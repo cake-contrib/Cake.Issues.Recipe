@@ -4,9 +4,7 @@
 public static class IssuesParameters
 {
     /// <summary>
-    /// Creates a new instance of the <see cref="IssuesParameters"/> class.
+    /// Gets the path to the MSBuild log file created by XmlFileLogger.
     /// </summary>
-    public static void SetIssuesParameters()
-    {
-    }
+    public static FilePath MsBuildXmlFileLoggerLogFilePath { get; set; }
 }

@@ -6,6 +6,11 @@ public class IssuesData
     private readonly List<IIssue> issues = new List<IIssue>();
 
     /// <summary>
+    /// Gets the root directory of the repository.
+    /// </summary>
+    public DirectoryPath RepositoryRootDirectory { get; }
+
+    /// <summary>
     /// Gets the list of reported issues.
     /// </summary>
     public IEnumerable<IIssue> Issues 
@@ -26,6 +31,8 @@ public class IssuesData
         {
             throw new ArgumentNullException(nameof(context));
         }
+
+        this.RepositoryRootDirectory = context.MakeAbsolute(context.Directory("./"));
     }
 
     /// <summary>
