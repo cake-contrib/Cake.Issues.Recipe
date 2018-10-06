@@ -11,6 +11,26 @@ public class IssuesData
     public DirectoryPath RepositoryRootDirectory { get; }
 
     /// <summary>
+    /// Gets a value indicating whether the build is running on Azure DevOps.
+    /// </summary>
+    public bool IsRunningOnAzureDevOps { get; }
+
+    /// <summary>
+    /// Gets URL of the remote repository.
+    /// </summary>
+    public Uri RepositoryUrl { get; }
+
+    /// <summary>
+    /// Gets a value indicating whether the build is for a pull request.
+    /// </summary>
+    public bool IsPullRequestBuild { get; }
+
+    /// <summary>
+    /// Gets ID of the pull request in case <see cref="IsPullRequestBuild"/> returns <c>true</c>.
+    /// </summary>
+    public int PullRequestId { get; }
+
+    /// <summary>
     /// Gets the list of reported issues.
     /// </summary>
     public IEnumerable<IIssue> Issues 
@@ -33,6 +53,36 @@ public class IssuesData
         }
 
         this.RepositoryRootDirectory = context.MakeAbsolute(context.Directory("./"));
+
+        // Could be simplified once https://github.com/cake-build/cake/issues/1684 / https://github.com/cake-build/cake/issues/1580 are fixed.
+        this.IsRunningOnAzureDevOps =
+            !string.IsNullOrWhiteSpace(context.EnvironmentVariable("TF_BUILD")) &&
+            !string.IsNullOrWhiteSpace(context.EnvironmentVariable("SYSTEM_COLLECTIONURI")) &&
+            (
+                new Uri(context.EnvironmentVariable("SYSTEM_COLLECTIONURI")).Host == "dev.azure.com" ||
+                new Uri(context.EnvironmentVariable("SYSTEM_COLLECTIONURI")).Host.EndsWith("visualstudio.com")
+            );
+
+        // Could be simplified once https://github.com/cake-build/cake/issues/2149 is fixed
+        this.IsPullRequestBuild =
+            !string.IsNullOrWhiteSpace(context.EnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID"));
+
+        if (this.IsRunningOnAzureDevOps)
+        {
+            this.RepositoryUrl = new Uri(context.EnvironmentVariable("BUILD_REPOSITORY_URI"));
+
+            if (this.IsPullRequestBuild)
+            {
+                if (!Int32.TryParse(context.EnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID"), out var pullRequestId))
+                {
+                    throw new Exception(string.Format("Invalid pull request ID: {0}", context.EnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID")));
+                }
+                else
+                {
+                    this.PullRequestId = pullRequestId;
+                }
+            }
+        }
     }
 
     /// <summary>
