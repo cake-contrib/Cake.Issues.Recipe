@@ -25,7 +25,8 @@ Setup<IssuesData>(setupContext =>
 ///////////////////////////////////////////////////////////////////////////////
 
 IssuesBuildTasks.IssuesTask = Task("Issues")
-    .IsDependentOn("Report-IssuesToPullRequest");
+    .IsDependentOn("Report-IssuesToPullRequest")
+    .IsDependentOn("Set-PullRequestIssuesState");
 
 IssuesBuildTasks.ReadIssuesTask = Task("Read-Issues")
     .Does<IssuesData>((data) =>
@@ -57,21 +58,13 @@ IssuesBuildTasks.ReadIssuesTask = Task("Read-Issues")
 });
 
 IssuesBuildTasks.ReportIssuesToPullRequestTask = Task("Report-IssuesToPullRequest")
+    .WithCriteria(() => IssuesParameters.ShouldReportIssuesToPullRequest, "Reporting of issues to pull requests is disabled")
     .IsDependentOn("Read-Issues")
     .IsDependentOn("Report-IssuesToAzureDevOpsPullRequest");
 
-IssuesBuildTasks.ReportIssuesToAzureDevOpsPullRequestTask = Task("Report-IssuesToAzureDevOpsPullRequest")
+IssuesBuildTasks.SetPullRequestIssuesStateTask = Task("Set-PullRequestIssuesState")
+    .WithCriteria(() => IssuesParameters.ShouldSetPullRequestStatus, "Setting of pull request status is disabled")
     .IsDependentOn("Read-Issues")
-    .WithCriteria<IssuesData>((context, data) => data.IsRunningOnAzureDevOps, "Not running on Azure DevOps")
-    .WithCriteria<IssuesData>((context, data) => data.IsPullRequestBuild, "Not a pull request build")
-    .WithCriteria((context) => !string.IsNullOrWhiteSpace(context.EnvironmentVariable("SYSTEM_ACCESSTOKEN")), "SYSTEM_ACCESSTOKEN environment variable not set. Make sure the 'Allow Scripts to access OAuth token' option is enabled on the build definition.")
-    .Does<IssuesData>((data) =>
-{
-    ReportIssuesToPullRequest(
-        data.Issues,
-        TfsPullRequests(
-            data.RepositoryUrl,
-            data.PullRequestId,
-            TfsAuthenticationOAuth(EnvironmentVariable("SYSTEM_ACCESSTOKEN"))),
-        data.RepositoryRootDirectory);
-});
+    .IsDependentOn("Set-AzureDevOpsPullRequestIssuesState");
+
+#load tasks/tasks.cake
