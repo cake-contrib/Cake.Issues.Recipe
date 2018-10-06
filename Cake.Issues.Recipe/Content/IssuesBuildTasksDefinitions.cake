@@ -12,4 +12,14 @@ public class IssuesBuildTaskDefinitions
     /// Gets or sets the task for reading issues.
     /// </summary>
     public CakeTaskBuilder ReadIssuesTask { get; set; }
+
+    /// <summary>
+    /// Gets or sets the task for reporting issues to pull request.
+    /// </summary>
+    public CakeTaskBuilder ReportIssuesToPullRequestTask { get; set; }
+
+    /// <summary>
+    /// Gets or sets the task for reporting issues to Azure DevOps pull request.
+    /// </summary>
+    public CakeTaskBuilder ReportIssuesToAzureDevOpsPullRequestTask { get; set; }
 }
