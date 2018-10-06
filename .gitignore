@@ -44,3 +44,4 @@ $RECYCLE.BIN/
 # Project specific
 
 version.cake
+BuildArtifacts/
