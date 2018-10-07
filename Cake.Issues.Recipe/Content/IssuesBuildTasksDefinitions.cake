@@ -14,6 +14,21 @@ public class IssuesBuildTaskDefinitions
     public CakeTaskBuilder ReadIssuesTask { get; set; }
 
     /// <summary>
+    /// Gets or sets the task for creating a full issue report.
+    /// </summary>
+    public CakeTaskBuilder CreateFullIssuesReportTask { get; set; }
+
+    /// <summary>
+    /// Gets or sets the task for publishing issues artifacts.
+    /// </summary>
+    public CakeTaskBuilder PublishIssuesArtifactsTask { get; set; }
+
+    /// <summary>
+    /// Gets or sets the task for  publishing issues artifacts to Azure DevOps builds.
+    /// </summary>
+    public CakeTaskBuilder PublishAzureDevOpsIssuesArtifactsTask { get; set; }
+
+    /// <summary>
     /// Gets or sets the task for reporting issues to pull request.
     /// </summary>
     public CakeTaskBuilder ReportIssuesToPullRequestTask { get; set; }
