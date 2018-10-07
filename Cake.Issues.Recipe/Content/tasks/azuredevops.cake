@@ -1,3 +1,16 @@
+IssuesBuildTasks.PublishAzureDevOpsIssuesArtifactsTask = Task("Publish-AzureDevOpsIssuesArtifacts")
+    .IsDependentOn("Create-FullIssuesReport")
+    .WithCriteria<IssuesData>((context, data) => data.IsRunningOnAzureDevOps, "Not running on Azure DevOps")
+    .Does<IssuesData>((data) =>
+{
+    if (IssuesParameters.ShouldPublishFullIssuesReport &&
+        data.FullIssuesReport != null &&
+        FileExists(data.FullIssuesReport))
+    {
+        TFBuild.Commands.UploadArtifact("Issues", data.FullIssuesReport, "Issues");
+    }
+});
+
 IssuesBuildTasks.ReportIssuesToAzureDevOpsPullRequestTask = Task("Report-IssuesToAzureDevOpsPullRequest")
     .IsDependentOn("Read-Issues")
     .WithCriteria(() => IssuesParameters.ShouldReportIssuesToPullRequest, "Reporting of issues to pull requests is disabled")

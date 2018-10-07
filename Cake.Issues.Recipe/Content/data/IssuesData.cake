@@ -11,6 +11,11 @@ public class IssuesData
     public DirectoryPath RepositoryRootDirectory { get; }
 
     /// <summary>
+    /// Gets or sets the path to the full issues report.
+    /// </summary>
+    public FilePath FullIssuesReport { get; set; }
+
+    /// <summary>
     /// Gets a value indicating whether the build is running on Azure DevOps.
     /// </summary>
     public bool IsRunningOnAzureDevOps { get; }

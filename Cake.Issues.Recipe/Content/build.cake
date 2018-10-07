@@ -25,6 +25,7 @@ Setup<IssuesData>(setupContext =>
 ///////////////////////////////////////////////////////////////////////////////
 
 IssuesBuildTasks.IssuesTask = Task("Issues")
+    .IsDependentOn("Publish-IssuesArtifacts")
     .IsDependentOn("Report-IssuesToPullRequest")
     .IsDependentOn("Set-PullRequestIssuesState");
 
@@ -56,6 +57,30 @@ IssuesBuildTasks.ReadIssuesTask = Task("Read-Issues")
 
     Information("{0} issues are found.", data.Issues.Count());
 });
+
+IssuesBuildTasks.CreateFullIssuesReportTask = Task("Create-FullIssuesReport")
+    .WithCriteria(() => IssuesParameters.ShouldCreateFullIssuesReport, "Creating of full issues report is disabled")
+    .IsDependentOn("Read-Issues")
+    .Does<IssuesData>((data) =>
+{
+    data.FullIssuesReport = IssuesParameters.OutputDirectory.CombineWithFilePath("report.html");
+    EnsureDirectoryExists(IssuesParameters.OutputDirectory);
+
+    // Create HTML report using DevExpress template.
+    var settings = 
+        GenericIssueReportFormatSettings
+            .FromEmbeddedTemplate(GenericIssueReportTemplate.HtmlDxDataGrid)
+            .WithOption(HtmlDxDataGridOption.Theme, DevExtremeTheme.MaterialBlueLight);
+    CreateIssueReport(
+        data.Issues,
+        GenericIssueReportFormat(settings),
+        data.RepositoryRootDirectory,
+        data.FullIssuesReport);
+});
+
+IssuesBuildTasks.PublishIssuesArtifactsTask = Task("Publish-IssuesArtifacts")
+    .IsDependentOn("Create-FullIssuesReport")
+    .IsDependentOn("Publish-AzureDevOpsIssuesArtifacts");
 
 IssuesBuildTasks.ReportIssuesToPullRequestTask = Task("Report-IssuesToPullRequest")
     .WithCriteria(() => IssuesParameters.ShouldReportIssuesToPullRequest, "Reporting of issues to pull requests is disabled")
