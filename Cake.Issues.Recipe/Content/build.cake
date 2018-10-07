@@ -26,6 +26,7 @@ Setup<IssuesData>(setupContext =>
 
 IssuesBuildTasks.IssuesTask = Task("Issues")
     .IsDependentOn("Publish-IssuesArtifacts")
+    .IsDependentOn("Create-SummaryIssuesReport")
     .IsDependentOn("Report-IssuesToPullRequest")
     .IsDependentOn("Set-PullRequestIssuesState");
 
@@ -81,6 +82,11 @@ IssuesBuildTasks.CreateFullIssuesReportTask = Task("Create-FullIssuesReport")
 IssuesBuildTasks.PublishIssuesArtifactsTask = Task("Publish-IssuesArtifacts")
     .IsDependentOn("Create-FullIssuesReport")
     .IsDependentOn("Publish-AzureDevOpsIssuesArtifacts");
+
+IssuesBuildTasks.CreateSummaryIssuesReportTask = Task("Create-SummaryIssuesReport")
+    .WithCriteria(() => IssuesParameters.ShouldCreateSummaryIssuesReport, "Creating of summary issues report is disabled")
+    .IsDependentOn("Read-Issues")
+    .IsDependentOn("Create-AzureDevOpsSummaryIssuesReport");
 
 IssuesBuildTasks.ReportIssuesToPullRequestTask = Task("Report-IssuesToPullRequest")
     .WithCriteria(() => IssuesParameters.ShouldReportIssuesToPullRequest, "Reporting of issues to pull requests is disabled")

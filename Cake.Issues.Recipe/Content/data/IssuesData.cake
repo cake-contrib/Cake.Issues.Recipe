@@ -16,6 +16,11 @@ public class IssuesData
     public FilePath FullIssuesReport { get; set; }
 
     /// <summary>
+    /// Gets or sets the path to the summary issues report.
+    /// </summary>
+    public FilePath SummaryIssuesReport { get; set; }
+
+    /// <summary>
     /// Gets a value indicating whether the build is running on Azure DevOps.
     /// </summary>
     public bool IsRunningOnAzureDevOps { get; }
