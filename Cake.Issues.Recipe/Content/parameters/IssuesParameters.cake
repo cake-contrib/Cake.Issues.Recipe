@@ -28,6 +28,12 @@ public static class IssuesParameters
     public static bool ShouldPublishFullIssuesReport { get; set; } = true;
 
     /// <summary>
+    /// Gets or sets a value indicating whether summary issues report should be created.
+    /// Default value is <c>true</c>.
+    /// </summary>
+    public static bool ShouldCreateSummaryIssuesReport { get; set; } = true;
+
+    /// <summary>
     /// Gets or sets a value indicating whether issues should be reported to the pull request system.
     /// Default value is <c>true</c>.
     /// </summary>

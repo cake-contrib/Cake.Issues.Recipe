@@ -29,6 +29,16 @@ public class IssuesBuildTaskDefinitions
     public CakeTaskBuilder PublishAzureDevOpsIssuesArtifactsTask { get; set; }
 
     /// <summary>
+    /// Gets or sets the task for creating a summary issue report.
+    /// </summary>
+    public CakeTaskBuilder CreateSummaryIssuesReportTask { get; set; }
+
+    /// <summary>
+    /// Gets or sets the task for creating a summary issue report.
+    /// </summary>
+    public CakeTaskBuilder CreateAzureDevOpsSummaryIssuesReportTask { get; set; }
+
+    /// <summary>
     /// Gets or sets the task for reporting issues to pull request.
     /// </summary>
     public CakeTaskBuilder ReportIssuesToPullRequestTask { get; set; }

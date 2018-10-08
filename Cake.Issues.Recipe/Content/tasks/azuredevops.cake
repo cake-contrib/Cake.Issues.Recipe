@@ -1,3 +1,21 @@
+IssuesBuildTasks.CreateAzureDevOpsSummaryIssuesReportTask = Task("Create-AzureDevOpsSummaryIssuesReport")
+    .IsDependentOn("Read-Issues")
+    .WithCriteria(() => IssuesParameters.ShouldCreateSummaryIssuesReport, "Creating of summary issues report is disabled")
+    .WithCriteria<IssuesData>((context, data) => data.IsRunningOnAzureDevOps, "Not running on Azure DevOps")
+    .Does<IssuesData>((data) =>
+{
+    var summaryFile = IssuesParameters.OutputDirectory.CombineWithFilePath("summary.md");
+
+    // Create summary for Azure Pipelines using custom template.
+    CreateIssueReport(
+        data.Issues,
+        GenericIssueReportFormatFromFilePath("AzurePipelineSummary.cshtml"),
+        data.RepositoryRootDirectory,
+        summaryFile);
+
+    TFBuild.Commands.UploadTaskSummary(summaryFile);
+});
+
 IssuesBuildTasks.PublishAzureDevOpsIssuesArtifactsTask = Task("Publish-AzureDevOpsIssuesArtifacts")
     .IsDependentOn("Create-FullIssuesReport")
     .WithCriteria<IssuesData>((context, data) => data.IsRunningOnAzureDevOps, "Not running on Azure DevOps")
