@@ -81,21 +81,71 @@ IssuesBuildTasks.CreateFullIssuesReportTask = Task("Create-FullIssuesReport")
 
 IssuesBuildTasks.PublishIssuesArtifactsTask = Task("Publish-IssuesArtifacts")
     .IsDependentOn("Create-FullIssuesReport")
-    .IsDependentOn("Publish-AzureDevOpsIssuesArtifacts");
+    .Does<IssuesData>((data) =>
+{
+    switch (data.BuildServer)
+    {
+        case IssuesBuildServer.AzureDevOps:
+            AzureDevOpsBuildServerHelper.PublishIssuesArtifacts(Context, data);
+            break;
+
+        default:
+            Information("Not supported build server.");
+            break;
+    }
+});
 
 IssuesBuildTasks.CreateSummaryIssuesReportTask = Task("Create-SummaryIssuesReport")
     .WithCriteria(() => IssuesParameters.ShouldCreateSummaryIssuesReport, "Creating of summary issues report is disabled")
     .IsDependentOn("Read-Issues")
-    .IsDependentOn("Create-AzureDevOpsSummaryIssuesReport");
+    .Does<IssuesData>((data) =>
+{
+    switch (data.BuildServer)
+    {
+        case IssuesBuildServer.AzureDevOps:
+            AzureDevOpsBuildServerHelper.CreateSummaryIssuesReport(Context, data);
+            break;
+
+        default:
+            Information("Not supported build server.");
+            break;
+    }
+});
 
 IssuesBuildTasks.ReportIssuesToPullRequestTask = Task("Report-IssuesToPullRequest")
     .WithCriteria(() => IssuesParameters.ShouldReportIssuesToPullRequest, "Reporting of issues to pull requests is disabled")
+    .WithCriteria<IssuesData>((context, data) => data.IsPullRequestBuild, "Not a pull request build")
     .IsDependentOn("Read-Issues")
-    .IsDependentOn("Report-IssuesToAzureDevOpsPullRequest");
+    .Does<IssuesData>((data) =>
+{
+    switch (data.PullRequestSystem)
+    {
+        case IssuesPullRequestSystem.AzureDevOps:
+            AzureDevOpsPullRequstSystemHelper.ReportIssuesToPullRequest(Context, data);
+            break;
+
+        default:
+            Information("Not supported pull request system.");
+            break;
+    }
+});
 
 IssuesBuildTasks.SetPullRequestIssuesStateTask = Task("Set-PullRequestIssuesState")
     .WithCriteria(() => IssuesParameters.ShouldSetPullRequestStatus, "Setting of pull request status is disabled")
+    .WithCriteria<IssuesData>((context, data) => data.IsPullRequestBuild, "Not a pull request build")
     .IsDependentOn("Read-Issues")
-    .IsDependentOn("Set-AzureDevOpsPullRequestIssuesState");
+    .Does<IssuesData>((data) =>
+{
+    switch (data.PullRequestSystem)
+    {
+        case IssuesPullRequestSystem.AzureDevOps:
+            AzureDevOpsPullRequstSystemHelper.SetPullRequestIssuesState(Context, data);
+            break;
+
+        default:
+            Information("Not supported pull request system.");
+            break;
+    }
+});
 
 #load tasks/tasks.cake

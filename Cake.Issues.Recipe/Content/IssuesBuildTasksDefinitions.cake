@@ -24,19 +24,9 @@ public class IssuesBuildTaskDefinitions
     public CakeTaskBuilder PublishIssuesArtifactsTask { get; set; }
 
     /// <summary>
-    /// Gets or sets the task for  publishing issues artifacts to Azure DevOps builds.
-    /// </summary>
-    public CakeTaskBuilder PublishAzureDevOpsIssuesArtifactsTask { get; set; }
-
-    /// <summary>
     /// Gets or sets the task for creating a summary issue report.
     /// </summary>
     public CakeTaskBuilder CreateSummaryIssuesReportTask { get; set; }
-
-    /// <summary>
-    /// Gets or sets the task for creating a summary issue report.
-    /// </summary>
-    public CakeTaskBuilder CreateAzureDevOpsSummaryIssuesReportTask { get; set; }
 
     /// <summary>
     /// Gets or sets the task for reporting issues to pull request.
@@ -44,17 +34,7 @@ public class IssuesBuildTaskDefinitions
     public CakeTaskBuilder ReportIssuesToPullRequestTask { get; set; }
 
     /// <summary>
-    /// Gets or sets the task for reporting issues to Azure DevOps pull request.
-    /// </summary>
-    public CakeTaskBuilder ReportIssuesToAzureDevOpsPullRequestTask { get; set; }
-
-    /// <summary>
     /// Gets or sets the task for settings the state on the pull request.
     /// </summary>
     public CakeTaskBuilder SetPullRequestIssuesStateTask { get; set; }
-
-    /// <summary>
-    /// Gets or sets the task for settings the state on an Azure DevOps pull request.
-    /// </summary>
-    public CakeTaskBuilder SetAzureDevOpsPullRequestIssuesStateTask { get; set; }
 }
