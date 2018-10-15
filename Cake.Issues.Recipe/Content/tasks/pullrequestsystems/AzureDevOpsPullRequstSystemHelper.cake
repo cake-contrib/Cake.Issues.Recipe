@@ -16,7 +16,7 @@ public static class AzureDevOpsPullRequstSystemHelper
             throw new ArgumentNullException(nameof(data));
         }
 
-        if (!string.IsNullOrWhiteSpace(context.EnvironmentVariable("SYSTEM_ACCESSTOKEN")))
+        if (string.IsNullOrWhiteSpace(context.EnvironmentVariable("SYSTEM_ACCESSTOKEN")))
         {
             context.Warning("SYSTEM_ACCESSTOKEN environment variable not set. Make sure the 'Allow Scripts to access OAuth token' option is enabled on the build definition.");
             return;
@@ -44,7 +44,7 @@ public static class AzureDevOpsPullRequstSystemHelper
             throw new ArgumentNullException(nameof(data));
         }
 
-        if (!string.IsNullOrWhiteSpace(context.EnvironmentVariable("SYSTEM_ACCESSTOKEN")))
+        if (string.IsNullOrWhiteSpace(context.EnvironmentVariable("SYSTEM_ACCESSTOKEN")))
         {
             context.Warning("SYSTEM_ACCESSTOKEN environment variable not set. Make sure the 'Allow Scripts to access OAuth token' option is enabled on the build definition.");
             return;
