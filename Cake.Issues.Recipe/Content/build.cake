@@ -50,6 +50,13 @@ IssuesBuildTasks.ReadIssuesTask = Task("Read-Issues")
                 MsBuildXmlFileLoggerFormat));
     }
 
+    if (IssuesParameters.InspectCodeLogFilePath != null)
+    {
+        issueProviders.Add(
+            InspectCodeIssuesFromFilePath(
+                IssuesParameters.InspectCodeLogFilePath));
+    }
+
     // Read issues from log files.
     data.AddIssues(
         ReadIssues(
