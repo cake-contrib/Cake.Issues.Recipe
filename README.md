@@ -23,6 +23,12 @@ and for general information about the Cake build automation system see the [Cake
 |:--:|:--:|
 |[![Build status](https://ci.appveyor.com/api/projects/status/rjbsw9b48oysfh07/branch/develop?svg=true)](https://ci.appveyor.com/project/cakecontrib/cake-issues-recipe/branch/develop)|[![Build status](https://ci.appveyor.com/api/projects/status/rjbsw9b48oysfh07/branch/master?svg=true)](https://ci.appveyor.com/project/cakecontrib/cake-issues-recipe/branch/master)|
 
+## Demos
+
+|Build Server|Repository| |
+|:--:|:--:|:--:|
+|Azure Pipelines|Azure Repos|[![Build status](https://dev.azure.com/pberger/Cake.Issues.Recipe-Demo/_apis/build/status/Azure.Repos)](https://dev.azure.com/pberger/Cake.Issues.Recipe-Demo/_build/latest?definitionId=6)|
+
 ## Quick Links
 
 - [Documentation](https://cake-contrib.github.io/Cake.Issues.Website)
