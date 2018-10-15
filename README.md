@@ -27,7 +27,7 @@ and for general information about the Cake build automation system see the [Cake
 
 |Build Server|Repository| |
 |:--:|:--:|:--:|
-|Azure Pipelines|Azure Repos|[![Build status](https://dev.azure.com/pberger/Cake.Issues.Recipe-Demo/_apis/build/status/Azure.Repos)](https://dev.azure.com/pberger/Cake.Issues.Recipe-Demo/_build/latest?definitionId=6)|
+|Azure Pipelines|Azure Repos|[![Build status](https://dev.azure.com/pberger/Cake.Issues.Recipe-Demo/_apis/build/status/Azure.Repos?branchName=master)](https://dev.azure.com/pberger/Cake.Issues.Recipe-Demo/_build/latest?definitionId=6)|
 
 ## Quick Links
 
