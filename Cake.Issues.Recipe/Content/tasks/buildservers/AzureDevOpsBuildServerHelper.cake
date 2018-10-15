@@ -45,7 +45,7 @@ public static class AzureDevOpsBuildServerHelper
             throw new ArgumentNullException(nameof(data));
         }
 
-        if (IssuesParameters.ShouldPublishFullIssuesReport &&
+        if (IssuesParameters.BuildServer.ShouldPublishFullIssuesReport &&
             data.FullIssuesReport != null &&
             context.FileExists(data.FullIssuesReport))
         {

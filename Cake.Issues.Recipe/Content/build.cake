@@ -42,19 +42,19 @@ IssuesBuildTasks.ReadIssuesTask = Task("Read-Issues")
     // Determine which issue providers should be used.
     var issueProviders = new List<IIssueProvider>();
 
-    if (IssuesParameters.MsBuildXmlFileLoggerLogFilePath != null)
+    if (IssuesParameters.InputFiles.MsBuildXmlFileLoggerLogFilePath != null)
     {
         issueProviders.Add(
             MsBuildIssuesFromFilePath(
-                IssuesParameters.MsBuildXmlFileLoggerLogFilePath,
+                IssuesParameters.InputFiles.MsBuildXmlFileLoggerLogFilePath,
                 MsBuildXmlFileLoggerFormat));
     }
 
-    if (IssuesParameters.InspectCodeLogFilePath != null)
+    if (IssuesParameters.InputFiles.InspectCodeLogFilePath != null)
     {
         issueProviders.Add(
             InspectCodeIssuesFromFilePath(
-                IssuesParameters.InspectCodeLogFilePath));
+                IssuesParameters.InputFiles.InspectCodeLogFilePath));
     }
 
     // Read issues from log files.
@@ -67,7 +67,7 @@ IssuesBuildTasks.ReadIssuesTask = Task("Read-Issues")
 });
 
 IssuesBuildTasks.CreateFullIssuesReportTask = Task("Create-FullIssuesReport")
-    .WithCriteria(() => IssuesParameters.ShouldCreateFullIssuesReport, "Creating of full issues report is disabled")
+    .WithCriteria(() => IssuesParameters.Reporting.ShouldCreateFullIssuesReport, "Creating of full issues report is disabled")
     .IsDependentOn("Read-Issues")
     .Does<IssuesData>((data) =>
 {
@@ -103,7 +103,7 @@ IssuesBuildTasks.PublishIssuesArtifactsTask = Task("Publish-IssuesArtifacts")
 });
 
 IssuesBuildTasks.CreateSummaryIssuesReportTask = Task("Create-SummaryIssuesReport")
-    .WithCriteria(() => IssuesParameters.ShouldCreateSummaryIssuesReport, "Creating of summary issues report is disabled")
+    .WithCriteria(() => IssuesParameters.BuildServer.ShouldCreateSummaryIssuesReport, "Creating of summary issues report is disabled")
     .IsDependentOn("Read-Issues")
     .Does<IssuesData>((data) =>
 {
@@ -120,7 +120,7 @@ IssuesBuildTasks.CreateSummaryIssuesReportTask = Task("Create-SummaryIssuesRepor
 });
 
 IssuesBuildTasks.ReportIssuesToPullRequestTask = Task("Report-IssuesToPullRequest")
-    .WithCriteria(() => IssuesParameters.ShouldReportIssuesToPullRequest, "Reporting of issues to pull requests is disabled")
+    .WithCriteria(() => IssuesParameters.PullRequestSystem.ShouldReportIssuesToPullRequest, "Reporting of issues to pull requests is disabled")
     .WithCriteria<IssuesData>((context, data) => data.IsPullRequestBuild, "Not a pull request build")
     .IsDependentOn("Read-Issues")
     .Does<IssuesData>((data) =>
@@ -138,7 +138,7 @@ IssuesBuildTasks.ReportIssuesToPullRequestTask = Task("Report-IssuesToPullReques
 });
 
 IssuesBuildTasks.SetPullRequestIssuesStateTask = Task("Set-PullRequestIssuesState")
-    .WithCriteria(() => IssuesParameters.ShouldSetPullRequestStatus, "Setting of pull request status is disabled")
+    .WithCriteria(() => IssuesParameters.PullRequestSystem.ShouldSetPullRequestStatus, "Setting of pull request status is disabled")
     .WithCriteria<IssuesData>((context, data) => data.IsPullRequestBuild, "Not a pull request build")
     .IsDependentOn("Read-Issues")
     .Does<IssuesData>((data) =>
