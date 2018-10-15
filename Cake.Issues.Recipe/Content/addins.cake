@@ -2,6 +2,7 @@
 // ADDINS
 ///////////////////////////////////////////////////////////////////////////////
 
+#addin nuget:?package=Cake.Git&version=0.19.0
 #addin nuget:?package=Cake.Issues&version=0.6.2
 #addin nuget:?package=Cake.Issues.MsBuild&version=0.6.0
 #addin nuget:?package=Cake.Issues.Reporting&version=0.6.0

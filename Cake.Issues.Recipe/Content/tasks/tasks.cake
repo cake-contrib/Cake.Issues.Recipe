@@ -1,1 +1,2 @@
-#load azuredevops.cake
+#load buildservers/buildservers.cake
+#load pullrequestsystems/pullrequestsystems.cake
