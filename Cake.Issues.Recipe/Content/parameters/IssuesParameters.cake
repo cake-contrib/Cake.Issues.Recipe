@@ -11,42 +11,22 @@ public static class IssuesParameters
     public static DirectoryPath OutputDirectory { get; set; } = "BuildArtifacts";
 
     /// <summary>
-    /// Gets or sets the path to the MSBuild log file created by XmlFileLogger.
+    /// Gets the parameters for the input files.
     /// </summary>
-    public static FilePath MsBuildXmlFileLoggerLogFilePath { get; set; }
+    public static IssuesParametersInputFiles InputFiles { get; } = new IssuesParametersInputFiles();
 
     /// <summary>
-    /// Gets or sets the path to the InspectCode log file.
+    /// Gets the parameters for reporting.
     /// </summary>
-    public static FilePath InspectCodeLogFilePath { get; set; }
+    public static IssuesParametersReporting Reporting { get; } = new IssuesParametersReporting();
 
     /// <summary>
-    /// Gets or sets a value indicating whether full issues report should be created.
-    /// Default value is <c>true</c>.
+    /// Gets the parameters for build server integration.
     /// </summary>
-    public static bool ShouldCreateFullIssuesReport { get; set; } = true;
+    public static IssuesParametersBuildServer BuildServer { get; } = new IssuesParametersBuildServer();
 
     /// <summary>
-    /// Gets or sets a value indicating whether full issues report should be published as artifact to the build system.
-    /// Default value is <c>true</c>.
+    /// Gets the parameters for pull request system integration.
     /// </summary>
-    public static bool ShouldPublishFullIssuesReport { get; set; } = true;
-
-    /// <summary>
-    /// Gets or sets a value indicating whether summary issues report should be created.
-    /// Default value is <c>true</c>.
-    /// </summary>
-    public static bool ShouldCreateSummaryIssuesReport { get; set; } = true;
-
-    /// <summary>
-    /// Gets or sets a value indicating whether issues should be reported to the pull request system.
-    /// Default value is <c>true</c>.
-    /// </summary>
-    public static bool ShouldReportIssuesToPullRequest { get; set; } = true;
-
-    /// <summary>
-    /// Gets or sets a value indicating whether a status on the pull request should be set.
-    /// Default value is <c>true</c>.
-    /// </summary>
-    public static bool ShouldSetPullRequestStatus { get; set; } = true;
+    public static IssuesParametersPullRequestSystem PullRequestSystem { get; } = new IssuesParametersPullRequestSystem();
 }
