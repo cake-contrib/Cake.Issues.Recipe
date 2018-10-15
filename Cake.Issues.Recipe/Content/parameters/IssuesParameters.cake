@@ -16,6 +16,11 @@ public static class IssuesParameters
     public static FilePath MsBuildXmlFileLoggerLogFilePath { get; set; }
 
     /// <summary>
+    /// Gets or sets the path to the InspectCode log file.
+    /// </summary>
+    public static FilePath InspectCodeLogFilePath { get; set; }
+
+    /// <summary>
     /// Gets or sets a value indicating whether full issues report should be created.
     /// Default value is <c>true</c>.
     /// </summary>
