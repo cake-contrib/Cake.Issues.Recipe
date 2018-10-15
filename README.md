@@ -25,9 +25,11 @@ and for general information about the Cake build automation system see the [Cake
 
 ## Demos
 
+Click on the build server and repository links to see the build definition or source code and try out the integration yourself.
+
 |Build Server|Repository| |
 |:--:|:--:|:--:|
-|Azure Pipelines|Azure Repos|[![Build status](https://dev.azure.com/pberger/Cake.Issues.Recipe-Demo/_apis/build/status/Azure.Repos?branchName=master)](https://dev.azure.com/pberger/Cake.Issues.Recipe-Demo/_build/latest?definitionId=6)|
+|[Azure Pipelines](https://dev.azure.com/pberger/Cake.Issues.Recipe-Demo/_build/latest?definitionId=6)|[Azure Repos](https://dev.azure.com/pberger/_git/Cake.Issues.Recipe-Demo)|[![Build status](https://dev.azure.com/pberger/Cake.Issues.Recipe-Demo/_apis/build/status/Azure.Repos?branchName=master)](https://dev.azure.com/pberger/Cake.Issues.Recipe-Demo/_build/latest?definitionId=6)|
 
 ## Quick Links
 
