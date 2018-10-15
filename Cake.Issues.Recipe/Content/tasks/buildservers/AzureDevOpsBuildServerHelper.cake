@@ -4,7 +4,10 @@
 public static class AzureDevOpsBuildServerHelper
 {
     /// <inheritdoc />
-    public static void CreateSummaryIssuesReport(ICakeContext context, IssuesData data)
+    public static void CreateSummaryIssuesReport(
+        ICakeContext context,
+        IssuesData data,
+        [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "")
     {
         if (context == null)
         {
@@ -21,7 +24,8 @@ public static class AzureDevOpsBuildServerHelper
         // Create summary for Azure Pipelines using custom template.
         context.CreateIssueReport(
             data.Issues,
-            context.GenericIssueReportFormatFromFilePath("AzurePipelineSummary.cshtml"),
+            context.GenericIssueReportFormatFromFilePath(
+                new FilePath(sourceFilePath).GetDirectory().Combine("tasks").Combine("buildservers").CombineWithFilePath("AzurePipelineSummary.cshtml")),
             data.RepositoryRootDirectory,
             summaryFile);
 
