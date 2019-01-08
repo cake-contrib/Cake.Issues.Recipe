@@ -9,7 +9,8 @@ BuildParameters.SetParameters(context: Context,
                             repositoryOwner: "cake-contrib",
                             repositoryName: "Cake.Issues.Recipe",
                             appVeyorAccountName: "cakecontrib",
-                            nuspecFilePath: "./Cake.Issues.Recipe/Cake.Issues.Recipe.nuspec");
+                            nuspecFilePath: "./Cake.Issues.Recipe/Cake.Issues.Recipe.nuspec",
+                            shouldPublishMyGet: false);
 
 BuildParameters.PrintParameters(Context);
 

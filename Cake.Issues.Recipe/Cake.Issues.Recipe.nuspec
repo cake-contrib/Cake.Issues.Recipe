@@ -2,14 +2,23 @@
 <package>
   <metadata>
     <id>Cake.Issues.Recipe</id>
+    <title>Cake.Issues.Recipe</title>
     <version>0.0.0</version>
     <authors>pascalberger</authors>
     <owners>cake-contrib, pascalberger</owners>
-    <description>Re-usable build script for Cake that can be used for working with linter and code analyzer output.</description>
+    <summary>Re-usable build script for Cake that can be used for working with linter and code analyzer output.</summary>
+    <description>
+Cake.Issues.Recipe provides a build script which can be used inside your projects Cake build script to add issue management.
+
+See the Project Site for documentation and an overview of the whole ecosystem of addins for working with issues in Cake scripts.
+    </description>
     <licenseUrl>https://github.com/cake-contrib/Cake.Issues.Recipe/blob/develop/LICENSE</licenseUrl>
-    <projectUrl>http://cake-contrib.github.io/Cake.Issues.Recipe/</projectUrl>
-    <iconUrl>https://cdn.rawgit.com/cake-contrib/graphics/a5cf0f881c390650144b2243ae551d5b9f836196/png/cake-contrib-medium.png</iconUrl>
+    <projectUrl>http://cake-contrib.github.io/Cake.Issues.Website</projectUrl>
+    <iconUrl>https://cdn.jsdelivr.net/gh/cake-contrib/graphics@a5cf0f881c390650144b2243ae551d5b9f836196/png/cake-contrib-medium.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <repository type="git" url="https://github.com/cake-contrib/Cake.Issues.Recipe"/>
+    <copyright>Copyright © Pascal Berger</copyright>
     <tags>Build Cake Cake.Issues Recipe</tags>
+    <releaseNotes>https://github.com/cake-contrib/Cake.Issues.Recipe/releases/tag/0.1.0</releaseNotes>
   </metadata>
 </package>
