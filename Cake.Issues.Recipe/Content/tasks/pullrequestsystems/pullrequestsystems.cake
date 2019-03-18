@@ -1,1 +1,3 @@
-#load AzureDevOpsPullRequstSystemHelper.cake
+#load IIssuesPullRequestSystem.cake
+#load BsePullRequestSystem.cake
+#load AzureDevOpsPullRequestSystem.cake

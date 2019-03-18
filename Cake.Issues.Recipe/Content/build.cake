@@ -98,16 +98,13 @@ IssuesBuildTasks.PublishIssuesArtifactsTask = Task("Publish-IssuesArtifacts")
     .IsDependentOn("Create-FullIssuesReport")
     .Does<IssuesData>((data) =>
 {
-    switch (data.BuildServer)
+    if (data.BuildServer == null)
     {
-        case IssuesBuildServer.AzureDevOps:
-            AzureDevOpsBuildServerHelper.PublishIssuesArtifacts(Context, data);
-            break;
-
-        default:
-            Information("Not supported build server.");
-            break;
+        Information("Not supported build server.");
+        return;
     }
+
+    data.BuildServer.PublishIssuesArtifacts(Context, data);
 });
 
 IssuesBuildTasks.CreateSummaryIssuesReportTask = Task("Create-SummaryIssuesReport")
@@ -115,16 +112,13 @@ IssuesBuildTasks.CreateSummaryIssuesReportTask = Task("Create-SummaryIssuesRepor
     .IsDependentOn("Read-Issues")
     .Does<IssuesData>((data) =>
 {
-    switch (data.BuildServer)
+    if (data.BuildServer == null)
     {
-        case IssuesBuildServer.AzureDevOps:
-            AzureDevOpsBuildServerHelper.CreateSummaryIssuesReport(Context, data);
-            break;
-
-        default:
-            Information("Not supported build server.");
-            break;
+        Information("Not supported build server.");
+        return;
     }
+
+    data.BuildServer.CreateSummaryIssuesReport(Context, data);
 });
 
 IssuesBuildTasks.ReportIssuesToPullRequestTask = Task("Report-IssuesToPullRequest")
@@ -133,16 +127,13 @@ IssuesBuildTasks.ReportIssuesToPullRequestTask = Task("Report-IssuesToPullReques
     .IsDependentOn("Read-Issues")
     .Does<IssuesData>((data) =>
 {
-    switch (data.PullRequestSystem)
+    if (data.PullRequestSystem == null)
     {
-        case IssuesPullRequestSystem.AzureDevOps:
-            AzureDevOpsPullRequstSystemHelper.ReportIssuesToPullRequest(Context, data);
-            break;
-
-        default:
-            Information("Not supported pull request system.");
-            break;
+        Information("Not supported pull request system.");
+        return;
     }
+
+    data.PullRequestSystem.ReportIssuesToPullRequest(Context, data);
 });
 
 IssuesBuildTasks.SetPullRequestIssuesStateTask = Task("Set-PullRequestIssuesState")
@@ -151,16 +142,13 @@ IssuesBuildTasks.SetPullRequestIssuesStateTask = Task("Set-PullRequestIssuesStat
     .IsDependentOn("Read-Issues")
     .Does<IssuesData>((data) =>
 {
-    switch (data.PullRequestSystem)
+    if (data.PullRequestSystem == null)
     {
-        case IssuesPullRequestSystem.AzureDevOps:
-            AzureDevOpsPullRequstSystemHelper.SetPullRequestIssuesState(Context, data);
-            break;
-
-        default:
-            Information("Not supported pull request system.");
-            break;
+        Information("Not supported pull request system.");
+        return;
     }
+
+    data.PullRequestSystem.SetPullRequestIssuesState(Context, data);
 });
 
 #load tasks/tasks.cake

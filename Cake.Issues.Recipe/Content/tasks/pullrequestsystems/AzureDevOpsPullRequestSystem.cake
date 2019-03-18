@@ -1,10 +1,10 @@
 /// <summary>
 /// Support for Azure DevOps / Azure Repository hosted code.
 /// </summary>
-public static class AzureDevOpsPullRequstSystemHelper
+public class AzureDevOpsPullRequestSystem : BasePullRequestSystem
 {
     /// <inheritdoc />
-    public static void ReportIssuesToPullRequest(ICakeContext context, IssuesData data)
+    public override void ReportIssuesToPullRequest(ICakeContext context, IssuesData data)
     {
         if (context == null)
         {
@@ -32,7 +32,7 @@ public static class AzureDevOpsPullRequstSystemHelper
     }
 
     /// <inheritdoc />
-    public static void SetPullRequestIssuesState(ICakeContext context, IssuesData data)
+    public override void SetPullRequestIssuesState(ICakeContext context, IssuesData data)
     {
         if (context == null)
         {
