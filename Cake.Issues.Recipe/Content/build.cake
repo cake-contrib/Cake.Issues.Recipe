@@ -50,6 +50,14 @@ IssuesBuildTasks.ReadIssuesTask = Task("Read-Issues")
                 MsBuildXmlFileLoggerFormat));
     }
 
+    if (IssuesParameters.InputFiles.MsBuildBinaryLogFilePath != null)
+    {
+        issueProviders.Add(
+            MsBuildIssuesFromFilePath(
+                IssuesParameters.InputFiles.MsBuildBinaryLogFilePath,
+                MsBuildBinaryLogFileFormat));
+    }
+
     if (IssuesParameters.InputFiles.InspectCodeLogFilePath != null)
     {
         issueProviders.Add(
