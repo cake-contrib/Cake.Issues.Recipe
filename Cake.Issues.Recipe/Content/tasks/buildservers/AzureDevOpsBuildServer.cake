@@ -1,10 +1,54 @@
 /// <summary>
 /// Support for Azure DevOps / Azure Pipelines builds.
 /// </summary>
-public static class AzureDevOpsBuildServerHelper
+public class AzureDevOpsBuildServer : BaseBuildServer
 {
     /// <inheritdoc />
-    public static void CreateSummaryIssuesReport(
+    public override Uri DetermineRepositoryRemoteUrl(
+        ICakeContext context,
+        DirectoryPath repositoryRootDirectory)
+    {
+        if (context == null)
+        {
+            throw new ArgumentNullException(nameof(context));
+        }
+
+        return new Uri(context.EnvironmentVariable("BUILD_REPOSITORY_URI"));
+    }
+
+    /// <inheritdoc />
+    public override bool DetermineIfPullRequest(ICakeContext context)
+    {
+        if (context == null)
+        {
+            throw new ArgumentNullException(nameof(context));
+        }
+        
+        // Could be simplified once https://github.com/cake-build/cake/issues/2149 is fixed
+        return !string.IsNullOrWhiteSpace(context.EnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID"));
+    }
+
+    /// <inheritdoc />
+    public override int? DeterminePullRequestId(ICakeContext context)
+    {
+        if (context == null)
+        {
+            throw new ArgumentNullException(nameof(context));
+        }
+
+        if (!Int32.TryParse(context.EnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID"), out var pullRequestId))
+        {
+            throw new Exception(string.Format("Invalid pull request ID: {0}", context.EnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID")));
+        }
+        else
+        {
+            return pullRequestId;
+        }
+   }
+
+
+    /// <inheritdoc />
+    public override void CreateSummaryIssuesReport(
         ICakeContext context,
         IssuesData data,
         [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "")
@@ -33,7 +77,7 @@ public static class AzureDevOpsBuildServerHelper
     }
 
     /// <inheritdoc />
-    public static void PublishIssuesArtifacts(ICakeContext context, IssuesData data)
+    public override void PublishIssuesArtifacts(ICakeContext context, IssuesData data)
     {
         if (context == null)
         {

@@ -9,6 +9,11 @@ public class IssuesParametersInputFiles
     public FilePath MsBuildXmlFileLoggerLogFilePath { get; set; }
 
     /// <summary>
+    /// Gets or sets the path to the MSBuild binary log file.
+    /// </summary>
+    public FilePath MsBuildBinaryLogFilePath { get; set; }
+
+    /// <summary>
     /// Gets or sets the path to the InspectCode log file.
     /// </summary>
     public FilePath InspectCodeLogFilePath { get; set; }
