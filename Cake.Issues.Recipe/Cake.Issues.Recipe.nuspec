@@ -12,13 +12,13 @@ Cake.Issues.Recipe provides a build script which can be used inside your project
 
 See the Project Site for documentation and an overview of the whole ecosystem of addins for working with issues in Cake scripts.
     </description>
-    <licenseUrl>https://github.com/cake-contrib/Cake.Issues.Recipe/blob/develop/LICENSE</licenseUrl>
+    <license type="expression">MIT</license>
     <projectUrl>http://cake-contrib.github.io/Cake.Issues.Website</projectUrl>
     <iconUrl>https://cdn.jsdelivr.net/gh/cake-contrib/graphics@a5cf0f881c390650144b2243ae551d5b9f836196/png/cake-contrib-medium.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <repository type="git" url="https://github.com/cake-contrib/Cake.Issues.Recipe"/>
+    <repository type="git" url="https://github.com/cake-contrib/Cake.Issues.Recipe.git"/>
     <copyright>Copyright © Pascal Berger</copyright>
     <tags>Build Cake Cake.Issues Recipe</tags>
-    <releaseNotes>https://github.com/cake-contrib/Cake.Issues.Recipe/releases/tag/0.1.0</releaseNotes>
+    <releaseNotes>https://github.com/cake-contrib/Cake.Issues.Recipe/releases/tag/0.2.0</releaseNotes>
   </metadata>
 </package>
