@@ -5,7 +5,7 @@ This is a recipe for using [Cake.Issues] in your Cake build script.
 Compared to using the [Cake.Issues] addins directly in your build script, this recipe provides a pre-made integration with
 support for different linters and integration into different build systems.
 
-For more information how to use it and documentation about the addins see the [Cake.Issues website](https://cake-contrib.github.io/Cake.Issues.Website)
+For more information how to use it and documentation about the addins see the [Cake.Issues website](https://cakeissues.net)
 and for general information about the Cake build automation system see the [Cake website](http://cakebuild.net)
 
 [![License](http://img.shields.io/:license-mit-blue.svg)](https://github.com/cake-contrib/Cake.Issues.Recipe/blob/develop/LICENSE)
@@ -33,7 +33,7 @@ Click on the build server and repository links to see the build definition or so
 
 ## Quick Links
 
-- [Documentation](https://cake-contrib.github.io/Cake.Issues.Website)
+- [Documentation](https://cakeissues.net)
 
 ## Chat Room
 
@@ -45,4 +45,4 @@ Come join in the conversation about this addin in our Gitter Chat Room
 
 Contributions are welcome. See [Contribution Guidelines](CONTRIBUTING.md).
 
-[Cake.Issues]: https://cake-contrib.github.io/Cake.Issues.Website
+[Cake.Issues]: https://cakeissues.net
