@@ -23,12 +23,12 @@ public class IssuesData
     /// <summary>
     /// Gets the build server under which the build is running.
     /// </summary>
-    public IssuesBuildServer BuildServer { get; }
+    public IIssuesBuildServer BuildServer { get; }
 
     /// <summary>
     /// Gets the pull request system used for the code.
     /// </summary>
-    public IssuesPullRequestSystem PullRequestSystem { get; }
+    public IIssuesPullRequestSystem PullRequestSystem { get; }
 
     /// <summary>
     /// Gets the list of reported issues.
