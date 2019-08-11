@@ -25,7 +25,7 @@ public class AzureDevOpsPullRequestSystem : BasePullRequestSystem
         context.ReportIssuesToPullRequest(
             data.Issues,
             context.TfsPullRequests(
-                data.RepositoryUrl,
+                data.BuildServer.DetermineRepositoryRemoteUrl(context, data.RepositoryRootDirectory),
                 data.PullRequestId.Value,
                 context.TfsAuthenticationOAuth(context.EnvironmentVariable("SYSTEM_ACCESSTOKEN"))),
             data.RepositoryRootDirectory);
@@ -52,7 +52,7 @@ public class AzureDevOpsPullRequestSystem : BasePullRequestSystem
 
         var pullRequestSettings =
             new TfsPullRequestSettings(
-                data.RepositoryUrl,
+                data.BuildServer.DetermineRepositoryRemoteUrl(context, data.RepositoryRootDirectory),
                 data.PullRequestId.Value,
                 context.TfsAuthenticationOAuth(context.EnvironmentVariable("SYSTEM_ACCESSTOKEN")));
 

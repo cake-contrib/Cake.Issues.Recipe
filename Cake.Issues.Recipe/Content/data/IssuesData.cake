@@ -55,7 +55,10 @@ public class IssuesData
         this.RepositoryRootDirectory = context.MakeAbsolute(context.Directory("./"));
 
         this.BuildServer = DetermineBuildServer(context);
-        this.PullRequestSystem = DeterminePullRequestSystem(context, BuildServer.DetermineRepositoryRemoteUrl());
+        this.PullRequestSystem =
+            DeterminePullRequestSystem(
+                context,
+                BuildServer.DetermineRepositoryRemoteUrl(context, this.RepositoryRootDirectory));
     }
 
     /// <summary>
