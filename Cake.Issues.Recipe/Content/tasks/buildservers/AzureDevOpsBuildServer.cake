@@ -63,7 +63,13 @@ public class AzureDevOpsBuildServer : BaseBuildServer
             throw new ArgumentNullException(nameof(data));
         }
 
-        var summaryFile = IssuesParameters.OutputDirectory.CombineWithFilePath("summary.md");
+        var summaryFileName = "summary";
+        if (!string.IsNullOrWhiteSpace(IssuesParameters.BuildIdentifier))
+        {
+            summaryFileName += $"-{IssuesParameters.BuildIdentifier}";
+        }
+        summaryFileName += ".md";
+        var summaryFilePath = IssuesParameters.OutputDirectory.CombineWithFilePath(summaryFileName);
 
         // Create summary for Azure Pipelines using custom template.
         context.CreateIssueReport(
@@ -71,9 +77,9 @@ public class AzureDevOpsBuildServer : BaseBuildServer
             context.GenericIssueReportFormatFromFilePath(
                 new FilePath(sourceFilePath).GetDirectory().Combine("tasks").Combine("buildservers").CombineWithFilePath("AzurePipelineSummary.cshtml")),
             data.RepositoryRootDirectory,
-            summaryFile);
+            summaryFilePath);
 
-        context.TFBuild().Commands.UploadTaskSummary(summaryFile);
+        context.TFBuild().Commands.UploadTaskSummary(summaryFilePath);
     }
 
     /// <inheritdoc />

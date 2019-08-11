@@ -11,6 +11,14 @@ public static class IssuesParameters
     public static DirectoryPath OutputDirectory { get; set; } = "BuildArtifacts";
 
     /// <summary>
+    /// Gets or sets a identifier for the build run.
+    /// If set this identifier will be used to identify to artifacts provided by the
+    /// build if building on multiple configurations.
+    /// Default value is <c>string.Empty</c>.
+    /// </summary>
+    public static string BuildIdentifier { get; set; } = string.Empty;
+
+    /// <summary>
     /// Gets the parameters for the input files.
     /// </summary>
     public static IssuesParametersInputFiles InputFiles { get; } = new IssuesParametersInputFiles();
