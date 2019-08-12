@@ -1,7 +1,7 @@
 /// <summary>
 /// Basic implementation for all pull request server.
 /// </summary>
-public abstract class BasePullRequestSystem
+public abstract class BasePullRequestSystem : IIssuesPullRequestSystem
 {
     /// <inheritdoc />
     public abstract void ReportIssuesToPullRequest(

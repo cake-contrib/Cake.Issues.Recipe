@@ -129,7 +129,7 @@ IssuesBuildTasks.CreateSummaryIssuesReportTask = Task("Create-SummaryIssuesRepor
 IssuesBuildTasks.ReportIssuesToPullRequestTask = Task("Report-IssuesToPullRequest")
     .Description("Report issues to pull request.")
     .WithCriteria(() => IssuesParameters.PullRequestSystem.ShouldReportIssuesToPullRequest, "Reporting of issues to pull requests is disabled")
-    .WithCriteria<IssuesData>((context, data) => data.IsPullRequestBuild, "Not a pull request build")
+    .WithCriteria<IssuesData>((context, data) => data.BuildServer != null ? data.BuildServer.DetermineIfPullRequest(context) : false, "Not a pull request build")
     .IsDependentOn("Read-Issues")
     .Does<IssuesData>((data) =>
 {
@@ -145,7 +145,7 @@ IssuesBuildTasks.ReportIssuesToPullRequestTask = Task("Report-IssuesToPullReques
 IssuesBuildTasks.SetPullRequestIssuesStateTask = Task("Set-PullRequestIssuesState")
     .Description("Set pull request status.")
     .WithCriteria(() => IssuesParameters.PullRequestSystem.ShouldSetPullRequestStatus, "Setting of pull request status is disabled")
-    .WithCriteria<IssuesData>((context, data) => data.IsPullRequestBuild, "Not a pull request build")
+    .WithCriteria<IssuesData>((context, data) => data.BuildServer != null ? data.BuildServer.DetermineIfPullRequest(context) : false, "Not a pull request build")
     .IsDependentOn("Read-Issues")
     .Does<IssuesData>((data) =>
 {
