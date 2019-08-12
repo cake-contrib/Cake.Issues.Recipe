@@ -22,11 +22,13 @@ public class IssuesData
 
     /// <summary>
     /// Gets the build server under which the build is running.
+    /// Returns <c>null</c> if running locally or on an unsupported build server.
     /// </summary>
     public IIssuesBuildServer BuildServer { get; }
 
     /// <summary>
     /// Gets the pull request system used for the code.
+    /// Returns <c>null</c> if not running a pull request build or on an unsupported build server.
     /// </summary>
     public IIssuesPullRequestSystem PullRequestSystem { get; }
 
@@ -55,10 +57,13 @@ public class IssuesData
         this.RepositoryRootDirectory = context.MakeAbsolute(context.Directory("./"));
 
         this.BuildServer = DetermineBuildServer(context);
-        this.PullRequestSystem =
-            DeterminePullRequestSystem(
-                context,
-                BuildServer.DetermineRepositoryRemoteUrl(context, this.RepositoryRootDirectory));
+        if (this.BuildServer != null)
+        {
+            this.PullRequestSystem =
+                DeterminePullRequestSystem(
+                    context,
+                    BuildServer.DetermineRepositoryRemoteUrl(context, this.RepositoryRootDirectory));
+        }
     }
 
     /// <summary>
