@@ -27,9 +27,10 @@ and for general information about the Cake build automation system see the [Cake
 
 Click on the build server and repository links to see the build definition or source code and try out the integration yourself.
 
-|Build Server|Repository|
-|:--:|:--:|
-|[[![Build Status](https://dev.azure.com/pberger/Cake.Issues.Recipe-Demo/_apis/build/status/Cake.Issues.Recipe-Demo?branchName=master)](https://dev.azure.com/pberger/Cake.Issues.Recipe-Demo/_build/latest?definitionId=9&branchName=master)|[Azure Repos](https://dev.azure.com/pberger/_git/Cake.Issues.Recipe-Demo)|
+||Azure Pipelines|AppVeyor|
+|:--:|:--:|:--:|
+|[Azure Repos](https://dev.azure.com/pberger/_git/Cake.Issues.Recipe-Demo)|[![Build Status](https://dev.azure.com/pberger/Cake.Issues.Recipe-Demo/_apis/build/status/Cake.Issues.Recipe-Demo?branchName=master)](https://dev.azure.com/pberger/Cake.Issues.Recipe-Demo/_build/latest?definitionId=9&branchName=master)|N/A|
+|[GitHub](https://github.com/pascalberger/Cake.Issues.Recipe-Demo)|[![Build Status](https://dev.azure.com/pberger/Cake.Issues.Recipe-Demo/_apis/build/status/pascalberger.Cake.Issues.Recipe-Demo?branchName=master)](https://dev.azure.com/pberger/Cake.Issues.Recipe-Demo/_build/latest?definitionId=10&branchName=master)|[![Build status](https://ci.appveyor.com/api/projects/status/d9vvrc7nhwyqmql5?svg=true)](https://ci.appveyor.com/project/pascalberger/cake-issues-recipe-demo)|
 
 ## Quick Links
 
