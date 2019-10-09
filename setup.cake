@@ -11,7 +11,7 @@ BuildParameters.SetParameters(context: Context,
                             appVeyorAccountName: "cakecontrib",
                             nuspecFilePath: "./Cake.Issues.Recipe/Cake.Issues.Recipe.nuspec",
                             shouldGenerateDocumentation: false,
-                            shouldPublishMyGet: false);
+                            shouldPublishMyGet: true);
 
 BuildParameters.PrintParameters(Context);
 
