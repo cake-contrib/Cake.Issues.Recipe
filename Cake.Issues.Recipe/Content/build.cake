@@ -39,12 +39,6 @@ IssuesBuildTasks.ReadIssuesTask = Task("Read-Issues")
     .Description("Reads issues from the provided log files.")
     .Does<IssuesData>((data) =>
 {
-    var settings =
-        new ReadIssuesSettings(data.RepositoryRootDirectory)
-        {
-            Format = IssueCommentFormat.Markdown
-        };
-
     // Determine which issue providers should be used.
     var issueProviders = new List<IIssueProvider>();
 
@@ -75,7 +69,7 @@ IssuesBuildTasks.ReadIssuesTask = Task("Read-Issues")
     data.AddIssues(
         ReadIssues(
             issueProviders,
-            settings));
+            data.RepositoryRootDirectory));
 
     Information("{0} issues are found.", data.Issues.Count());
 });
