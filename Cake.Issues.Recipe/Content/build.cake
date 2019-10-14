@@ -1,3 +1,6 @@
+#load addins.cake
+#load IssuesBuildTasksDefinitions.cake
+#load version.cake
 #load data/data.cake
 #load parameters/parameters.cake
 

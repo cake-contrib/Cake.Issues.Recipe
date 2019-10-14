@@ -5,7 +5,8 @@ build_script:
   - ps: .\build.ps1 -Target AppVeyor
 
 # Tests
-test: off
+test_script:
+  - ps: .\build.ps1 -Target Run-Integration-Tests --exclusive
 
 #---------------------------------#
 #        Branches to build        #

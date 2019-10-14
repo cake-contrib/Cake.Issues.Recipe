@@ -1,0 +1,18 @@
+trigger:
+- develop
+- master
+- release/*
+- hotfix/*
+
+pr:
+- develop
+- release/*
+- hotfix/*
+
+jobs:
+- job: Windows
+  pool:
+    vmImage: 'vs2017-win2016'
+  steps:
+  - powershell: ./build.ps1 -target Run-Integration-Tests
+    displayName: 'Integration Tests'
