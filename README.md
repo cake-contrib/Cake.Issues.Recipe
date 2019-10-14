@@ -17,11 +17,12 @@ and for general information about the Cake build automation system see the [Cake
 |GitHub Release|-|[![GitHub release](https://img.shields.io/github/release/cake-contrib/Cake.Issues.Recipe.svg)](https://github.com/cake-contrib/Cake.Issues.Recipe/releases/latest)|
 |NuGet|[![NuGet](https://img.shields.io/nuget/v/Cake.Issues.Recipe.svg)](https://www.nuget.org/packages/Cake.Issues.Recipe)|[![NuGet](https://img.shields.io/nuget/vpre/Cake.Issues.Recipe.svg)](https://www.nuget.org/packages/Cake.Issues.Recipe)|
 
-## Build Status
+## Build & Test Status
 
-|Develop|Master|
-|:--:|:--:|
-|[![Build status](https://ci.appveyor.com/api/projects/status/rjbsw9b48oysfh07/branch/develop?svg=true)](https://ci.appveyor.com/project/cakecontrib/cake-issues-recipe/branch/develop)|[![Build status](https://ci.appveyor.com/api/projects/status/rjbsw9b48oysfh07/branch/master?svg=true)](https://ci.appveyor.com/project/cakecontrib/cake-issues-recipe/branch/master)|
+| | Develop | Master |
+|:--:|:--:|:--:|
+|AppVeyor Windows|[![Build status](https://ci.appveyor.com/api/projects/status/rjbsw9b48oysfh07/branch/develop?svg=true)](https://ci.appveyor.com/project/cakecontrib/cake-issues-recipe/branch/develop)|[![Build status](https://ci.appveyor.com/api/projects/status/rjbsw9b48oysfh07/branch/master?svg=true)](https://ci.appveyor.com/project/cakecontrib/cake-issues-recipe/branch/master)|
+|Azure DevOps Windows|[[![Build Status](https://dev.azure.com/cake-contrib/Cake.Issues.Recipe/_apis/build/status/cake-contrib.Cake.Issues.Recipe?branchName=develop)](https://dev.azure.com/cake-contrib/Cake.Issues.Recipe/_build/latest?definitionId=30&branchName=develop)|[![Build Status](https://dev.azure.com/cake-contrib/Cake.Issues.Recipe/_apis/build/status/cake-contrib.Cake.Issues.Recipe?branchName=master)](https://dev.azure.com/cake-contrib/Cake.Issues.Recipe/_build/latest?definitionId=30&branchName=master)|
 
 ## Demos
 
