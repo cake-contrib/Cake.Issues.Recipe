@@ -24,10 +24,10 @@ public class AzureDevOpsPullRequestSystem : BasePullRequestSystem
 
         context.ReportIssuesToPullRequest(
             data.Issues,
-            context.TfsPullRequests(
+            context.AzureDevOpsPullRequests(
                 data.BuildServer.DetermineRepositoryRemoteUrl(context, data.RepositoryRootDirectory),
                 data.BuildServer.DeterminePullRequestId(context).Value,
-                context.TfsAuthenticationOAuth(context.EnvironmentVariable("SYSTEM_ACCESSTOKEN"))),
+                context.AzureDevOpsAuthenticationOAuth(context.EnvironmentVariable("SYSTEM_ACCESSTOKEN"))),
             data.RepositoryRootDirectory);
     }
 
@@ -51,10 +51,10 @@ public class AzureDevOpsPullRequestSystem : BasePullRequestSystem
         }
 
         var pullRequestSettings =
-            new TfsPullRequestSettings(
+            new AzureDevOpsPullRequestSettings(
                 data.BuildServer.DetermineRepositoryRemoteUrl(context, data.RepositoryRootDirectory),
                 data.BuildServer.DeterminePullRequestId(context).Value,
-                context.TfsAuthenticationOAuth(context.EnvironmentVariable("SYSTEM_ACCESSTOKEN")));
+                context.AzureDevOpsAuthenticationOAuth(context.EnvironmentVariable("SYSTEM_ACCESSTOKEN")));
 
         var pullRequestStatusName = "Issues";
         var pullRequestDescriptionIfIssues = $"Found {data.Issues.Count()} issues";
@@ -67,14 +67,14 @@ public class AzureDevOpsPullRequestSystem : BasePullRequestSystem
         }
 
         var pullRequestStatus =
-            new TfsPullRequestStatus(pullRequestStatusName)
+            new AzureDevOpsPullRequestStatus(pullRequestStatusName)
             {
                 Genre = "Cake.Issues.Recipe",
-                State = data.Issues.Any() ? TfsPullRequestStatusState.Failed : TfsPullRequestStatusState.Succeeded,
+                State = data.Issues.Any() ? AzureDevOpsPullRequestStatusState.Failed : AzureDevOpsPullRequestStatusState.Succeeded,
                 Description = data.Issues.Any() ? pullRequestDescriptionIfIssues : pullRequestDescriptionIfNoIssues
             };
 
-        context.TfsSetPullRequestStatus(
+        context.AzureDevOpsSetPullRequestStatus(
             pullRequestSettings,
             pullRequestStatus);
         }
