@@ -23,6 +23,23 @@ Setup<BuildData>(setupContext =>
 // TARGETS
 //////////////////////////////////////////////////
 
+Task("Configure-IssuesManagement")
+    .Does<BuildData>((data) =>
+{
+    if (IsRunningOnWindows())
+    {
+        IssuesParameters.BuildIdentifier = "Windows";
+    }
+    else if (IsRunningOnUnix())
+    {
+        IssuesParameters.BuildIdentifier = "Unix";
+    }
+    else
+    {
+        IssuesParameters.BuildIdentifier = "Unknown platform";
+    }
+});
+
 Task("Build")
     .Does<BuildData>((data) =>
 {
@@ -83,6 +100,7 @@ IssuesBuildTasks.ReadIssuesTask
 
 // Run issues task by default.
 Task("Default")
+    .IsDependentOn("Configure-IssuesManagement")
     .IsDependentOn("Issues");
 
 //////////////////////////////////////////////////
