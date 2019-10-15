@@ -28,6 +28,15 @@ public interface IIssuesBuildServer
     int? DeterminePullRequestId(ICakeContext context);
 
     /// <summary>
+    /// Reports issues to the build server.
+    /// </summary>
+    /// <param name="context">The Cake context.</param>
+    /// <param name="data">Object containing the issues.</param>
+    void ReportIssuesToBuildServer(
+        ICakeContext context,
+        IssuesData data);
+
+    /// <summary>
     /// Creates a summary report of the issues.
     /// </summary>
     /// <param name="context">The Cake context.</param>

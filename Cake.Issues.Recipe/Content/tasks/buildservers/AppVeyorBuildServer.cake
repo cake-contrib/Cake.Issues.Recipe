@@ -46,6 +46,27 @@ public class AppVeyorBuildServer : BaseBuildServer
    }
 
     /// <inheritdoc />
+    public override void ReportIssuesToBuildServer(
+        ICakeContext context,
+        IssuesData data)
+    {
+        if (context == null)
+        {
+            throw new ArgumentNullException(nameof(context));
+        }
+
+        if (data == null)
+        {
+            throw new ArgumentNullException(nameof(data));
+        }
+
+        context.ReportIssuesToPullRequest(
+            data.Issues,
+            context.AppVeyorBuilds(),
+            data.RepositoryRootDirectory);
+    }
+
+    /// <inheritdoc />
     public override void CreateSummaryIssuesReport(
         ICakeContext context,
         IssuesData data,
