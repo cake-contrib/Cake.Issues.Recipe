@@ -24,6 +24,11 @@ public class IssuesBuildTaskDefinitions
     public CakeTaskBuilder PublishIssuesArtifactsTask { get; set; }
 
     /// <summary>
+    /// Gets or sets the task for reporting issues to build server.
+    /// </summary>
+    public CakeTaskBuilder ReportIssuesToBuildServerTask { get; set; }
+
+    /// <summary>
     /// Gets or sets the task for creating a summary issue report.
     /// </summary>
     public CakeTaskBuilder CreateSummaryIssuesReportTask { get; set; }

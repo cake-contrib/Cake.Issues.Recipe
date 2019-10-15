@@ -45,6 +45,11 @@ public abstract class BaseBuildServer : IIssuesBuildServer
    }
 
     /// <inheritdoc />
+    public abstract void ReportIssuesToBuildServer(
+        ICakeContext context,
+        IssuesData data);
+
+    /// <inheritdoc />
     public abstract void CreateSummaryIssuesReport(
         ICakeContext context,
         IssuesData data,

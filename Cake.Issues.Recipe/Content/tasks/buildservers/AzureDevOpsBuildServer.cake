@@ -46,6 +46,13 @@ public class AzureDevOpsBuildServer : BaseBuildServer
         }
    }
 
+    /// <inheritdoc />
+    public override void ReportIssuesToBuildServer(
+        ICakeContext context,
+        IssuesData data)
+    {
+        // Not implemented for Azure DevOps
+    }
 
     /// <inheritdoc />
     public override void CreateSummaryIssuesReport(

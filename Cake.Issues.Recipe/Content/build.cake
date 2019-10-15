@@ -30,6 +30,7 @@ Setup<IssuesData>(setupContext =>
 IssuesBuildTasks.IssuesTask = Task("Issues")
     .Description("Main tasks for issue management integration.")
     .IsDependentOn("Publish-IssuesArtifacts")
+    .IsDependentOn("Report-IssuesToBuildServer")
     .IsDependentOn("Create-SummaryIssuesReport")
     .IsDependentOn("Report-IssuesToPullRequest")
     .IsDependentOn("Set-PullRequestIssuesState");
@@ -120,6 +121,21 @@ IssuesBuildTasks.PublishIssuesArtifactsTask = Task("Publish-IssuesArtifacts")
     }
 
     data.BuildServer.PublishIssuesArtifacts(Context, data);
+});
+
+IssuesBuildTasks.ReportIssuesToBuildServerTask = Task("Report-IssuesToBuildServer")
+    .Description("Report issues to build server.")
+    .WithCriteria(() => IssuesParameters.BuildServer.ShouldReportIssuesToBuildServer, "Reporting of issues to build server is disabled")
+    .IsDependentOn("Read-Issues")
+    .Does<IssuesData>((data) =>
+{
+    if (data.BuildServer == null)
+    {
+        Information("Not supported build server.");
+        return;
+    }
+
+    data.BuildServer.ReportIssuesToBuildServer(Context, data);
 });
 
 IssuesBuildTasks.CreateSummaryIssuesReportTask = Task("Create-SummaryIssuesReport")
