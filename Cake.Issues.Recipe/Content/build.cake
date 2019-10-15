@@ -85,7 +85,15 @@ IssuesBuildTasks.CreateFullIssuesReportTask = Task("Create-FullIssuesReport")
     .IsDependentOn("Read-Issues")
     .Does<IssuesData>((data) =>
 {
-    data.FullIssuesReport = IssuesParameters.OutputDirectory.CombineWithFilePath("report.html");
+    var reportFileName = "report";
+    if (!string.IsNullOrWhiteSpace(IssuesParameters.BuildIdentifier))
+    {
+        reportFileName += $"-{IssuesParameters.BuildIdentifier}";
+    }
+    reportFileName += ".html";
+
+    data.FullIssuesReport =
+        IssuesParameters.OutputDirectory.CombineWithFilePath(reportFileName);
     EnsureDirectoryExists(IssuesParameters.OutputDirectory);
 
     // Create HTML report using DevExpress template.

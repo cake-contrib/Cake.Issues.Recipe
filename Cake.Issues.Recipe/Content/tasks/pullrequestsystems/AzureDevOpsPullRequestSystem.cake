@@ -56,16 +56,26 @@ public class AzureDevOpsPullRequestSystem : BasePullRequestSystem
                 data.BuildServer.DeterminePullRequestId(context).Value,
                 context.TfsAuthenticationOAuth(context.EnvironmentVariable("SYSTEM_ACCESSTOKEN")));
 
-        var pullRequstStatus =
-            new TfsPullRequestStatus("Issues")
+        var pullRequestStatusName = "Issues";
+        var pullRequestDescriptionIfIssues = $"Found {data.Issues.Count()} issues";
+        var pullRequestDescriptionIfNoIssues = "No issues found";
+        if (!string.IsNullOrWhiteSpace(IssuesParameters.BuildIdentifier))
+        {
+            pullRequestStatusName += $"-{IssuesParameters.BuildIdentifier}";
+            pullRequestDescriptionIfIssues += $" for build {IssuesParameters.BuildIdentifier}";
+            pullRequestDescriptionIfNoIssues += $" for build {IssuesParameters.BuildIdentifier}";
+        }
+
+        var pullRequestStatus =
+            new TfsPullRequestStatus(pullRequestStatusName)
             {
                 Genre = "Cake.Issues.Recipe",
                 State = data.Issues.Any() ? TfsPullRequestStatusState.Failed : TfsPullRequestStatusState.Succeeded,
-                Description = data.Issues.Any() ? $"Found {data.Issues.Count()} issues" : "No issues found"
+                Description = data.Issues.Any() ? pullRequestDescriptionIfIssues : pullRequestDescriptionIfNoIssues
             };
 
         context.TfsSetPullRequestStatus(
             pullRequestSettings,
-            pullRequstStatus);
+            pullRequestStatus);
         }
 }
