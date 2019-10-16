@@ -27,7 +27,7 @@ ToolSettings.SetToolSettings(context: Context);
 Task("Generate-Version-File")
     .Does(() => {
         var buildMetaDataCodeGen = TransformText(@"
-        public class BuildMetaData
+        public class BuildMetaDataCakeIssuesRecipe
         {
             public static string Date { get; } = ""<%date%>"";
             public static string Version { get; } = ""<%version%>"";

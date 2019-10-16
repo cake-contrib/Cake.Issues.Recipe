@@ -19,7 +19,7 @@ var IssuesBuildTasks = new IssuesBuildTaskDefinitions();
 
 Setup<IssuesData>(setupContext =>
 {
-    Information("Initializing Cake.Issues.Recipe (Version {0})...", BuildMetaData.Version);
+    Information("Initializing Cake.Issues.Recipe (Version {0})...", BuildMetaDataCakeIssuesRecipe.Version);
     return new IssuesData(setupContext);
 });
 
