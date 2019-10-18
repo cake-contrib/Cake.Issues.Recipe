@@ -14,7 +14,7 @@ See the Project Site for documentation and an overview of the whole ecosystem of
     </description>
     <license type="expression">MIT</license>
     <projectUrl>https://cakeissues.net</projectUrl>
-    <icon>cake-contrib-medium.png</icon>
+    <icon>icon.png</icon>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <repository type="git" url="https://github.com/cake-contrib/Cake.Issues.Recipe.git"/>
     <copyright>Copyright © Pascal Berger</copyright>
