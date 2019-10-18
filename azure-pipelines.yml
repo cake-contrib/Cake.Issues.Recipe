@@ -1,0 +1,30 @@
+trigger:
+- develop
+- master
+- release/*
+- hotfix/*
+
+pr:
+- develop
+- release/*
+- hotfix/*
+
+jobs:
+- job: Windows
+  pool:
+    vmImage: 'vs2017-win2016'
+  steps:
+  - powershell: ./build.ps1 -target Run-Integration-Tests
+    displayName: 'Integration Tests'
+- job: macOS
+  pool:
+    vmImage: 'macOS-10.14'
+  steps:
+  # To manually select a Xamarin SDK version on the Hosted macOS agent, enable this script with the SDK version you want to target
+  #  https://go.microsoft.com/fwlink/?linkid=871629 
+  - bash: |
+      sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh 5_18_1
+    displayName: 'Select Mono 5.18.1'
+  - bash: |
+      ./build.sh --target Run-Integration-Tests
+    displayName: 'Integration Tests'

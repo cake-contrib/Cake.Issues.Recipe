@@ -1,7 +1,7 @@
 /// <summary>
-/// Support for Azure DevOps / Azure Pipelines builds.
+/// Support for AppVeyor builds.
 /// </summary>
-public class AzureDevOpsBuildServer : BaseBuildServer
+public class AppVeyorBuildServer : BaseBuildServer
 {
     /// <inheritdoc />
     public override Uri DetermineRepositoryRemoteUrl(
@@ -13,7 +13,14 @@ public class AzureDevOpsBuildServer : BaseBuildServer
             throw new ArgumentNullException(nameof(context));
         }
 
-        return new Uri(context.EnvironmentVariable("BUILD_REPOSITORY_URI"));
+        switch(context.AppVeyor().Environment.Repository.Provider)
+        {
+            case "bitBucket": return new System.Uri($"https://bitbucket.org/{context.AppVeyor().Environment.Repository.Name}/src");
+            case "gitHub": return new System.Uri($"https://github.com/{context.AppVeyor().Environment.Repository.Name}.git");
+            case "gitLab": return new System.Uri($"https://gitlab.com/{context.AppVeyor().Environment.Repository.Name}.git");
+            case "vso": return new System.Uri($"https://dev.azure.com/{context.AppVeyor().Environment.Repository.Name}");
+            default: return new System.Uri(context.AppVeyor().Environment.Repository.Name);
+        }
     }
 
     /// <inheritdoc />
@@ -24,8 +31,7 @@ public class AzureDevOpsBuildServer : BaseBuildServer
             throw new ArgumentNullException(nameof(context));
         }
         
-        // Could be simplified once https://github.com/cake-build/cake/issues/2149 is fixed
-        return !string.IsNullOrWhiteSpace(context.EnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID"));
+        return context.AppVeyor().Environment.PullRequest.IsPullRequest;
     }
 
     /// <inheritdoc />
@@ -36,14 +42,7 @@ public class AzureDevOpsBuildServer : BaseBuildServer
             throw new ArgumentNullException(nameof(context));
         }
 
-        if (!Int32.TryParse(context.EnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID"), out var pullRequestId))
-        {
-            throw new Exception(string.Format("Invalid pull request ID: {0}", context.EnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID")));
-        }
-        else
-        {
-            return pullRequestId;
-        }
+        return context.AppVeyor().Environment.PullRequest.Number;
    }
 
     /// <inheritdoc />
@@ -51,7 +50,20 @@ public class AzureDevOpsBuildServer : BaseBuildServer
         ICakeContext context,
         IssuesData data)
     {
-        // Not implemented for Azure DevOps
+        if (context == null)
+        {
+            throw new ArgumentNullException(nameof(context));
+        }
+
+        if (data == null)
+        {
+            throw new ArgumentNullException(nameof(data));
+        }
+
+        context.ReportIssuesToPullRequest(
+            data.Issues,
+            context.AppVeyorBuilds(),
+            data.RepositoryRootDirectory);
     }
 
     /// <inheritdoc />
@@ -70,23 +82,7 @@ public class AzureDevOpsBuildServer : BaseBuildServer
             throw new ArgumentNullException(nameof(data));
         }
 
-        var summaryFileName = "summary";
-        if (!string.IsNullOrWhiteSpace(IssuesParameters.BuildIdentifier))
-        {
-            summaryFileName += $"-{IssuesParameters.BuildIdentifier}";
-        }
-        summaryFileName += ".md";
-        var summaryFilePath = IssuesParameters.OutputDirectory.CombineWithFilePath(summaryFileName);
-
-        // Create summary for Azure Pipelines using custom template.
-        context.CreateIssueReport(
-            data.Issues,
-            context.GenericIssueReportFormatFromFilePath(
-                new FilePath(sourceFilePath).GetDirectory().Combine("tasks").Combine("buildservers").CombineWithFilePath("AzurePipelineSummary.cshtml")),
-            data.RepositoryRootDirectory,
-            summaryFilePath);
-
-        context.TFBuild().Commands.UploadTaskSummary(summaryFilePath);
+        // Summary issues report is not supported for AppVeyor.
     }
 
     /// <inheritdoc />
@@ -106,7 +102,7 @@ public class AzureDevOpsBuildServer : BaseBuildServer
             data.FullIssuesReport != null &&
             context.FileExists(data.FullIssuesReport))
         {
-            context.TFBuild().Commands.UploadArtifact("Issues", data.FullIssuesReport, "Issues");
+            context.AppVeyor().UploadArtifact(data.FullIssuesReport);
         }
     }
 }

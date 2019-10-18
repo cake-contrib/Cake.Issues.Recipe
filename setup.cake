@@ -10,19 +10,24 @@ BuildParameters.SetParameters(context: Context,
                             repositoryName: "Cake.Issues.Recipe",
                             appVeyorAccountName: "cakecontrib",
                             nuspecFilePath: "./Cake.Issues.Recipe/Cake.Issues.Recipe.nuspec",
-                            shouldPublishMyGet: false);
+                            shouldRunGitVersion: true,
+                            shouldGenerateDocumentation: false,
+                            shouldPublishMyGet: false,
+                            shouldRunIntegrationTests: true,
+                            integrationTestScriptPath: "./tests/integration/tests.cake");
 
 BuildParameters.PrintParameters(Context);
 
 ToolSettings.SetToolSettings(context: Context);
 
-BuildParameters.Tasks.CleanTask
-    .IsDependentOn("Generate-Version-File");
+//*************************************************************************************************
+// Extensions
+//*************************************************************************************************
 
 Task("Generate-Version-File")
     .Does(() => {
         var buildMetaDataCodeGen = TransformText(@"
-        public class BuildMetaData
+        public class BuildMetaDataCakeIssuesRecipe
         {
             public static string Date { get; } = ""<%date%>"";
             public static string Version { get; } = ""<%version%>"";
@@ -39,5 +44,12 @@ Task("Generate-Version-File")
         buildMetaDataCodeGen
         );
     });
+
+BuildParameters.Tasks.CleanTask
+    .IsDependentOn("Generate-Version-File");
+
+//*************************************************************************************************
+// Execution
+//*************************************************************************************************
 
 Build.RunNuGet();

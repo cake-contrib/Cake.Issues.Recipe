@@ -38,7 +38,7 @@ There are @Model.Count() issues in the code.
                     @issue.Rule;
                 }
             </td>
-            <td>@issue.Message</td>
+            <td>@issue.Message(IssueCommentFormat.Html)</td>
         </tr>
         }
     </tbody>

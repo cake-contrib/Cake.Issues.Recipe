@@ -117,6 +117,11 @@ public class IssuesData
             return new AzureDevOpsBuildServer();
         }
 
+        if (context.AppVeyor().IsRunningOnAppVeyor)
+        {
+            return new AppVeyorBuildServer();
+        }
+
         return null;
     }
 
