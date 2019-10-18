@@ -19,7 +19,7 @@ var IssuesBuildTasks = new IssuesBuildTaskDefinitions();
 
 Setup<IssuesData>(setupContext =>
 {
-    Information("Initializing Cake.Issues.Recipe (Version {0})...", BuildMetaData.Version);
+    Information("Initializing Cake.Issues.Recipe (Version {0})...", BuildMetaDataCakeIssuesRecipe.Version);
     return new IssuesData(setupContext);
 });
 
@@ -105,6 +105,7 @@ IssuesBuildTasks.CreateFullIssuesReportTask = Task("Create-FullIssuesReport")
 
 IssuesBuildTasks.PublishIssuesArtifactsTask = Task("Publish-IssuesArtifacts")
     .Description("Publish issue artifacts to build server.")
+    .WithCriteria(() => !BuildSystem.IsLocalBuild, "Not running on build server")
     .IsDependentOn("Create-FullIssuesReport")
     .Does<IssuesData>((data) =>
 {
@@ -119,6 +120,7 @@ IssuesBuildTasks.PublishIssuesArtifactsTask = Task("Publish-IssuesArtifacts")
 
 IssuesBuildTasks.ReportIssuesToBuildServerTask = Task("Report-IssuesToBuildServer")
     .Description("Report issues to build server.")
+    .WithCriteria(() => !BuildSystem.IsLocalBuild, "Not running on build server")
     .WithCriteria(() => IssuesParameters.BuildServer.ShouldReportIssuesToBuildServer, "Reporting of issues to build server is disabled")
     .IsDependentOn("Read-Issues")
     .Does<IssuesData>((data) =>
@@ -134,6 +136,7 @@ IssuesBuildTasks.ReportIssuesToBuildServerTask = Task("Report-IssuesToBuildServe
 
 IssuesBuildTasks.CreateSummaryIssuesReportTask = Task("Create-SummaryIssuesReport")
     .Description("Creates a summary issue report.")
+    .WithCriteria(() => !BuildSystem.IsLocalBuild, "Not running on build server")
     .WithCriteria(() => IssuesParameters.BuildServer.ShouldCreateSummaryIssuesReport, "Creating of summary issues report is disabled")
     .IsDependentOn("Read-Issues")
     .Does<IssuesData>((data) =>
@@ -149,6 +152,7 @@ IssuesBuildTasks.CreateSummaryIssuesReportTask = Task("Create-SummaryIssuesRepor
 
 IssuesBuildTasks.ReportIssuesToPullRequestTask = Task("Report-IssuesToPullRequest")
     .Description("Report issues to pull request.")
+    .WithCriteria(() => !BuildSystem.IsLocalBuild, "Not running on build server")
     .WithCriteria(() => IssuesParameters.PullRequestSystem.ShouldReportIssuesToPullRequest, "Reporting of issues to pull requests is disabled")
     .WithCriteria<IssuesData>((context, data) => data.BuildServer != null ? data.BuildServer.DetermineIfPullRequest(context) : false, "Not a pull request build")
     .IsDependentOn("Read-Issues")
@@ -165,6 +169,7 @@ IssuesBuildTasks.ReportIssuesToPullRequestTask = Task("Report-IssuesToPullReques
 
 IssuesBuildTasks.SetPullRequestIssuesStateTask = Task("Set-PullRequestIssuesState")
     .Description("Set pull request status.")
+    .WithCriteria(() => !BuildSystem.IsLocalBuild, "Not running on build server")
     .WithCriteria(() => IssuesParameters.PullRequestSystem.ShouldSetPullRequestStatus, "Setting of pull request status is disabled")
     .WithCriteria<IssuesData>((context, data) => data.BuildServer != null ? data.BuildServer.DetermineIfPullRequest(context) : false, "Not a pull request build")
     .IsDependentOn("Read-Issues")
