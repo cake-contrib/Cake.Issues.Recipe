@@ -11,4 +11,4 @@
 #addin nuget:?package=Cake.Issues.PullRequests&version=0.8.0
 #addin nuget:?package=Cake.Issues.PullRequests.AppVeyor&version=0.8.0
 #addin nuget:?package=Cake.Issues.PullRequests.AzureDevOps&version=0.8.0
-#addin nuget:?package=Cake.AzureDevOps&version=0.4.0
+#addin nuget:?package=Cake.AzureDevOps&version=0.4.4
