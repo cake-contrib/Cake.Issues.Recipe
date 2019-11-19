@@ -65,6 +65,12 @@ IssuesBuildTasks.ReadIssuesTask = Task("Read-Issues")
                 IssuesParameters.InputFiles.InspectCodeLogFilePath));
     }
 
+    if (!issueProviders.Any())
+    {
+        Information("No files to process...");
+        return;
+    }
+
     // Read issues from log files.
     data.AddIssues(
         ReadIssues(
