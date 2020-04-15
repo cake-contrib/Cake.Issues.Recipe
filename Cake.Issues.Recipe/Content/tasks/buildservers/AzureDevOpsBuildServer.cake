@@ -51,7 +51,26 @@ public class AzureDevOpsBuildServer : BaseBuildServer
         ICakeContext context,
         IssuesData data)
     {
-        // Not implemented for Azure DevOps
+        if (context == null)
+        {
+            throw new ArgumentNullException(nameof(context));
+        }
+
+        if (data == null)
+        {
+            throw new ArgumentNullException(nameof(data));
+        }
+
+        foreach (var issue in data.Issues)
+        {
+            context.TFBuild().Commands.WriteWarning(
+                issue.MessageText,
+                new TFBuildMessageData
+                {
+                    SourcePath = issue.AffectedFileRelativePath?.FullPath,
+                    LineNumber = issue.Line
+                });
+        }
     }
 
     /// <inheritdoc />
