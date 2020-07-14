@@ -73,6 +73,14 @@ IssuesBuildTasks.ReadIssuesTask = Task("Read-Issues")
                 MarkdownlintCliLogFileFormat));
     }
 
+    if (IssuesParameters.InputFiles.MarkdownlintV1LogFilePath != null)
+    {
+        issueProviders.Add(
+            MarkdownlintIssuesFromFilePath(
+                IssuesParameters.InputFiles.MarkdownlintV1LogFilePath,
+                MarkdownlintLogFileFormat));
+    }
+
     if (!issueProviders.Any())
     {
         Information("No files to process...");
