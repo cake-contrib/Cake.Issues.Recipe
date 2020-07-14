@@ -17,4 +17,14 @@ public class IssuesParametersInputFiles
     /// Gets or sets the path to the InspectCode log file.
     /// </summary>
     public FilePath InspectCodeLogFilePath { get; set; }
+
+    /// <summary>
+    /// Gets or sets the path to the markdownlint-cli log file.
+    /// </summary>
+    public FilePath MarkdownlintCliLogFilePath { get; set; }
+
+    /// <summary>
+    /// Gets or sets the path to the markdownlint log file in version 1.
+    /// </summary>
+    public FilePath MarkdownlintV1LogFilePath { get; set; }
 }

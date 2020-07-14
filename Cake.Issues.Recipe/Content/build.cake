@@ -65,6 +65,22 @@ IssuesBuildTasks.ReadIssuesTask = Task("Read-Issues")
                 IssuesParameters.InputFiles.InspectCodeLogFilePath));
     }
 
+    if (IssuesParameters.InputFiles.MarkdownlintCliLogFilePath != null)
+    {
+        issueProviders.Add(
+            MarkdownlintIssuesFromFilePath(
+                IssuesParameters.InputFiles.MarkdownlintCliLogFilePath,
+                MarkdownlintCliLogFileFormat));
+    }
+
+    if (IssuesParameters.InputFiles.MarkdownlintV1LogFilePath != null)
+    {
+        issueProviders.Add(
+            MarkdownlintIssuesFromFilePath(
+                IssuesParameters.InputFiles.MarkdownlintV1LogFilePath,
+                MarkdownlintLogFileFormat));
+    }
+
     if (!issueProviders.Any())
     {
         Information("No files to process...");
@@ -98,7 +114,7 @@ IssuesBuildTasks.CreateFullIssuesReportTask = Task("Create-FullIssuesReport")
     EnsureDirectoryExists(IssuesParameters.OutputDirectory);
 
     // Create HTML report using DevExpress template.
-    var settings = 
+    var settings =
         GenericIssueReportFormatSettings
             .FromEmbeddedTemplate(GenericIssueReportTemplate.HtmlDxDataGrid)
             .WithOption(HtmlDxDataGridOption.Theme, DevExtremeTheme.MaterialBlueLight);
