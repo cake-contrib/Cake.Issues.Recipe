@@ -1,6 +1,8 @@
 #load "../../Cake.Issues.Recipe/Content/build.cake"
 #load "buildData.cake"
 
+#addin "Cake.Markdownlint"
+
 #tool "nuget:?package=JetBrains.ReSharper.CommandLineTools"
 #tool "nuget:?package=MSBuild.Extension.Pack"
 
@@ -47,7 +49,7 @@ Task("Build")
         data.IssuesData.RepositoryRootDirectory
             .Combine("src")
             .CombineWithFilePath("ClassLibrary1.sln");
-    
+
     Information("Restoring NuGet package for {0}...", solutionFile);
     NuGetRestore(solutionFile);
 
@@ -90,8 +92,23 @@ Task("Run-InspectCode")
     IssuesParameters.InputFiles.InspectCodeLogFilePath = data.InspectCodeLogFilePath;
 });
 
+Task("Lint-Documentation")
+    .Does<BuildData>((data) =>
+{
+    var settings =
+        MarkdownlintNodeJsRunnerSettings.ForDirectory(
+            data.IssuesData.RepositoryRootDirectory.Combine("docs"));
+    settings.OutputFile = data.MarkdownlintCliLogFilePath;
+    settings.ThrowOnIssue = false;
+    RunMarkdownlintNodeJs(settings);
+
+    // Pass path to markdownlint-cli log file to Cake.Issues.Recipe
+    IssuesParameters.InputFiles.MarkdownlintCliLogFilePath = data.MarkdownlintCliLogFilePath;
+});
+
 Task("Lint")
-    .IsDependentOn("Run-InspectCode");
+    .IsDependentOn("Run-InspectCode")
+    .IsDependentOn("Lint-Documentation");
 
 // Make sure build and linters run before issues task.
 IssuesBuildTasks.ReadIssuesTask

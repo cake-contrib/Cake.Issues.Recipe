@@ -6,6 +6,8 @@ public class BuildData
 
     public FilePath InspectCodeLogFilePath { get; }
 
+    public FilePath MarkdownlintCliLogFilePath { get; }
+
     public BuildData(ICakeContext context)
     {
         if (context == null)
@@ -17,5 +19,6 @@ public class BuildData
 
         this.MsBuildLogFilePath = IssuesParameters.OutputDirectory.CombineWithFilePath("msbuild.log");
         this.InspectCodeLogFilePath = IssuesParameters.OutputDirectory.CombineWithFilePath("inspectCode.log");
+        this.MarkdownlintCliLogFilePath = IssuesParameters.OutputDirectory.CombineWithFilePath("markdownlintCli.log");
     }
 }

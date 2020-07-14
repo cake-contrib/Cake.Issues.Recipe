@@ -6,6 +6,7 @@
 #addin nuget:?package=Cake.Issues&version=0.8.1
 #addin nuget:?package=Cake.Issues.MsBuild&version=0.8.0
 #addin nuget:?package=Cake.Issues.InspectCode&version=0.8.0
+#addin nuget:?package=Cake.Issues.Markdownlint&version=0.8.2
 #addin nuget:?package=Cake.Issues.Reporting&version=0.8.0
 #addin nuget:?package=Cake.Issues.Reporting.Generic&version=0.8.2
 #addin nuget:?package=Cake.Issues.PullRequests&version=0.8.1
