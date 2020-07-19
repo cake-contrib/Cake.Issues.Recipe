@@ -37,11 +37,7 @@ public class AddinData
         foreach (var ctx in constructors)
         {
             var ctxParams = ctx.GetParameters();
-            bool useCtx = true;
-            for (int i = 0; i < ctxParams.Length && useCtx; i++)
-            {
-                useCtx = ctxParams[i].ParameterType == parameters[i].GetType();
-            }
+            bool useCtx = ParametersMatch(ctxParams, parameters);
 
             if (useCtx)
             {
@@ -60,23 +56,7 @@ public class AddinData
 
     public object CallStaticMethod(string methodName, params object[] parameters)
     {
-        parameters = parameters ?? new object[0];
-
-        for (int i = 0; i < parameters.Length; i++)
-        {
-            var parameterType = parameters[i].GetType();
-            int index = parameterType == typeof(string) ? parameters[i].ToString().IndexOf('.') : -1;
-            if (index >= 0)
-            {
-                var enumOrClass = parameters[i].ToString().Substring(0, index);
-                var enumType = _declaredEnums.FirstOrDefault(e => string.Compare(e.Name, enumOrClass, StringComparison.OrdinalIgnoreCase) == 0);
-                if (enumType is object)
-                {
-                    var value = parameters[i].ToString().Substring(index+1);
-                    parameters[i] = Enum.Parse(enumType, value);
-                }
-            }
-        }
+        parameters = TransformParameters(parameters);
 
         var methods = this._definedMethods.Where(m => m.IsPublic && m.IsStatic && string.Compare(m.Name, methodName, StringComparison.OrdinalIgnoreCase) == 0);
         MethodInfo method = null;
@@ -84,38 +64,7 @@ public class AddinData
         foreach (var m in methods.Where(m => m.GetParameters().Length == parameters.Length))
         {
             var methodParams = m.GetParameters();
-            bool useMethod = true;
-
-            for (int i = 0; i < methodParams.Length && useMethod; i++)
-            {
-                var methodParamType = methodParams[i].ParameterType;
-                var optionParamType = parameters[i].GetType();
-                if (methodParamType.IsEnum && optionParamType == typeof(string))
-                {
-                    try
-                    {
-                        var parsedValue = Enum.Parse(methodParamType, parameters[i].ToString());
-                        if (parsedValue is object)
-                        {
-                            parameters[i] = parsedValue;
-                        }
-                        else
-                            useMethod = false;
-                    }
-                    catch
-                    {
-                        useMethod = false;
-                    }
-                }
-                else if (methodParamType == typeof(Enum) && optionParamType.IsEnum)
-                {
-                    useMethod = true;
-                }
-                else
-                {
-                    useMethod = methodParamType == optionParamType || methodParamType.IsAssignableFrom(optionParamType);
-                }
-            }
+            bool useMethod = ParametersMatch(methodParams, parameters);
 
             if (useMethod)
             {
@@ -126,10 +75,85 @@ public class AddinData
 
         if (method is null)
         {
-            throw new NullReferenceException("No method with the specified name was found!");
+            throw new NullReferenceException($"No method with the name '{methodName}' was found!");
         }
 
         return method.Invoke(null, parameters);
+    }
+
+    public object[] TransformParameters(params object[] parameters)
+    {
+        var newParameters = new List<object>();
+        if (parameters is null)
+        {
+            return newParameters.ToArray();
+        }
+
+        foreach (var parameter in parameters)
+        {
+            object value = parameter;
+            if (parameter is string sParam)
+            {
+                int index = sParam.IndexOf('.');
+                if (index >= 0)
+                {
+                    var enumOrClass = sParam.Substring(0, index);
+                    var subValue = sParam.Substring(index+1);
+                    var enumType = _declaredEnums.FirstOrDefault(e => string.Compare(e.Name, enumOrClass, StringComparison.OrdinalIgnoreCase) == 0);
+                    var classType = _definedClasses.FirstOrDefault(c => string.Compare(c.Name, enumOrClass, StringComparison.OrdinalIgnoreCase) == 0);
+                    if (enumType is object)
+                    {
+                        value = Enum.Parse(enumType, subValue);
+                    }
+                    else if (classType is object)
+                    {
+                        var property = classType.GetProperty(subValue, BindingFlags.GetProperty | BindingFlags.Public | BindingFlags.Static);
+                        value = property.GetValue(null);
+                    }
+                }
+            }
+
+            newParameters.Add(value);
+        }
+
+        return newParameters.ToArray();
+    }
+
+    public static bool ParametersMatch(ParameterInfo[] methodParameters, object[] parameters)
+    {
+        bool useMethod = true;
+        for (int i = 0; i < methodParameters.Length && useMethod; i++)
+        {
+            var methodParamType = methodParameters[i].ParameterType;
+            var optionParamType = parameters[i].GetType();
+            if (methodParamType.IsEnum && optionParamType == typeof(string))
+            {
+                try
+                {
+                    var parsedValue = Enum.Parse(methodParamType, parameters[i].ToString());
+                    if (parsedValue is object)
+                    {
+                        parameters[i] = parsedValue;
+                    }
+                        else
+                            useMethod = false;
+                    }
+                catch
+                {
+                    useMethod = false;
+                }
+            }
+            else if (methodParamType == typeof(Enum) && optionParamType.IsEnum)
+            {
+                useMethod = true;
+            }
+            else
+            {
+                useMethod = methodParamType == optionParamType || methodParamType.IsAssignableFrom(optionParamType);
+            }
+        }
+
+        return useMethod;
     }
 
     protected void Initialize(ICakeContext context, string packageName, string packageVersion, string assemblyName = null)

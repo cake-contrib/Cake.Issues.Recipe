@@ -2,7 +2,9 @@
 #load IssuesBuildTasksDefinitions.cake
 #load version.cake
 #load data/data.cake
+#load loader/loader.cake
 #load parameters/parameters.cake
+#load reporters/reporters.cake
 
 ///////////////////////////////////////////////////////////////////////////////
 // GLOBAL VARIABLES
@@ -128,16 +130,23 @@ IssuesBuildTasks.CreateFullIssuesReportTask = Task("Create-FullIssuesReport")
         IssuesParameters.OutputDirectory.CombineWithFilePath(reportFileName);
     EnsureDirectoryExists(IssuesParameters.OutputDirectory);
 
-    // Create HTML report using DevExpress template.
-    var settings =
-        GenericIssueReportFormatSettings
-            .FromEmbeddedTemplate(GenericIssueReportTemplate.HtmlDxDataGrid)
-            .WithOption(HtmlDxDataGridOption.Theme, DevExtremeTheme.MaterialBlueLight);
-    CreateIssueReport(
-        data.Issues,
-        GenericIssueReportFormat(settings),
-        data.BuildRootDirectory,
-        data.FullIssuesReport);
+    var issueFormats = new List<IIssueReportFormat>();
+
+    if (!Context.Environment.Runtime.IsCoreClr)
+    {
+        Information("Creating report format using Generic Reporter");
+        issueFormats.Add(GenericReporterData.CreateIssueFormatFromEmbeddedTemplate(Context, IssuesParameters.Reporting));
+    }
+
+    foreach (var issueFormat in issueFormats)
+    {
+        CreateIssueReport(
+            data.Issues,
+            issueFormat,
+            data.BuildRootDirectory,
+            data.FullIssuesReport
+        );
+    }
 });
 
 IssuesBuildTasks.PublishIssuesArtifactsTask = Task("Publish-IssuesArtifacts")

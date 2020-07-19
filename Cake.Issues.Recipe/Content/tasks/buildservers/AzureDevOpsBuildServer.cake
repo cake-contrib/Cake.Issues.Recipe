@@ -110,14 +110,23 @@ public class AzureDevOpsBuildServer : BaseBuildServer
         summaryFileName += ".md";
         var summaryFilePath = IssuesParameters.OutputDirectory.CombineWithFilePath(summaryFileName);
 
-        // Create summary for Azure Pipelines using custom template.
-        context.CreateIssueReport(
-            data.Issues,
-            context.GenericIssueReportFormatFromFilePath(
-                new FilePath(sourceFilePath).GetDirectory().Combine("tasks").Combine("buildservers").CombineWithFilePath("AzurePipelineSummary.cshtml")),
-            data.BuildRootDirectory,
-            summaryFilePath);
+        var issueFormats = new List<IIssueReportFormat>();
+        if (!context.Environment.Runtime.IsCoreClr)
+        {
+            var reportPath = new FilePath(sourceFilePath).GetDirectory().Combine("tasks").Combine("buildservers").CombineWithFilePath("AzurePipelineSummary.cshtml");
+            issueFormats.Add(GenericReporterData.CreateIssueFormatFromFilePath(context, IssuesParameters.Reporting, reportPath));
+        }
 
+        foreach (var issueFormat in issueFormats)
+        {
+            context.CreateIssueReport(
+                data.Issues,
+                issueFormat,
+                data.BuildRootDirectory,
+                summaryFilePath
+            );
+        }
+        
         context.AzurePipelines().Commands.UploadTaskSummary(summaryFilePath);
     }
 
