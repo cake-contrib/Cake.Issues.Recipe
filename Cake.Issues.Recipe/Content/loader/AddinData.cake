@@ -16,7 +16,7 @@ public class AddinData
     public IList<TypeInfo> _definedClasses = new List<TypeInfo>();
     private IList<MethodInfo> _definedMethods = new List<MethodInfo>();
 
-    public object CreateClass(string classTypeString, params object[] parameters)
+    public ClassWrapper CreateClass(string classTypeString, params object[] parameters)
     {
         var possibleClass = _definedClasses.FirstOrDefault(c => string.Compare(c.Name, classTypeString, StringComparison.OrdinalIgnoreCase) == 0);
 
@@ -28,7 +28,7 @@ public class AddinData
         return CreateClass(possibleClass, parameters);
     }
 
-    public object CreateClass(TypeInfo classType, params object[] parameters)
+    public ClassWrapper CreateClass(TypeInfo classType, params object[] parameters)
     {
         parameters = parameters ?? new object[0];
         var constructors = classType.DeclaredConstructors.Where(c => c.IsPublic && !c.IsStatic && c.GetParameters().Length == parameters.Length);
@@ -51,10 +51,24 @@ public class AddinData
             throw new NullReferenceException("No valid constructor was found!");
         }
 
-        return constructor.Invoke(parameters ?? new object[0]);
+        var result = constructor.Invoke(parameters ?? new object[0]);
+
+        return new ClassWrapper(result, this);
     }
 
-    public object CallStaticMethod(string methodName, params object[] parameters)
+    public TType CallStaticMethod<TType>(string methodName, params object[] parameters)
+    {
+        var result = CallStaticMethod(methodName, parameters);
+
+        if (result.GetType().IsClass)
+        {
+            return (TType)result.ToActual();
+        }
+
+        return (TType)result;
+    }
+
+    public dynamic CallStaticMethod(string methodName, params object[] parameters)
     {
         parameters = TransformParameters(parameters);
 
@@ -78,7 +92,14 @@ public class AddinData
             throw new NullReferenceException($"No method with the name '{methodName}' was found!");
         }
 
-        return method.Invoke(null, parameters);
+        var result = method.Invoke(null, parameters);
+
+        if (result.GetType().IsClass)
+        {
+            return new ClassWrapper(result, this);
+        }
+
+        return result;
     }
 
     public object[] TransformParameters(params object[] parameters)
@@ -111,6 +132,10 @@ public class AddinData
                         value = property.GetValue(null);
                     }
                 }
+            }
+            else if (parameter is ClassWrapper wrapper)
+            {
+                value = wrapper.ToActual();
             }
 
             newParameters.Add(value);

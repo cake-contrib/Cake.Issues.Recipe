@@ -20,9 +20,9 @@ public class GenericReporterData : AddinData
         var settings = reporter.CallStaticMethod("FromEmbeddedTemplate", "HtmlDxDataGrid");
 
         var theme = "DevExtremeTheme.MaterialBlueLight"; // Should be changed to be set on IssuesParametersReporting settings class.
-        reporter.CallStaticMethod("WithOption", settings, "HtmlDxDataGridOption.Theme", theme);
+        settings.CallExtensionMethod("WithOption", "HtmlDxDataGridOption.Theme", theme);
 
-        var issueFormat = (IIssueReportFormat)reporter.CallStaticMethod("GenericIssueReportFormat", context, settings);
+        var issueFormat = reporter.CallStaticMethod<IIssueReportFormat>("GenericIssueReportFormat", context, settings);
 
         return issueFormat;
     }
@@ -31,7 +31,7 @@ public class GenericReporterData : AddinData
     {
         var reporter = GetReporter(context);
 
-        var issueFormat = (IIssueReportFormat)reporter.CallStaticMethod("GenericIssueReportFormatFromFilePath", context, reportPath);
+        var issueFormat = reporter.CallStaticMethod<IIssueReportFormat>("GenericIssueReportFormatFromFilePath", context, reportPath);
 
         return issueFormat;
     }
