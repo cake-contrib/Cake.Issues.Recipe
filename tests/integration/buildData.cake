@@ -17,7 +17,7 @@ public class BuildData
 
         this.IssuesData = context.Data.Get<IssuesData>();
 
-        this.MsBuildLogFilePath = IssuesParameters.OutputDirectory.CombineWithFilePath("msbuild.log");
+        this.MsBuildLogFilePath = IssuesParameters.OutputDirectory.CombineWithFilePath("msbuild.binlog");
         this.InspectCodeLogFilePath = IssuesParameters.OutputDirectory.CombineWithFilePath("inspectCode.log");
         this.MarkdownlintCliLogFilePath = IssuesParameters.OutputDirectory.CombineWithFilePath("markdownlintCli.log");
     }

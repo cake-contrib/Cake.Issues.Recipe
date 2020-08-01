@@ -78,7 +78,7 @@ IssuesBuildTasks.ReadIssuesTask = Task("Read-Issues")
         issueProviders.Add(
             MarkdownlintIssuesFromFilePath(
                 IssuesParameters.InputFiles.MarkdownlintV1LogFilePath,
-                MarkdownlintLogFileFormat));
+                MarkdownlintV1LogFileFormat));
     }
 
     if (!issueProviders.Any())

@@ -63,9 +63,9 @@ public class AzureDevOpsBuildServer : BaseBuildServer
 
         foreach (var issue in data.Issues)
         {
-            context.TFBuild().Commands.WriteWarning(
+            context.AzurePipelines().Commands.WriteWarning(
                 issue.MessageText,
-                new TFBuildMessageData
+                new AzurePipelinesMessageData
                 {
                     SourcePath = issue.AffectedFileRelativePath?.FullPath,
                     LineNumber = issue.Line
@@ -105,7 +105,7 @@ public class AzureDevOpsBuildServer : BaseBuildServer
             data.RepositoryRootDirectory,
             summaryFilePath);
 
-        context.TFBuild().Commands.UploadTaskSummary(summaryFilePath);
+        context.AzurePipelines().Commands.UploadTaskSummary(summaryFilePath);
     }
 
     /// <inheritdoc />
@@ -125,7 +125,7 @@ public class AzureDevOpsBuildServer : BaseBuildServer
             data.FullIssuesReport != null &&
             context.FileExists(data.FullIssuesReport))
         {
-            context.TFBuild().Commands.UploadArtifact("Issues", data.FullIssuesReport, "Issues");
+            context.AzurePipelines().Commands.UploadArtifact("Issues", data.FullIssuesReport, "Issues");
         }
     }
 }

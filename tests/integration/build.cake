@@ -44,30 +44,39 @@ Task("Build")
             .Combine("src")
             .CombineWithFilePath("ClassLibrary1.sln");
 
-    Information("Restoring NuGet package for {0}...", solutionFile);
+#if NETCOREAPP
+    DotNetCoreRestore(solutionFile.FullPath);
+
+    var settings =
+        new DotNetCoreMSBuildSettings()
+            .WithTarget("Rebuild")
+            .WithLogger(
+                "BinaryLogger," + Context.Tools.Resolve("Cake.Issues.MsBuild*/**/StructuredLogger.dll"),
+                "",
+                data.MsBuildLogFilePath.FullPath
+            );
+
+    DotNetCoreBuild(
+        solutionFile.FullPath,
+        new DotNetCoreBuildSettings
+        {
+            MSBuildSettings = settings
+        });
+#else
     NuGetRestore(solutionFile);
 
     var settings =
         new MSBuildSettings()
-            .WithTarget("Rebuild");
-
-    // XML File Logger
-    settings =
-        settings.WithLogger(
-            Context.Tools.Resolve("MSBuild.ExtensionPack.Loggers.dll").FullPath,
-            "XmlFileLogger",
-            string.Format(
-                "logfile=\"{0}\";verbosity=Detailed;encoding=UTF-8",
-                data.MsBuildLogFilePath));
-
-    Information("Creating directory {0}...", IssuesParameters.OutputDirectory);
-    EnsureDirectoryExists(IssuesParameters.OutputDirectory);
-
-    Information("Building {0}...", solutionFile);
+            .WithTarget("Rebuild")
+            .WithLogger(
+                Context.Tools.Resolve("Cake.Issues.MsBuild*/**/StructuredLogger.dll").FullPath,
+                "BinaryLogger",
+                data.MsBuildLogFilePath.FullPath);
     MSBuild(solutionFile, settings);
+#endif
 
     // Pass path to MsBuild log file to Cake.Issues.Recipe
-    IssuesParameters.InputFiles.MsBuildXmlFileLoggerLogFilePath = data.MsBuildLogFilePath;
+    IssuesParameters.InputFiles.MsBuildBinaryLogFilePath = data.MsBuildLogFilePath;
 });
 
 Task("Run-InspectCode")
