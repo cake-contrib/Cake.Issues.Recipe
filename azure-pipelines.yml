@@ -10,32 +10,68 @@ pr:
 - hotfix/*
 
 jobs:
-- job: Windows
+# Build
+- job: Build
   pool:
-    vmImage: 'vs2017-win2016'
+    vmImage: 'windows-2019'
+  steps:
+  - powershell: ./build.ps1
+    displayName: 'Build'
+  - publish: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    artifact: NuGet Package
+    displayName: 'Publish NuGet package as build artifact'
+# Integration Tests Windows (.NET Framework)
+- job: Test_Windows_DotNetFramework
+  displayName: 'Integration Tests Windows (.NET Framework)'
+  dependsOn: Build
+  pool:
+    vmImage: 'windows-2019'
   steps:
   - task: NodeTool@0
     inputs:
       versionSpec: '14.x'
+    displayName: 'Install NodeJs 14.x'
   - powershell: choco install markdownlint-cli --no-progress
     displayName: 'Install required tools'
-  - powershell: ./build.ps1 -target Run-Integration-Tests
-    displayName: 'Integration Tests'
-- job: macOS
+  - download: current
+    artifact: NuGet Package
+    displayName: 'Download build artifact'
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: $(Pipeline.Workspace)/NuGet Package
+      targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    displayName: 'Copy build artifact for test run'
+  - powershell: ./build.ps1 -verbosity diagnostic
+    workingDirectory: ./tests/integration/
+    displayName: 'Run integration tests'
+# Integration Tests macOS 10.14 (Mono)
+- job: Test_macOS_Mono
+  displayName: 'Integration Tests macOS 10.14 (Mono)'
+  dependsOn: Build
   pool:
     vmImage: 'macOS-10.14'
   steps:
   - task: NodeTool@0
     inputs:
       versionSpec: '14.x'
+    displayName: 'Install NodeJs 14.x'
   - bash: |
       npm install -g markdownlint-cli
     displayName: 'Install required tools'
   # To manually select a Xamarin SDK version on the Hosted macOS agent, enable this script with the SDK version you want to target
-  #  https://go.microsoft.com/fwlink/?linkid=871629
+  #  https://go.microsoft.com/fwlink/?linkid=871629 
   - bash: |
       sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh 5_18_1
     displayName: 'Select Mono 5.18.1'
+  - download: current
+    artifact: NuGet Package
+    displayName: 'Download build artifact'
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: $(Pipeline.Workspace)/NuGet Package
+      targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    displayName: 'Copy build artifact for test run'
   - bash: |
-      ./build.sh --target Run-Integration-Tests
-    displayName: 'Integration Tests'
+      ./build.sh --verbosity diagnostic
+    workingDirectory: ./tests/integration/
+    displayName: 'Run integration tests'

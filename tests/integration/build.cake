@@ -1,4 +1,4 @@
-#load "../../Cake.Issues.Recipe/Content/build.cake"
+#load nuget:?package=Cake.Issues.Recipe&prerelease
 #load "buildData.cake"
 
 #addin "Cake.Markdownlint"

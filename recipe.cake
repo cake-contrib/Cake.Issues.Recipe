@@ -12,9 +12,7 @@ BuildParameters.SetParameters(context: Context,
                             nuspecFilePath: "./Cake.Issues.Recipe/Cake.Issues.Recipe.nuspec",
                             shouldRunGitVersion: true,
                             shouldGenerateDocumentation: false,
-                            shouldPublishMyGet: false,
-                            shouldRunIntegrationTests: true,
-                            integrationTestScriptPath: "./tests/integration/tests.cake");
+                            shouldPublishMyGet: false);
 
 BuildParameters.PrintParameters(Context);
 
