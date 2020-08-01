@@ -28,18 +28,12 @@ Setup<BuildData>(setupContext =>
 Task("Configure-IssuesManagement")
     .Does<BuildData>((data) =>
 {
-    if (IsRunningOnWindows())
-    {
-        IssuesParameters.BuildIdentifier = "Windows";
-    }
-    else if (IsRunningOnUnix())
-    {
-        IssuesParameters.BuildIdentifier = "Unix";
-    }
-    else
-    {
-        IssuesParameters.BuildIdentifier = "Unknown platform";
-    }
+    var platform = Context.Environment.Platform.Family.ToString();
+    var runtime = Context.Environment.Runtime.IsCoreClr ? ".NET Core" : ".NET Framework";
+
+    IssuesParameters.BuildIdentifier = $"{platform} ({runtime})";
+
+    Information("Build identifier: {0}", IssuesParameters.BuildIdentifier);
 });
 
 Task("Build")
