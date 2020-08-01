@@ -12,7 +12,7 @@ build_script:
 
 # Tests
 test_script:
-  - ps: .\build.ps1 -Target Run-Integration-Tests --exclusive
+  - ps: .\tests\integration\build.ps1 -Script .\tests\integration\build.cake
 
 #---------------------------------#
 #        Branches to build        #
