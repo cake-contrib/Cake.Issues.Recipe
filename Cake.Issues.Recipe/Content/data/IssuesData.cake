@@ -15,6 +15,15 @@ public class IssuesData
     /// </summary>
     public DirectoryPath BuildRootDirectory { get; }
 
+    /// Gets the remote URL of the repository.
+    /// </summary>
+    public Uri RepositoryRemoteUrl { get; }
+
+    /// <summary>
+    /// Gets the SHA ID of the current commit.
+    /// </summary>
+    public string CommitId { get; }
+
     /// <summary>
     /// Gets or sets the path to the full issues report.
     /// </summary>
@@ -68,10 +77,16 @@ public class IssuesData
         this.BuildServer = DetermineBuildServer(context);
         if (this.BuildServer != null)
         {
+            this.RepositoryRemoteUrl =
+                BuildServer.DetermineRepositoryRemoteUrl(context, this.RepositoryRootDirectory);
+
+            this.CommitId =
+                BuildServer.DetermineCommitId(context, this.RepositoryRootDirectory);
+
             this.PullRequestSystem =
                 DeterminePullRequestSystem(
                     context,
-                    BuildServer.DetermineRepositoryRemoteUrl(context, this.RepositoryRootDirectory));
+                    this.RepositoryRemoteUrl);
         }
     }
 
@@ -158,6 +173,11 @@ public class IssuesData
         {
             context.Information("Pull request system detected: {0}", "Azure Repos");
             return new AzureDevOpsPullRequestSystem();
+        }
+
+        if (repositoryUrl.Host == "github.com")
+        {
+            return new GitHubPullRequestSystem();
         }
 
         return null;

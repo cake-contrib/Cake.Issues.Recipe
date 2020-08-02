@@ -12,4 +12,9 @@ public abstract class BasePullRequestSystem : IIssuesPullRequestSystem
     public abstract void SetPullRequestIssuesState(
         ICakeContext context,
         IssuesData data);
+
+    /// <inheritdoc />
+    public abstract FileLinkSettings GetFileLinkSettings(
+        ICakeContext context,
+        IssuesData data);
 }
