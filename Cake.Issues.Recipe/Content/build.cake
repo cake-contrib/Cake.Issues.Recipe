@@ -65,6 +65,13 @@ IssuesBuildTasks.ReadIssuesTask = Task("Read-Issues")
                 IssuesParameters.InputFiles.InspectCodeLogFilePath));
     }
 
+    if (IssuesParameters.InputFiles.DupFinderLogFilePath != null)
+    {
+        issueProviders.Add(
+            DupFinderIssuesFromFilePath(
+                IssuesParameters.InputFiles.DupFinderLogFilePath));
+    }
+
     if (IssuesParameters.InputFiles.MarkdownlintCliLogFilePath != null)
     {
         issueProviders.Add(
