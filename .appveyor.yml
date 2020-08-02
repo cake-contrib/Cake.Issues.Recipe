@@ -17,7 +17,8 @@ build_script:
 
 # Tests
 test_script:
-  - ps: .\tests\integration\build.ps1 -Script .\tests\integration\build.cake
+  - ps: cd .\tests\integration\
+  - ps: .\build.ps1 -verbosity diagnostic
 
 #---------------------------------#
 #        Branches to build        #
