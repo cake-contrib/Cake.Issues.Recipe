@@ -98,7 +98,7 @@ IssuesBuildTasks.ReadIssuesTask = Task("Read-Issues")
     data.AddIssues(
         ReadIssues(
             issueProviders,
-            data.RepositoryRootDirectory));
+            data.BuildRootDirectory));
 
     Information("{0} issues are found.", data.Issues.Count());
 });
@@ -128,7 +128,7 @@ IssuesBuildTasks.CreateFullIssuesReportTask = Task("Create-FullIssuesReport")
     CreateIssueReport(
         data.Issues,
         GenericIssueReportFormat(settings),
-        data.RepositoryRootDirectory,
+        data.BuildRootDirectory,
         data.FullIssuesReport);
 });
 

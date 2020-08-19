@@ -40,7 +40,7 @@ Task("Build")
     .Does<BuildData>((data) =>
 {
     var solutionFile =
-        data.IssuesData.RepositoryRootDirectory
+        data.IssuesData.BuildRootDirectory
             .Combine("src")
             .CombineWithFilePath("ClassLibrary1.sln");
 
@@ -88,7 +88,7 @@ Task("Run-InspectCode")
     };
 
     InspectCode(
-        data.IssuesData.RepositoryRootDirectory.Combine("src").CombineWithFilePath("ClassLibrary1.sln"),
+        data.IssuesData.BuildRootDirectory.Combine("src").CombineWithFilePath("ClassLibrary1.sln"),
         settings);
 
     // Pass path to InspectCode log file to Cake.Issues.Recipe
@@ -104,7 +104,7 @@ Task("Run-DupFinder")
     };
 
     DupFinder(
-        data.IssuesData.RepositoryRootDirectory.Combine("src").CombineWithFilePath("ClassLibrary1.sln"),
+        data.IssuesData.BuildRootDirectory.Combine("src").CombineWithFilePath("ClassLibrary1.sln"),
         settings);
 
     // Pass path to dupFinder log file to Cake.Issues.Recipe
@@ -116,7 +116,7 @@ Task("Lint-Documentation")
 {
     var settings =
         MarkdownlintNodeJsRunnerSettings.ForDirectory(
-            data.IssuesData.RepositoryRootDirectory.Combine("docs"));
+            data.IssuesData.BuildRootDirectory.Combine("docs"));
     settings.OutputFile = data.MarkdownlintCliLogFilePath;
     settings.ThrowOnIssue = false;
     RunMarkdownlintNodeJs(settings);

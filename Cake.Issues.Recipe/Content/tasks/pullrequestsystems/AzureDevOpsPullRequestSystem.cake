@@ -28,7 +28,7 @@ public class AzureDevOpsPullRequestSystem : BasePullRequestSystem
                 data.BuildServer.DetermineRepositoryRemoteUrl(context, data.RepositoryRootDirectory),
                 data.BuildServer.DeterminePullRequestId(context).Value,
                 context.AzureDevOpsAuthenticationOAuth(context.EnvironmentVariable("SYSTEM_ACCESSTOKEN"))),
-            data.RepositoryRootDirectory);
+            data.BuildRootDirectory);
     }
 
     /// <inheritdoc />
