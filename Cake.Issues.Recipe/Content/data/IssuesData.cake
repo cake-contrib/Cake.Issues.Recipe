@@ -11,6 +11,11 @@ public class IssuesData
     public DirectoryPath RepositoryRootDirectory { get; }
 
     /// <summary>
+    /// Gets the root directory of the build script.
+    /// </summary>
+    public DirectoryPath BuildRootDirectory { get; }
+
+    /// <summary>
     /// Gets or sets the path to the full issues report.
     /// </summary>
     public FilePath FullIssuesReport { get; set; }
@@ -54,7 +59,10 @@ public class IssuesData
             throw new ArgumentNullException(nameof(context));
         }
 
-        this.RepositoryRootDirectory = context.MakeAbsolute(context.Directory("./"));
+        this.BuildRootDirectory = context.MakeAbsolute(context.Directory("./"));
+        context.Information("Build script root directory: {0}", this.BuildRootDirectory);
+
+        this.RepositoryRootDirectory = context.GitFindRootFromPath(this.BuildRootDirectory);
         context.Information("Repository root directory: {0}", this.RepositoryRootDirectory);
 
         this.BuildServer = DetermineBuildServer(context);
