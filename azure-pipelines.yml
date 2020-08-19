@@ -44,6 +44,9 @@ jobs:
   - powershell: ./build.ps1 -verbosity diagnostic
     workingDirectory: ./tests/integration/
     displayName: 'Run integration tests'
+  - publish: $(Build.SourcesDirectory)/tests/integration/BuildArtifacts/output
+    artifact: Integration Tests Windows (.NET Framework)
+    displayName: 'Publish generated reports as build artifact'
 # Integration Tests Windows (.NET Core tool)
 - job: Test_Windows_DotNetCoreTool
   displayName: Integration Tests Windows (.NET Core tool)
@@ -71,6 +74,9 @@ jobs:
   - powershell: dotnet cake
     workingDirectory: ./tests/integration/
     displayName: 'Run integration tests'
+  - publish: $(Build.SourcesDirectory)/tests/integration/BuildArtifacts/output
+    artifact: Integration Tests Windows (.NET Core tool)
+    displayName: 'Publish generated reports as build artifact'
 # Integration Tests macOS 10.14 (Mono)
 - job: Test_macOS_Mono
   displayName: 'Integration Tests macOS 10.14 (Mono)'
@@ -102,6 +108,9 @@ jobs:
       ./build.sh --verbosity diagnostic
     workingDirectory: ./tests/integration/
     displayName: 'Run integration tests'
+  - publish: $(Build.SourcesDirectory)/tests/integration/BuildArtifacts/output
+    artifact: Integration Tests macOS 10.14 (Mono)
+    displayName: 'Publish generated reports as build artifact'
 # Integration Tests macOS 10.15 (.NET Core tool)
 - job: Test_macOS_DotNetCoreTool
   displayName: Integration Tests macOS 10.15 (.NET Core tool)
@@ -132,6 +141,9 @@ jobs:
       dotnet cake
     workingDirectory: ./tests/integration/
     displayName: 'Run integration tests'
+  - publish: $(Build.SourcesDirectory)/tests/integration/BuildArtifacts/output
+    artifact: Integration Tests macOS 10.15 (.NET Core tool)
+    displayName: 'Publish generated reports as build artifact'
 # Integration Tests Ubuntu 16.04 (Mono)
 - job: Test_ubuntu_Mono
   displayName: 'Integration Tests Ubuntu 16.04 (Mono)'
@@ -158,6 +170,9 @@ jobs:
       ./build.sh --verbosity diagnostic
     workingDirectory: ./tests/integration/
     displayName: 'Run integration tests'
+  - publish: $(Build.SourcesDirectory)/tests/integration/BuildArtifacts/output
+    artifact: Integration Tests Ubuntu 16.04 (Mono)
+    displayName: 'Publish generated reports as build artifact'
 # Integration Tests Ubuntu 16.04 (.NET Core tool)
 - job: Test_ubuntu_DotNetCoreTool
   displayName: Integration Tests Ubuntu 16.04 (.NET Core tool)
@@ -188,3 +203,6 @@ jobs:
       dotnet cake
     workingDirectory: ./tests/integration/
     displayName: 'Run integration tests'
+  - publish: $(Build.SourcesDirectory)/tests/integration/BuildArtifacts/output
+    artifact: Integration Tests Ubuntu 16.04 (.NET Core tool)
+    displayName: 'Publish generated reports as build artifact'
