@@ -55,6 +55,7 @@ public class IssuesData
         }
 
         this.RepositoryRootDirectory = context.MakeAbsolute(context.Directory("./"));
+        context.Information("Repository root directory: {0}", this.RepositoryRootDirectory);
 
         this.BuildServer = DetermineBuildServer(context);
         if (this.BuildServer != null)
@@ -114,11 +115,13 @@ public class IssuesData
                 new Uri(context.EnvironmentVariable("SYSTEM_COLLECTIONURI")).Host.EndsWith("visualstudio.com")
             )) 
         {
+            context.Information("Build server detected: {0}", "Azure Pipelines");
             return new AzureDevOpsBuildServer();
         }
 
         if (context.AppVeyor().IsRunningOnAppVeyor)
         {
+            context.Information("Build server detected: {0}", "AppVeyor");
             return new AppVeyorBuildServer();
         }
 
@@ -145,6 +148,7 @@ public class IssuesData
 
         if (repositoryUrl.Host == "dev.azure.com" || repositoryUrl.Host.EndsWith("visualstudio.com"))
         {
+            context.Information("Pull request system detected: {0}", "Azure Repos");
             return new AzureDevOpsPullRequestSystem();
         }
 
