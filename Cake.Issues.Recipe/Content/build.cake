@@ -95,10 +95,18 @@ IssuesBuildTasks.ReadIssuesTask = Task("Read-Issues")
     }
 
     // Read issues from log files.
+    var settings = new ReadIssuesSettings(data.BuildRootDirectory);
+
+    if (data.PullRequestSystem != null)
+    {
+        settings.FileLinkSettings =
+            data.PullRequestSystem.GetFileLinkSettings(Context, data);
+    }
+
     data.AddIssues(
         ReadIssues(
             issueProviders,
-            data.BuildRootDirectory));
+            settings));
 
     Information("{0} issues are found.", data.Issues.Count());
 });

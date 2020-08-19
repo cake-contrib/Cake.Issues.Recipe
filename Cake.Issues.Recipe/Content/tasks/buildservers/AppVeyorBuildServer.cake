@@ -24,6 +24,19 @@ public class AppVeyorBuildServer : BaseBuildServer
     }
 
     /// <inheritdoc />
+    public override string DetermineCommitId(
+        ICakeContext context,
+        DirectoryPath repositoryRootDirectory)
+    {
+        if (context == null)
+        {
+            throw new ArgumentNullException(nameof(context));
+        }
+
+        return context.AppVeyor().Environment.Repository.Commit.Id;
+    }
+
+    /// <inheritdoc />
     public override bool DetermineIfPullRequest(ICakeContext context)
     {
         if (context == null)
