@@ -1,4 +1,4 @@
-#load "../../Cake.Issues.Recipe/Content/build.cake"
+#load nuget:?package=Cake.Issues.Recipe&prerelease
 #load "buildData.cake"
 
 #addin "Cake.Markdownlint"
@@ -28,52 +28,55 @@ Setup<BuildData>(setupContext =>
 Task("Configure-IssuesManagement")
     .Does<BuildData>((data) =>
 {
-    if (IsRunningOnWindows())
-    {
-        IssuesParameters.BuildIdentifier = "Windows";
-    }
-    else if (IsRunningOnUnix())
-    {
-        IssuesParameters.BuildIdentifier = "Unix";
-    }
-    else
-    {
-        IssuesParameters.BuildIdentifier = "Unknown platform";
-    }
+    var platform = Context.Environment.Platform.Family.ToString();
+    var runtime = Context.Environment.Runtime.IsCoreClr ? ".NET Core" : ".NET Framework";
+
+    IssuesParameters.BuildIdentifier = $"{platform} ({runtime})";
+
+    Information("Build identifier: {0}", IssuesParameters.BuildIdentifier);
 });
 
 Task("Build")
     .Does<BuildData>((data) =>
 {
     var solutionFile =
-        data.IssuesData.RepositoryRootDirectory
+        data.IssuesData.BuildRootDirectory
             .Combine("src")
             .CombineWithFilePath("ClassLibrary1.sln");
 
-    Information("Restoring NuGet package for {0}...", solutionFile);
+#if NETCOREAPP
+    DotNetCoreRestore(solutionFile.FullPath);
+
+    var settings =
+        new DotNetCoreMSBuildSettings()
+            .WithTarget("Rebuild")
+            .WithLogger(
+                "BinaryLogger," + Context.Tools.Resolve("Cake.Issues.MsBuild*/**/StructuredLogger.dll"),
+                "",
+                data.MsBuildLogFilePath.FullPath
+            );
+
+    DotNetCoreBuild(
+        solutionFile.FullPath,
+        new DotNetCoreBuildSettings
+        {
+            MSBuildSettings = settings
+        });
+#else
     NuGetRestore(solutionFile);
 
     var settings =
         new MSBuildSettings()
-            .WithTarget("Rebuild");
-
-    // XML File Logger
-    settings =
-        settings.WithLogger(
-            Context.Tools.Resolve("MSBuild.ExtensionPack.Loggers.dll").FullPath,
-            "XmlFileLogger",
-            string.Format(
-                "logfile=\"{0}\";verbosity=Detailed;encoding=UTF-8",
-                data.MsBuildLogFilePath));
-
-    Information("Creating directory {0}...", IssuesParameters.OutputDirectory);
-    EnsureDirectoryExists(IssuesParameters.OutputDirectory);
-
-    Information("Building {0}...", solutionFile);
+            .WithTarget("Rebuild")
+            .WithLogger(
+                Context.Tools.Resolve("Cake.Issues.MsBuild*/**/StructuredLogger.dll").FullPath,
+                "BinaryLogger",
+                data.MsBuildLogFilePath.FullPath);
     MSBuild(solutionFile, settings);
+#endif
 
     // Pass path to MsBuild log file to Cake.Issues.Recipe
-    IssuesParameters.InputFiles.MsBuildXmlFileLoggerLogFilePath = data.MsBuildLogFilePath;
+    IssuesParameters.InputFiles.MsBuildBinaryLogFilePath = data.MsBuildLogFilePath;
 });
 
 Task("Run-InspectCode")
@@ -85,11 +88,27 @@ Task("Run-InspectCode")
     };
 
     InspectCode(
-        data.IssuesData.RepositoryRootDirectory.Combine("src").CombineWithFilePath("ClassLibrary1.sln"),
+        data.IssuesData.BuildRootDirectory.Combine("src").CombineWithFilePath("ClassLibrary1.sln"),
         settings);
 
     // Pass path to InspectCode log file to Cake.Issues.Recipe
     IssuesParameters.InputFiles.InspectCodeLogFilePath = data.InspectCodeLogFilePath;
+});
+
+Task("Run-DupFinder")
+    .WithCriteria((context) => context.IsRunningOnWindows(), "DupFinder is only supported on Windows.")
+    .Does<BuildData>((data) =>
+{
+    var settings = new DupFinderSettings() {
+        OutputFile = data.DupFinderLogFilePath
+    };
+
+    DupFinder(
+        data.IssuesData.BuildRootDirectory.Combine("src").CombineWithFilePath("ClassLibrary1.sln"),
+        settings);
+
+    // Pass path to dupFinder log file to Cake.Issues.Recipe
+    IssuesParameters.InputFiles.DupFinderLogFilePath = data.DupFinderLogFilePath;
 });
 
 Task("Lint-Documentation")
@@ -97,7 +116,7 @@ Task("Lint-Documentation")
 {
     var settings =
         MarkdownlintNodeJsRunnerSettings.ForDirectory(
-            data.IssuesData.RepositoryRootDirectory.Combine("docs"));
+            data.IssuesData.BuildRootDirectory.Combine("docs"));
     settings.OutputFile = data.MarkdownlintCliLogFilePath;
     settings.ThrowOnIssue = false;
     RunMarkdownlintNodeJs(settings);
@@ -108,6 +127,7 @@ Task("Lint-Documentation")
 
 Task("Lint")
     .IsDependentOn("Run-InspectCode")
+    .IsDependentOn("Run-DupFinder")
     .IsDependentOn("Lint-Documentation");
 
 // Make sure build and linters run before issues task.

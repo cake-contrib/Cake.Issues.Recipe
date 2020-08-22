@@ -1,4 +1,4 @@
-#load nuget:https://www.myget.org/F/cake-contrib/api/v2?package=Cake.Recipe&version=1.1.2-beta0001&prerelease
+#load nuget:?package=Cake.Recipe&version=1.1.2
 
 Environment.SetVariableNames();
 
@@ -12,9 +12,7 @@ BuildParameters.SetParameters(context: Context,
                             nuspecFilePath: "./Cake.Issues.Recipe/Cake.Issues.Recipe.nuspec",
                             shouldRunGitVersion: true,
                             shouldGenerateDocumentation: false,
-                            shouldPublishMyGet: false,
-                            shouldRunIntegrationTests: true,
-                            integrationTestScriptPath: "./tests/integration/tests.cake");
+                            shouldPublishMyGet: false);
 
 BuildParameters.PrintParameters(Context);
 

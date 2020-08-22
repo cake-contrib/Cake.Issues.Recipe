@@ -23,6 +23,24 @@ public abstract class BaseBuildServer : IIssuesBuildServer
     }
 
     /// <inheritdoc />
+    public virtual string DetermineCommitId(
+        ICakeContext context,
+        DirectoryPath repositoryRootDirectory)
+    {
+        if (context == null)
+        {
+            throw new ArgumentNullException(nameof(context));
+        }
+
+        if (repositoryRootDirectory == null)
+        {
+            throw new ArgumentNullException(nameof(repositoryRootDirectory));
+        }
+
+        return context.GitLogTip(repositoryRootDirectory).Sha;
+    }
+
+    /// <inheritdoc />
     public virtual bool DetermineIfPullRequest(ICakeContext context)
     {
         if (context == null)

@@ -19,6 +19,11 @@ public class IssuesParametersInputFiles
     public FilePath InspectCodeLogFilePath { get; set; }
 
     /// <summary>
+    /// Gets or sets the path to the dupFinder log file.
+    /// </summary>
+    public FilePath DupFinderLogFilePath { get; set; }
+
+    /// <summary>
     /// Gets or sets the path to the markdownlint-cli log file.
     /// </summary>
     public FilePath MarkdownlintCliLogFilePath { get; set; }

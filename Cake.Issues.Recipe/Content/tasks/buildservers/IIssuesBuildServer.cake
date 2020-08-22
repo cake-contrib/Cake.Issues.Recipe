@@ -14,6 +14,16 @@ public interface IIssuesBuildServer
         DirectoryPath repositoryRootDirectory);
 
     /// <summary>
+    /// Determines the SHA ID of the current commit.
+    /// </summary>
+    /// <param name="context">The Cake context.</param>
+    /// <param name="repositoryRootDirectory">The root directory of the repository.</param>
+    /// <returns>The SHA ID of the current commit.</returns>
+    string DetermineCommitId(
+        ICakeContext context,
+        DirectoryPath repositoryRootDirectory);
+
+    /// <summary>
     /// Determines whether the build is for a pull request.
     /// </summary>
     /// <param name="context">The Cake context.</param>

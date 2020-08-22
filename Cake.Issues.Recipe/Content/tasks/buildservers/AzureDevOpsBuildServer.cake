@@ -17,6 +17,19 @@ public class AzureDevOpsBuildServer : BaseBuildServer
     }
 
     /// <inheritdoc />
+    public override string DetermineCommitId(
+        ICakeContext context,
+        DirectoryPath repositoryRootDirectory)
+    {
+        if (context == null)
+        {
+            throw new ArgumentNullException(nameof(context));
+        }
+
+        return context.AzurePipelines().Environment.Repository.SourceVersion;
+    }
+
+    /// <inheritdoc />
     public override bool DetermineIfPullRequest(ICakeContext context)
     {
         if (context == null)
@@ -63,9 +76,9 @@ public class AzureDevOpsBuildServer : BaseBuildServer
 
         foreach (var issue in data.Issues)
         {
-            context.TFBuild().Commands.WriteWarning(
+            context.AzurePipelines().Commands.WriteWarning(
                 issue.MessageText,
-                new TFBuildMessageData
+                new AzurePipelinesMessageData
                 {
                     SourcePath = issue.AffectedFileRelativePath?.FullPath,
                     LineNumber = issue.Line
@@ -102,10 +115,10 @@ public class AzureDevOpsBuildServer : BaseBuildServer
             data.Issues,
             context.GenericIssueReportFormatFromFilePath(
                 new FilePath(sourceFilePath).GetDirectory().Combine("tasks").Combine("buildservers").CombineWithFilePath("AzurePipelineSummary.cshtml")),
-            data.RepositoryRootDirectory,
+            data.BuildRootDirectory,
             summaryFilePath);
 
-        context.TFBuild().Commands.UploadTaskSummary(summaryFilePath);
+        context.AzurePipelines().Commands.UploadTaskSummary(summaryFilePath);
     }
 
     /// <inheritdoc />
@@ -125,7 +138,7 @@ public class AzureDevOpsBuildServer : BaseBuildServer
             data.FullIssuesReport != null &&
             context.FileExists(data.FullIssuesReport))
         {
-            context.TFBuild().Commands.UploadArtifact("Issues", data.FullIssuesReport, "Issues");
+            context.AzurePipelines().Commands.UploadArtifact("Issues", data.FullIssuesReport, "Issues");
         }
     }
 }

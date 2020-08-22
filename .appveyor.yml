@@ -1,4 +1,9 @@
 #---------------------------------#
+#  Build Image                    #
+#---------------------------------#
+image: Visual Studio 2019
+
+#---------------------------------#
 #  Build Script                   #
 #---------------------------------#
 install:
@@ -12,7 +17,8 @@ build_script:
 
 # Tests
 test_script:
-  - ps: .\build.ps1 -Target Run-Integration-Tests --exclusive
+  - ps: cd .\tests\integration\
+  - ps: .\build.ps1 -verbosity diagnostic
 
 #---------------------------------#
 #        Branches to build        #

@@ -28,7 +28,7 @@ public class AzureDevOpsPullRequestSystem : BasePullRequestSystem
                 data.BuildServer.DetermineRepositoryRemoteUrl(context, data.RepositoryRootDirectory),
                 data.BuildServer.DeterminePullRequestId(context).Value,
                 context.AzureDevOpsAuthenticationOAuth(context.EnvironmentVariable("SYSTEM_ACCESSTOKEN"))),
-            data.RepositoryRootDirectory);
+            data.BuildRootDirectory);
     }
 
     /// <inheritdoc />
@@ -77,5 +77,26 @@ public class AzureDevOpsPullRequestSystem : BasePullRequestSystem
         context.AzureDevOpsSetPullRequestStatus(
             pullRequestSettings,
             pullRequestStatus);
+    }
+
+    /// <inheritdoc />
+    public override FileLinkSettings GetFileLinkSettings(ICakeContext context, IssuesData data)
+    {
+        if (context == null)
+        {
+            throw new ArgumentNullException(nameof(context));
         }
+
+        if (data == null)
+        {
+            throw new ArgumentNullException(nameof(data));
+        }
+
+        var rootPath = data.RepositoryRootDirectory.GetRelativePath(data.BuildRootDirectory);
+
+        return context.IssueFileLinkSettingsForAzureDevOpsCommit(
+            data.RepositoryRemoteUrl,
+            data.CommitId,
+            rootPath.FullPath);
+    }
 }
