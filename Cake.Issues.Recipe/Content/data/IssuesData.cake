@@ -11,6 +11,20 @@ public class IssuesData
     public DirectoryPath RepositoryRootDirectory { get; }
 
     /// <summary>
+    /// Gets the root directory of the build script.
+    /// </summary>
+    public DirectoryPath BuildRootDirectory { get; }
+
+    /// Gets the remote URL of the repository.
+    /// </summary>
+    public Uri RepositoryRemoteUrl { get; }
+
+    /// <summary>
+    /// Gets the SHA ID of the current commit.
+    /// </summary>
+    public string CommitId { get; }
+
+    /// <summary>
     /// Gets or sets the path to the full issues report.
     /// </summary>
     public FilePath FullIssuesReport { get; set; }
@@ -54,15 +68,25 @@ public class IssuesData
             throw new ArgumentNullException(nameof(context));
         }
 
-        this.RepositoryRootDirectory = context.MakeAbsolute(context.Directory("./"));
+        this.BuildRootDirectory = context.MakeAbsolute(context.Directory("./"));
+        context.Information("Build script root directory: {0}", this.BuildRootDirectory);
+
+        this.RepositoryRootDirectory = context.GitFindRootFromPath(this.BuildRootDirectory);
+        context.Information("Repository root directory: {0}", this.RepositoryRootDirectory);
 
         this.BuildServer = DetermineBuildServer(context);
         if (this.BuildServer != null)
         {
+            this.RepositoryRemoteUrl =
+                BuildServer.DetermineRepositoryRemoteUrl(context, this.RepositoryRootDirectory);
+
+            this.CommitId =
+                BuildServer.DetermineCommitId(context, this.RepositoryRootDirectory);
+
             this.PullRequestSystem =
                 DeterminePullRequestSystem(
                     context,
-                    BuildServer.DetermineRepositoryRemoteUrl(context, this.RepositoryRootDirectory));
+                    this.RepositoryRemoteUrl);
         }
     }
 
@@ -114,11 +138,13 @@ public class IssuesData
                 new Uri(context.EnvironmentVariable("SYSTEM_COLLECTIONURI")).Host.EndsWith("visualstudio.com")
             )) 
         {
+            context.Information("Build server detected: {0}", "Azure Pipelines");
             return new AzureDevOpsBuildServer();
         }
 
         if (context.AppVeyor().IsRunningOnAppVeyor)
         {
+            context.Information("Build server detected: {0}", "AppVeyor");
             return new AppVeyorBuildServer();
         }
 
@@ -145,7 +171,13 @@ public class IssuesData
 
         if (repositoryUrl.Host == "dev.azure.com" || repositoryUrl.Host.EndsWith("visualstudio.com"))
         {
+            context.Information("Pull request system detected: {0}", "Azure Repos");
             return new AzureDevOpsPullRequestSystem();
+        }
+
+        if (repositoryUrl.Host == "github.com")
+        {
+            return new GitHubPullRequestSystem();
         }
 
         return null;

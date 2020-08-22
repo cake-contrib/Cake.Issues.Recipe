@@ -17,6 +17,19 @@ public class AzureDevOpsBuildServer : BaseBuildServer
     }
 
     /// <inheritdoc />
+    public override string DetermineCommitId(
+        ICakeContext context,
+        DirectoryPath repositoryRootDirectory)
+    {
+        if (context == null)
+        {
+            throw new ArgumentNullException(nameof(context));
+        }
+
+        return context.AzurePipelines().Environment.Repository.SourceVersion;
+    }
+
+    /// <inheritdoc />
     public override bool DetermineIfPullRequest(ICakeContext context)
     {
         if (context == null)
@@ -102,7 +115,7 @@ public class AzureDevOpsBuildServer : BaseBuildServer
             data.Issues,
             context.GenericIssueReportFormatFromFilePath(
                 new FilePath(sourceFilePath).GetDirectory().Combine("tasks").Combine("buildservers").CombineWithFilePath("AzurePipelineSummary.cshtml")),
-            data.RepositoryRootDirectory,
+            data.BuildRootDirectory,
             summaryFilePath);
 
         context.AzurePipelines().Commands.UploadTaskSummary(summaryFilePath);

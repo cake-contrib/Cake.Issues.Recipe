@@ -65,6 +65,13 @@ IssuesBuildTasks.ReadIssuesTask = Task("Read-Issues")
                 IssuesParameters.InputFiles.InspectCodeLogFilePath));
     }
 
+    if (IssuesParameters.InputFiles.DupFinderLogFilePath != null)
+    {
+        issueProviders.Add(
+            DupFinderIssuesFromFilePath(
+                IssuesParameters.InputFiles.DupFinderLogFilePath));
+    }
+
     if (IssuesParameters.InputFiles.MarkdownlintCliLogFilePath != null)
     {
         issueProviders.Add(
@@ -88,10 +95,18 @@ IssuesBuildTasks.ReadIssuesTask = Task("Read-Issues")
     }
 
     // Read issues from log files.
+    var settings = new ReadIssuesSettings(data.BuildRootDirectory);
+
+    if (data.PullRequestSystem != null)
+    {
+        settings.FileLinkSettings =
+            data.PullRequestSystem.GetFileLinkSettings(Context, data);
+    }
+
     data.AddIssues(
         ReadIssues(
             issueProviders,
-            data.RepositoryRootDirectory));
+            settings));
 
     Information("{0} issues are found.", data.Issues.Count());
 });
@@ -121,7 +136,7 @@ IssuesBuildTasks.CreateFullIssuesReportTask = Task("Create-FullIssuesReport")
     CreateIssueReport(
         data.Issues,
         GenericIssueReportFormat(settings),
-        data.RepositoryRootDirectory,
+        data.BuildRootDirectory,
         data.FullIssuesReport);
 });
 
