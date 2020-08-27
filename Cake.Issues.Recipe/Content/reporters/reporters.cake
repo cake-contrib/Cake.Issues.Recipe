@@ -1,0 +1,1 @@
+#load ./GenericReporterData.cake
