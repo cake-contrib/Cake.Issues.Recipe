@@ -67,19 +67,38 @@ public class GitHubActionsBuildServer : BaseBuildServer
             throw new ArgumentNullException(nameof(data));
         }
 
-        foreach (var issue in data.Issues)
+        // Group annotations by provider type and run
+        var groupedIssues =
+            from issue in data.Issues
+            group issue by new { issue.ProviderType, issue.Run };
+
+        foreach (var group in groupedIssues)
         {
-            // Commands don't support line breaks, therefore we only use the first line of the message.
-            var message =
-                issue.MessageText
-                    .Split(new[] {'\n'}, StringSplitOptions.RemoveEmptyEntries)
-                    .FirstOrDefault()
-                    ?.Trim();
+            var groupName = group.First().ProviderName;
 
-            var rootDirectoryPath =
-                data.RepositoryRootDirectory.GetRelativePath(data.BuildRootDirectory);
+            if (!string.IsNullOrWhiteSpace(group.Key.Run))
+            {
+                groupName += " - " + group.Key.Run;
+            }
 
-            context.Information($"::warning {FormatWarningOptions(rootDirectoryPath, issue.AffectedFileRelativePath, issue.Line, issue.Column)}::{message}");
+            context.Information($"::group::{groupName}");
+
+            foreach (var issue in group.OrderByDescending(x => x.Priority))
+            {
+                // Commands don't support line breaks, therefore we only use the first line of the message.
+                var message =
+                    issue.MessageText
+                        .Split(new[] {'\n'}, StringSplitOptions.RemoveEmptyEntries)
+                        .FirstOrDefault()
+                        ?.Trim();
+
+                var rootDirectoryPath =
+                    data.RepositoryRootDirectory.GetRelativePath(data.BuildRootDirectory);
+
+                context.Information($"::warning {FormatWarningOptions(rootDirectoryPath, issue.AffectedFileRelativePath, issue.Line, issue.Column)}::{message}");
+            }
+
+            context.Information($"::endgroup::{groupName}");
         }
     }
 
