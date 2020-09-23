@@ -1,0 +1,74 @@
+name: Build and tests
+on: [push, pull_request]
+jobs:
+  # Build
+  Build:
+    name: Build
+    runs-on: windows-latest
+    steps:
+      - name: Get the sources
+        uses: actions/checkout@v2
+      - name: Fetch all tags and branches
+        run: git fetch --prune --unshallow
+      - name: Build
+        run: .\build.ps1
+        shell: powershell
+      - name: Publish NuGet package as build artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: NuGet Package
+          path: ./BuildArtifacts/Packages/NuGet/
+  # Integration Tests Windows (.NET Framework)
+  Test_Windows_DotNetFramework:
+    name: Integration Tests Windows (.NET Framework)
+    needs: Build
+    runs-on: windows-latest
+    steps:
+      - name: Get the sources
+        uses: actions/checkout@v2
+      - name: Install required tools
+        run: npm install -g markdownlint-cli
+        shell: powershell
+      - name: Download build artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: NuGet Package
+          path: ./BuildArtifacts/Packages/NuGet
+      - name: Run integration tests
+        run: ./build.ps1 -verbosity diagnostic
+        working-directory: ./tests/integration/
+        shell: powershell
+      - name: Publish generated reports as build artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Integration Tests Windows (.NET Framework)
+          path: ./tests/integration/BuildArtifacts/output/
+  # Integration Tests Windows (.NET Core tool)
+  Test_Windows_DotNetCoreTool:
+    name: Integration Tests Windows (.NET Core tool)
+    needs: Build
+    runs-on: windows-latest
+    steps:
+      - name: Get the sources
+        uses: actions/checkout@v2
+      - name: Install required tools
+        run: npm install -g markdownlint-cli
+        shell: powershell
+      - name: Download build artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: NuGet Package
+          path: ./BuildArtifacts/Packages/NuGet
+      - name: Restore .NET Core tool
+        run: dotnet tool restore
+        working-directory: ./tests/integration/
+        shell: powershell
+      - name: Run integration tests
+        run: dotnet cake
+        working-directory: ./tests/integration/
+        shell: powershell
+      - name: Publish generated reports as build artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Integration Tests Windows (.NET Core tool)
+          path: ./tests/integration/BuildArtifacts/output/
