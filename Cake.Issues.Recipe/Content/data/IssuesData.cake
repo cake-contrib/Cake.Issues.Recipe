@@ -79,9 +79,11 @@ public class IssuesData
         {
             this.RepositoryRemoteUrl =
                 BuildServer.DetermineRepositoryRemoteUrl(context, this.RepositoryRootDirectory);
+            context.Information("Repository remote URL: {0}", this.RepositoryRemoteUrl);
 
             this.CommitId =
                 BuildServer.DetermineCommitId(context, this.RepositoryRootDirectory);
+            context.Information("CommitId: {0}", this.CommitId);
 
             this.PullRequestSystem =
                 DeterminePullRequestSystem(
