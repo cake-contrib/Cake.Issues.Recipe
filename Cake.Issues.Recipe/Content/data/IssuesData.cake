@@ -49,12 +49,12 @@ public class IssuesData
     /// <summary>
     /// Gets the list of reported issues.
     /// </summary>
-    public IEnumerable<IIssue> Issues 
-    { 
+    public IEnumerable<IIssue> Issues
+    {
         get
         {
             return issues.AsReadOnly();
-        } 
+        }
     }
 
     /// <summary>
@@ -79,9 +79,11 @@ public class IssuesData
         {
             this.RepositoryRemoteUrl =
                 BuildServer.DetermineRepositoryRemoteUrl(context, this.RepositoryRootDirectory);
+            context.Information("Repository remote URL: {0}", this.RepositoryRemoteUrl);
 
             this.CommitId =
                 BuildServer.DetermineCommitId(context, this.RepositoryRootDirectory);
+            context.Information("CommitId: {0}", this.CommitId);
 
             this.PullRequestSystem =
                 DeterminePullRequestSystem(
@@ -136,7 +138,7 @@ public class IssuesData
             (
                 new Uri(context.EnvironmentVariable("SYSTEM_COLLECTIONURI")).Host == "dev.azure.com" ||
                 new Uri(context.EnvironmentVariable("SYSTEM_COLLECTIONURI")).Host.EndsWith("visualstudio.com")
-            )) 
+            ))
         {
             context.Information("Build server detected: {0}", "Azure Pipelines");
             return new AzureDevOpsBuildServer();
@@ -146,6 +148,12 @@ public class IssuesData
         {
             context.Information("Build server detected: {0}", "AppVeyor");
             return new AppVeyorBuildServer();
+        }
+
+        if (context.GitHubActions().IsRunningOnGitHubActions)
+        {
+            context.Information("Build server detected: {0}", "GitHub Actions");
+            return new GitHubActionsBuildServer();
         }
 
         return null;
