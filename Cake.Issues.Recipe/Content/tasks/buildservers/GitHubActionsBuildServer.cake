@@ -67,39 +67,10 @@ public class GitHubActionsBuildServer : BaseBuildServer
             throw new ArgumentNullException(nameof(data));
         }
 
-        // Group annotations by provider type and run
-        var groupedIssues =
-            from issue in data.Issues
-            group issue by new { issue.ProviderType, issue.Run };
-
-        foreach (var group in groupedIssues)
-        {
-            var groupName = group.First().ProviderName;
-
-            if (!string.IsNullOrWhiteSpace(group.Key.Run))
-            {
-                groupName += " - " + group.Key.Run;
-            }
-
-            context.Information($"::group::{groupName}");
-
-            foreach (var issue in group.OrderByDescending(x => x.Priority))
-            {
-                // Commands don't support line breaks, therefore we only use the first line of the message.
-                var message =
-                    issue.MessageText
-                        .Split(new[] {'\n'}, StringSplitOptions.RemoveEmptyEntries)
-                        .FirstOrDefault()
-                        ?.Trim();
-
-                var rootDirectoryPath =
-                    data.RepositoryRootDirectory.GetRelativePath(data.BuildRootDirectory);
-
-                context.Information($"::warning {FormatWarningOptions(rootDirectoryPath, issue.AffectedFileRelativePath, issue.Line, issue.Column)}::{message}");
-            }
-
-            context.Information($"::endgroup::{groupName}");
-        }
+        context.ReportIssuesToPullRequest(
+            data.Issues,
+            context.GitHubActionsBuilds(),
+            data.BuildRootDirectory);
     }
 
     /// <inheritdoc />
@@ -135,35 +106,5 @@ public class GitHubActionsBuildServer : BaseBuildServer
         }
 
         // Publishing artifacts is currently not supported for GitHub Actions.
-    }
-
-    /// <summary>
-    /// Formats the options for the warning service message.
-    /// </summary>
-    /// <param name="rootDirectoryPath">The root path of the file, relative to the repository root.</param>
-    /// <param name="filePath">The file path relative to the project root.</param>
-    /// <param name="line">The line where the issue ocurred.</param>
-    /// <param name="column">The column where the issue ocurred.</param>
-    /// <returns>Formatted options string for the warning service message.</returns>
-    private static string FormatWarningOptions(DirectoryPath rootDirectoryPath, FilePath filePath, int? line, int? column)
-    {
-        var result = new List<string>();
-
-        if (filePath != null)
-        {
-            result.Add($"file={rootDirectoryPath.CombineWithFilePath(filePath)}");
-        }
-
-        if (line.HasValue)
-        {
-            result.Add($"line={line.Value}");
-        }
-
-        if (column.HasValue)
-        {
-            result.Add($"col={column}");
-        }
-
-        return string.Join(",", result);
     }
 }
