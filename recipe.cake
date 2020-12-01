@@ -1,4 +1,4 @@
-#load nuget:https://pkgs.dev.azure.com/cake-contrib/Home/_packaging/addins/nuget/v3/index.json?package=Cake.Recipe&version=2.0.0-alpha0493&prerelease
+#load nuget:?package=Cake.Recipe&version=2.1.0
 
 Environment.SetVariableNames();
 
