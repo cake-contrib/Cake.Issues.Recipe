@@ -1,18 +1,17 @@
-#load nuget:?package=Cake.Recipe&version=1.1.2
+#load nuget:?package=Cake.Recipe&version=2.1.0
 
 Environment.SetVariableNames();
 
-BuildParameters.SetParameters(context: Context,
-                            buildSystem: BuildSystem,
-                            sourceDirectoryPath: "./src",
-                            title: "Cake.Issues.Recipe",
-                            repositoryOwner: "cake-contrib",
-                            repositoryName: "Cake.Issues.Recipe",
-                            appVeyorAccountName: "cakecontrib",
-                            nuspecFilePath: "./Cake.Issues.Recipe/Cake.Issues.Recipe.nuspec",
-                            shouldRunGitVersion: true,
-                            shouldGenerateDocumentation: false,
-                            shouldPublishMyGet: false);
+BuildParameters.SetParameters(
+    context: Context,
+    buildSystem: BuildSystem,
+    sourceDirectoryPath: "./src",
+    title: "Cake.Issues.Recipe",
+    repositoryOwner: "cake-contrib",
+    repositoryName: "Cake.Issues.Recipe",
+    appVeyorAccountName: "cakecontrib",
+    nuspecFilePath: "./Cake.Issues.Recipe/Cake.Issues.Recipe.nuspec",
+    shouldGenerateDocumentation: false);
 
 BuildParameters.PrintParameters(Context);
 
@@ -23,18 +22,20 @@ ToolSettings.SetToolSettings(context: Context);
 //*************************************************************************************************
 
 Task("Generate-Version-File")
-    .Does(() => {
+    .Does<BuildVersion>((context, buildVersion) => {
         var buildMetaDataCodeGen = TransformText(@"
         public class BuildMetaDataCakeIssuesRecipe
         {
             public static string Date { get; } = ""<%date%>"";
             public static string Version { get; } = ""<%version%>"";
+            public static string CakeVersion { get; } = ""<%cakeversion%>"";
         }",
         "<%",
         "%>"
         )
-   .WithToken("date", DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"))
-   .WithToken("version", BuildParameters.Version.SemVersion)
+   .WithToken("date", BuildMetaData.Date)
+   .WithToken("version", buildVersion.SemVersion)
+   .WithToken("cakeversion", BuildMetaData.CakeVersion)
    .ToString();
 
     System.IO.File.WriteAllText(

@@ -88,6 +88,14 @@ IssuesBuildTasks.ReadIssuesTask = Task("Read-Issues")
                 MarkdownlintV1LogFileFormat));
     }
 
+    if (IssuesParameters.InputFiles.EsLintJsonLogFilePath != null)
+    {
+        issueProviders.Add(
+            EsLintIssuesFromFilePath(
+                IssuesParameters.InputFiles.EsLintJsonLogFilePath,
+                EsLintJsonFormat));
+    }
+
     if (!issueProviders.Any())
     {
         Information("No files to process...");
