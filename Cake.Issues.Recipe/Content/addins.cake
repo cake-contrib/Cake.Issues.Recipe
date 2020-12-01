@@ -8,6 +8,7 @@
 #addin nuget:?package=Cake.Issues.InspectCode&version=0.9.0
 #addin nuget:?package=Cake.Issues.DupFinder&version=0.9.0
 #addin nuget:?package=Cake.Issues.Markdownlint&version=0.9.0
+#addin nuget:?package=Cake.Issues.EsLint&version=0.9.0
 #addin nuget:?package=Cake.Issues.Reporting&version=0.9.0
 #addin nuget:?package=Cake.Issues.Reporting.Generic&version=0.9.0
 #addin nuget:?package=Cake.Issues.PullRequests&version=0.9.0
