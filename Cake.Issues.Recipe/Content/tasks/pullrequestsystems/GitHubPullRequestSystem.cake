@@ -6,15 +6,8 @@ public class GitHubPullRequestSystem : BasePullRequestSystem
     /// <inheritdoc />
     public override void ReportIssuesToPullRequest(ICakeContext context, IssuesData data)
     {
-        if (context == null)
-        {
-            throw new ArgumentNullException(nameof(context));
-        }
-
-        if (data == null)
-        {
-            throw new ArgumentNullException(nameof(data));
-        }
+        context.NotNull(nameof(context));
+        data.NotNull(nameof(data));
 
         // Not supported yet
     }
@@ -22,15 +15,8 @@ public class GitHubPullRequestSystem : BasePullRequestSystem
     /// <inheritdoc />
     public override void SetPullRequestIssuesState(ICakeContext context, IssuesData data)
     {
-        if (context == null)
-        {
-            throw new ArgumentNullException(nameof(context));
-        }
-
-        if (data == null)
-        {
-            throw new ArgumentNullException(nameof(data));
-        }
+        context.NotNull(nameof(context));
+        data.NotNull(nameof(data));
 
         // Not supported yet
     }
@@ -38,15 +24,8 @@ public class GitHubPullRequestSystem : BasePullRequestSystem
     /// <inheritdoc />
     public override FileLinkSettings GetFileLinkSettings(ICakeContext context, IssuesData data)
     {
-        if (context == null)
-        {
-            throw new ArgumentNullException(nameof(context));
-        }
-
-        if (data == null)
-        {
-            throw new ArgumentNullException(nameof(data));
-        }
+        context.NotNull(nameof(context));
+        data.NotNull(nameof(data));
 
         var rootPath = data.RepositoryRootDirectory.GetRelativePath(data.BuildRootDirectory);
 

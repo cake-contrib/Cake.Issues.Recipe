@@ -63,10 +63,7 @@ public class IssuesData
     /// <param name="context">The Cake context.</param>
     public IssuesData(ICakeContext context)
     {
-        if (context == null)
-        {
-            throw new ArgumentNullException(nameof(context));
-        }
+        context.NotNull(nameof(context));
 
         this.BuildRootDirectory = context.MakeAbsolute(context.Directory("./"));
         context.Information("Build script root directory: {0}", this.BuildRootDirectory);
@@ -98,10 +95,7 @@ public class IssuesData
     /// <param name="issue">Issue which should be added.</param>
     public void AddIssue(IIssue issue)
     {
-        if (issue == null)
-        {
-            throw new ArgumentNullException(nameof(issue));
-        }
+        issue.NotNull(nameof(issue));
 
         this.issues.Add(issue);
     }
@@ -112,10 +106,7 @@ public class IssuesData
     /// <param name="issues">Issues which should be added.</param>
     public void AddIssues(IEnumerable<IIssue> issues)
     {
-        if (issues == null)
-        {
-            throw new ArgumentNullException(nameof(issues));
-        }
+        issues.NotNull(nameof(issues));
 
         this.issues.AddRange(issues);
     }
@@ -127,10 +118,7 @@ public class IssuesData
     /// <returns>The build server on which the build is running or <c>null</c> if unknown build server.</returns>
     private static IIssuesBuildServer DetermineBuildServer(ICakeContext context)
     {
-        if (context == null)
-        {
-            throw new ArgumentNullException(nameof(context));
-        }
+        context.NotNull(nameof(context));
 
         // Could be simplified once https://github.com/cake-build/cake/issues/1684 / https://github.com/cake-build/cake/issues/1580 are fixed.
         if (!string.IsNullOrWhiteSpace(context.EnvironmentVariable("TF_BUILD")) &&
@@ -167,15 +155,8 @@ public class IssuesData
     /// <returns>The pull request system or <c>null</c> if unknown pull request system.</returns>
     private static IIssuesPullRequestSystem DeterminePullRequestSystem(ICakeContext context, Uri repositoryUrl)
     {
-        if (context == null)
-        {
-            throw new ArgumentNullException(nameof(context));
-        }
-
-        if (repositoryUrl == null)
-        {
-            throw new ArgumentNullException(nameof(repositoryUrl));
-        }
+        context.NotNull(nameof(context));
+        repositoryUrl.NotNull(nameof(repositoryUrl));
 
         if (repositoryUrl.Host == "dev.azure.com" || repositoryUrl.Host.EndsWith("visualstudio.com"))
         {
