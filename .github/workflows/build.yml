@@ -35,7 +35,7 @@ jobs:
           name: NuGet Package
           path: ./BuildArtifacts/Packages/NuGet
       - name: Run integration tests
-        run: ./build.ps1 -verbosity diagnostic
+        run: ./build.ps1 --verbosity=diagnostic
         working-directory: ./tests/integration/
         shell: powershell
       - name: Publish generated reports as build artifact
