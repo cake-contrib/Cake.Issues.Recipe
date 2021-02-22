@@ -8,15 +8,8 @@ public abstract class BaseBuildServer : IIssuesBuildServer
         ICakeContext context,
         DirectoryPath repositoryRootDirectory)
     {
-        if (context == null)
-        {
-            throw new ArgumentNullException(nameof(context));
-        }
-
-        if (repositoryRootDirectory == null)
-        {
-            throw new ArgumentNullException(nameof(repositoryRootDirectory));
-        }
+        context.NotNull(nameof(context));
+        repositoryRootDirectory.NotNull(nameof(repositoryRootDirectory));
 
         var currentBranch = context.GitBranchCurrent(repositoryRootDirectory);
         return new Uri(currentBranch.Remotes.Single(x => x.Name == "origin").Url);
@@ -27,15 +20,8 @@ public abstract class BaseBuildServer : IIssuesBuildServer
         ICakeContext context,
         DirectoryPath repositoryRootDirectory)
     {
-        if (context == null)
-        {
-            throw new ArgumentNullException(nameof(context));
-        }
-
-        if (repositoryRootDirectory == null)
-        {
-            throw new ArgumentNullException(nameof(repositoryRootDirectory));
-        }
+        context.NotNull(nameof(context));
+        repositoryRootDirectory.NotNull(nameof(repositoryRootDirectory));
 
         return context.GitLogTip(repositoryRootDirectory).Sha;
     }
@@ -43,10 +29,7 @@ public abstract class BaseBuildServer : IIssuesBuildServer
     /// <inheritdoc />
     public virtual bool DetermineIfPullRequest(ICakeContext context)
     {
-        if (context == null)
-        {
-            throw new ArgumentNullException(nameof(context));
-        }
+        context.NotNull(nameof(context));
 
         return false;
     }
@@ -54,10 +37,7 @@ public abstract class BaseBuildServer : IIssuesBuildServer
     /// <inheritdoc />
     public virtual int? DeterminePullRequestId(ICakeContext context)
     {
-        if (context == null)
-        {
-            throw new ArgumentNullException(nameof(context));
-        }
+        context.NotNull(nameof(context));
 
         return null;
    }

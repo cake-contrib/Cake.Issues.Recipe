@@ -8,10 +8,7 @@ public class AzureDevOpsBuildServer : BaseBuildServer
         ICakeContext context,
         DirectoryPath repositoryRootDirectory)
     {
-        if (context == null)
-        {
-            throw new ArgumentNullException(nameof(context));
-        }
+        context.NotNull(nameof(context));
 
         return new Uri(context.EnvironmentVariable("BUILD_REPOSITORY_URI"));
     }
@@ -21,10 +18,7 @@ public class AzureDevOpsBuildServer : BaseBuildServer
         ICakeContext context,
         DirectoryPath repositoryRootDirectory)
     {
-        if (context == null)
-        {
-            throw new ArgumentNullException(nameof(context));
-        }
+        context.NotNull(nameof(context));
 
         return context.AzurePipelines().Environment.Repository.SourceVersion;
     }
@@ -32,11 +26,8 @@ public class AzureDevOpsBuildServer : BaseBuildServer
     /// <inheritdoc />
     public override bool DetermineIfPullRequest(ICakeContext context)
     {
-        if (context == null)
-        {
-            throw new ArgumentNullException(nameof(context));
-        }
-        
+        context.NotNull(nameof(context));
+
         // Could be simplified once https://github.com/cake-build/cake/issues/2149 is fixed
         return !string.IsNullOrWhiteSpace(context.EnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID"));
     }
@@ -44,10 +35,7 @@ public class AzureDevOpsBuildServer : BaseBuildServer
     /// <inheritdoc />
     public override int? DeterminePullRequestId(ICakeContext context)
     {
-        if (context == null)
-        {
-            throw new ArgumentNullException(nameof(context));
-        }
+        context.NotNull(nameof(context));
 
         if (!Int32.TryParse(context.EnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID"), out var pullRequestId))
         {
@@ -64,15 +52,8 @@ public class AzureDevOpsBuildServer : BaseBuildServer
         ICakeContext context,
         IssuesData data)
     {
-        if (context == null)
-        {
-            throw new ArgumentNullException(nameof(context));
-        }
-
-        if (data == null)
-        {
-            throw new ArgumentNullException(nameof(data));
-        }
+        context.NotNull(nameof(context));
+        data.NotNull(nameof(data));
 
         foreach (var issue in data.Issues)
         {
@@ -92,15 +73,8 @@ public class AzureDevOpsBuildServer : BaseBuildServer
         IssuesData data,
         [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "")
     {
-        if (context == null)
-        {
-            throw new ArgumentNullException(nameof(context));
-        }
-
-        if (data == null)
-        {
-            throw new ArgumentNullException(nameof(data));
-        }
+        context.NotNull(nameof(context));
+        data.NotNull(nameof(data));
 
         var summaryFileName = "summary";
         if (!string.IsNullOrWhiteSpace(IssuesParameters.BuildIdentifier))
@@ -124,15 +98,8 @@ public class AzureDevOpsBuildServer : BaseBuildServer
     /// <inheritdoc />
     public override void PublishIssuesArtifacts(ICakeContext context, IssuesData data)
     {
-        if (context == null)
-        {
-            throw new ArgumentNullException(nameof(context));
-        }
-
-        if (data == null)
-        {
-            throw new ArgumentNullException(nameof(data));
-        }
+        context.NotNull(nameof(context));
+        data.NotNull(nameof(data));
 
         if (IssuesParameters.BuildServer.ShouldPublishFullIssuesReport &&
             data.FullIssuesReport != null &&
