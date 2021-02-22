@@ -17,7 +17,7 @@ build_script:
 
 # Tests
 test_script:
-  - ps: cd .\tests\integration\
+  - ps: cd .\tests\script-runner\
   - ps: .\build.ps1 --verbosity=diagnostic
 
 #---------------------------------#
