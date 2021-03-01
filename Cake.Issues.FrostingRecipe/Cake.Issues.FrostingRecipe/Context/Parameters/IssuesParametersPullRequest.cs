@@ -3,7 +3,7 @@ namespace Cake.Issues.FrostingRecipe
     /// <summary>
     /// Parameters for pull request integration.
     /// </summary>
-    public class IssuesParametersPullRequestSystem
+    public class IssuesParametersPullRequest
     {
         /// <summary>
         /// Gets or sets a value indicating whether issues should be reported to the pull request system.

@@ -19,7 +19,7 @@ namespace Cake.Issues.FrostingRecipe
         {
             return
                 !context.BuildSystem().IsLocalBuild &&
-                context.Parameters.PullRequestSystem.ShouldReportIssuesToPullRequest &&
+                context.Parameters.PullRequest.ShouldReportIssuesToPullRequest &&
                 context.State.BuildServer != null && context.State.BuildServer.DetermineIfPullRequest(context);
         }
         #endregion

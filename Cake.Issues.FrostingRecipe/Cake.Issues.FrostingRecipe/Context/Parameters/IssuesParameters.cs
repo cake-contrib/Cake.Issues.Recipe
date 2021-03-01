@@ -38,8 +38,8 @@ namespace Cake.Issues.FrostingRecipe
         public IssuesParametersBuildServer BuildServer { get; } = new IssuesParametersBuildServer();
 
         /// <summary>
-        /// Gets the parameters for pull request system integration.
+        /// Gets the parameters for pull request integration.
         /// </summary>
-        public IssuesParametersPullRequestSystem PullRequestSystem { get; } = new IssuesParametersPullRequestSystem();
+        public IssuesParametersPullRequest PullRequest { get; } = new IssuesParametersPullRequest();
     }
 }
