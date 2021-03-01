@@ -4,5 +4,5 @@ updates:
 - package-ecosystem: nuget
   directory: "/Cake.Issues.FrostingRecipe"
   schedule:
-    interval: live
+    interval: daily
   open-pull-requests-limit: 10
