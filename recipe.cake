@@ -5,12 +5,13 @@ Environment.SetVariableNames();
 BuildParameters.SetParameters(
     context: Context,
     buildSystem: BuildSystem,
-    sourceDirectoryPath: "./src",
+    sourceDirectoryPath: "./Cake.Issues.FrostingRecipe",
     title: "Cake.Issues.Recipe",
     repositoryOwner: "cake-contrib",
     repositoryName: "Cake.Issues.Recipe",
     appVeyorAccountName: "cakecontrib",
-    nuspecFilePath: "./Cake.Issues.Recipe/Cake.Issues.Recipe.nuspec",
+    solutionFilePath: "./Cake.Issues.FrostingRecipe/Cake.Issues.FrostingRecipe.sln",
+    shouldRunDotNetCorePack: true,
     shouldGenerateDocumentation: false);
 
 BuildParameters.PrintParameters(Context);
@@ -51,4 +52,4 @@ BuildParameters.Tasks.CleanTask
 // Execution
 //*************************************************************************************************
 
-Build.RunNuGet();
+Build.RunDotNetCore();

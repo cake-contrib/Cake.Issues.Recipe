@@ -1,0 +1,46 @@
+@inherits IEnumerable<Cake.Issues.IIssue>
+
+@using System.Linq
+@using Cake.Issues
+@using Cake.Issues.Reporting.Generic
+
+# Summary report
+
+There are @Model.Count() issues in the code.
+
+<table>
+    <thead>
+        <tr>
+            <th align="left">Severity</th>
+            <th align="left">Project</th>
+            <th align="left">Directory</th>
+            <th align="left">File</th>
+            <th align="left">Line</th>
+            <th align="left">Rule</th>
+            <th align="left">Message</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var issue in @Model.OrderByDescending(x => x.Priority))
+        {
+        <tr>
+            <td>@issue.PriorityName</td>
+            <td>@issue.ProjectName</td>
+            <td>@issue.FileDirectory()</td>
+            <td>@issue.FileName()</td>
+            <td>@issue.Line</td>
+            <td>
+                @if (issue.RuleUrl != null)
+                {
+                    <a href="@issue.RuleUrl" target="_blank">@issue.Rule</a>
+                }
+                else
+                {
+                    @issue.Rule;
+                }
+            </td>
+            <td>@issue.Message(IssueCommentFormat.Html)</td>
+        </tr>
+        }
+    </tbody>
+</table>
