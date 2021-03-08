@@ -31,7 +31,7 @@ See the Project Site for documentation and an overview of the whole ecosystem of
 
   <ItemGroup>
     <PackageReference Include="Cake.AzureDevOps" Version="0.5.1" />
-    <PackageReference Include="Cake.Frosting" Version="1.0.0" PrivateAssets="All" />
+    <PackageReference Include="Cake.Frosting" Version="1.1.0" PrivateAssets="All" />
     <PackageReference Include="Cake.Git" Version="1.0.0" />
     <PackageReference Include="Cake.Issues" Version="0.9.1" />
     <PackageReference Include="Cake.Issues.DupFinder" Version="0.9.0" />
