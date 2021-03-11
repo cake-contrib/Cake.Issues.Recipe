@@ -71,8 +71,6 @@ public class Lifetime : FrostingLifetime<BuildContext>
         context.Parameters.BuildIdentifier = $"Cake Frosting {platform} ({runtime})";
 
         context.Information("Build identifier: {0}", context.Parameters.BuildIdentifier);
-
-        // context.Parameters.OutputDirectory = context.BuildArtifactsDirectory.Combine("output");
     }
 
     public override void Teardown(BuildContext context, ITeardownContext info)
@@ -140,7 +138,7 @@ public sealed class RunInspectCodeTask : FrostingTask<BuildContext>
             settings);
 
         // Pass path to InspectCode log file to Cake.Issues.Recipe
-        context.Parameters.InputFiles.InspectCodeLogFilePath = context.InspectCodeLogFilePath;
+        context.Parameters.InputFiles.AddInspectCodeLogFile(context.InspectCodeLogFilePath);
     }
 }
 

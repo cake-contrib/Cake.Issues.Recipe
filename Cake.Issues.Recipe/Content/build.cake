@@ -39,82 +39,87 @@ IssuesBuildTasks.ReadIssuesTask = Task("Read-Issues")
     .Description("Reads issues from the provided log files.")
     .Does<IssuesData>((data) =>
 {
-    // Determine which issue providers should be used.
-    var issueProviders = new List<IIssueProvider>();
-
-    if (IssuesParameters.InputFiles.MsBuildXmlFileLoggerLogFilePath != null)
-    {
-        issueProviders.Add(
-            MsBuildIssuesFromFilePath(
-                IssuesParameters.InputFiles.MsBuildXmlFileLoggerLogFilePath,
-                MsBuildXmlFileLoggerFormat));
-    }
-
-    if (IssuesParameters.InputFiles.MsBuildBinaryLogFilePath != null)
-    {
-        issueProviders.Add(
-            MsBuildIssuesFromFilePath(
-                IssuesParameters.InputFiles.MsBuildBinaryLogFilePath,
-                MsBuildBinaryLogFileFormat));
-    }
-
-    if (IssuesParameters.InputFiles.InspectCodeLogFilePath != null)
-    {
-        issueProviders.Add(
-            InspectCodeIssuesFromFilePath(
-                IssuesParameters.InputFiles.InspectCodeLogFilePath));
-    }
-
-    if (IssuesParameters.InputFiles.DupFinderLogFilePath != null)
-    {
-        issueProviders.Add(
-            DupFinderIssuesFromFilePath(
-                IssuesParameters.InputFiles.DupFinderLogFilePath));
-    }
-
-    if (IssuesParameters.InputFiles.MarkdownlintCliLogFilePath != null)
-    {
-        issueProviders.Add(
-            MarkdownlintIssuesFromFilePath(
-                IssuesParameters.InputFiles.MarkdownlintCliLogFilePath,
-                MarkdownlintCliLogFileFormat));
-    }
-
-    if (IssuesParameters.InputFiles.MarkdownlintV1LogFilePath != null)
-    {
-        issueProviders.Add(
-            MarkdownlintIssuesFromFilePath(
-                IssuesParameters.InputFiles.MarkdownlintV1LogFilePath,
-                MarkdownlintV1LogFileFormat));
-    }
-
-    if (IssuesParameters.InputFiles.EsLintJsonLogFilePath != null)
-    {
-        issueProviders.Add(
-            EsLintIssuesFromFilePath(
-                IssuesParameters.InputFiles.EsLintJsonLogFilePath,
-                EsLintJsonFormat));
-    }
-
-    if (!issueProviders.Any())
-    {
-        Information("No files to process...");
-        return;
-    }
-
-    // Read issues from log files.
-    var settings = new ReadIssuesSettings(data.BuildRootDirectory);
+    // Define default settings.
+    var defaultSettings = new ReadIssuesSettings(data.BuildRootDirectory);
 
     if (data.PullRequestSystem != null)
     {
-        settings.FileLinkSettings =
+        defaultSettings.FileLinkSettings =
             data.PullRequestSystem.GetFileLinkSettings(Context, data);
     }
 
-    data.AddIssues(
-        ReadIssues(
-            issueProviders,
-            settings));
+    // Read MSBuild log files created by XmlFileLogger.
+    foreach (var logFile in IssuesParameters.InputFiles.MsBuildXmlFileLoggerLogFilePaths)
+    {
+        data.AddIssues(
+            ReadIssues(
+                MsBuildIssuesFromFilePath(
+                    logFile.Key,
+                    MsBuildXmlFileLoggerFormat),
+                GetSettings(logFile.Value, defaultSettings)));
+    }
+
+    // Read MSBuild binary log files.
+    foreach (var logFile in IssuesParameters.InputFiles.MsBuildBinaryLogFilePaths)
+    {
+        data.AddIssues(
+            ReadIssues(
+                MsBuildIssuesFromFilePath(
+                    logFile.Key,
+                    MsBuildBinaryLogFileFormat),
+                GetSettings(logFile.Value, defaultSettings)));
+    }
+
+    // Read InspectCode log files.
+    foreach (var logFile in IssuesParameters.InputFiles.InspectCodeLogFilePaths)
+    {
+        data.AddIssues(
+            ReadIssues(
+                InspectCodeIssuesFromFilePath(logFile.Key),
+                GetSettings(logFile.Value, defaultSettings)));
+    }
+
+    // Read dupFinder log files.
+    foreach (var logFile in IssuesParameters.InputFiles.DupFinderLogFilePaths)
+    {
+        data.AddIssues(
+            ReadIssues(
+                DupFinderIssuesFromFilePath(logFile.Key),
+                GetSettings(logFile.Value, defaultSettings)));
+    }
+
+    // Read markdownlint-cli log files.
+    foreach (var logFile in IssuesParameters.InputFiles.MarkdownlintCliLogFilePaths)
+    {
+        data.AddIssues(
+            ReadIssues(
+                MarkdownlintIssuesFromFilePath(
+                    logFile.Key,
+                    MarkdownlintCliLogFileFormat),
+                GetSettings(logFile.Value, defaultSettings)));
+    }
+
+    // Read markdownlint log files in version 1.
+    foreach (var logFile in IssuesParameters.InputFiles.MarkdownlintV1LogFilePaths)
+    {
+        data.AddIssues(
+            ReadIssues(
+                MarkdownlintIssuesFromFilePath(
+                    logFile.Key,
+                    MarkdownlintV1LogFileFormat),
+                GetSettings(logFile.Value, defaultSettings)));
+    }
+
+    // Read ESLint log files in JSON format.
+    foreach (var logFile in IssuesParameters.InputFiles.EsLintJsonLogFilePaths)
+    {
+        data.AddIssues(
+            ReadIssues(
+                EsLintIssuesFromFilePath(
+                    logFile.Key,
+                    EsLintJsonFormat),
+                GetSettings(logFile.Value, defaultSettings)));
+    }
 
     Information("{0} issues are found.", data.Issues.Count());
 });
@@ -228,5 +233,24 @@ IssuesBuildTasks.SetPullRequestIssuesStateTask = Task("Set-PullRequestIssuesStat
 
     data.PullRequestSystem.SetPullRequestIssuesState(Context, data);
 });
+
+///////////////////////////////////////////////////////////////////////////////
+// HELPER Functions
+///////////////////////////////////////////////////////////////////////////////
+
+private IReadIssuesSettings GetSettings(IReadIssuesSettings configuredSettings, IReadIssuesSettings defaultSettings)
+{
+    if (configuredSettings == null)
+    {
+        return defaultSettings;
+    }
+
+    if (configuredSettings.FileLinkSettings == null)
+    {
+        configuredSettings.FileLinkSettings = defaultSettings.FileLinkSettings;
+    }
+
+    return configuredSettings;
+}
 
 #load tasks/tasks.cake
