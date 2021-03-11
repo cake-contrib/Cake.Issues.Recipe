@@ -12,7 +12,7 @@
 See the Project Site for documentation and an overview of the whole ecosystem of addins for working with issues in Cake scripts.</Description>
     <Authors>Pascal Berger</Authors>
     <Copyright>Copyright © Pascal Berger</Copyright>
-    <PackageTags>Build Cake Cake.Issues Recipe</PackageTags>
+    <PackageTags>cake cake-frosting cake-recipe cake-issues</PackageTags>
     <PackageIcon>icon.png</PackageIcon>
     <PackageProjectUrl>https://cakeissues.net</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
