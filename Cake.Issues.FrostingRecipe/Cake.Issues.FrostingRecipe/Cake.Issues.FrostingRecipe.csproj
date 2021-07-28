@@ -44,7 +44,7 @@ See the Project Site for documentation and an overview of the whole ecosystem of
     <PackageReference Include="Cake.Issues.PullRequests.AzureDevOps" Version="0.9.1" />
     <PackageReference Include="Cake.Issues.PullRequests.GitHubActions" Version="0.9.0" />
     <PackageReference Include="Cake.Issues.Reporting" Version="0.9.0" />
-    <PackageReference Include="Cake.Issues.Reporting.Generic" Version="0.9.0" />
+    <PackageReference Include="Cake.Issues.Reporting.Generic" Version="1.0.0" />
   </ItemGroup>
 
 </Project>
