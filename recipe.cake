@@ -5,12 +5,12 @@ Environment.SetVariableNames();
 BuildParameters.SetParameters(
     context: Context,
     buildSystem: BuildSystem,
-    sourceDirectoryPath: "./Cake.Issues.FrostingRecipe",
+    sourceDirectoryPath: "./Cake.Frosting.Issues.Recipe",
     title: "Cake.Issues.Recipe",
     repositoryOwner: "cake-contrib",
     repositoryName: "Cake.Issues.Recipe",
     appVeyorAccountName: "cakecontrib",
-    solutionFilePath: "./Cake.Issues.FrostingRecipe/Cake.Issues.FrostingRecipe.sln",
+    solutionFilePath: "./Cake.Frosting.Issues.Recipe/Cake.Frosting.Issues.Recipe.sln",
     shouldRunDotNetCorePack: true,
     shouldGenerateDocumentation: false);
 
