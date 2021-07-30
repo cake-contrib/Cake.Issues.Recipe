@@ -1,0 +1,50 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\Cake.Frosting.Issues.Recipe.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Title>Cake.Frosting.Issues.Recipe</Title>
+    <Description>Cake.Frosting.Issues.Recipe provides a build script which can be used inside your projects Cake build script to add issue management.
+
+See the Project Site for documentation and an overview of the whole ecosystem of addins for working with issues in Cake scripts.</Description>
+    <Authors>Pascal Berger</Authors>
+    <Copyright>Copyright © Pascal Berger</Copyright>
+    <PackageTags>cake cake-frosting cake-recipe cake-issues</PackageTags>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageProjectUrl>https://cakeissues.net</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/cake-contrib/Cake.Issues.Recipe.git</RepositoryUrl>
+    <PackageReleaseNotes>https://github.com/cake-contrib/Cake.Issues.Recipe/releases/tag/0.4.4</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="BuildServers\AzurePipelineSummary.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="icon.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Cake.AzureDevOps" Version="1.0.0" />
+    <PackageReference Include="Cake.Frosting" Version="1.0.0" PrivateAssets="All" />
+    <PackageReference Include="Cake.Git" Version="1.0.1" />
+    <PackageReference Include="Cake.Issues" Version="1.0.0" />
+    <PackageReference Include="Cake.Issues.DupFinder" Version="1.0.0" />
+    <PackageReference Include="Cake.Issues.EsLint" Version="1.0.0" />
+    <PackageReference Include="Cake.Issues.InspectCode" Version="1.0.0" />
+    <PackageReference Include="Cake.Issues.Markdownlint" Version="1.0.0" />
+    <PackageReference Include="Cake.Issues.MsBuild" Version="1.0.0" />
+    <PackageReference Include="Cake.Issues.PullRequests" Version="1.0.0" />
+    <PackageReference Include="Cake.Issues.PullRequests.AppVeyor" Version="1.0.0" />
+    <PackageReference Include="Cake.Issues.PullRequests.AzureDevOps" Version="1.0.0" />
+    <PackageReference Include="Cake.Issues.PullRequests.GitHubActions" Version="1.0.0" />
+    <PackageReference Include="Cake.Issues.Reporting" Version="1.0.0" />
+    <PackageReference Include="Cake.Frosting.Issues.Reporting.Generic" Version="1.0.0" />
+  </ItemGroup>
+
+</Project>

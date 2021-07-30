@@ -10,7 +10,7 @@ using Cake.Core;
 using Cake.Core.Diagnostics;
 using Cake.Core.IO;
 using Cake.Frosting;
-using Cake.Issues.FrostingRecipe;
+using Cake.Frosting.Issues.Recipe;
 
 public static class Program
 {
