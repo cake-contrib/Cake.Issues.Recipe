@@ -11,6 +11,10 @@
 Cake.Issues.Recipe provides a build script which can be used inside your projects Cake build script to add issue management.
 
 See the Project Site for documentation and an overview of the whole ecosystem of addins for working with issues in Cake scripts.
+
+NOTE:
+This is the version of the recipe compatible with Cake Script Runners.
+For recipe compatible with Cake Frosting see Cake.Frosting.Issues.Recipe.
     </description>
     <license type="expression">MIT</license>
     <projectUrl>https://cakeissues.net</projectUrl>

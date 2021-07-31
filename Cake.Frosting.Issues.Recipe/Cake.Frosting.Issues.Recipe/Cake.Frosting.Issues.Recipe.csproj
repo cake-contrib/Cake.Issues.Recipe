@@ -7,9 +7,13 @@
 
   <PropertyGroup>
     <Title>Cake.Frosting.Issues.Recipe</Title>
-    <Description>Cake.Frosting.Issues.Recipe provides a build script which can be used inside your projects Cake build script to add issue management.
+    <Description>Cake.Frosting.Issues.Recipe provides a build script which can be used inside your projects Cake Frosting build to add issue management.
 
-See the Project Site for documentation and an overview of the whole ecosystem of addins for working with issues in Cake scripts.</Description>
+See the Project Site for documentation and an overview of the whole ecosystem of addins for working with issues in Cake builds.
+
+NOTE:
+This is the version of the recipe compatible with Cake Frosting.
+For recipe compatible with Cake Script Runners see Cake.Issues.Recipe.</Description>
     <Authors>Pascal Berger</Authors>
     <Copyright>Copyright © Pascal Berger</Copyright>
     <PackageTags>cake cake-frosting cake-recipe cake-issues</PackageTags>
