@@ -19,7 +19,7 @@ See the Project Site for documentation and an overview of the whole ecosystem of
     <repository type="git" url="https://github.com/cake-contrib/Cake.Issues.Recipe.git"/>
     <copyright>Copyright © Pascal Berger</copyright>
     <tags>cake cake-recipe cake-issues</tags>
-    <releaseNotes>https://github.com/cake-contrib/Cake.Issues.Recipe/releases/tag/0.4.4</releaseNotes>
+    <releaseNotes>https://github.com/cake-contrib/Cake.Issues.Recipe/releases/tag/1.0.0</releaseNotes>
   </metadata>
   <files>
     <file src="icon.png" target="" />

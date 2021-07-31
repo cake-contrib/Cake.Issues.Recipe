@@ -18,7 +18,7 @@ See the Project Site for documentation and an overview of the whole ecosystem of
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/cake-contrib/Cake.Issues.Recipe.git</RepositoryUrl>
-    <PackageReleaseNotes>https://github.com/cake-contrib/Cake.Issues.Recipe/releases/tag/0.4.4</PackageReleaseNotes>
+    <PackageReleaseNotes>https://github.com/cake-contrib/Cake.Issues.Recipe/releases/tag/1.0.0</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
