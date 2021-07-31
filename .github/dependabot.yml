@@ -6,3 +6,7 @@ updates:
   schedule:
     interval: daily
   open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: Cake.Frosting
+    versions:
+    - "> 1.0.0, < 2"
