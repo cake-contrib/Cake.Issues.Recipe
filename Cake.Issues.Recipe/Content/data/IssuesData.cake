@@ -41,6 +41,11 @@ public class IssuesData
     public IIssuesBuildServer BuildServer { get; }
 
     /// <summary>
+    /// Gets the provider to read information about the Git repository.
+    /// </summary>
+    public IRepositoryInfoProvider RepositoryInfo { get; }
+
+    /// <summary>
     /// Gets the pull request system used for the code.
     /// Returns <c>null</c> if not running a pull request build or on an unsupported build server.
     /// </summary>
@@ -61,12 +66,15 @@ public class IssuesData
     /// Creates a new instance of the <see cref="IssuesData"/> class.
     /// </summary>
     /// <param name="context">The Cake context.</param>
-    public IssuesData(ICakeContext context)
+    /// <param name="repositoryInfoProviderType">Defines how information about the Git repository should be determined.</param>
+    public IssuesData(ICakeContext context, RepositoryInfoProviderType repositoryInfoProviderType)
     {
         context.NotNull(nameof(context));
 
         this.BuildRootDirectory = context.MakeAbsolute(context.Directory("./"));
         context.Information("Build script root directory: {0}", this.BuildRootDirectory);
+
+        this.RepositoryInfo = DetermineRepositoryInfoProvider(context, repositoryInfoProviderType);
 
         this.RepositoryRootDirectory = context.GitFindRootFromPath(this.BuildRootDirectory);
         context.Information("Repository root directory: {0}", this.RepositoryRootDirectory);
@@ -109,6 +117,34 @@ public class IssuesData
         issues.NotNull(nameof(issues));
 
         this.issues.AddRange(issues);
+    }
+
+    /// <summary>
+    /// Determines the repository info provider to use.
+    /// </summary>
+    /// <param name="context">The Cake context.</param>
+    /// <param name="repositoryInfoProviderType">Defines how information about the Git repository should be determined.</param>
+    /// <returns>The repository info provider which should be used.</returns>
+    private static IRepositoryInfoProvider DetermineRepositoryInfoProvider(
+        ICakeContext context,
+        RepositoryInfoProviderType repositoryInfoProviderType)
+    {
+        if (context == null)
+        {
+            throw new ArgumentNullException(nameof(context));
+        }
+
+        switch (repositoryInfoProviderType)
+        {
+            case RepositoryInfoProviderType.CakeGit:
+                context.Information("Using Cake.Git for providing repository information");
+                return new CliRepositoryInfoProvider();
+            case RepositoryInfoProviderType.Cli:
+                context.Information("Using Git CLI for providing repository information");
+                return new CliRepositoryInfoProvider();
+            default:
+                throw new NotImplementedException("Unsupported repository info provider");
+        }
     }
 
     /// <summary>

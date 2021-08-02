@@ -13,6 +13,11 @@
 /// </summary>
 var IssuesBuildTasks = new IssuesBuildTaskDefinitions();
 
+/// <summary>
+/// Defines how information about the Git repository should be determined.
+/// </summary>
+var RepositoryInfoProvider = RepositoryInfoProviderType.CakeGit;
+
 ///////////////////////////////////////////////////////////////////////////////
 // SETUP / TEARDOWN
 ///////////////////////////////////////////////////////////////////////////////
@@ -20,7 +25,7 @@ var IssuesBuildTasks = new IssuesBuildTaskDefinitions();
 Setup<IssuesData>(setupContext =>
 {
     Information("Initializing Cake.Issues.Recipe (Version {0})...", BuildMetaDataCakeIssuesRecipe.Version);
-    return new IssuesData(setupContext);
+    return new IssuesData(setupContext, RepositoryInfoProvider);
 });
 
 ///////////////////////////////////////////////////////////////////////////////
