@@ -40,7 +40,7 @@ public class BuildContext : IssuesContext
     public FilePath MarkdownlintCliLogFilePath { get; }
 
     public BuildContext(ICakeContext context)
-        : base(context)
+        : base(context, RepositoryInfoProviderType.Cli)
     {
         this.BuildArtifactsDirectory = new DirectoryPath("BuildArtifacts");
 

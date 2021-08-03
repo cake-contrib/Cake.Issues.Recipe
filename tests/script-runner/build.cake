@@ -12,6 +12,8 @@
 
 var target = Argument("target", "Default");
 
+RepositoryInfoProvider = Argument("repositoryInfoProvider", RepositoryInfoProviderType.Cli);
+
 //////////////////////////////////////////////////
 // SETUP / TEARDOWN
 //////////////////////////////////////////////////

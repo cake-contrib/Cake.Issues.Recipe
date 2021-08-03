@@ -21,11 +21,14 @@ namespace Cake.Frosting.Issues.Recipe
         /// Creates a new instance of the <see cref="IssuesContext"/> class.
         /// </summary>
         /// <param name="context">The Cake context.</param>
-        public IssuesContext(ICakeContext context)
+        /// <param name="repositoryInfoProviderType">Defines how information about the Git repository should be determined.</param>
+        public IssuesContext(
+            ICakeContext context,
+            RepositoryInfoProviderType repositoryInfoProviderType)
             : base(context)
         {
             this.Parameters = new IssuesParameters();
-            this.State = new IssuesState(this);
+            this.State = new IssuesState(this, repositoryInfoProviderType);
         }
     }
 }

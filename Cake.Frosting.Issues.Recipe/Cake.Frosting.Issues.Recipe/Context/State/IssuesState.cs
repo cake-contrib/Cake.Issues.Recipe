@@ -3,7 +3,6 @@ using Cake.Common.Build;
 using Cake.Common.Diagnostics;
 using Cake.Common.IO;
 using Cake.Core.IO;
-using Cake.Git;
 using Cake.Issues;
 using System;
 using System.Collections.Generic;
@@ -48,6 +47,11 @@ namespace Cake.Frosting.Issues.Recipe
         public FilePath SummaryIssuesReport { get; set; }
 
         /// <summary>
+        /// Gets the provider to read information about the Git repository.
+        /// </summary>
+        public IRepositoryInfoProvider RepositoryInfo { get; }
+
+        /// <summary>
         /// Gets the build server under which the build is running.
         /// Returns <c>null</c> if running locally or on an unsupported build server.
         /// </summary>
@@ -68,7 +72,10 @@ namespace Cake.Frosting.Issues.Recipe
         /// Creates a new instance of the <see cref="IssuesState"/> class.
         /// </summary>
         /// <param name="context">The Cake context.</param>
-        public IssuesState(IssuesContext context)
+        /// <param name="repositoryInfoProviderType">Defines how information about the Git repository should be determined.</param>
+        public IssuesState(
+            IssuesContext context,
+            RepositoryInfoProviderType repositoryInfoProviderType)
         {
             if (context == null)
             {
@@ -78,7 +85,9 @@ namespace Cake.Frosting.Issues.Recipe
             this.BuildRootDirectory = context.MakeAbsolute(context.Directory("./"));
             context.Information("Build script root directory: {0}", this.BuildRootDirectory);
 
-            this.RepositoryRootDirectory = context.GitFindRootFromPath(this.BuildRootDirectory);
+            this.RepositoryInfo = DetermineRepositoryInfoProvider(context, repositoryInfoProviderType);
+
+            this.RepositoryRootDirectory = this.RepositoryInfo.GetRepositoryRootDirectory(context, this.BuildRootDirectory);
             context.Information("Repository root directory: {0}", this.RepositoryRootDirectory);
 
             this.BuildServer = DetermineBuildServer(context);
@@ -125,6 +134,34 @@ namespace Cake.Frosting.Issues.Recipe
             }
 
             this.issues.AddRange(issues);
+        }
+
+        /// <summary>
+        /// Determines the repository info provider to use.
+        /// </summary>
+        /// <param name="context">The Cake context.</param>
+        /// <param name="repositoryInfoProviderType">Defines how information about the Git repository should be determined.</param>
+        /// <returns>The repository info provider which should be used.</returns>
+        private static IRepositoryInfoProvider DetermineRepositoryInfoProvider(
+            IssuesContext context,
+            RepositoryInfoProviderType repositoryInfoProviderType)
+        {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
+            switch (repositoryInfoProviderType)
+            {
+                case RepositoryInfoProviderType.CakeGit:
+                    context.Information("Using Cake.Git for providing repository information");
+                    return new CliRepositoryInfoProvider();
+                case RepositoryInfoProviderType.Cli:
+                    context.Information("Using Git CLI for providing repository information");
+                    return new CliRepositoryInfoProvider();
+                default:
+                    throw new NotImplementedException("Unsupported repository info provider");
+            }
         }
 
         /// <summary>
