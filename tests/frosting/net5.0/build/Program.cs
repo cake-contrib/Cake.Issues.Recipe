@@ -63,8 +63,6 @@ public class Lifetime : FrostingLifetime<BuildContext>
 {
     public override void Setup(BuildContext context)
     {
-        context.Parameters.Reporting.ShouldCreateFullIssuesReport = false;
-
         var platform = context.Environment.Platform.Family.ToString();
         var runtime = context.Environment.Runtime.IsCoreClr ? ".NET Core" : ".NET Framework";
 
