@@ -1,0 +1,3 @@
+#load IRepositoryInfoProvider.cake
+#load CakeGitRepositoryInfoProvider.cake
+#load CliRepositoryInfoProvider.cake

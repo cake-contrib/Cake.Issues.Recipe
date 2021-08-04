@@ -1,8 +1,6 @@
 using Cake.Core.IO;
-using Cake.Git;
 using Cake.Issues;
 using System;
-using System.Linq;
 
 namespace Cake.Frosting.Issues.Recipe
 {
@@ -19,8 +17,7 @@ namespace Cake.Frosting.Issues.Recipe
             context.NotNull(nameof(context));
             repositoryRootDirectory.NotNull(nameof(repositoryRootDirectory));
 
-            var currentBranch = context.GitBranchCurrent(repositoryRootDirectory);
-            return new Uri(currentBranch.Remotes.Single(x => x.Name == "origin").Url);
+            return context.State.RepositoryInfo.GetRepositoryRemoteUrl(context, repositoryRootDirectory);
         }
 
         /// <inheritdoc />
@@ -31,7 +28,7 @@ namespace Cake.Frosting.Issues.Recipe
             context.NotNull(nameof(context));
             repositoryRootDirectory.NotNull(nameof(repositoryRootDirectory));
 
-            return context.GitLogTip(repositoryRootDirectory).Sha;
+            return context.State.RepositoryInfo.GetCommitId(context, repositoryRootDirectory);
         }
 
         /// <inheritdoc />
