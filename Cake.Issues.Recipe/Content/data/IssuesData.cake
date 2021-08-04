@@ -41,6 +41,11 @@ public class IssuesData
     public IIssuesBuildServer BuildServer { get; }
 
     /// <summary>
+    /// Gets the provider to read information about the Git repository.
+    /// </summary>
+    public IRepositoryInfoProvider RepositoryInfo { get; }
+
+    /// <summary>
     /// Gets the pull request system used for the code.
     /// Returns <c>null</c> if not running a pull request build or on an unsupported build server.
     /// </summary>
@@ -61,15 +66,15 @@ public class IssuesData
     /// Creates a new instance of the <see cref="IssuesData"/> class.
     /// </summary>
     /// <param name="context">The Cake context.</param>
-    public IssuesData(ICakeContext context)
+    /// <param name="repositoryInfoProviderType">Defines how information about the Git repository should be determined.</param>
+    public IssuesData(ICakeContext context, RepositoryInfoProviderType repositoryInfoProviderType)
     {
-        if (context == null)
-        {
-            throw new ArgumentNullException(nameof(context));
-        }
+        context.NotNull(nameof(context));
 
         this.BuildRootDirectory = context.MakeAbsolute(context.Directory("./"));
         context.Information("Build script root directory: {0}", this.BuildRootDirectory);
+
+        this.RepositoryInfo = DetermineRepositoryInfoProvider(context, repositoryInfoProviderType);
 
         this.RepositoryRootDirectory = context.GitFindRootFromPath(this.BuildRootDirectory);
         context.Information("Repository root directory: {0}", this.RepositoryRootDirectory);
@@ -98,10 +103,7 @@ public class IssuesData
     /// <param name="issue">Issue which should be added.</param>
     public void AddIssue(IIssue issue)
     {
-        if (issue == null)
-        {
-            throw new ArgumentNullException(nameof(issue));
-        }
+        issue.NotNull(nameof(issue));
 
         this.issues.Add(issue);
     }
@@ -112,12 +114,37 @@ public class IssuesData
     /// <param name="issues">Issues which should be added.</param>
     public void AddIssues(IEnumerable<IIssue> issues)
     {
-        if (issues == null)
-        {
-            throw new ArgumentNullException(nameof(issues));
-        }
+        issues.NotNull(nameof(issues));
 
         this.issues.AddRange(issues);
+    }
+
+    /// <summary>
+    /// Determines the repository info provider to use.
+    /// </summary>
+    /// <param name="context">The Cake context.</param>
+    /// <param name="repositoryInfoProviderType">Defines how information about the Git repository should be determined.</param>
+    /// <returns>The repository info provider which should be used.</returns>
+    private static IRepositoryInfoProvider DetermineRepositoryInfoProvider(
+        ICakeContext context,
+        RepositoryInfoProviderType repositoryInfoProviderType)
+    {
+        if (context == null)
+        {
+            throw new ArgumentNullException(nameof(context));
+        }
+
+        switch (repositoryInfoProviderType)
+        {
+            case RepositoryInfoProviderType.CakeGit:
+                context.Information("Using Cake.Git for providing repository information");
+                return new CliRepositoryInfoProvider();
+            case RepositoryInfoProviderType.Cli:
+                context.Information("Using Git CLI for providing repository information");
+                return new CliRepositoryInfoProvider();
+            default:
+                throw new NotImplementedException("Unsupported repository info provider");
+        }
     }
 
     /// <summary>
@@ -127,10 +154,7 @@ public class IssuesData
     /// <returns>The build server on which the build is running or <c>null</c> if unknown build server.</returns>
     private static IIssuesBuildServer DetermineBuildServer(ICakeContext context)
     {
-        if (context == null)
-        {
-            throw new ArgumentNullException(nameof(context));
-        }
+        context.NotNull(nameof(context));
 
         // Could be simplified once https://github.com/cake-build/cake/issues/1684 / https://github.com/cake-build/cake/issues/1580 are fixed.
         if (!string.IsNullOrWhiteSpace(context.EnvironmentVariable("TF_BUILD")) &&
@@ -167,15 +191,8 @@ public class IssuesData
     /// <returns>The pull request system or <c>null</c> if unknown pull request system.</returns>
     private static IIssuesPullRequestSystem DeterminePullRequestSystem(ICakeContext context, Uri repositoryUrl)
     {
-        if (context == null)
-        {
-            throw new ArgumentNullException(nameof(context));
-        }
-
-        if (repositoryUrl == null)
-        {
-            throw new ArgumentNullException(nameof(repositoryUrl));
-        }
+        context.NotNull(nameof(context));
+        repositoryUrl.NotNull(nameof(repositoryUrl));
 
         if (repositoryUrl.Host == "dev.azure.com" || repositoryUrl.Host.EndsWith("visualstudio.com"))
         {

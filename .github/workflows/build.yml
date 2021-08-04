@@ -18,9 +18,9 @@ jobs:
         with:
           name: NuGet Package
           path: ./BuildArtifacts/Packages/NuGet/
-  # Integration Tests Windows (.NET Framework)
-  Test_Windows_DotNetFramework:
-    name: Integration Tests Windows (.NET Framework)
+  # Integration Tests Script Runner Windows (.NET Framework)
+  Test_Script_Runner_Windows_DotNetFramework:
+    name: Integration Tests Script Runner Windows (.NET Framework)
     needs: Build
     runs-on: windows-latest
     steps:
@@ -35,17 +35,17 @@ jobs:
           name: NuGet Package
           path: ./BuildArtifacts/Packages/NuGet
       - name: Run integration tests
-        run: ./build.ps1 -verbosity diagnostic
-        working-directory: ./tests/integration/
+        run: ./build.ps1 --verbosity=diagnostic
+        working-directory: ./tests/script-runner/
         shell: powershell
       - name: Publish generated reports as build artifact
         uses: actions/upload-artifact@v2
         with:
-          name: Integration Tests Windows (.NET Framework)
-          path: ./tests/integration/BuildArtifacts/output/
-  # Integration Tests Windows (.NET Core tool)
+          name: Integration Tests Script Runner Windows (.NET Framework)
+          path: ./tests/script-runner/BuildArtifacts/output/
+  # Integration Tests Script Runner Windows (.NET Core tool)
   Test_Windows_DotNetCoreTool:
-    name: Integration Tests Windows (.NET Core tool)
+    name: Integration Tests Script Runner Windows (.NET Core tool)
     needs: Build
     runs-on: windows-latest
     steps:
@@ -61,14 +61,14 @@ jobs:
           path: ./BuildArtifacts/Packages/NuGet
       - name: Restore .NET Core tool
         run: dotnet tool restore
-        working-directory: ./tests/integration/
+        working-directory: ./tests/script-runner/
         shell: powershell
       - name: Run integration tests
         run: dotnet cake
-        working-directory: ./tests/integration/
+        working-directory: ./tests/script-runner/
         shell: powershell
       - name: Publish generated reports as build artifact
         uses: actions/upload-artifact@v2
         with:
-          name: Integration Tests Windows (.NET Core tool)
-          path: ./tests/integration/BuildArtifacts/output/
+          name: Integration Tests Script Runner Windows (.NET Core tool)
+          path: ./tests/script-runner/BuildArtifacts/output/

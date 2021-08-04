@@ -17,8 +17,8 @@ build_script:
 
 # Tests
 test_script:
-  - ps: cd .\tests\integration\
-  - ps: .\build.ps1 -verbosity diagnostic
+  - ps: cd .\tests\script-runner\
+  - ps: .\build.ps1 --verbosity=diagnostic
 
 #---------------------------------#
 #        Branches to build        #

@@ -8,10 +8,7 @@ public class GitHubActionsBuildServer : BaseBuildServer
         ICakeContext context,
         DirectoryPath repositoryRootDirectory)
     {
-        if (context == null)
-        {
-            throw new ArgumentNullException(nameof(context));
-        }
+        context.NotNull(nameof(context));
 
         return new System.Uri($"https://github.com/{context.GitHubActions().Environment.Workflow.Repository}.git");
     }
@@ -21,10 +18,7 @@ public class GitHubActionsBuildServer : BaseBuildServer
         ICakeContext context,
         DirectoryPath repositoryRootDirectory)
     {
-        if (context == null)
-        {
-            throw new ArgumentNullException(nameof(context));
-        }
+        context.NotNull(nameof(context));
 
         return context.GitHubActions().Environment.Workflow.Sha;
     }
@@ -32,10 +26,7 @@ public class GitHubActionsBuildServer : BaseBuildServer
     /// <inheritdoc />
     public override bool DetermineIfPullRequest(ICakeContext context)
     {
-        if (context == null)
-        {
-            throw new ArgumentNullException(nameof(context));
-        }
+        context.NotNull(nameof(context));
 
         return context.GitHubActions().Environment.PullRequest.IsPullRequest;
     }
@@ -43,10 +34,7 @@ public class GitHubActionsBuildServer : BaseBuildServer
     /// <inheritdoc />
     public override int? DeterminePullRequestId(ICakeContext context)
     {
-        if (context == null)
-        {
-            throw new ArgumentNullException(nameof(context));
-        }
+        context.NotNull(nameof(context));
 
         // Not supported by GitHub Actions
         return null;
@@ -57,15 +45,8 @@ public class GitHubActionsBuildServer : BaseBuildServer
         ICakeContext context,
         IssuesData data)
     {
-        if (context == null)
-        {
-            throw new ArgumentNullException(nameof(context));
-        }
-
-        if (data == null)
-        {
-            throw new ArgumentNullException(nameof(data));
-        }
+        context.NotNull(nameof(context));
+        data.NotNull(nameof(data));
 
         context.ReportIssuesToPullRequest(
             data.Issues,
@@ -79,15 +60,8 @@ public class GitHubActionsBuildServer : BaseBuildServer
         IssuesData data,
         [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "")
     {
-        if (context == null)
-        {
-            throw new ArgumentNullException(nameof(context));
-        }
-
-        if (data == null)
-        {
-            throw new ArgumentNullException(nameof(data));
-        }
+        context.NotNull(nameof(context));
+        data.NotNull(nameof(data));
 
         // Summary issues report is not supported for GitHub Actions.
     }
@@ -95,15 +69,8 @@ public class GitHubActionsBuildServer : BaseBuildServer
     /// <inheritdoc />
     public override void PublishIssuesArtifacts(ICakeContext context, IssuesData data)
     {
-        if (context == null)
-        {
-            throw new ArgumentNullException(nameof(context));
-        }
-
-        if (data == null)
-        {
-            throw new ArgumentNullException(nameof(data));
-        }
+        context.NotNull(nameof(context));
+        data.NotNull(nameof(data));
 
         // Publishing artifacts is currently not supported for GitHub Actions.
     }
