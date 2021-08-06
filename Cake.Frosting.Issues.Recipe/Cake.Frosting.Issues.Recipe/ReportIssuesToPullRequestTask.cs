@@ -9,13 +9,13 @@ namespace Cake.Frosting.Issues.Recipe
     /// </summary>
     [TaskName("Report-IssuesToPullRequest")]
     [IsDependentOn(typeof(ReadIssuesTask))]
-    public sealed class ReportIssuesToPullRequestTask : FrostingTask<IssuesContext>
+    public sealed class ReportIssuesToPullRequestTask : FrostingTask<IIssuesContext>
     {
 #pragma warning disable SA1123 // Do not place regions within elements
         #region DupFinder Exclusion
 #pragma warning restore SA1123 // Do not place regions within elements
         /// <inheritdoc/>
-        public override bool ShouldRun(IssuesContext context)
+        public override bool ShouldRun(IIssuesContext context)
         {
             context.NotNull(nameof(context));
 
@@ -27,7 +27,7 @@ namespace Cake.Frosting.Issues.Recipe
         #endregion
 
         /// <inheritdoc/>
-        public override void Run(IssuesContext context)
+        public override void Run(IIssuesContext context)
         {
             context.NotNull(nameof(context));
 

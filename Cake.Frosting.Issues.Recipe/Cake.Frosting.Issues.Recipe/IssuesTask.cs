@@ -9,7 +9,7 @@
     [IsDependentOn(typeof(CreateSummaryIssuesReportTask))]
     [IsDependentOn(typeof(ReportIssuesToPullRequestTask))]
     [IsDependentOn(typeof(SetPullRequestIssuesStateTask))]
-    public sealed class IssuesTask : FrostingTask<IssuesContext>
+    public sealed class IssuesTask : FrostingTask
     {
     }
 }

@@ -13,10 +13,10 @@ namespace Cake.Frosting.Issues.Recipe
     /// Reads issues from the provided log files.
     /// </summary>
     [TaskName("Read-Issues")]
-    public sealed class ReadIssuesTask : FrostingTask<IssuesContext>
+    public sealed class ReadIssuesTask : FrostingTask<IIssuesContext>
     {
         /// <inheritdoc/>
-        public override void Run(IssuesContext context)
+        public override void Run(IIssuesContext context)
         {
             context.NotNull(nameof(context));
 

@@ -10,22 +10,22 @@ namespace Cake.Frosting.Issues.Recipe
     {
         /// <inheritdoc />
         public abstract void ReportIssuesToPullRequest(
-            IssuesContext context);
+            IIssuesContext context);
 
         /// <inheritdoc />
         public abstract void SetPullRequestIssuesState(
-            IssuesContext context);
+            IIssuesContext context);
 
         /// <inheritdoc />
         public abstract FileLinkSettings GetFileLinkSettings(
-            IssuesContext context);
+            IIssuesContext context);
 
         /// <summary>
         /// Returns settings for reporting issues to pull requests.
         /// </summary>
         /// <param name="context">The Cake context.</param>
         /// <returns>Settings for reporting issues to pull requests.</returns>
-        protected static IReportIssuesToPullRequestSettings GetReportIssuesToPullRequestSettings(IssuesContext context)
+        protected static IReportIssuesToPullRequestSettings GetReportIssuesToPullRequestSettings(IIssuesContext context)
         {
             var settings =
                 new ReportIssuesToPullRequestSettings(context.State.ProjectRootDirectory)

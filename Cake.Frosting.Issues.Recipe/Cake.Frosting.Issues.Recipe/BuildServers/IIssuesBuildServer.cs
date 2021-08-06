@@ -15,7 +15,7 @@ namespace Cake.Frosting.Issues.Recipe
         /// <param name="repositoryRootDirectory">The root directory of the repository.</param>
         /// <returns>The remote URL of the repository.</returns>
         Uri DetermineRepositoryRemoteUrl(
-            IssuesContext context,
+            IIssuesContext context,
             DirectoryPath repositoryRootDirectory);
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace Cake.Frosting.Issues.Recipe
         /// <param name="repositoryRootDirectory">The root directory of the repository.</param>
         /// <returns>The SHA ID of the current commit.</returns>
         string DetermineCommitId(
-            IssuesContext context,
+            IIssuesContext context,
             DirectoryPath repositoryRootDirectory);
 
         /// <summary>
@@ -33,21 +33,21 @@ namespace Cake.Frosting.Issues.Recipe
         /// </summary>
         /// <param name="context">The Cake context.</param>
         /// <returns>A value indicating whether the build is for a pull request.</returns>
-        bool DetermineIfPullRequest(IssuesContext context);
+        bool DetermineIfPullRequest(IIssuesContext context);
 
         /// <summary>
         /// Determines ID of the pull request.
         /// </summary>
         /// <param name="context">The Cake context.</param>
         /// <returns>ID of the pull request.</returns>
-        int? DeterminePullRequestId(IssuesContext context);
+        int? DeterminePullRequestId(IIssuesContext context);
 
         /// <summary>
         /// Reports issues to the build server.
         /// </summary>
         /// <param name="context">The Cake context.</param>
         void ReportIssuesToBuildServer(
-            IssuesContext context);
+            IIssuesContext context);
 
         /// <summary>
         /// Creates a summary report of the issues.
@@ -55,7 +55,7 @@ namespace Cake.Frosting.Issues.Recipe
         /// <param name="context">The Cake context.</param>
         /// <param name="sourceFilePath">Path of the file.</param>
         void CreateSummaryIssuesReport(
-            IssuesContext context,
+            IIssuesContext context,
             [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "");
 
         /// <summary>
@@ -63,6 +63,6 @@ namespace Cake.Frosting.Issues.Recipe
         /// </summary>
         /// <param name="context">The Cake context.</param>
         void PublishIssuesArtifacts(
-            IssuesContext context);
+            IIssuesContext context);
     }
 }
