@@ -243,7 +243,7 @@ IssuesBuildTasks.SetPullRequestIssuesStateTask = Task("Set-PullRequestIssuesStat
 // HELPER Functions
 ///////////////////////////////////////////////////////////////////////////////
 
-private IReadIssuesSettings GetSettings(IReadIssuesSettings configuredSettings, IReadIssuesSettings defaultSettings)
+private static IReadIssuesSettings GetSettings(IReadIssuesSettings configuredSettings, IReadIssuesSettings defaultSettings)
 {
     if (configuredSettings == null)
     {
