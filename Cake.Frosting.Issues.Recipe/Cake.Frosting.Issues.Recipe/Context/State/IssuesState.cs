@@ -181,7 +181,7 @@ namespace Cake.Frosting.Issues.Recipe
                 !string.IsNullOrWhiteSpace(context.EnvironmentVariable("SYSTEM_COLLECTIONURI")) &&
                 (
                     new Uri(context.EnvironmentVariable("SYSTEM_COLLECTIONURI")).Host == "dev.azure.com" ||
-                    new Uri(context.EnvironmentVariable("SYSTEM_COLLECTIONURI")).Host.EndsWith("visualstudio.com")
+                    new Uri(context.EnvironmentVariable("SYSTEM_COLLECTIONURI")).Host.EndsWith("visualstudio.com", StringComparison.InvariantCulture)
                 ))
             {
                 context.Information("Build server detected: {0}", "Azure Pipelines");
@@ -221,7 +221,7 @@ namespace Cake.Frosting.Issues.Recipe
                 throw new ArgumentNullException(nameof(repositoryUrl));
             }
 
-            if (repositoryUrl.Host == "dev.azure.com" || repositoryUrl.Host.EndsWith("visualstudio.com"))
+            if (repositoryUrl.Host == "dev.azure.com" || repositoryUrl.Host.EndsWith("visualstudio.com", StringComparison.InvariantCulture))
             {
                 context.Information("Pull request system detected: {0}", "Azure Repos");
                 return new AzureDevOpsPullRequestSystem();

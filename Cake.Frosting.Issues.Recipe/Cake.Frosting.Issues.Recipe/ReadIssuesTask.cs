@@ -18,6 +18,8 @@ namespace Cake.Frosting.Issues.Recipe
         /// <inheritdoc/>
         public override void Run(IssuesContext context)
         {
+            context.NotNull(nameof(context));
+
             // Define default settings.
             var defaultSettings = new ReadIssuesSettings(context.State.BuildRootDirectory);
 
@@ -30,12 +32,14 @@ namespace Cake.Frosting.Issues.Recipe
             // Read MSBuild log files created by XmlFileLogger.
             foreach (var logFile in context.Parameters.InputFiles.MsBuildXmlFileLoggerLogFilePaths)
             {
+                context.NotNull(nameof(context));
+
                 context.State.AddIssues(
                     context.ReadIssues(
                         context.MsBuildIssuesFromFilePath(
                             logFile.Key,
                             context.MsBuildXmlFileLoggerFormat()),
-                        this.GetSettings(logFile.Value, defaultSettings)));
+                        GetSettings(logFile.Value, defaultSettings)));
             }
 
             // Read MSBuild binary log files.
@@ -46,7 +50,7 @@ namespace Cake.Frosting.Issues.Recipe
                         context.MsBuildIssuesFromFilePath(
                             logFile.Key,
                             context.MsBuildBinaryLogFileFormat()),
-                        this.GetSettings(logFile.Value, defaultSettings)));
+                        GetSettings(logFile.Value, defaultSettings)));
             }
 
             // Read InspectCode log files.
@@ -55,7 +59,7 @@ namespace Cake.Frosting.Issues.Recipe
                 context.State.AddIssues(
                     context.ReadIssues(
                         context.InspectCodeIssuesFromFilePath(logFile.Key),
-                        this.GetSettings(logFile.Value, defaultSettings)));
+                        GetSettings(logFile.Value, defaultSettings)));
             }
 
             // Read dupFinder log files.
@@ -64,7 +68,7 @@ namespace Cake.Frosting.Issues.Recipe
                 context.State.AddIssues(
                     context.ReadIssues(
                         context.DupFinderIssuesFromFilePath(logFile.Key),
-                        this.GetSettings(logFile.Value, defaultSettings)));
+                        GetSettings(logFile.Value, defaultSettings)));
             }
 
             // Read markdownlint-cli log files.
@@ -75,7 +79,7 @@ namespace Cake.Frosting.Issues.Recipe
                         context.MarkdownlintIssuesFromFilePath(
                             logFile.Key,
                             context.MarkdownlintCliLogFileFormat()),
-                        this.GetSettings(logFile.Value, defaultSettings)));
+                        GetSettings(logFile.Value, defaultSettings)));
             }
 
             // Read markdownlint log files in version 1.
@@ -86,7 +90,7 @@ namespace Cake.Frosting.Issues.Recipe
                         context.MarkdownlintIssuesFromFilePath(
                             logFile.Key,
                             context.MarkdownlintV1LogFileFormat()),
-                        this.GetSettings(logFile.Value, defaultSettings)));
+                        GetSettings(logFile.Value, defaultSettings)));
             }
 
             // Read ESLint log files in JSON format.
@@ -97,13 +101,13 @@ namespace Cake.Frosting.Issues.Recipe
                         context.EsLintIssuesFromFilePath(
                             logFile.Key,
                             context.EsLintJsonFormat()),
-                        this.GetSettings(logFile.Value, defaultSettings)));
+                        GetSettings(logFile.Value, defaultSettings)));
             }
 
             context.Information("{0} issues are found.", context.State.Issues.Count());
         }
 
-        private IReadIssuesSettings GetSettings(IReadIssuesSettings configuredSettings, IReadIssuesSettings defaultSettings)
+        private static IReadIssuesSettings GetSettings(IReadIssuesSettings configuredSettings, IReadIssuesSettings defaultSettings)
         {
             if (configuredSettings == null)
             {

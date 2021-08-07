@@ -6,28 +6,37 @@ public class CliRepositoryInfoProvider : IRepositoryInfoProvider
     /// <inheritdoc />
     public DirectoryPath GetRepositoryRootDirectory(ICakeContext context, DirectoryPath buildRootDirectory)
     {
+        context.NotNull(nameof(context));
+        buildRootDirectory.NotNull(nameof(buildRootDirectory));
+
         var result =
-            this.GitCommand(context, buildRootDirectory, "rev-parse", "--show-toplevel");
+            GitCommand(context, buildRootDirectory, "rev-parse", "--show-toplevel");
         return new DirectoryPath(result.Single());
     }
 
     /// <inheritdoc />
     public Uri GetRepositoryRemoteUrl(ICakeContext context, DirectoryPath repositoryRootDirectory)
     {
+        context.NotNull(nameof(context));
+        repositoryRootDirectory.NotNull(nameof(repositoryRootDirectory));
+
         var result =
-            this.GitCommand(context, repositoryRootDirectory, "config", "--get", "remote.origin.url");
+            GitCommand(context, repositoryRootDirectory, "config", "--get", "remote.origin.url");
         return new Uri(result.Single());
     }
 
     /// <inheritdoc />
     public string GetCommitId(ICakeContext context, DirectoryPath repositoryRootDirectory)
     {
+        context.NotNull(nameof(context));
+        repositoryRootDirectory.NotNull(nameof(repositoryRootDirectory));
+
         return
-            this.GitCommand(context, repositoryRootDirectory, "rev-parse", "HEAD")
+            GitCommand(context, repositoryRootDirectory, "rev-parse", "HEAD")
             .Single();
     }
 
-    private  IEnumerable<string> GitCommand(
+    private static IEnumerable<string> GitCommand(
         ICakeContext context,
         DirectoryPath repositoryRootFolder,
         params string[] arguments)
