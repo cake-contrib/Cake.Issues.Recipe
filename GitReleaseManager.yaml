@@ -1,8 +1,9 @@
 issue-labels-include:
 - Breaking change
 - Feature
-- Bug
 - Improvement
+- Bug
+- Dependencies
 - Documentation
 issue-labels-exclude:
 - Build
