@@ -36,14 +36,10 @@ namespace Cake.Frosting.Issues.Recipe
                 context.Parameters.OutputDirectory.CombineWithFilePath(reportFileName);
             context.EnsureDirectoryExists(context.Parameters.OutputDirectory);
 
-            // Create HTML report using DevExpress template.
-            var settings =
-                GenericIssueReportFormatSettings
-                    .FromEmbeddedTemplate(GenericIssueReportTemplate.HtmlDxDataGrid)
-                    .WithOption(HtmlDxDataGridOption.Theme, DevExtremeTheme.MaterialBlueLight);
+            // Create HTML report.
             context.CreateIssueReport(
                 context.State.Issues,
-                context.GenericIssueReportFormat(settings),
+                context.GenericIssueReportFormat(context.Parameters.Reporting.FullIssuesReportSettings),
                 context.State.BuildRootDirectory,
                 context.State.FullIssuesReport);
         }
