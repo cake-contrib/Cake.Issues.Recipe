@@ -146,14 +146,10 @@ IssuesBuildTasks.CreateFullIssuesReportTask = Task("Create-FullIssuesReport")
         IssuesParameters.OutputDirectory.CombineWithFilePath(reportFileName);
     EnsureDirectoryExists(IssuesParameters.OutputDirectory);
 
-    // Create HTML report using DevExpress template.
-    var settings =
-        GenericIssueReportFormatSettings
-            .FromEmbeddedTemplate(GenericIssueReportTemplate.HtmlDxDataGrid)
-            .WithOption(HtmlDxDataGridOption.Theme, DevExtremeTheme.MaterialBlueLight);
+    // Create HTML report.
     CreateIssueReport(
         data.Issues,
-        GenericIssueReportFormat(settings),
+        GenericIssueReportFormat(IssuesParameters.Reporting.FullIssuesReportSettings),
         data.BuildRootDirectory,
         data.FullIssuesReport);
 });
