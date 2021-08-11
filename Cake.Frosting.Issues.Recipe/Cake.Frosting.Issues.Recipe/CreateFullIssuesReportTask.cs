@@ -1,4 +1,5 @@
 ﻿using Cake.Common.IO;
+using Cake.Issues;
 using Cake.Issues.Reporting;
 using Cake.Issues.Reporting.Generic;
 
@@ -14,12 +15,16 @@ namespace Cake.Frosting.Issues.Recipe
         /// <inheritdoc/>
         public override bool ShouldRun(IssuesContext context)
         {
+            context.NotNull(nameof(context));
+
             return context.Parameters.Reporting.ShouldCreateFullIssuesReport;
         }
 
         /// <inheritdoc/>
         public override void Run(IssuesContext context)
         {
+            context.NotNull(nameof(context));
+
             var reportFileName = "report";
             if (!string.IsNullOrWhiteSpace(context.Parameters.BuildIdentifier))
             {
@@ -31,14 +36,10 @@ namespace Cake.Frosting.Issues.Recipe
                 context.Parameters.OutputDirectory.CombineWithFilePath(reportFileName);
             context.EnsureDirectoryExists(context.Parameters.OutputDirectory);
 
-            // Create HTML report using DevExpress template.
-            var settings =
-                GenericIssueReportFormatSettings
-                    .FromEmbeddedTemplate(GenericIssueReportTemplate.HtmlDxDataGrid)
-                    .WithOption(HtmlDxDataGridOption.Theme, DevExtremeTheme.MaterialBlueLight);
+            // Create HTML report.
             context.CreateIssueReport(
                 context.State.Issues,
-                context.GenericIssueReportFormat(settings),
+                context.GenericIssueReportFormat(context.Parameters.Reporting.FullIssuesReportSettings),
                 context.State.BuildRootDirectory,
                 context.State.FullIssuesReport);
         }

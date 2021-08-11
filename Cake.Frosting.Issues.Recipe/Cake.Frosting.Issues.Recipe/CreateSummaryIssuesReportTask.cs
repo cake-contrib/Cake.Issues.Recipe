@@ -1,5 +1,6 @@
 ﻿using Cake.Common.Build;
 using Cake.Common.Diagnostics;
+using Cake.Issues;
 
 namespace Cake.Frosting.Issues.Recipe
 {
@@ -13,6 +14,8 @@ namespace Cake.Frosting.Issues.Recipe
         /// <inheritdoc/>
         public override bool ShouldRun(IssuesContext context)
         {
+            context.NotNull(nameof(context));
+
             return
                 !context.BuildSystem().IsLocalBuild &&
                 context.Parameters.BuildServer.ShouldCreateSummaryIssuesReport;
@@ -21,6 +24,8 @@ namespace Cake.Frosting.Issues.Recipe
         /// <inheritdoc/>
         public override void Run(IssuesContext context)
         {
+            context.NotNull(nameof(context));
+
             if (context.State.BuildServer == null)
             {
                 context.Information("Not supported build server.");
