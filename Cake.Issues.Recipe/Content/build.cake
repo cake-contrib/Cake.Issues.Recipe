@@ -45,7 +45,7 @@ IssuesBuildTasks.ReadIssuesTask = Task("Read-Issues")
     .Does<IssuesData>((data) =>
 {
     // Define default settings.
-    var defaultSettings = new ReadIssuesSettings(data.BuildRootDirectory);
+    var defaultSettings = new ReadIssuesSettings(data.ProjectRootDirectory);
 
     if (data.PullRequestSystem != null)
     {

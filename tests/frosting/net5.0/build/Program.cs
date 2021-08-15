@@ -35,8 +35,7 @@ public class BuildContext : IssuesContext
         this.LogDirectoryPath = this.Parameters.OutputDirectory.Combine("logs");
         this.Parameters.OutputDirectory = this.Parameters.OutputDirectory.Combine("output");
         this.SolutionFilePath =
-            this.State.BuildRootDirectory
-                .Combine("..")
+            this.State.ProjectRootDirectory
                 .Combine("src")
                 .CombineWithFilePath("ClassLibrary1.sln");
     }
@@ -75,7 +74,8 @@ public sealed class RunInspectCodeTask : FrostingTask<BuildContext>
 
         var settings = new InspectCodeSettings() {
             OutputFile = inspectCodeLogFilePath,
-            ArgumentCustomization = x => x.Append("--no-build")
+            ArgumentCustomization = x => x.Append("--no-build"),
+            WorkingDirectory = context.State.ProjectRootDirectory
         };
 
         context.InspectCode(
