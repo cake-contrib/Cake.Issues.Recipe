@@ -15,6 +15,12 @@ public class IssuesData
     /// </summary>
     public DirectoryPath BuildRootDirectory { get; }
 
+    /// <summary>
+    /// Gets the root directory of the project.
+    /// Default value is the <see cref="BuildRootDirectory"/>.
+    /// </summary>
+    public DirectoryPath ProjectRootDirectory { get; set; }
+
     /// Gets the remote URL of the repository.
     /// </summary>
     public Uri RepositoryRemoteUrl { get; }
@@ -73,6 +79,9 @@ public class IssuesData
 
         this.BuildRootDirectory = context.MakeAbsolute(context.Directory("./"));
         context.Information("Build script root directory: {0}", this.BuildRootDirectory);
+
+        this.ProjectRootDirectory = this.BuildRootDirectory;
+        context.Information("Project root directory: {0}", this.ProjectRootDirectory);
 
         this.RepositoryInfo = DetermineRepositoryInfoProvider(context, repositoryInfoProviderType);
 
