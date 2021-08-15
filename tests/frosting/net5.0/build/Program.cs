@@ -33,6 +33,7 @@ public class BuildContext : IssuesContext
         : base(context, RepositoryInfoProviderType.Cli)
     {
         this.LogDirectoryPath = this.Parameters.OutputDirectory.Combine("logs");
+        this.Parameters.OutputDirectory = this.Parameters.OutputDirectory.Combine("output");
         this.SolutionFilePath =
             this.State.BuildRootDirectory
                 .Combine("..")
