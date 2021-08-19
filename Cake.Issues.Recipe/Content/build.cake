@@ -150,7 +150,7 @@ IssuesBuildTasks.CreateFullIssuesReportTask = Task("Create-FullIssuesReport")
     CreateIssueReport(
         data.Issues,
         GenericIssueReportFormat(IssuesParameters.Reporting.FullIssuesReportSettings),
-        data.BuildRootDirectory,
+        data.ProjectRootDirectory,
         data.FullIssuesReport);
 });
 

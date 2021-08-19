@@ -40,7 +40,7 @@ namespace Cake.Frosting.Issues.Recipe
             context.CreateIssueReport(
                 context.State.Issues,
                 context.GenericIssueReportFormat(context.Parameters.Reporting.FullIssuesReportSettings),
-                context.State.BuildRootDirectory,
+                context.State.ProjectRootDirectory,
                 context.State.FullIssuesReport);
         }
     }
