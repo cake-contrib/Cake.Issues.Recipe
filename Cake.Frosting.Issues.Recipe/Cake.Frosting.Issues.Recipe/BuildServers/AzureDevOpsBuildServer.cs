@@ -107,7 +107,7 @@ namespace Cake.Frosting.Issues.Recipe
                     context.CreateIssueReport(
                         context.State.Issues,
                         context.GenericIssueReportFormatFromContent(sr.ReadToEnd()),
-                        context.State.BuildRootDirectory,
+                        context.State.ProjectRootDirectory,
                         summaryFilePath);
                 }
             }
