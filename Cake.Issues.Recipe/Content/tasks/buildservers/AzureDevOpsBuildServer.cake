@@ -89,7 +89,7 @@ public class AzureDevOpsBuildServer : BaseBuildServer
             data.Issues,
             context.GenericIssueReportFormatFromFilePath(
                 new FilePath(sourceFilePath).GetDirectory().Combine("tasks").Combine("buildservers").CombineWithFilePath("AzurePipelineSummary.cshtml")),
-            data.BuildRootDirectory,
+            data.ProjectRootDirectory,
             summaryFilePath);
 
         context.AzurePipelines().Commands.UploadTaskSummary(summaryFilePath);

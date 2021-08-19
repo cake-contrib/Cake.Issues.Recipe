@@ -44,10 +44,9 @@ jobs:
   - powershell: ./build.ps1 --verbosity=diagnostic
     workingDirectory: ./tests/frosting/net5.0
     displayName: 'Run integration tests'
-  # TODO Requires Cake.Issues.Reporting.Generic working with Frosting https://github.com/cake-contrib/Cake.Issues.Reporting.Generic/issues/361
-  # - publish: $(Build.SourcesDirectory)/tests/script-runner/BuildArtifacts/output
-  #   artifact: Integration Tests Script Runner Windows (.NET Core tool)
-  #   displayName: 'Publish generated reports as build artifact'
+  - publish: $(Build.SourcesDirectory)/tests/frosting/net5.0/build/BuildArtifacts/output
+    artifact: Integration Tests Frosting Windows (.NET 5)
+    displayName: 'Publish generated reports as build artifact'
 # Integration Tests Script Runner Windows (.NET Framework)
 - job: Test_Script_Runner_Windows_DotNetFramework
   displayName: 'Integration Tests Script Runner Windows (.NET Framework)'

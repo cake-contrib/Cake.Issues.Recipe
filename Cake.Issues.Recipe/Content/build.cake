@@ -45,7 +45,7 @@ IssuesBuildTasks.ReadIssuesTask = Task("Read-Issues")
     .Does<IssuesData>((data) =>
 {
     // Define default settings.
-    var defaultSettings = new ReadIssuesSettings(data.BuildRootDirectory);
+    var defaultSettings = new ReadIssuesSettings(data.ProjectRootDirectory);
 
     if (data.PullRequestSystem != null)
     {
@@ -150,7 +150,7 @@ IssuesBuildTasks.CreateFullIssuesReportTask = Task("Create-FullIssuesReport")
     CreateIssueReport(
         data.Issues,
         GenericIssueReportFormat(IssuesParameters.Reporting.FullIssuesReportSettings),
-        data.BuildRootDirectory,
+        data.ProjectRootDirectory,
         data.FullIssuesReport);
 });
 

@@ -57,7 +57,7 @@ public class AppVeyorBuildServer : BaseBuildServer
         context.ReportIssuesToPullRequest(
             data.Issues,
             context.AppVeyorBuilds(),
-            data.BuildRootDirectory);
+            data.ProjectRootDirectory);
     }
 
     /// <inheritdoc />

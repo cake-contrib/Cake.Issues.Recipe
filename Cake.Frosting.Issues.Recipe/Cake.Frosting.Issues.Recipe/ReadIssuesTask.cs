@@ -21,7 +21,7 @@ namespace Cake.Frosting.Issues.Recipe
             context.NotNull(nameof(context));
 
             // Define default settings.
-            var defaultSettings = new ReadIssuesSettings(context.State.BuildRootDirectory);
+            var defaultSettings = new ReadIssuesSettings(context.State.ProjectRootDirectory);
 
             if (context.State.PullRequestSystem != null)
             {

@@ -27,6 +27,12 @@ namespace Cake.Frosting.Issues.Recipe
         public DirectoryPath BuildRootDirectory { get; }
 
         /// <summary>
+        /// Gets the root directory of the project.
+        /// Default value is the parent directory of the <see cref="BuildRootDirectory"/>.
+        /// </summary>
+        public DirectoryPath ProjectRootDirectory { get; set; }
+
+        /// <summary>
         /// Gets the remote URL of the repository.
         /// </summary>
         public Uri RepositoryRemoteUrl { get; }
@@ -84,6 +90,9 @@ namespace Cake.Frosting.Issues.Recipe
 
             this.BuildRootDirectory = context.MakeAbsolute(context.Directory("./"));
             context.Information("Build script root directory: {0}", this.BuildRootDirectory);
+
+            this.ProjectRootDirectory = this.BuildRootDirectory.Combine("..").Collapse();
+            context.Information("Project root directory: {0}", this.ProjectRootDirectory);
 
             this.RepositoryInfo = DetermineRepositoryInfoProvider(context, repositoryInfoProviderType);
 

@@ -21,7 +21,7 @@ public class AzureDevOpsPullRequestSystem : BasePullRequestSystem
                 data.BuildServer.DetermineRepositoryRemoteUrl(context, data.RepositoryRootDirectory),
                 data.BuildServer.DeterminePullRequestId(context).Value,
                 context.AzureDevOpsAuthenticationOAuth(context.EnvironmentVariable("SYSTEM_ACCESSTOKEN"))),
-            data.BuildRootDirectory);
+            GetReportIssuesToPullRequestSettings(data));
     }
 
     /// <inheritdoc />
@@ -71,7 +71,7 @@ public class AzureDevOpsPullRequestSystem : BasePullRequestSystem
         context.NotNull(nameof(context));
         data.NotNull(nameof(data));
 
-        var rootPath = data.RepositoryRootDirectory.GetRelativePath(data.BuildRootDirectory);
+        var rootPath = data.RepositoryRootDirectory.GetRelativePath(data.ProjectRootDirectory);
 
         return context.IssueFileLinkSettingsForAzureDevOpsCommit(
             data.RepositoryRemoteUrl,
