@@ -27,7 +27,7 @@ public class GitHubPullRequestSystem : BasePullRequestSystem
         context.NotNull(nameof(context));
         data.NotNull(nameof(data));
 
-        var rootPath = data.RepositoryRootDirectory.GetRelativePath(data.BuildRootDirectory);
+        var rootPath = data.RepositoryRootDirectory.GetRelativePath(data.ProjectRootDirectory);
 
         return context.IssueFileLinkSettingsForGitHubCommit(
             data.RepositoryRemoteUrl,
