@@ -28,7 +28,7 @@ namespace Cake.Frosting.Issues.Recipe
         {
             context.NotNull(nameof(context));
 
-            var rootPath = context.State.RepositoryRootDirectory.GetRelativePath(context.State.BuildRootDirectory);
+            var rootPath = context.State.RepositoryRootDirectory.GetRelativePath(context.State.ProjectRootDirectory);
 
             return context.IssueFileLinkSettingsForGitHubCommit(
                 context.State.RepositoryRemoteUrl,
