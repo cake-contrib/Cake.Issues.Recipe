@@ -34,7 +34,7 @@ namespace Cake.Frosting.Issues.Recipe
                     context.State.BuildServer.DetermineRepositoryRemoteUrl(context, context.State.RepositoryRootDirectory),
                     context.State.BuildServer.DeterminePullRequestId(context).Value,
                     context.AzureDevOpsAuthenticationOAuth(context.EnvironmentVariable("SYSTEM_ACCESSTOKEN"))),
-                context.State.BuildRootDirectory);
+                context.State.ProjectRootDirectory);
             #endregion
         }
 

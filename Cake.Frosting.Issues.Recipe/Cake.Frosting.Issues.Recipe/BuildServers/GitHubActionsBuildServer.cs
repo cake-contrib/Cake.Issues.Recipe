@@ -58,7 +58,7 @@ namespace Cake.Frosting.Issues.Recipe
             context.ReportIssuesToPullRequest(
                 context.State.Issues,
                 context.GitHubActionsBuilds(),
-                context.State.BuildRootDirectory);
+                context.State.ProjectRootDirectory);
         }
 
         /// <inheritdoc />
