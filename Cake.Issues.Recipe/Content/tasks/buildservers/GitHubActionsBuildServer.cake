@@ -51,7 +51,7 @@ public class GitHubActionsBuildServer : BaseBuildServer
         context.ReportIssuesToPullRequest(
             data.Issues,
             context.GitHubActionsBuilds(),
-            data.BuildRootDirectory);
+            data.ProjectRootDirectory);
     }
 
     /// <inheritdoc />
