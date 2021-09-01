@@ -82,6 +82,17 @@ namespace Cake.Frosting.Issues.Recipe
                         GetSettings(logFile.Value, defaultSettings)));
             }
 
+            // Read markdownlint-cli log files created with --json.
+            foreach (var logFile in context.Parameters.InputFiles.MarkdownlintCliJsonLogFilePaths)
+            {
+                context.State.AddIssues(
+                    context.ReadIssues(
+                        context.MarkdownlintIssuesFromFilePath(
+                            logFile.Key,
+                            context.MarkdownlintCliJsonLogFileFormat()),
+                        GetSettings(logFile.Value, defaultSettings)));
+            }
+
             // Read markdownlint log files in version 1.
             foreach (var logFile in context.Parameters.InputFiles.MarkdownlintV1LogFilePaths)
             {
