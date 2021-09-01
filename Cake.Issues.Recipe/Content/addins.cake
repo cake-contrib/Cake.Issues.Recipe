@@ -7,7 +7,7 @@
 #addin nuget:?package=Cake.Issues.MsBuild&version=1.0.0
 #addin nuget:?package=Cake.Issues.InspectCode&version=1.0.0
 #addin nuget:?package=Cake.Issues.DupFinder&version=1.0.0
-#addin nuget:?package=Cake.Issues.Markdownlint&version=1.1.0
+#addin nuget:?package=Cake.Issues.Markdownlint&version=1.1.1
 #addin nuget:?package=Cake.Issues.EsLint&version=1.0.1
 #addin nuget:?package=Cake.Issues.Reporting&version=1.0.0
 #addin nuget:?package=Cake.Issues.Reporting.Generic&version=1.0.0
