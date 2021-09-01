@@ -24,7 +24,7 @@ For recipe compatible with Cake Script Runners see Cake.Issues.Recipe.</Descript
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/cake-contrib/Cake.Issues.Recipe.git</RepositoryUrl>
-    <PackageReleaseNotes>https://github.com/cake-contrib/Cake.Issues.Recipe/releases/tag/1.3.0</PackageReleaseNotes>
+    <PackageReleaseNotes>https://github.com/cake-contrib/Cake.Issues.Recipe/releases/tag/1.3.1</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
@@ -43,7 +43,7 @@ For recipe compatible with Cake Script Runners see Cake.Issues.Recipe.</Descript
     <PackageReference Include="Cake.Issues.DupFinder" Version="1.0.0" />
     <PackageReference Include="Cake.Issues.EsLint" Version="1.0.1" />
     <PackageReference Include="Cake.Issues.InspectCode" Version="1.0.0" />
-    <PackageReference Include="Cake.Issues.Markdownlint" Version="1.1.0" />
+    <PackageReference Include="Cake.Issues.Markdownlint" Version="1.1.1" />
     <PackageReference Include="Cake.Issues.MsBuild" Version="1.0.0" />
     <PackageReference Include="Cake.Issues.PullRequests" Version="1.0.0" />
     <PackageReference Include="Cake.Issues.PullRequests.AppVeyor" Version="1.0.0" />
