@@ -104,6 +104,17 @@ IssuesBuildTasks.ReadIssuesTask = Task("Read-Issues")
                 GetSettings(logFile.Value, defaultSettings)));
     }
 
+    // Read markdownlint-cli log files created with --json.
+    foreach (var logFile in IssuesParameters.InputFiles.MarkdownlintCliJsonLogFilePaths)
+    {
+        data.AddIssues(
+            ReadIssues(
+                MarkdownlintIssuesFromFilePath(
+                    logFile.Key,
+                    MarkdownlintCliJsonLogFileFormat),
+                GetSettings(logFile.Value, defaultSettings)));
+    }
+
     // Read markdownlint log files in version 1.
     foreach (var logFile in IssuesParameters.InputFiles.MarkdownlintV1LogFilePaths)
     {

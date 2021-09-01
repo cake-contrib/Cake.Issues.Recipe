@@ -29,6 +29,11 @@ public class IssuesParametersInputFiles
     public IDictionary<FilePath, IReadIssuesSettings> MarkdownlintCliLogFilePaths { get; } = new Dictionary<FilePath, IReadIssuesSettings>();
 
     /// <summary>
+    /// Gets list of registered paths to markdownlint-cli log files created with <c>--json</c>.
+    /// </summary>
+    public IDictionary<FilePath, IReadIssuesSettings> MarkdownlintCliJsonLogFilePaths { get; } = new Dictionary<FilePath, IReadIssuesSettings>();
+
+    /// <summary>
     /// Gets list of registered paths to markdownlint log files in version 1.
     /// </summary>
     public IDictionary<FilePath, IReadIssuesSettings> MarkdownlintV1LogFilePaths { get; } = new Dictionary<FilePath, IReadIssuesSettings>();
@@ -141,6 +146,27 @@ public class IssuesParametersInputFiles
     {
         logfilePath.NotNull(nameof(logfilePath));
         this.MarkdownlintCliLogFilePaths.Add(logfilePath, settings);
+    }
+
+    /// <summary>
+    /// Adds a path to a markdownlint-cli log file created with <c>--json</c>.
+    /// </summary>
+    /// <param name="logfilePath">Path to the markdownlint-cli log file.</param>
+    public void AddMarkdownlintCliJsonLogFile(FilePath logfilePath)
+    {
+        logfilePath.NotNull(nameof(logfilePath));
+        this.AddMarkdownlintCliJsonLogFile(logfilePath, null);
+    }
+
+    /// <summary>
+    /// Adds a path to a markdownlint-cli log file created with <c>--json</c>.
+    /// </summary>
+    /// <param name="logfilePath">Path to the markdownlint-cli log file.</param>
+    /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
+    public void AddMarkdownlintCliJsonLogFile(FilePath logfilePath, IReadIssuesSettings settings)
+    {
+        logfilePath.NotNull(nameof(logfilePath));
+        this.MarkdownlintCliJsonLogFilePaths.Add(logfilePath, settings);
     }
 
     /// <summary>
