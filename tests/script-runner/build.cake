@@ -3,8 +3,8 @@
 
 #addin "Cake.Markdownlint"
 
-#tool "nuget:?package=JetBrains.ReSharper.CommandLineTools"
-#tool "nuget:?package=MSBuild.Extension.Pack"
+#tool nuget:?package=JetBrains.ReSharper.CommandLineTools&version=2021.2.2
+#tool nuget:?package=MSBuild.Extension.Pack&version=1.9.1
 
 //////////////////////////////////////////////////
 // ARGUMENTS
@@ -86,7 +86,8 @@ Task("Run-InspectCode")
     .Does<BuildData>((data) =>
 {
     var settings = new InspectCodeSettings() {
-        OutputFile = data.InspectCodeLogFilePath
+        OutputFile = data.InspectCodeLogFilePath,
+        ArgumentCustomization = x => x.Append("--no-build")
     };
 
     InspectCode(
