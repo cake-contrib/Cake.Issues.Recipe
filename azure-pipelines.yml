@@ -171,12 +171,12 @@ jobs:
   - publish: $(Build.SourcesDirectory)/tests/script-runner/BuildArtifacts/output
     artifact: Integration Tests Script Runner macOS 10.15 (.NET Core tool)
     displayName: 'Publish generated reports as build artifact'
-# Integration Tests Script Runner Ubuntu 16.04 (Mono)
+# Integration Tests Script Runner Ubuntu 18.04 (Mono)
 - job: Test_Script_Runner_ubuntu_Mono
-  displayName: 'Integration Tests Script Runner Ubuntu 16.04 (Mono)'
+  displayName: 'Integration Tests Script Runner Ubuntu 18.04 (Mono)'
   dependsOn: Build
   pool:
-    vmImage: 'ubuntu-16.04'
+    vmImage: 'ubuntu-18.04'
   steps:
   - task: NodeTool@0
     inputs:
@@ -198,14 +198,14 @@ jobs:
     workingDirectory: ./tests/script-runner/
     displayName: 'Run integration tests'
   - publish: $(Build.SourcesDirectory)/tests/script-runner/BuildArtifacts/output
-    artifact: Integration Tests Script Runner Ubuntu 16.04 (Mono)
+    artifact: Integration Tests Script Runner Ubuntu 18.04 (Mono)
     displayName: 'Publish generated reports as build artifact'
-# Integration Tests Script Runner Ubuntu 16.04 (.NET Core tool)
+# Integration Tests Script Runner Ubuntu 18.04 (.NET Core tool)
 - job: Test_Script_Runner_ubuntu_DotNetCoreTool
-  displayName: Integration Tests Script Runner Ubuntu 16.04 (.NET Core tool)
+  displayName: Integration Tests Script Runner Ubuntu 18.04 (.NET Core tool)
   dependsOn: Build
   pool:
-    vmImage: 'ubuntu-16.04'
+    vmImage: 'ubuntu-18.04'
   steps:
   - task: NodeTool@0
     inputs:
@@ -231,5 +231,5 @@ jobs:
     workingDirectory: ./tests/script-runner/
     displayName: 'Run integration tests'
   - publish: $(Build.SourcesDirectory)/tests/script-runner/BuildArtifacts/output
-    artifact: Integration Tests Script Runner Ubuntu 16.04 (.NET Core tool)
+    artifact: Integration Tests Script Runner Ubuntu 18.04 (.NET Core tool)
     displayName: 'Publish generated reports as build artifact'
