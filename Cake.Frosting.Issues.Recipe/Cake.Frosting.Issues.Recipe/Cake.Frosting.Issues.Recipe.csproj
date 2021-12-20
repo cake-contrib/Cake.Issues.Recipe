@@ -50,7 +50,7 @@ For recipe compatible with Cake Script Runners see Cake.Issues.Recipe.</Descript
     <PackageReference Include="Cake.Issues.PullRequests.AzureDevOps" Version="1.0.0" />
     <PackageReference Include="Cake.Issues.PullRequests.GitHubActions" Version="1.0.0" />
     <PackageReference Include="Cake.Issues.Reporting" Version="1.0.0" />
-    <PackageReference Include="Cake.Frosting.Issues.Reporting.Generic" Version="1.0.0" />
+    <PackageReference Include="Cake.Frosting.Issues.Reporting.Generic" Version="2.0.0" />
   </ItemGroup>
 
 </Project>
