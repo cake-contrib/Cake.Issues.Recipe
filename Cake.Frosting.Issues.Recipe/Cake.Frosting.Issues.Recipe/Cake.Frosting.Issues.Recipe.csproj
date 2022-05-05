@@ -24,7 +24,7 @@ For recipe compatible with Cake Script Runners see Cake.Issues.Recipe.</Descript
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/cake-contrib/Cake.Issues.Recipe.git</RepositoryUrl>
-    <PackageReleaseNotes>https://github.com/cake-contrib/Cake.Issues.Recipe/releases/tag/1.3.2</PackageReleaseNotes>
+    <PackageReleaseNotes>https://github.com/cake-contrib/Cake.Issues.Recipe/releases/tag/1.3.3</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
