@@ -13,7 +13,7 @@ jobs:
 # Build
 - job: Build
   pool:
-    vmImage: 'windows-2019'
+    vmImage: 'windows-2022'
   steps:
   - powershell: ./build.ps1
     displayName: 'Build'

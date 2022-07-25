@@ -4,7 +4,7 @@ jobs:
   # Build
   Build:
     name: Build
-    runs-on: windows-latest
+    runs-on: windows-2022
     steps:
       - name: Get the sources
         uses: actions/checkout@v2
@@ -22,7 +22,7 @@ jobs:
   Test_Script_Runner_Windows_DotNetFramework:
     name: Integration Tests Script Runner Windows (.NET Framework)
     needs: Build
-    runs-on: windows-latest
+    runs-on: windows-2019
     steps:
       - name: Get the sources
         uses: actions/checkout@v2
@@ -47,7 +47,7 @@ jobs:
   Test_Windows_DotNetCoreTool:
     name: Integration Tests Script Runner Windows (.NET Core tool)
     needs: Build
-    runs-on: windows-latest
+    runs-on: windows-2019
     steps:
       - name: Get the sources
         uses: actions/checkout@v2
