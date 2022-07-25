@@ -104,12 +104,12 @@ jobs:
   - publish: $(Build.SourcesDirectory)/tests/script-runner/BuildArtifacts/output
     artifact: Integration Tests Script Runner Windows (.NET Core tool)
     displayName: 'Publish generated reports as build artifact'
-# Integration Tests Script Runner macOS 10.14 (Mono)
+# Integration Tests Script Runner macOS 10.15 (Mono)
 - job: Test_Script_Runner_macOS_Mono
-  displayName: 'Integration Tests Script Runner macOS 10.14 (Mono)'
+  displayName: 'Integration Tests Script Runner macOS 10.15 (Mono)'
   dependsOn: Build
   pool:
-    vmImage: 'macOS-10.14'
+    vmImage: 'macOS-10.15'
   steps:
   - task: NodeTool@0
     inputs:
@@ -136,7 +136,7 @@ jobs:
     workingDirectory: ./tests/script-runner/
     displayName: 'Run integration tests'
   - publish: $(Build.SourcesDirectory)/tests/script-runner/BuildArtifacts/output
-    artifact: Integration Tests Script Runner macOS 10.14 (Mono)
+    artifact: Integration Tests Script Runner macOS 10.15 (Mono)
     displayName: 'Publish generated reports as build artifact'
 # Integration Tests Script Runner macOS 10.15 (.NET Core tool)
 - job: Test_Script_Runner_macOS_DotNetCoreTool
