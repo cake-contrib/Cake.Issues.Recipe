@@ -37,7 +37,7 @@ For recipe compatible with Cake Script Runners see Cake.Issues.Recipe.</Descript
 
   <ItemGroup>
     <PackageReference Include="Cake.AzureDevOps" Version="2.0.0-beta0001" />
-    <PackageReference Include="Cake.Frosting" Version="2.0.0" PrivateAssets="All" />
+    <PackageReference Include="Cake.Frosting" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Cake.Git" Version="2.0.0" />
     <PackageReference Include="Cake.Issues" Version="2.0.0-beta0001" />
     <PackageReference Include="Cake.Issues.DupFinder" Version="2.0.0-beta0001" />
