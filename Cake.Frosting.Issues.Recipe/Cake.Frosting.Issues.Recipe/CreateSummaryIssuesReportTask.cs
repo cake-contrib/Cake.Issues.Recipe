@@ -9,10 +9,10 @@ namespace Cake.Frosting.Issues.Recipe
     /// </summary>
     [TaskName("Create-SummaryIssuesReport")]
     [IsDependentOn(typeof(ReadIssuesTask))]
-    public sealed class CreateSummaryIssuesReportTask : FrostingTask<IssuesContext>
+    public sealed class CreateSummaryIssuesReportTask : FrostingTask<IIssuesContext>
     {
         /// <inheritdoc/>
-        public override bool ShouldRun(IssuesContext context)
+        public override bool ShouldRun(IIssuesContext context)
         {
             context.NotNull(nameof(context));
 
@@ -22,7 +22,7 @@ namespace Cake.Frosting.Issues.Recipe
         }
 
         /// <inheritdoc/>
-        public override void Run(IssuesContext context)
+        public override void Run(IIssuesContext context)
         {
             context.NotNull(nameof(context));
 

@@ -12,14 +12,14 @@ namespace Cake.Frosting.Issues.Recipe
         /// </summary>
         /// <param name="context">The Cake context.</param>
         void ReportIssuesToPullRequest(
-            IssuesContext context);
+            IIssuesContext context);
 
         /// <summary>
         /// Set pull request status.
         /// </summary>
         /// <param name="context">The Cake context.</param>
         void SetPullRequestIssuesState(
-            IssuesContext context);
+            IIssuesContext context);
 
         /// <summary>
         /// Get settings for linking to files.
@@ -27,6 +27,6 @@ namespace Cake.Frosting.Issues.Recipe
         /// <param name="context">The Cake context.</param>
         /// <returns>Settings for linking to files.</returns>
         FileLinkSettings GetFileLinkSettings(
-            IssuesContext context);
+            IIssuesContext context);
     }
 }

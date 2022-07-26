@@ -5,19 +5,12 @@ namespace Cake.Frosting.Issues.Recipe
     /// <summary>
     /// Parameters for reporting.
     /// </summary>
-    public class IssuesParametersReporting
+    public class IssuesParametersReporting : IIssuesParametersReporting
     {
-        /// <summary>
-        /// Gets or sets a value indicating whether full issues report should be created.
-        /// Default value is <c>true</c>.
-        /// </summary>
+        /// <inheritdoc />
         public bool ShouldCreateFullIssuesReport { get; set; } = true;
 
-        /// <summary>
-        /// Gets the settings for the full issues report.
-        /// By default <see cref="GenericIssueReportTemplate.HtmlDxDataGrid"/> template is used
-        /// with <see cref="DevExtremeTheme.MaterialBlueLight"/> theme.
-        /// </summary>
+        /// <inheritdoc />
         public GenericIssueReportFormatSettings FullIssuesReportSettings { get; } =
             GenericIssueReportFormatSettings
                 .FromEmbeddedTemplate(GenericIssueReportTemplate.HtmlDxDataGrid)

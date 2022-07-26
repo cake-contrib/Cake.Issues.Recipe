@@ -1,45 +1,35 @@
 using Cake.Core.IO;
+using System;
 
 namespace Cake.Frosting.Issues.Recipe
 {
     /// <summary>
-    /// Class for configuring the script.
+    /// Parameters of the build.
     /// </summary>
-    public class IssuesParameters
+    public class IssuesParameters : IssuesParameters<IssuesParametersInputFiles, IssuesParametersReporting, IssuesParametersBuildServer, IssuesParametersPullRequestSystem>
     {
-        /// <summary>
-        /// Gets or sets the path to the output directory.
-        /// A relative path will be relative to the current working directory.
-        /// Default value is <c>BuildArtifacts</c>.
-        /// </summary>
-        public DirectoryPath OutputDirectory { get; set; } = "BuildArtifacts";
+        /// <inheritdoc />
+        protected override IssuesParametersBuildServer CreateBuildServerParameters()
+        {
+            return new IssuesParametersBuildServer();
+        }
 
-        /// <summary>
-        /// Gets or sets a identifier for the build run.
-        /// If set this identifier will be used to identify to artifacts provided by the
-        /// build if building on multiple configurations.
-        /// Default value is <c>string.Empty</c>.
-        /// </summary>
-        public string BuildIdentifier { get; set; } = string.Empty;
+        /// <inheritdoc />
+        protected override IssuesParametersInputFiles CreateInputFilesParameters()
+        {
+            return new IssuesParametersInputFiles();
+        }
 
-        /// <summary>
-        /// Gets the parameters for the input files.
-        /// </summary>
-        public IssuesParametersInputFiles InputFiles { get; } = new IssuesParametersInputFiles();
+        /// <inheritdoc />
+        protected override IssuesParametersPullRequestSystem CreatePullRequestSystemParameters()
+        {
+            return new IssuesParametersPullRequestSystem();
+        }
 
-        /// <summary>
-        /// Gets the parameters for reporting.
-        /// </summary>
-        public IssuesParametersReporting Reporting { get; } = new IssuesParametersReporting();
-
-        /// <summary>
-        /// Gets the parameters for build server integration.
-        /// </summary>
-        public IssuesParametersBuildServer BuildServer { get; } = new IssuesParametersBuildServer();
-
-        /// <summary>
-        /// Gets the parameters for pull request system integration.
-        /// </summary>
-        public IssuesParametersPullRequestSystem PullRequestSystem { get; } = new IssuesParametersPullRequestSystem();
+        /// <inheritdoc />
+        protected override IssuesParametersReporting CreateReportingParameters()
+        {
+            return new IssuesParametersReporting();
+        }
     }
 }

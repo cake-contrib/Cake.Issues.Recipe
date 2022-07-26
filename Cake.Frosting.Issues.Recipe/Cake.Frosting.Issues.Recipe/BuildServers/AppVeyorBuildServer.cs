@@ -15,7 +15,7 @@ namespace Cake.Frosting.Issues.Recipe
     {
         /// <inheritdoc />
         public override Uri DetermineRepositoryRemoteUrl(
-            IssuesContext context,
+            IIssuesContext context,
             DirectoryPath repositoryRootDirectory)
         {
             context.NotNull(nameof(context));
@@ -32,7 +32,7 @@ namespace Cake.Frosting.Issues.Recipe
 
         /// <inheritdoc />
         public override string DetermineCommitId(
-            IssuesContext context,
+            IIssuesContext context,
             DirectoryPath repositoryRootDirectory)
         {
             context.NotNull(nameof(context));
@@ -41,7 +41,7 @@ namespace Cake.Frosting.Issues.Recipe
         }
 
         /// <inheritdoc />
-        public override bool DetermineIfPullRequest(IssuesContext context)
+        public override bool DetermineIfPullRequest(IIssuesContext context)
         {
             context.NotNull(nameof(context));
 
@@ -49,7 +49,7 @@ namespace Cake.Frosting.Issues.Recipe
         }
 
         /// <inheritdoc />
-        public override int? DeterminePullRequestId(IssuesContext context)
+        public override int? DeterminePullRequestId(IIssuesContext context)
         {
             context.NotNull(nameof(context));
 
@@ -58,7 +58,7 @@ namespace Cake.Frosting.Issues.Recipe
 
         /// <inheritdoc />
         public override void ReportIssuesToBuildServer(
-            IssuesContext context)
+            IIssuesContext context)
         {
             context.NotNull(nameof(context));
 
@@ -70,7 +70,7 @@ namespace Cake.Frosting.Issues.Recipe
 
         /// <inheritdoc />
         public override void CreateSummaryIssuesReport(
-            IssuesContext context,
+            IIssuesContext context,
             [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "")
         {
             context.NotNull(nameof(context));
@@ -79,7 +79,7 @@ namespace Cake.Frosting.Issues.Recipe
         }
 
         /// <inheritdoc />
-        public override void PublishIssuesArtifacts(IssuesContext context)
+        public override void PublishIssuesArtifacts(IIssuesContext context)
         {
             context.NotNull(nameof(context));
 

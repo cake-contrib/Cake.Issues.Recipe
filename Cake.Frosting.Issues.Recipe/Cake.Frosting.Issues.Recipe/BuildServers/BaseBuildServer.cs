@@ -11,7 +11,7 @@ namespace Cake.Frosting.Issues.Recipe
     {
         /// <inheritdoc />
         public virtual Uri DetermineRepositoryRemoteUrl(
-            IssuesContext context,
+            IIssuesContext context,
             DirectoryPath repositoryRootDirectory)
         {
             context.NotNull(nameof(context));
@@ -22,7 +22,7 @@ namespace Cake.Frosting.Issues.Recipe
 
         /// <inheritdoc />
         public virtual string DetermineCommitId(
-            IssuesContext context,
+            IIssuesContext context,
             DirectoryPath repositoryRootDirectory)
         {
             context.NotNull(nameof(context));
@@ -32,7 +32,7 @@ namespace Cake.Frosting.Issues.Recipe
         }
 
         /// <inheritdoc />
-        public virtual bool DetermineIfPullRequest(IssuesContext context)
+        public virtual bool DetermineIfPullRequest(IIssuesContext context)
         {
             context.NotNull(nameof(context));
 
@@ -40,7 +40,7 @@ namespace Cake.Frosting.Issues.Recipe
         }
 
         /// <inheritdoc />
-        public virtual int? DeterminePullRequestId(IssuesContext context)
+        public virtual int? DeterminePullRequestId(IIssuesContext context)
         {
             context.NotNull(nameof(context));
 
@@ -49,15 +49,15 @@ namespace Cake.Frosting.Issues.Recipe
 
         /// <inheritdoc />
         public abstract void ReportIssuesToBuildServer(
-            IssuesContext context);
+            IIssuesContext context);
 
         /// <inheritdoc />
         public abstract void CreateSummaryIssuesReport(
-            IssuesContext context,
+            IIssuesContext context,
             [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "");
 
         /// <inheritdoc />
         public abstract void PublishIssuesArtifacts(
-            IssuesContext context);
+            IIssuesContext context);
     }
 }

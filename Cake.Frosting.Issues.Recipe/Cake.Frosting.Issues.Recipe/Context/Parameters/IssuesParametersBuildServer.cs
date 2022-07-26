@@ -3,24 +3,15 @@ namespace Cake.Frosting.Issues.Recipe
     /// <summary>
     /// Parameters for build server integration.
     /// </summary>
-    public class IssuesParametersBuildServer
+    public class IssuesParametersBuildServer : IIssuesParametersBuildServer
     {
-        /// <summary>
-        /// Gets or sets a value indicating whether issues should be reported to the build server.
-        /// Default value is <c>true</c>.
-        /// </summary>
+        /// <inheritdoc />
         public bool ShouldReportIssuesToBuildServer { get; set; } = true;
 
-        /// <summary>
-        /// Gets or sets a value indicating whether full issues report should be published as artifact to the build system.
-        /// Default value is <c>true</c>.
-        /// </summary>
+        /// <inheritdoc />
         public bool ShouldPublishFullIssuesReport { get; set; } = true;
 
-        /// <summary>
-        /// Gets or sets a value indicating whether summary issues report should be created.
-        /// Default value is <c>true</c>.
-        /// </summary>
+        /// <inheritdoc />
         public bool ShouldCreateSummaryIssuesReport { get; set; } = true;
     }
 }

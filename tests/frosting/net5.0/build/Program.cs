@@ -23,19 +23,43 @@ public static class Program
     }
 }
 
-public class BuildContext : IssuesContext
+public class BuildContext : IssuesContext<BuildParameters, BuildState>
 {
-    public DirectoryPath LogDirectoryPath { get; }
+    public BuildContext(ICakeContext context)
+        : base(context)
+    {
+    }
 
+    protected override BuildParameters CreateIssuesParameters()
+    {
+        return new BuildParameters();
+    }
+
+    protected override BuildState CreateIssuesState()
+    {
+        return new BuildState(this);
+    }
+}
+
+public class BuildParameters : IssuesParameters
+{
+    public DirectoryPath LogDirectoryPath => this.OutputDirectory.Combine("logs");
+
+    public BuildParameters()
+    {
+        this.OutputDirectory = this.OutputDirectory.Combine("output");
+    }
+}
+
+public class BuildState : IssuesState
+{
     public FilePath SolutionFilePath { get; }
 
-    public BuildContext(ICakeContext context)
+    public BuildState(BuildContext context)
         : base(context, RepositoryInfoProviderType.Cli)
     {
-        this.LogDirectoryPath = this.Parameters.OutputDirectory.Combine("logs");
-        this.Parameters.OutputDirectory = this.Parameters.OutputDirectory.Combine("output");
         this.SolutionFilePath =
-            this.State.ProjectRootDirectory
+            this.ProjectRootDirectory
                 .Combine("src")
                 .CombineWithFilePath("ClassLibrary1.sln");
     }
@@ -70,7 +94,7 @@ public sealed class RunInspectCodeTask : FrostingTask<BuildContext>
     public override void Run(BuildContext context)
     {
         // Run InspectCode.
-        var inspectCodeLogFilePath = context.LogDirectoryPath.CombineWithFilePath("inspectCode.log");
+        var inspectCodeLogFilePath = context.Parameters.LogDirectoryPath.CombineWithFilePath("inspectCode.log");
 
         var settings = new InspectCodeSettings() {
             OutputFile = inspectCodeLogFilePath,
@@ -79,7 +103,7 @@ public sealed class RunInspectCodeTask : FrostingTask<BuildContext>
         };
 
         context.InspectCode(
-            context.SolutionFilePath,
+            context.State.SolutionFilePath,
             settings);
 
         // Pass path to InspectCode log file to Cake.Frosting.Issues.Recipe.
