@@ -74,12 +74,12 @@ jobs:
   - publish: $(Build.SourcesDirectory)/tests/script-runner/BuildArtifacts/output
     artifact: Integration Tests Script Runner Windows (.NET Core tool)
     displayName: 'Publish generated reports as build artifact'
-# Integration Tests Frosting macOS 10.15 (.NET 5)
+# Integration Tests Frosting macOS 11 (.NET 5)
 - job: Test_Frosting_macOS_Net5
-  displayName: Integration Tests Frosting macOS 10.15 (.NET 5)
+  displayName: Integration Tests Frosting macOS 11 (.NET 5)
   dependsOn: Build
   pool:
-    vmImage: 'macOS-10.15'
+    vmImage: 'macOS-11'
   steps:
   - task: NodeTool@0
     inputs:
@@ -101,14 +101,14 @@ jobs:
     workingDirectory: ./tests/frosting/net5.0
     displayName: 'Run integration tests'
   - publish: $(Build.SourcesDirectory)/tests/frosting/net5.0/build/BuildArtifacts/output
-    artifact: Integration Tests Frosting macOS 10.15 (.NET 5)
+    artifact: Integration Tests Frosting macOS 11 (.NET 5)
     displayName: 'Publish generated reports as build artifact'
-# Integration Tests Script Runner macOS 10.15 (.NET Core tool)
+# Integration Tests Script Runner macOS 11 (.NET Core tool)
 - job: Test_Script_Runner_macOS_DotNetCoreTool
-  displayName: Integration Tests Script Runner macOS 10.15 (.NET Core tool)
+  displayName: Integration Tests Script Runner macOS 11 (.NET Core tool)
   dependsOn: Build
   pool:
-    vmImage: 'macOS-10.15'
+    vmImage: 'macOS-11'
   steps:
   - task: NodeTool@0
     inputs:
@@ -130,7 +130,7 @@ jobs:
     workingDirectory: ./tests/script-runner/
     displayName: 'Run integration tests'
   - publish: $(Build.SourcesDirectory)/tests/script-runner/BuildArtifacts/output
-    artifact: Integration Tests Script Runner macOS 10.15 (.NET Core tool)
+    artifact: Integration Tests Script Runner macOS 11 (.NET Core tool)
     displayName: 'Publish generated reports as build artifact'
 # Integration Tests Frosting Ubuntu 18.04 (.NET 5)
 - job: Test_Frosting_ubuntu_Net5
