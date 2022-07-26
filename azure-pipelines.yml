@@ -47,9 +47,9 @@ jobs:
   - publish: $(Build.SourcesDirectory)/tests/frosting/net5.0/build/BuildArtifacts/output
     artifact: Integration Tests Frosting Windows (.NET 5)
     displayName: 'Publish generated reports as build artifact'
-# Integration Tests Script Runner Windows (.NET Framework)
-- job: Test_Script_Runner_Windows_DotNetFramework
-  displayName: 'Integration Tests Script Runner Windows (.NET Framework)'
+# Integration Tests Script Runner Windows (.NET Core tool)
+- job: Test_Script_Runner_Windows_DotNetCoreTool
+  displayName: Integration Tests Script Runner Windows (.NET Core tool)
   dependsOn: Build
   pool:
     vmImage: 'windows-2019'
@@ -72,44 +72,14 @@ jobs:
     workingDirectory: ./tests/script-runner/
     displayName: 'Run integration tests'
   - publish: $(Build.SourcesDirectory)/tests/script-runner/BuildArtifacts/output
-    artifact: Integration Tests Script Runner Windows (.NET Framework)
-    displayName: 'Publish generated reports as build artifact'
-# Integration Tests Script Runner Windows (.NET Core tool)
-- job: Test_Script_Runner_Windows_DotNetCoreTool
-  displayName: Integration Tests Script Runner Windows (.NET Core tool)
-  dependsOn: Build
-  pool:
-    vmImage: 'windows-2019'
-  steps:
-  - task: NodeTool@0
-    inputs:
-      versionSpec: '14.x'
-    displayName: 'Install NodeJs 14.x'
-  - powershell: choco install markdownlint-cli --no-progress
-    displayName: 'Install required tools'
-  - download: current
-    artifact: NuGet Package
-    displayName: 'Download build artifact'
-  - task: CopyFiles@2
-    inputs:
-      sourceFolder: $(Pipeline.Workspace)/NuGet Package
-      targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
-    displayName: 'Copy build artifact for test run'
-  - powershell: dotnet tool restore
-    workingDirectory: ./tests/script-runner/
-    displayName: 'Restore .NET Core tool'
-  - powershell: dotnet cake
-    workingDirectory: ./tests/script-runner/
-    displayName: 'Run integration tests'
-  - publish: $(Build.SourcesDirectory)/tests/script-runner/BuildArtifacts/output
     artifact: Integration Tests Script Runner Windows (.NET Core tool)
     displayName: 'Publish generated reports as build artifact'
-# Integration Tests Script Runner macOS 10.14 (Mono)
-- job: Test_Script_Runner_macOS_Mono
-  displayName: 'Integration Tests Script Runner macOS 10.14 (Mono)'
+# Integration Tests Frosting macOS 10.15 (.NET 5)
+- job: Test_Frosting_macOS_Net5
+  displayName: Integration Tests Frosting macOS 10.15 (.NET 5)
   dependsOn: Build
   pool:
-    vmImage: 'macOS-10.14'
+    vmImage: 'macOS-10.15'
   steps:
   - task: NodeTool@0
     inputs:
@@ -118,11 +88,6 @@ jobs:
   - bash: |
       npm install -g markdownlint-cli
     displayName: 'Install required tools'
-  # To manually select a Xamarin SDK version on the Hosted macOS agent, enable this script with the SDK version you want to target
-  #  https://go.microsoft.com/fwlink/?linkid=871629
-  - bash: |
-      sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh 5_18_1
-    displayName: 'Select Mono 5.18.1'
   - download: current
     artifact: NuGet Package
     displayName: 'Download build artifact'
@@ -133,10 +98,10 @@ jobs:
     displayName: 'Copy build artifact for test run'
   - bash: |
       ./build.sh --verbosity=diagnostic
-    workingDirectory: ./tests/script-runner/
+    workingDirectory: ./tests/frosting/net5.0
     displayName: 'Run integration tests'
-  - publish: $(Build.SourcesDirectory)/tests/script-runner/BuildArtifacts/output
-    artifact: Integration Tests Script Runner macOS 10.14 (Mono)
+  - publish: $(Build.SourcesDirectory)/tests/frosting/net5.0/build/BuildArtifacts/output
+    artifact: Integration Tests Frosting macOS 10.15 (.NET 5)
     displayName: 'Publish generated reports as build artifact'
 # Integration Tests Script Runner macOS 10.15 (.NET Core tool)
 - job: Test_Script_Runner_macOS_DotNetCoreTool
@@ -161,19 +126,15 @@ jobs:
       targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
     displayName: 'Copy build artifact for test run'
   - bash: |
-      dotnet tool restore
-    workingDirectory: ./tests/script-runner/
-    displayName: 'Restore .NET Core tool'
-  - bash: |
-      dotnet cake
+      ./build.sh --verbosity=diagnostic
     workingDirectory: ./tests/script-runner/
     displayName: 'Run integration tests'
   - publish: $(Build.SourcesDirectory)/tests/script-runner/BuildArtifacts/output
     artifact: Integration Tests Script Runner macOS 10.15 (.NET Core tool)
     displayName: 'Publish generated reports as build artifact'
-# Integration Tests Script Runner Ubuntu 18.04 (Mono)
-- job: Test_Script_Runner_ubuntu_Mono
-  displayName: 'Integration Tests Script Runner Ubuntu 18.04 (Mono)'
+# Integration Tests Frosting Ubuntu 18.04 (.NET 5)
+- job: Test_Frosting_ubuntu_Net5
+  displayName: Integration Tests Frosting Ubuntu 18.04 (.NET 5)
   dependsOn: Build
   pool:
     vmImage: 'ubuntu-18.04'
@@ -195,10 +156,10 @@ jobs:
     displayName: 'Copy build artifact for test run'
   - bash: |
       ./build.sh --verbosity=diagnostic
-    workingDirectory: ./tests/script-runner/
+    workingDirectory: ./tests/frosting/net5.0
     displayName: 'Run integration tests'
-  - publish: $(Build.SourcesDirectory)/tests/script-runner/BuildArtifacts/output
-    artifact: Integration Tests Script Runner Ubuntu 18.04 (Mono)
+  - publish: $(Build.SourcesDirectory)/tests/frosting/net5.0/build/BuildArtifacts/output
+    artifact: Integration Tests Frosting Ubuntu 18.04 (.NET 5)
     displayName: 'Publish generated reports as build artifact'
 # Integration Tests Script Runner Ubuntu 18.04 (.NET Core tool)
 - job: Test_Script_Runner_ubuntu_DotNetCoreTool
@@ -223,11 +184,7 @@ jobs:
       targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
     displayName: 'Copy build artifact for test run'
   - bash: |
-      dotnet tool restore
-    workingDirectory: ./tests/script-runner/
-    displayName: 'Restore .NET Core tool'
-  - bash: |
-      dotnet cake
+      ./build.sh --verbosity=diagnostic
     workingDirectory: ./tests/script-runner/
     displayName: 'Run integration tests'
   - publish: $(Build.SourcesDirectory)/tests/script-runner/BuildArtifacts/output
