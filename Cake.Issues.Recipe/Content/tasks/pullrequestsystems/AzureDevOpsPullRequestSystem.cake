@@ -36,33 +36,34 @@ public class AzureDevOpsPullRequestSystem : BasePullRequestSystem
             return;
         }
 
-        var pullRequestSettings =
-            new AzureDevOpsPullRequestSettings(
-                data.BuildServer.DetermineRepositoryRemoteUrl(context, data.RepositoryRootDirectory),
-                data.BuildServer.DeterminePullRequestId(context).Value,
-                context.AzureDevOpsAuthenticationOAuth(context.EnvironmentVariable("SYSTEM_ACCESSTOKEN")));
-
-        var pullRequestStatusName = "Issues";
-        var pullRequestDescriptionIfIssues = $"Found {data.Issues.Count()} issues";
-        var pullRequestDescriptionIfNoIssues = "No issues found";
-        if (!string.IsNullOrWhiteSpace(IssuesParameters.BuildIdentifier))
+        if (IssuesParameters.PullRequestSystem.ShouldSetSeparatePullRequestStatusForEachIssueProviderAndRun)
         {
-            pullRequestStatusName += $"-{IssuesParameters.BuildIdentifier}";
-            pullRequestDescriptionIfIssues += $" for build {IssuesParameters.BuildIdentifier}";
-            pullRequestDescriptionIfNoIssues += $" for build {IssuesParameters.BuildIdentifier}";
-        }
-
-        var pullRequestStatus =
-            new AzureDevOpsPullRequestStatus(pullRequestStatusName)
+            foreach (var providerGroup in data.Issues.GroupBy(x => x.ProviderType))
             {
-                Genre = "Cake.Issues.Recipe",
-                State = data.Issues.Any() ? AzureDevOpsPullRequestStatusState.Failed : AzureDevOpsPullRequestStatusState.Succeeded,
-                Description = data.Issues.Any() ? pullRequestDescriptionIfIssues : pullRequestDescriptionIfNoIssues
-            };
+                var issueProvider = providerGroup.Key;
+                foreach (var runGroup in providerGroup.GroupBy(x => x.Run))
+                {
+                    if (!string.IsNullOrEmpty(runGroup.Key))
+                    {
+                        issueProvider += $"-{runGroup.Key}";
+                    }
 
-        context.AzureDevOpsSetPullRequestStatus(
-            pullRequestSettings,
-            pullRequestStatus);
+                    SetPullRequestStatus(
+                        context,
+                        data,
+                        runGroup,
+                        issueProvider);
+                }
+            }
+        }
+        else
+        {
+            SetPullRequestStatus(
+                context,
+                data,
+                data.Issues,
+                null);
+        }
     }
 
     /// <inheritdoc />
@@ -77,5 +78,55 @@ public class AzureDevOpsPullRequestSystem : BasePullRequestSystem
             data.RepositoryRemoteUrl,
             data.CommitId,
             rootPath.FullPath);
+    }
+
+    /// <summary>
+    /// Reports a status to the pull request of the current build.
+    /// </summary>
+    /// <param name="context">The Cake context.</param>
+    /// <param name="data">Object containing information about the build.</param>
+    /// <param name="issues">Issues for which the status should be reported.</param>
+    /// <param name="issueIdentifier">Identifier for the issues passed in <paramref name="issues"/>.</param>
+    private static void SetPullRequestStatus(
+        ICakeContext context,
+        IssuesData data,
+        IEnumerable<IIssue> issues,
+        string issueIdentifier)
+    {
+        var pullRequestSettings =
+            new AzureDevOpsPullRequestSettings(
+                data.BuildServer.DetermineRepositoryRemoteUrl(context, data.RepositoryRootDirectory),
+                data.BuildServer.DeterminePullRequestId(context).Value,
+                context.AzureDevOpsAuthenticationOAuth(context.EnvironmentVariable("SYSTEM_ACCESSTOKEN")));
+
+        var pullRequestStatusName = "Issues";
+        var pullRequestDescriptionIfIssues = $"Found {issues.Count()} issues";
+        var pullRequestDescriptionIfNoIssues = "No issues found";
+
+        if (!string.IsNullOrWhiteSpace(issueIdentifier))
+        {
+            pullRequestStatusName += $"-{issueIdentifier}";
+            pullRequestDescriptionIfIssues += $" for {issueIdentifier}";
+            pullRequestDescriptionIfNoIssues += $" for {issueIdentifier}";
+        }
+
+        if (!string.IsNullOrWhiteSpace(IssuesParameters.BuildIdentifier))
+        {
+            pullRequestStatusName += $"-{IssuesParameters.BuildIdentifier}";
+            pullRequestDescriptionIfIssues += $" in build {IssuesParameters.BuildIdentifier}";
+            pullRequestDescriptionIfNoIssues += $" in build {IssuesParameters.BuildIdentifier}";
+        }
+
+        var pullRequestStatus =
+            new AzureDevOpsPullRequestStatus(pullRequestStatusName)
+            {
+                Genre = "Cake.Issues.Recipe",
+                State = issues.Any() ? AzureDevOpsPullRequestStatusState.Failed : AzureDevOpsPullRequestStatusState.Succeeded,
+                Description = issues.Any() ? pullRequestDescriptionIfIssues : pullRequestDescriptionIfNoIssues
+            };
+
+        context.AzureDevOpsSetPullRequestStatus(
+            pullRequestSettings,
+            pullRequestStatus);
     }
 }

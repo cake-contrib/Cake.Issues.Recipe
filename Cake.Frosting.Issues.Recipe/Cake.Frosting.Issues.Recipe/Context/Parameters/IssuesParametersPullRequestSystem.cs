@@ -15,6 +15,9 @@ namespace Cake.Frosting.Issues.Recipe
         public bool ShouldSetPullRequestStatus { get; set; } = true;
 
         /// <inheritdoc />
+        public bool ShouldSetSeparatePullRequestStatusForEachIssueProviderAndRun { get; set; }
+
+        /// <inheritdoc />
         public int? MaxIssuesToPost { get; set; }
 
         /// <inheritdoc />
@@ -25,6 +28,5 @@ namespace Cake.Frosting.Issues.Recipe
 
         /// <inheritdoc />
         public Dictionary<string, IProviderIssueLimits> ProviderIssueLimits => new Dictionary<string, IProviderIssueLimits>();
-
     }
 }
