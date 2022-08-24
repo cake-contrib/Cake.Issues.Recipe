@@ -52,4 +52,10 @@ public class IssuesParametersPullRequestSystem
     /// Default value is <c>true</c>.
     /// </summary>
     public bool ShouldSetPullRequestStatus { get; set; } = true;
+
+    /// <summary>
+    /// Gets or sets a value indicating whether a separate status should be set for issues of every issue provider and run.
+    /// Default value is <c>false</c>.
+    /// </summary>
+    public bool ShouldSetSeparatePullRequestStatusForEachIssueProviderAndRun { get; set; }
 }

@@ -58,5 +58,11 @@ namespace Cake.Frosting.Issues.Recipe
         /// Default value is <c>true</c>.
         /// </summary>
         bool ShouldSetPullRequestStatus { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether a separate status should be set for issues of every issue provider and run.
+        /// Default value is <c>false</c>.
+        /// </summary>
+        bool ShouldSetSeparatePullRequestStatusForEachIssueProviderAndRun { get; set; }
     }
 }
