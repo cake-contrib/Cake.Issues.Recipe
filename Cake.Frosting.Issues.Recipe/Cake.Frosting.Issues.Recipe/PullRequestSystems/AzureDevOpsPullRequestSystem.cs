@@ -20,9 +20,6 @@ namespace Cake.Frosting.Issues.Recipe
         {
             context.NotNull(nameof(context));
 
-#pragma warning disable SA1123 // Do not place regions within elements
-            #region DupFinder Exclusion
-#pragma warning restore SA1123 // Do not place regions within elements
             if (string.IsNullOrWhiteSpace(context.EnvironmentVariable("SYSTEM_ACCESSTOKEN")))
             {
                 context.Warning("SYSTEM_ACCESSTOKEN environment variable not set. Make sure the 'Allow Scripts to access OAuth token' option is enabled on the build definition.");
@@ -36,7 +33,6 @@ namespace Cake.Frosting.Issues.Recipe
                     context.State.BuildServer.DeterminePullRequestId(context).Value,
                     context.AzureDevOpsAuthenticationOAuth(context.EnvironmentVariable("SYSTEM_ACCESSTOKEN"))),
                 GetReportIssuesToPullRequestSettings(context));
-            #endregion
         }
 
         /// <inheritdoc />
