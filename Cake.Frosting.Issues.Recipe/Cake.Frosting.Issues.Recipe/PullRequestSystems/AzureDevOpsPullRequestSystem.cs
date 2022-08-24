@@ -46,6 +46,16 @@ namespace Cake.Frosting.Issues.Recipe
                 return;
             }
 
+            // Set status across all issues
+            if (context.Parameters.PullRequestSystem.ShouldSetPullRequestStatus)
+            {
+                SetPullRequestStatus(
+                    context,
+                    context.State.Issues,
+                    null);
+            }
+
+            // Set status for individual issue providers
             if (context.Parameters.PullRequestSystem.ShouldSetSeparatePullRequestStatusForEachIssueProviderAndRun)
             {
                 foreach (var providerGroup in context.State.Issues.GroupBy(x => x.ProviderType))
@@ -64,13 +74,6 @@ namespace Cake.Frosting.Issues.Recipe
                             issueProvider);
                     }
                 }
-            }
-            else
-            {
-                SetPullRequestStatus(
-                    context,
-                    context.State.Issues,
-                    null);
             }
         }
 

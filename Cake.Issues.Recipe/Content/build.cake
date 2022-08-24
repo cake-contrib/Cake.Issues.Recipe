@@ -232,7 +232,9 @@ IssuesBuildTasks.ReportIssuesToPullRequestTask = Task("Report-IssuesToPullReques
 IssuesBuildTasks.SetPullRequestIssuesStateTask = Task("Set-PullRequestIssuesState")
     .Description("Set pull request status.")
     .WithCriteria(() => !BuildSystem.IsLocalBuild, "Not running on build server")
-    .WithCriteria(() => IssuesParameters.PullRequestSystem.ShouldSetPullRequestStatus, "Setting of pull request status is disabled")
+    .WithCriteria(() => 
+        IssuesParameters.PullRequestSystem.ShouldSetPullRequestStatus || IssuesParameters.PullRequestSystem.ShouldSetSeparatePullRequestStatusForEachIssueProviderAndRun,
+        "Setting of pull request status is disabled")
     .WithCriteria<IssuesData>((context, data) => data.BuildServer != null ? data.BuildServer.DetermineIfPullRequest(context) : false, "Not a pull request build")
     .IsDependentOn("Read-Issues")
     .Does<IssuesData>((data) =>

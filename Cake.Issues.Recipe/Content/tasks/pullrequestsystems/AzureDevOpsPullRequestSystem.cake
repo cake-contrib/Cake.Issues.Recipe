@@ -36,6 +36,17 @@ public class AzureDevOpsPullRequestSystem : BasePullRequestSystem
             return;
         }
 
+        // Set status across all issues
+        if (IssuesParameters.PullRequestSystem.ShouldSetPullRequestStatus)
+        {
+            SetPullRequestStatus(
+                context,
+                data,
+                data.Issues,
+                null);
+        }
+
+        // Set status for individual issue providers
         if (IssuesParameters.PullRequestSystem.ShouldSetSeparatePullRequestStatusForEachIssueProviderAndRun)
         {
             foreach (var providerGroup in data.Issues.GroupBy(x => x.ProviderType))
@@ -55,14 +66,6 @@ public class AzureDevOpsPullRequestSystem : BasePullRequestSystem
                         issueProvider);
                 }
             }
-        }
-        else
-        {
-            SetPullRequestStatus(
-                context,
-                data,
-                data.Issues,
-                null);
         }
     }
 

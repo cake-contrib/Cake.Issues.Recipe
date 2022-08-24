@@ -18,7 +18,8 @@ namespace Cake.Frosting.Issues.Recipe
 
             return
                 !context.BuildSystem().IsLocalBuild &&
-                context.Parameters.PullRequestSystem.ShouldSetPullRequestStatus &&
+                (context.Parameters.PullRequestSystem.ShouldSetPullRequestStatus ||
+                context.Parameters.PullRequestSystem.ShouldSetSeparatePullRequestStatusForEachIssueProviderAndRun) &&
                 context.State.BuildServer != null && context.State.BuildServer.DetermineIfPullRequest(context);
         }
 
