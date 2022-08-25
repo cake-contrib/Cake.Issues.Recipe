@@ -6,6 +6,7 @@ using Cake.Core.IO;
 using Cake.Issues;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Cake.Frosting.Issues.Recipe
 {
@@ -14,7 +15,11 @@ namespace Cake.Frosting.Issues.Recipe
     /// </summary>
     public class IssuesState : IIssuesState
     {
+        private readonly IIssuesContext context;
+
         private readonly List<IIssue> issues = new List<IIssue>();
+
+        private readonly List<(IIssueProvider, string)> issueProvidersAndRuns = new List<(IIssueProvider, string)>();
 
         /// <inheritdoc />
         public DirectoryPath RepositoryRootDirectory { get; }
@@ -49,6 +54,9 @@ namespace Cake.Frosting.Issues.Recipe
         /// <inheritdoc />
         public IEnumerable<IIssue> Issues => this.issues.AsReadOnly();
 
+        /// <inheritdoc />
+        public IList<(IIssueProvider, string)> IssueProvidersAndRuns => this.issueProvidersAndRuns.AsReadOnly();
+
         /// <summary>
         /// Creates a new instance of the <see cref="IssuesState"/> class.
         /// </summary>
@@ -62,6 +70,8 @@ namespace Cake.Frosting.Issues.Recipe
             {
                 throw new ArgumentNullException(nameof(context));
             }
+
+            this.context = context;
 
             this.BuildRootDirectory = context.MakeAbsolute(context.Directory("./"));
             context.Information("Build script root directory: {0}", this.BuildRootDirectory);
@@ -112,6 +122,28 @@ namespace Cake.Frosting.Issues.Recipe
             }
 
             this.issues.AddRange(issues);
+        }
+
+        /// <inheritdoc />
+        public void AddIssues(IIssueProvider issueProvider, IReadIssuesSettings settings)
+        {
+            issueProvider.NotNull(nameof(issueProvider));
+
+            this.issueProvidersAndRuns.Add((issueProvider, settings?.Run));
+
+            // Define default settings.
+            var defaultSettings = new ReadIssuesSettings(this.ProjectRootDirectory);
+
+            if (this.PullRequestSystem != null)
+            {
+                defaultSettings.FileLinkSettings =
+                    this.PullRequestSystem.GetFileLinkSettings(context);
+            }
+
+            AddIssues(
+                context.ReadIssues(
+                    issueProvider,
+                    GetSettings(settings, defaultSettings)));
         }
 
         /// <summary>
@@ -211,6 +243,21 @@ namespace Cake.Frosting.Issues.Recipe
             }
 
             return null;
+        }
+
+        private static IReadIssuesSettings GetSettings(IReadIssuesSettings configuredSettings, IReadIssuesSettings defaultSettings)
+        {
+            if (configuredSettings == null)
+            {
+                return defaultSettings;
+            }
+
+            if (configuredSettings.FileLinkSettings == null)
+            {
+                configuredSettings.FileLinkSettings = defaultSettings.FileLinkSettings;
+            }
+
+            return configuredSettings;
         }
     }
 }
