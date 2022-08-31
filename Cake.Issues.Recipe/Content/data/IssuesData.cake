@@ -151,7 +151,8 @@ public class IssuesData
     /// </summary>
     /// <param name="issueProvider">Issue provider used to read the issues.</param>
     /// <param name="settings">Settings for reading the issues. <c>Null</c> for default values.</param>
-    public void AddIssues(IIssueProvider issueProvider, IReadIssuesSettings settings)
+    /// <returns>List of issues read from issue provider.</returns>
+    public IEnumerable<IIssue> AddIssues(IIssueProvider issueProvider, IReadIssuesSettings settings)
     {
         issueProvider.NotNull(nameof(issueProvider));
 
@@ -166,10 +167,14 @@ public class IssuesData
                 this.PullRequestSystem.GetFileLinkSettings(this.context, this);
         }
 
-        AddIssues(
+        var issues =
             context.ReadIssues(
                 issueProvider,
-                GetSettings(settings, defaultSettings)));
+                GetSettings(settings, defaultSettings));
+
+        AddIssues(issues);
+
+        return issues;
     }
 
     /// <summary>
