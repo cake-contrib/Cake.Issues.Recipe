@@ -133,7 +133,7 @@ namespace Cake.Frosting.Issues.Recipe
             {
                 case RepositoryInfoProviderType.CakeGit:
                     context.Information("Using Cake.Git for providing repository information");
-                    return new CliRepositoryInfoProvider();
+                    return new CakeGitRepositoryInfoProvider();
                 case RepositoryInfoProviderType.Cli:
                     context.Information("Using Git CLI for providing repository information");
                     return new CliRepositoryInfoProvider();
