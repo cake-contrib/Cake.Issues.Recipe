@@ -58,21 +58,43 @@ namespace Cake.Frosting.Issues.Recipe
             // Set status for individual issue providers
             if (context.Parameters.PullRequestSystem.ShouldSetSeparatePullRequestStatusForEachIssueProviderAndRun)
             {
-                foreach (var providerGroup in context.State.Issues.GroupBy(x => x.ProviderType))
-                {
-                    var issueProvider = providerGroup.Key;
-                    foreach (var runGroup in providerGroup.GroupBy(x => x.Run))
-                    {
-                        if (!string.IsNullOrEmpty(runGroup.Key))
-                        {
-                            issueProvider += $"-{runGroup.Key}";
-                        }
+                // Determine issue providers and runs from the list of issues providers from which issues were read
+                // and issue providers and runs of the reported issues.
+                var issueProvidersAndRuns =
+                    context.State.IssueProvidersAndRuns
+                        .Select(x => 
+                            new 
+                            { 
+                                x.Item1.ProviderName, 
+                                Run = x.Item2 
+                            })
+                        .Union(
+                            context.State.Issues
+                                .GroupBy(x => 
+                                    new 
+                                    { 
+                                        x.ProviderName, 
+                                        x.Run 
+                                    })
+                                .Select(x => 
+                                    new 
+                                    { 
+                                        x.Key.ProviderName, 
+                                        x.Key.Run 
+                                    }));
 
-                        SetPullRequestStatus(
-                            context,
-                            runGroup,
-                            issueProvider);
+                foreach (var item in issueProvidersAndRuns)
+                {
+                    var issueProvider = item.ProviderName;
+                    if (!string.IsNullOrEmpty(item.Run))
+                    {
+                        issueProvider += $" ({item.Run})";
                     }
+
+                    SetPullRequestStatus(
+                        context,
+                        context.State.Issues.Where(x => x.ProviderName == item.ProviderName && x.Run == item.Run),
+                        issueProvider);
                 }
             }
         }

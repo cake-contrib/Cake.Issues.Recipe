@@ -20,117 +20,83 @@ namespace Cake.Frosting.Issues.Recipe
         {
             context.NotNull(nameof(context));
 
-            // Define default settings.
-            var defaultSettings = new ReadIssuesSettings(context.State.ProjectRootDirectory);
-
-            if (context.State.PullRequestSystem != null)
-            {
-                defaultSettings.FileLinkSettings =
-                    context.State.PullRequestSystem.GetFileLinkSettings(context);
-            }
-
             // Read MSBuild log files created by XmlFileLogger.
             foreach (var logFile in context.Parameters.InputFiles.MsBuildXmlFileLoggerLogFilePaths)
             {
-                context.NotNull(nameof(context));
-
                 context.State.AddIssues(
-                    context.ReadIssues(
-                        context.MsBuildIssuesFromFilePath(
-                            logFile.Key,
-                            context.MsBuildXmlFileLoggerFormat()),
-                        GetSettings(logFile.Value, defaultSettings)));
+                    context.MsBuildIssuesFromFilePath(
+                        logFile.Key,
+                        context.MsBuildXmlFileLoggerFormat()), 
+                    logFile.Value);
             }
 
             // Read MSBuild binary log files.
             foreach (var logFile in context.Parameters.InputFiles.MsBuildBinaryLogFilePaths)
             {
                 context.State.AddIssues(
-                    context.ReadIssues(
-                        context.MsBuildIssuesFromFilePath(
-                            logFile.Key,
-                            context.MsBuildBinaryLogFileFormat()),
-                        GetSettings(logFile.Value, defaultSettings)));
+                    context.MsBuildIssuesFromFilePath(
+                        logFile.Key,
+                        context.MsBuildBinaryLogFileFormat()),
+                    logFile.Value);
             }
 
             // Read InspectCode log files.
             foreach (var logFile in context.Parameters.InputFiles.InspectCodeLogFilePaths)
             {
                 context.State.AddIssues(
-                    context.ReadIssues(
-                        context.InspectCodeIssuesFromFilePath(logFile.Key),
-                        GetSettings(logFile.Value, defaultSettings)));
+                    context.InspectCodeIssuesFromFilePath(logFile.Key),
+                    logFile.Value);
             }
 
             // Read dupFinder log files.
             foreach (var logFile in context.Parameters.InputFiles.DupFinderLogFilePaths)
             {
                 context.State.AddIssues(
-                    context.ReadIssues(
-                        context.DupFinderIssuesFromFilePath(logFile.Key),
-                        GetSettings(logFile.Value, defaultSettings)));
+                    context.DupFinderIssuesFromFilePath(logFile.Key),
+                    logFile.Value);
             }
 
             // Read markdownlint-cli log files.
             foreach (var logFile in context.Parameters.InputFiles.MarkdownlintCliLogFilePaths)
             {
                 context.State.AddIssues(
-                    context.ReadIssues(
-                        context.MarkdownlintIssuesFromFilePath(
-                            logFile.Key,
-                            context.MarkdownlintCliLogFileFormat()),
-                        GetSettings(logFile.Value, defaultSettings)));
+                    context.MarkdownlintIssuesFromFilePath(
+                        logFile.Key,
+                        context.MarkdownlintCliLogFileFormat()),
+                    logFile.Value);
             }
 
             // Read markdownlint-cli log files created with --json.
             foreach (var logFile in context.Parameters.InputFiles.MarkdownlintCliJsonLogFilePaths)
             {
                 context.State.AddIssues(
-                    context.ReadIssues(
-                        context.MarkdownlintIssuesFromFilePath(
-                            logFile.Key,
-                            context.MarkdownlintCliJsonLogFileFormat()),
-                        GetSettings(logFile.Value, defaultSettings)));
+                    context.MarkdownlintIssuesFromFilePath(
+                        logFile.Key,
+                        context.MarkdownlintCliJsonLogFileFormat()),
+                    logFile.Value);
             }
 
             // Read markdownlint log files in version 1.
             foreach (var logFile in context.Parameters.InputFiles.MarkdownlintV1LogFilePaths)
             {
                 context.State.AddIssues(
-                    context.ReadIssues(
-                        context.MarkdownlintIssuesFromFilePath(
-                            logFile.Key,
-                            context.MarkdownlintV1LogFileFormat()),
-                        GetSettings(logFile.Value, defaultSettings)));
+                    context.MarkdownlintIssuesFromFilePath(
+                        logFile.Key,
+                        context.MarkdownlintV1LogFileFormat()),
+                    logFile.Value);
             }
 
             // Read ESLint log files in JSON format.
             foreach (var logFile in context.Parameters.InputFiles.EsLintJsonLogFilePaths)
             {
                 context.State.AddIssues(
-                    context.ReadIssues(
-                        context.EsLintIssuesFromFilePath(
-                            logFile.Key,
-                            context.EsLintJsonFormat()),
-                        GetSettings(logFile.Value, defaultSettings)));
+                    context.EsLintIssuesFromFilePath(
+                        logFile.Key,
+                        context.EsLintJsonFormat()),
+                    logFile.Value);
             }
 
             context.Information("{0} issues are found.", context.State.Issues.Count());
-        }
-
-        private static IReadIssuesSettings GetSettings(IReadIssuesSettings configuredSettings, IReadIssuesSettings defaultSettings)
-        {
-            if (configuredSettings == null)
-            {
-                return defaultSettings;
-            }
-
-            if (configuredSettings.FileLinkSettings == null)
-            {
-                configuredSettings.FileLinkSettings = defaultSettings.FileLinkSettings;
-            }
-
-            return configuredSettings;
         }
     }
 }
