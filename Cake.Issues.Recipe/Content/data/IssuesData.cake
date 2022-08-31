@@ -182,10 +182,7 @@ public class IssuesData
         ICakeContext context,
         RepositoryInfoProviderType repositoryInfoProviderType)
     {
-        if (context == null)
-        {
-            throw new ArgumentNullException(nameof(context));
-        }
+        context.NotNull(nameof(context));
 
         switch (repositoryInfoProviderType)
         {
