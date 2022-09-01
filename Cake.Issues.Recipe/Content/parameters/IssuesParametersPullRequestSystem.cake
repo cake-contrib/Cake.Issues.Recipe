@@ -56,7 +56,7 @@ public class IssuesParametersPullRequestSystem
     /// <summary>
     /// Gets or sets a value indicating whether a separate status should be set for issues of every issue provider and run.
     /// Use <see cref="ShouldSetPullRequestStatus"/> to report status across all issue providers and runs.
-    /// Default value is <c>false</c>.
+    /// Default value is <c>true</c>.
     /// </summary>
-    public bool ShouldSetSeparatePullRequestStatusForEachIssueProviderAndRun { get; set; }
+    public bool ShouldSetSeparatePullRequestStatusForEachIssueProviderAndRun { get; set; } = true;
 }
