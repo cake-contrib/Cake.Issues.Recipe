@@ -125,7 +125,7 @@ namespace Cake.Frosting.Issues.Recipe
         }
 
         /// <inheritdoc />
-        public void AddIssues(IIssueProvider issueProvider, IReadIssuesSettings settings)
+        public IEnumerable<IIssue> AddIssues(IIssueProvider issueProvider, IReadIssuesSettings settings)
         {
             issueProvider.NotNull(nameof(issueProvider));
 
@@ -140,10 +140,14 @@ namespace Cake.Frosting.Issues.Recipe
                     this.PullRequestSystem.GetFileLinkSettings(context);
             }
 
-            AddIssues(
+            var issues =
                 context.ReadIssues(
                     issueProvider,
-                    GetSettings(settings, defaultSettings)));
+                    GetSettings(settings, defaultSettings));
+
+            AddIssues(issues);
+
+            return issues;
         }
 
         /// <summary>

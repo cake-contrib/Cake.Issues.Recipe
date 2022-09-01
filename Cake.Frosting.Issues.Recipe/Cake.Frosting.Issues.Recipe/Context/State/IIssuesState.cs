@@ -92,6 +92,7 @@ namespace Cake.Frosting.Issues.Recipe
         /// </summary>
         /// <param name="issueProvider">Issue provider used to read the issues.</param>
         /// <param name="settings">Settings for reading the issues. <c>Null</c> for default values.</param>
-        void AddIssues(IIssueProvider issueProvider, IReadIssuesSettings settings);
+        /// <returns>List of issues read from issue provider.</returns>
+        IEnumerable<IIssue> AddIssues(IIssueProvider issueProvider, IReadIssuesSettings settings);
     }
 }
