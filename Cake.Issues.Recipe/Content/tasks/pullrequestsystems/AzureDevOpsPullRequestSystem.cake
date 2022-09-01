@@ -142,11 +142,18 @@ public class AzureDevOpsPullRequestSystem : BasePullRequestSystem
             pullRequestDescriptionIfNoIssues += $" in build {IssuesParameters.BuildIdentifier}";
         }
 
+        var state =
+            issues.Any() ? 
+                AzureDevOpsPullRequestStatusState.Failed : 
+                AzureDevOpsPullRequestStatusState.Succeeded;
+
+        context.Information("Set status {0} to {1}", pullRequestStatusName, state);
+
         var pullRequestStatus =
             new AzureDevOpsPullRequestStatus(pullRequestStatusName)
             {
                 Genre = "Cake.Issues.Recipe",
-                State = issues.Any() ? AzureDevOpsPullRequestStatusState.Failed : AzureDevOpsPullRequestStatusState.Succeeded,
+                State = state,
                 Description = issues.Any() ? pullRequestDescriptionIfIssues : pullRequestDescriptionIfNoIssues
             };
 
