@@ -33,14 +33,12 @@ Task("Generate-Version-File")
         {
             public static string Date { get; } = ""<%date%>"";
             public static string Version { get; } = ""<%version%>"";
-            public static string CakeVersion { get; } = ""<%cakeversion%>"";
         }",
         "<%",
         "%>"
         )
    .WithToken("date", BuildMetaData.Date)
    .WithToken("version", buildVersion.SemVersion)
-   .WithToken("cakeversion", BuildMetaData.CakeVersion)
    .ToString();
 
     System.IO.File.WriteAllText(
