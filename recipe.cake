@@ -28,22 +28,34 @@ ToolSettings.SetToolSettings(context: Context);
 
 Task("Generate-Version-File")
     .Does<BuildVersion>((context, buildVersion) => {
-        var buildMetaDataCodeGen = TransformText(@"
-        public class BuildMetaDataCakeIssuesRecipe
-        {
-            public static string Date { get; } = ""<%date%>"";
-            public static string Version { get; } = ""<%version%>"";
-        }",
-        "<%",
-        "%>"
-        )
-   .WithToken("date", BuildMetaData.Date)
-   .WithToken("version", buildVersion.SemVersion)
-   .ToString();
+        // Write metadata to configuration file
+        System.IO.File.WriteAllText(
+            "./Cake.Issues.Recipe/cake-version.yml",
+            @"TargetCakeVersion: 2.0.0
+TargetFrameworks:
+- netcoreapp3.1
+- net5.0
+- net6.0"
+        );
 
-    System.IO.File.WriteAllText(
-        "./Cake.Issues.Recipe/Content/version.cake",
-        buildMetaDataCodeGen
+        // Write metadata to class for use when running a build
+        var buildMetaDataCodeGen =
+            TransformText(@"
+                public class BuildMetaDataCakeIssuesRecipe
+                {
+                    public static string Date { get; } = ""<%date%>"";
+                    public static string Version { get; } = ""<%version%>"";
+                }",
+                "<%",
+                "%>"
+            )
+            .WithToken("date", BuildMetaData.Date)
+            .WithToken("version", buildVersion.SemVersion)
+            .ToString();
+
+        System.IO.File.WriteAllText(
+            "./Cake.Issues.Recipe/Content/version.cake",
+            buildMetaDataCodeGen
         );
     });
 
