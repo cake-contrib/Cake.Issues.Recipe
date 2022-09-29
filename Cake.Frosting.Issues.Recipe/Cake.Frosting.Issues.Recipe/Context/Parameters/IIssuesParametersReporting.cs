@@ -14,10 +14,10 @@ namespace Cake.Frosting.Issues.Recipe
         bool ShouldCreateFullIssuesReport { get; set; }
 
         /// <summary>
-        /// Gets the settings for the full issues report.
+        /// Gets or sets the settings for the full issues report.
         /// By default <see cref="GenericIssueReportTemplate.HtmlDxDataGrid"/> template is used
         /// with <see cref="DevExtremeTheme.MaterialBlueLight"/> theme.
         /// </summary>
-        GenericIssueReportFormatSettings FullIssuesReportSettings { get; }
+        GenericIssueReportFormatSettings FullIssuesReportSettings { get; set; }
     }
 }
