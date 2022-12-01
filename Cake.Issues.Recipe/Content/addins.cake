@@ -9,7 +9,7 @@
 #addin nuget:?package=Cake.Issues.DupFinder&version=2.0.0-beta0001
 #addin nuget:?package=Cake.Issues.Markdownlint&version=2.0.0-beta0002
 #addin nuget:?package=Cake.Issues.EsLint&version=2.0.0-beta0001
-#addin nuget:?package=Cake.Issues.Reporting&version=2.0.0-beta0002
+#addin nuget:?package=Cake.Issues.Reporting&version=2.0.0
 #addin nuget:?package=Cake.Issues.Reporting.Generic&version=2.0.0-beta0001
 #addin nuget:?package=Cake.Issues.PullRequests&version=2.0.0-beta0002
 #addin nuget:?package=Cake.Issues.PullRequests.AppVeyor&version=2.0.0-beta0001
