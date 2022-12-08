@@ -5,7 +5,7 @@ updates:
   directory: "/Cake.Frosting.Issues.Recipe"
   schedule:
     interval: daily
-  open-pull-requests-limit: 10
+  open-pull-requests-limit: 20
   ignore:
   - dependency-name: Cake.Frosting
     versions:
