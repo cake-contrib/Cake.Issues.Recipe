@@ -47,7 +47,7 @@ For recipe compatible with Cake Script Runners see Cake.Issues.Recipe.</Descript
     <PackageReference Include="Cake.Issues.MsBuild" Version="2.0.0-beta0001" />
     <PackageReference Include="Cake.Issues.PullRequests" Version="2.0.0-beta0001" />
     <PackageReference Include="Cake.Issues.PullRequests.AppVeyor" Version="2.0.0-beta0001" />
-    <PackageReference Include="Cake.Issues.PullRequests.AzureDevOps" Version="2.0.0-beta0001" />
+    <PackageReference Include="Cake.Issues.PullRequests.AzureDevOps" Version="2.0.0" />
     <PackageReference Include="Cake.Issues.PullRequests.GitHubActions" Version="2.0.0-beta0001" />
     <PackageReference Include="Cake.Issues.Reporting" Version="2.0.0-beta0001" />
     <PackageReference Include="Cake.Frosting.Issues.Reporting.Generic" Version="2.0.0-beta0001" />
