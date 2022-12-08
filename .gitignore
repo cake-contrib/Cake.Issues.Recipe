@@ -403,4 +403,5 @@ MigrationBackup/
 # Project specific
 
 version.cake
+cake-version.yml
 BuildArtifacts/

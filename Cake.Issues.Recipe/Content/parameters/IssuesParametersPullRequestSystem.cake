@@ -47,9 +47,16 @@ public class IssuesParametersPullRequestSystem
     /// </summary>
     public Dictionary<string, IProviderIssueLimits> ProviderIssueLimits { get; } = new Dictionary<string, IProviderIssueLimits>();
 
+    /// Gets or sets a value indicating whether a status on the pull request should be set if there are any issues found.
+    /// The status is succeeded if there are no issues and fails as soon as issues from any issue provider or run have been found.
+    /// Use <see cref="ShouldSetSeparatePullRequestStatusForEachIssueProviderAndRun"/> to report additional status for issues of every issue provider and run.
+    /// Default value is <c>true</c>.
+    public bool ShouldSetPullRequestStatus { get; set; } = true;
+
     /// <summary>
-    /// Gets or sets a value indicating whether a status on the pull request should be set.
+    /// Gets or sets a value indicating whether a separate status should be set for issues of every issue provider and run.
+    /// Use <see cref="ShouldSetPullRequestStatus"/> to report status across all issue providers and runs.
     /// Default value is <c>true</c>.
     /// </summary>
-    public bool ShouldSetPullRequestStatus { get; set; } = true;
+    public bool ShouldSetSeparatePullRequestStatusForEachIssueProviderAndRun { get; set; } = true;
 }

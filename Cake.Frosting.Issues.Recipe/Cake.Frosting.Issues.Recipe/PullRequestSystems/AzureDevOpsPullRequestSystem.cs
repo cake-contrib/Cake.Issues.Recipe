@@ -5,6 +5,7 @@ using Cake.Common.Diagnostics;
 using Cake.Issues;
 using Cake.Issues.PullRequests;
 using Cake.Issues.PullRequests.AzureDevOps;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Cake.Frosting.Issues.Recipe
@@ -19,9 +20,6 @@ namespace Cake.Frosting.Issues.Recipe
         {
             context.NotNull(nameof(context));
 
-#pragma warning disable SA1123 // Do not place regions within elements
-            #region DupFinder Exclusion
-#pragma warning restore SA1123 // Do not place regions within elements
             if (string.IsNullOrWhiteSpace(context.EnvironmentVariable("SYSTEM_ACCESSTOKEN")))
             {
                 context.Warning("SYSTEM_ACCESSTOKEN environment variable not set. Make sure the 'Allow Scripts to access OAuth token' option is enabled on the build definition.");
@@ -35,7 +33,6 @@ namespace Cake.Frosting.Issues.Recipe
                     context.State.BuildServer.DeterminePullRequestId(context).Value,
                     context.AzureDevOpsAuthenticationOAuth(context.EnvironmentVariable("SYSTEM_ACCESSTOKEN"))),
                 GetReportIssuesToPullRequestSettings(context));
-            #endregion
         }
 
         /// <inheritdoc />
@@ -43,43 +40,63 @@ namespace Cake.Frosting.Issues.Recipe
         {
             context.NotNull(nameof(context));
 
-#pragma warning disable SA1123 // Do not place regions within elements
-            #region DupFinder Exclusion
-#pragma warning restore SA1123 // Do not place regions within elements
             if (string.IsNullOrWhiteSpace(context.EnvironmentVariable("SYSTEM_ACCESSTOKEN")))
             {
                 context.Warning("SYSTEM_ACCESSTOKEN environment variable not set. Make sure the 'Allow Scripts to access OAuth token' option is enabled on the build definition.");
                 return;
             }
 
-            var pullRequestSettings =
-                new AzureDevOpsPullRequestSettings(
-                    context.State.BuildServer.DetermineRepositoryRemoteUrl(context, context.State.RepositoryRootDirectory),
-                    context.State.BuildServer.DeterminePullRequestId(context).Value,
-                    context.AzureDevOpsAuthenticationOAuth(context.EnvironmentVariable("SYSTEM_ACCESSTOKEN")));
-            #endregion
-
-            var pullRequestStatusName = "Issues";
-            var pullRequestDescriptionIfIssues = $"Found {context.State.Issues.Count()} issues";
-            var pullRequestDescriptionIfNoIssues = "No issues found";
-            if (!string.IsNullOrWhiteSpace(context.Parameters.BuildIdentifier))
+            // Set status across all issues
+            if (context.Parameters.PullRequestSystem.ShouldSetPullRequestStatus)
             {
-                pullRequestStatusName += $"-{context.Parameters.BuildIdentifier}";
-                pullRequestDescriptionIfIssues += $" for build {context.Parameters.BuildIdentifier}";
-                pullRequestDescriptionIfNoIssues += $" for build {context.Parameters.BuildIdentifier}";
+                SetPullRequestStatus(
+                    context,
+                    context.State.Issues,
+                    null);
             }
 
-            var pullRequestStatus =
-                new AzureDevOpsPullRequestStatus(pullRequestStatusName)
-                {
-                    Genre = "Cake.Issues.Recipe",
-                    State = context.State.Issues.Any() ? AzureDevOpsPullRequestStatusState.Failed : AzureDevOpsPullRequestStatusState.Succeeded,
-                    Description = context.State.Issues.Any() ? pullRequestDescriptionIfIssues : pullRequestDescriptionIfNoIssues
-                };
+            // Set status for individual issue providers
+            if (context.Parameters.PullRequestSystem.ShouldSetSeparatePullRequestStatusForEachIssueProviderAndRun)
+            {
+                // Determine issue providers and runs from the list of issues providers from which issues were read
+                // and issue providers and runs of the reported issues.
+                var issueProvidersAndRuns =
+                    context.State.IssueProvidersAndRuns
+                        .Select(x => 
+                            new 
+                            { 
+                                x.Item1.ProviderName, 
+                                Run = x.Item2 
+                            })
+                        .Union(
+                            context.State.Issues
+                                .GroupBy(x => 
+                                    new 
+                                    { 
+                                        x.ProviderName, 
+                                        x.Run 
+                                    })
+                                .Select(x => 
+                                    new 
+                                    { 
+                                        x.Key.ProviderName, 
+                                        x.Key.Run 
+                                    }));
 
-            context.AzureDevOpsSetPullRequestStatus(
-                pullRequestSettings,
-                pullRequestStatus);
+                foreach (var item in issueProvidersAndRuns)
+                {
+                    var issueProvider = item.ProviderName;
+                    if (!string.IsNullOrEmpty(item.Run))
+                    {
+                        issueProvider += $" ({item.Run})";
+                    }
+
+                    SetPullRequestStatus(
+                        context,
+                        context.State.Issues.Where(x => x.ProviderName == item.ProviderName && x.Run == item.Run),
+                        issueProvider);
+                }
+            }
         }
 
         /// <inheritdoc />
@@ -93,6 +110,61 @@ namespace Cake.Frosting.Issues.Recipe
                 context.State.RepositoryRemoteUrl,
                 context.State.CommitId,
                 rootPath.FullPath);
+        }
+
+        /// <summary>
+        /// Reports a status to the pull request of the current build.
+        /// </summary>
+        /// <param name="context">The Cake context.</param>
+        /// <param name="issues">Issues for which the status should be reported.</param>
+        /// <param name="issueIdentifier">Identifier for the issues passed in <paramref name="issues"/>.</param>
+        private static void SetPullRequestStatus(
+            IIssuesContext context,
+            IEnumerable<IIssue> issues,
+            string issueIdentifier)
+        {
+            var pullRequestSettings =
+                new AzureDevOpsPullRequestSettings(
+                    context.State.BuildServer.DetermineRepositoryRemoteUrl(context, context.State.RepositoryRootDirectory),
+                    context.State.BuildServer.DeterminePullRequestId(context).Value,
+                    context.AzureDevOpsAuthenticationOAuth(context.EnvironmentVariable("SYSTEM_ACCESSTOKEN")));
+
+            var pullRequestStatusName = "Issues";
+            var pullRequestDescriptionIfIssues = $"Found {issues.Count()} issues";
+            var pullRequestDescriptionIfNoIssues = "No issues found";
+
+            if (!string.IsNullOrWhiteSpace(issueIdentifier))
+            {
+                pullRequestStatusName += $"-{issueIdentifier}";
+                pullRequestDescriptionIfIssues += $" for {issueIdentifier}";
+                pullRequestDescriptionIfNoIssues += $" for {issueIdentifier}";
+            }
+
+            if (!string.IsNullOrWhiteSpace(context.Parameters.BuildIdentifier))
+            {
+                pullRequestStatusName += $"-{context.Parameters.BuildIdentifier}";
+                pullRequestDescriptionIfIssues += $" in build {context.Parameters.BuildIdentifier}";
+                pullRequestDescriptionIfNoIssues += $" in build {context.Parameters.BuildIdentifier}";
+            }
+
+            var state =
+                issues.Any() ? 
+                    AzureDevOpsPullRequestStatusState.Failed : 
+                    AzureDevOpsPullRequestStatusState.Succeeded;
+
+            context.Information("Set status {0} to {1}", pullRequestStatusName, state);
+
+            var pullRequestStatus =
+                new AzureDevOpsPullRequestStatus(pullRequestStatusName)
+                {
+                    Genre = "Cake.Issues.Recipe",
+                    State = state,
+                    Description = issues.Any() ? pullRequestDescriptionIfIssues : pullRequestDescriptionIfNoIssues
+                };
+
+            context.AzureDevOpsSetPullRequestStatus(
+                pullRequestSettings,
+                pullRequestStatus);
         }
     }
 }

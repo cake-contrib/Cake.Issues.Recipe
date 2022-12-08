@@ -69,15 +69,30 @@ namespace Cake.Frosting.Issues.Recipe
         IEnumerable<IIssue> Issues { get; }
 
         /// <summary>
-        /// Adds an issue to the data class.
+        /// Gets the list of issue providers and runs for which issues are read.
+        /// </summary>
+        IList<(IIssueProvider, string)> IssueProvidersAndRuns { get; }
+
+        /// <summary>
+        /// Adds an issue to <see cref="Issues"/>.
+        /// To read issues from an issue provider use <see cref="AddIssues(IIssueProvider, IReadIssuesSettings)"/>.
         /// </summary>
         /// <param name="issue">Issue which should be added.</param>
         void AddIssue(IIssue issue);
 
         /// <summary>
-        /// Adds a list of issues to the data class.
+        /// Adds a list of issues to <see cref="Issues"/>.
+        /// To read issues from an issue provider use <see cref="AddIssues(IIssueProvider, IReadIssuesSettings)"/>.
         /// </summary>
         /// <param name="issues">Issues which should be added.</param>
         void AddIssues(IEnumerable<IIssue> issues);
+
+        /// <summary>
+        /// Reads issues from an issue provider and adds the issues to <see cref="Issues"/>.
+        /// </summary>
+        /// <param name="issueProvider">Issue provider used to read the issues.</param>
+        /// <param name="settings">Settings for reading the issues. <c>Null</c> for default values.</param>
+        /// <returns>List of issues read from issue provider.</returns>
+        IEnumerable<IIssue> AddIssues(IIssueProvider issueProvider, IReadIssuesSettings settings);
     }
 }

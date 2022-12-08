@@ -11,9 +11,6 @@ namespace Cake.Frosting.Issues.Recipe
     [IsDependentOn(typeof(ReadIssuesTask))]
     public sealed class ReportIssuesToPullRequestTask : FrostingTask<IIssuesContext>
     {
-#pragma warning disable SA1123 // Do not place regions within elements
-        #region DupFinder Exclusion
-#pragma warning restore SA1123 // Do not place regions within elements
         /// <inheritdoc/>
         public override bool ShouldRun(IIssuesContext context)
         {
@@ -24,7 +21,6 @@ namespace Cake.Frosting.Issues.Recipe
                 context.Parameters.PullRequestSystem.ShouldReportIssuesToPullRequest &&
                 context.State.BuildServer != null && context.State.BuildServer.DetermineIfPullRequest(context);
         }
-        #endregion
 
         /// <inheritdoc/>
         public override void Run(IIssuesContext context)

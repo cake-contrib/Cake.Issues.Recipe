@@ -3,7 +3,11 @@
 /// </summary>
 public class IssuesData
 {
+    private readonly ICakeContext context;
+
     private readonly List<IIssue> issues = new List<IIssue>();
+
+    private readonly List<(IIssueProvider, string)> issueProvidersAndRuns = new List<(IIssueProvider, string)>();
 
     /// <summary>
     /// Gets the root directory of the repository.
@@ -69,6 +73,17 @@ public class IssuesData
     }
 
     /// <summary>
+    /// Gets the list of issue providers and runs for which issues are read.
+    /// </summary>
+    public IList<(IIssueProvider, string)> IssueProvidersAndRuns 
+    { 
+        get
+        {
+            return issueProvidersAndRuns.AsReadOnly();
+        }
+    }
+
+    /// <summary>
     /// Creates a new instance of the <see cref="IssuesData"/> class.
     /// </summary>
     /// <param name="context">The Cake context.</param>
@@ -76,6 +91,8 @@ public class IssuesData
     public IssuesData(ICakeContext context, RepositoryInfoProviderType repositoryInfoProviderType)
     {
         context.NotNull(nameof(context));
+
+        this.context = context;
 
         this.BuildRootDirectory = context.MakeAbsolute(context.Directory("./"));
         context.Information("Build script root directory: {0}", this.BuildRootDirectory);
@@ -118,7 +135,8 @@ public class IssuesData
     }
 
     /// <summary>
-    /// Adds a list of issues to the data class.
+    /// Adds a list of issues to <see cref="Issues"/>.
+    /// To read issues from an issue provider use <see cref="AddIssues(IIssueProvider, IReadIssuesSettings)"/>.    /// Adds a list of issues to the data class.
     /// </summary>
     /// <param name="issues">Issues which should be added.</param>
     public void AddIssues(IEnumerable<IIssue> issues)
@@ -126,6 +144,37 @@ public class IssuesData
         issues.NotNull(nameof(issues));
 
         this.issues.AddRange(issues);
+    }
+
+    /// <summary>
+    /// Reads issues from an issue provider and adds the issues to <see cref="Issues"/>.
+    /// </summary>
+    /// <param name="issueProvider">Issue provider used to read the issues.</param>
+    /// <param name="settings">Settings for reading the issues. <c>Null</c> for default values.</param>
+    /// <returns>List of issues read from issue provider.</returns>
+    public IEnumerable<IIssue> AddIssues(IIssueProvider issueProvider, IReadIssuesSettings settings)
+    {
+        issueProvider.NotNull(nameof(issueProvider));
+
+        this.issueProvidersAndRuns.Add((issueProvider, settings?.Run));
+
+        // Define default settings.
+        var defaultSettings = new ReadIssuesSettings(this.ProjectRootDirectory);
+
+        if (this.PullRequestSystem != null)
+        {
+            defaultSettings.FileLinkSettings =
+                this.PullRequestSystem.GetFileLinkSettings(this.context, this);
+        }
+
+        var issues =
+            context.ReadIssues(
+                issueProvider,
+                GetSettings(settings, defaultSettings));
+
+        AddIssues(issues);
+
+        return issues;
     }
 
     /// <summary>
@@ -138,16 +187,13 @@ public class IssuesData
         ICakeContext context,
         RepositoryInfoProviderType repositoryInfoProviderType)
     {
-        if (context == null)
-        {
-            throw new ArgumentNullException(nameof(context));
-        }
+        context.NotNull(nameof(context));
 
         switch (repositoryInfoProviderType)
         {
             case RepositoryInfoProviderType.CakeGit:
                 context.Information("Using Cake.Git for providing repository information");
-                return new CliRepositoryInfoProvider();
+                return new CakeGitRepositoryInfoProvider();
             case RepositoryInfoProviderType.Cli:
                 context.Information("Using Git CLI for providing repository information");
                 return new CliRepositoryInfoProvider();
@@ -215,5 +261,20 @@ public class IssuesData
         }
 
         return null;
+    }
+
+    private static IReadIssuesSettings GetSettings(IReadIssuesSettings configuredSettings, IReadIssuesSettings defaultSettings)
+    {
+        if (configuredSettings == null)
+        {
+            return defaultSettings;
+        }
+
+        if (configuredSettings.FileLinkSettings == null)
+        {
+            configuredSettings.FileLinkSettings = defaultSettings.FileLinkSettings;
+        }
+
+        return configuredSettings;
     }
 }
