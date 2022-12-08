@@ -1,4 +1,8 @@
-#load nuget:?package=Cake.Recipe&version=2.2.1
+#load nuget:https://pkgs.dev.azure.com/cake-contrib/Home/_packaging/addins/nuget/v3/index.json?package=Cake.Recipe&version=3.0.0-beta0001-0007&prerelease
+
+//*************************************************************************************************
+// Settings
+//*************************************************************************************************
 
 Environment.SetVariableNames();
 
@@ -24,24 +28,34 @@ ToolSettings.SetToolSettings(context: Context);
 
 Task("Generate-Version-File")
     .Does<BuildVersion>((context, buildVersion) => {
-        var buildMetaDataCodeGen = TransformText(@"
-        public class BuildMetaDataCakeIssuesRecipe
-        {
-            public static string Date { get; } = ""<%date%>"";
-            public static string Version { get; } = ""<%version%>"";
-            public static string CakeVersion { get; } = ""<%cakeversion%>"";
-        }",
-        "<%",
-        "%>"
-        )
-   .WithToken("date", BuildMetaData.Date)
-   .WithToken("version", buildVersion.SemVersion)
-   .WithToken("cakeversion", BuildMetaData.CakeVersion)
-   .ToString();
+        // Write metadata to configuration file
+        System.IO.File.WriteAllText(
+            "./Cake.Issues.Recipe/cake-version.yml",
+            @"TargetCakeVersion: 2.0.0
+TargetFrameworks:
+- netcoreapp3.1
+- net5.0
+- net6.0"
+        );
 
-    System.IO.File.WriteAllText(
-        "./Cake.Issues.Recipe/Content/version.cake",
-        buildMetaDataCodeGen
+        // Write metadata to class for use when running a build
+        var buildMetaDataCodeGen =
+            TransformText(@"
+                public class BuildMetaDataCakeIssuesRecipe
+                {
+                    public static string Date { get; } = ""<%date%>"";
+                    public static string Version { get; } = ""<%version%>"";
+                }",
+                "<%",
+                "%>"
+            )
+            .WithToken("date", BuildMetaData.Date)
+            .WithToken("version", buildVersion.SemVersion)
+            .ToString();
+
+        System.IO.File.WriteAllText(
+            "./Cake.Issues.Recipe/Content/version.cake",
+            buildMetaDataCodeGen
         );
     });
 

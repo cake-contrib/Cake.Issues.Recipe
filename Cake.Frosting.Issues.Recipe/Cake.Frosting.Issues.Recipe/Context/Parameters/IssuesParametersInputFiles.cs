@@ -7,52 +7,33 @@ namespace Cake.Frosting.Issues.Recipe
     /// <summary>
     /// Parameters for passing input files.
     /// </summary>
-    public class IssuesParametersInputFiles
+    public class IssuesParametersInputFiles : IIssuesParametersInputFiles
     {
-        /// <summary>
-        /// Gets list of registered paths to MSBuild log files created by XmlFileLogger.
-        /// </summary>
+        /// <inheritdoc />
         public IDictionary<FilePath, IReadIssuesSettings> MsBuildXmlFileLoggerLogFilePaths { get; } = new Dictionary<FilePath, IReadIssuesSettings>();
 
-        /// <summary>
-        /// Gets list of registered paths to MSBuild binary log files.
-        /// </summary>
+        /// <inheritdoc />
         public IDictionary<FilePath, IReadIssuesSettings> MsBuildBinaryLogFilePaths { get; } = new Dictionary<FilePath, IReadIssuesSettings>();
 
-        /// <summary>
-        /// Gets list of registered paths to InspectCode log files.
-        /// </summary>
+        /// <inheritdoc />
         public IDictionary<FilePath, IReadIssuesSettings> InspectCodeLogFilePaths { get; } = new Dictionary<FilePath, IReadIssuesSettings>();
 
-        /// <summary>
-        /// Gets list of registered paths to dupFinder log files.
-        /// </summary>
+        /// <inheritdoc />
         public IDictionary<FilePath, IReadIssuesSettings> DupFinderLogFilePaths { get; } = new Dictionary<FilePath, IReadIssuesSettings>();
 
-        /// <summary>
-        /// Gets list of registered paths to markdownlint-cli log files.
-        /// </summary>
+        /// <inheritdoc />
         public IDictionary<FilePath, IReadIssuesSettings> MarkdownlintCliLogFilePaths { get; } = new Dictionary<FilePath, IReadIssuesSettings>();
 
-        /// <summary>
-        /// Gets list of registered paths to markdownlint-cli log files created with <c>--json</c>.
-        /// </summary>
+        /// <inheritdoc />
         public IDictionary<FilePath, IReadIssuesSettings> MarkdownlintCliJsonLogFilePaths { get; } = new Dictionary<FilePath, IReadIssuesSettings>();
 
-        /// <summary>
-        /// Gets list of registered paths to markdownlint log files in version 1.
-        /// </summary>
+        /// <inheritdoc />
         public IDictionary<FilePath, IReadIssuesSettings> MarkdownlintV1LogFilePaths { get; } = new Dictionary<FilePath, IReadIssuesSettings>();
 
-        /// <summary>
-        /// Gets list of registered paths to ESLint log files in JSON format.
-        /// </summary>
+        /// <inheritdoc />
         public IDictionary<FilePath, IReadIssuesSettings> EsLintJsonLogFilePaths { get; } = new Dictionary<FilePath, IReadIssuesSettings>();
 
-        /// <summary>
-        /// Adds a path to a MSBuild log file created by XmlFileLogger.
-        /// </summary>
-        /// <param name="logfilePath">Path to the MSBuild log file.</param>
+        /// <inheritdoc />
         public void AddMsBuildXmlFileLoggerLogFile(FilePath logfilePath)
         {
             logfilePath.NotNull(nameof(logfilePath));
@@ -60,11 +41,7 @@ namespace Cake.Frosting.Issues.Recipe
             this.AddMsBuildXmlFileLoggerLogFile(logfilePath, null);
         }
 
-        /// <summary>
-        /// Adds a path to a MSBuild log file created by XmlFileLogger.
-        /// </summary>
-        /// <param name="logfilePath">Path to the MSBuild log file.</param>
-        /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
+        /// <inheritdoc />
         public void AddMsBuildXmlFileLoggerLogFile(FilePath logfilePath, IReadIssuesSettings settings)
         {
             logfilePath.NotNull(nameof(logfilePath));
@@ -72,10 +49,7 @@ namespace Cake.Frosting.Issues.Recipe
             this.MsBuildXmlFileLoggerLogFilePaths.Add(logfilePath, settings);
         }
 
-        /// <summary>
-        /// Adds a path to a MSBuild binary log file.
-        /// </summary>
-        /// <param name="logfilePath">Path to the MSBuild log file.</param>
+        /// <inheritdoc />
         public void AddMsBuildBinaryLogFile(FilePath logfilePath)
         {
             logfilePath.NotNull(nameof(logfilePath));
@@ -83,11 +57,7 @@ namespace Cake.Frosting.Issues.Recipe
             this.AddMsBuildBinaryLogFile(logfilePath, null);
         }
 
-        /// <summary>
-        /// Adds a path to a MSBuild binary log file.
-        /// </summary>
-        /// <param name="logfilePath">Path to the MSBuild log file.</param>
-        /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
+        /// <inheritdoc />
         public void AddMsBuildBinaryLogFile(FilePath logfilePath, IReadIssuesSettings settings)
         {
             logfilePath.NotNull(nameof(logfilePath));
@@ -95,10 +65,7 @@ namespace Cake.Frosting.Issues.Recipe
             this.MsBuildBinaryLogFilePaths.Add(logfilePath, settings);
         }
 
-        /// <summary>
-        /// Adds a path to a InspectCode log file.
-        /// </summary>
-        /// <param name="logfilePath">Path to the InspectCode log file.</param>
+        /// <inheritdoc />
         public void AddInspectCodeLogFile(FilePath logfilePath)
         {
             logfilePath.NotNull(nameof(logfilePath));
@@ -106,11 +73,7 @@ namespace Cake.Frosting.Issues.Recipe
             this.AddInspectCodeLogFile(logfilePath, null);
         }
 
-        /// <summary>
-        /// Adds a path to a InspectCode log file.
-        /// </summary>
-        /// <param name="logfilePath">Path to the InspectCode log file.</param>
-        /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
+        /// <inheritdoc />
         public void AddInspectCodeLogFile(FilePath logfilePath, IReadIssuesSettings settings)
         {
             logfilePath.NotNull(nameof(logfilePath));
@@ -118,10 +81,7 @@ namespace Cake.Frosting.Issues.Recipe
             this.InspectCodeLogFilePaths.Add(logfilePath, settings);
         }
 
-        /// <summary>
-        /// Adds a path to a dupFinder log file.
-        /// </summary>
-        /// <param name="logfilePath">Path to the dupFinder log file.</param>
+        /// <inheritdoc />
         public void AddDupFinderLogFile(FilePath logfilePath)
         {
             logfilePath.NotNull(nameof(logfilePath));
@@ -129,11 +89,7 @@ namespace Cake.Frosting.Issues.Recipe
             this.AddDupFinderLogFile(logfilePath, null);
         }
 
-        /// <summary>
-        /// Adds a path to a dupFinder log file.
-        /// </summary>
-        /// <param name="logfilePath">Path to the dupFinder log file.</param>
-        /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
+        /// <inheritdoc />
         public void AddDupFinderLogFile(FilePath logfilePath, IReadIssuesSettings settings)
         {
             logfilePath.NotNull(nameof(logfilePath));
@@ -141,10 +97,7 @@ namespace Cake.Frosting.Issues.Recipe
             this.DupFinderLogFilePaths.Add(logfilePath, settings);
         }
 
-        /// <summary>
-        /// Adds a path to a markdownlint-cli log file.
-        /// </summary>
-        /// <param name="logfilePath">Path to the markdownlint-cli log file.</param>
+        /// <inheritdoc />
         public void AddMarkdownlintCliLogFile(FilePath logfilePath)
         {
             logfilePath.NotNull(nameof(logfilePath));
@@ -152,11 +105,7 @@ namespace Cake.Frosting.Issues.Recipe
             this.AddMarkdownlintCliLogFile(logfilePath, null);
         }
 
-        /// <summary>
-        /// Adds a path to a markdownlint-cli log file.
-        /// </summary>
-        /// <param name="logfilePath">Path to the markdownlint-cli log file.</param>
-        /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
+        /// <inheritdoc />
         public void AddMarkdownlintCliLogFile(FilePath logfilePath, IReadIssuesSettings settings)
         {
             logfilePath.NotNull(nameof(logfilePath));
@@ -164,10 +113,7 @@ namespace Cake.Frosting.Issues.Recipe
             this.MarkdownlintCliLogFilePaths.Add(logfilePath, settings);
         }
 
-        /// <summary>
-        /// Adds a path to a markdownlint-cli log file created with <c>--json</c>.
-        /// </summary>
-        /// <param name="logfilePath">Path to the markdownlint-cli log file.</param>
+        /// <inheritdoc />
         public void AddMarkdownlintCliJsonLogFile(FilePath logfilePath)
         {
             logfilePath.NotNull(nameof(logfilePath));
@@ -175,11 +121,7 @@ namespace Cake.Frosting.Issues.Recipe
             this.AddMarkdownlintCliJsonLogFile(logfilePath, null);
         }
 
-        /// <summary>
-        /// Adds a path to a markdownlint-cli log file created with <c>--json</c>.
-        /// </summary>
-        /// <param name="logfilePath">Path to the markdownlint-cli log file.</param>
-        /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
+        /// <inheritdoc />
         public void AddMarkdownlintCliJsonLogFile(FilePath logfilePath, IReadIssuesSettings settings)
         {
             logfilePath.NotNull(nameof(logfilePath));
@@ -187,10 +129,8 @@ namespace Cake.Frosting.Issues.Recipe
             this.MarkdownlintCliJsonLogFilePaths.Add(logfilePath, settings);
         }
 
-        /// <summary>
-        /// Adds a path to a markdownlint log file in version 1.
-        /// </summary>
-        /// <param name="logfilePath">Path to the markdownlint log file.</param>
+
+        /// <inheritdoc />
         public void AddMarkdownlintV1LogFile(FilePath logfilePath)
         {
             logfilePath.NotNull(nameof(logfilePath));
@@ -198,11 +138,7 @@ namespace Cake.Frosting.Issues.Recipe
             this.AddMarkdownlintV1LogFile(logfilePath, null);
         }
 
-        /// <summary>
-        /// Adds a path to a markdownlint log file in version 1.
-        /// </summary>
-        /// <param name="logfilePath">Path to the markdownlint log file.</param>
-        /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
+        /// <inheritdoc />
         public void AddMarkdownlintV1LogFile(FilePath logfilePath, IReadIssuesSettings settings)
         {
             logfilePath.NotNull(nameof(logfilePath));
@@ -210,10 +146,7 @@ namespace Cake.Frosting.Issues.Recipe
             this.MarkdownlintV1LogFilePaths.Add(logfilePath, settings);
         }
 
-        /// <summary>
-        /// Adds a path to a ESLint log file in JSON format.
-        /// </summary>
-        /// <param name="logfilePath">Path to the ESLint log file.</param>
+        /// <inheritdoc />
         public void AddEsLintJsonLogFile(FilePath logfilePath)
         {
             logfilePath.NotNull(nameof(logfilePath));
@@ -221,11 +154,7 @@ namespace Cake.Frosting.Issues.Recipe
             this.AddEsLintJsonLogFile(logfilePath, null);
         }
 
-        /// <summary>
-        /// Adds a path to a ESLint log file in JSON format.
-        /// </summary>
-        /// <param name="logfilePath">Path to the ESLint log file.</param>
-        /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
+        /// <inheritdoc />
         public void AddEsLintJsonLogFile(FilePath logfilePath, IReadIssuesSettings settings)
         {
             logfilePath.NotNull(nameof(logfilePath));

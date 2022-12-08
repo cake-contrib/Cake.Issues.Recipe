@@ -4,7 +4,7 @@ jobs:
   # Build
   Build:
     name: Build
-    runs-on: windows-latest
+    runs-on: windows-2022
     steps:
       - name: Get the sources
         uses: actions/checkout@v2
@@ -18,11 +18,11 @@ jobs:
         with:
           name: NuGet Package
           path: ./BuildArtifacts/Packages/NuGet/
-  # Integration Tests Script Runner Windows (.NET Framework)
-  Test_Script_Runner_Windows_DotNetFramework:
-    name: Integration Tests Script Runner Windows (.NET Framework)
+  # Integration Tests Script Runner Windows (.NET Core tool)
+  Test_Windows_DotNetCoreTool:
+    name: Integration Tests Script Runner Windows (.NET Core tool)
     needs: Build
-    runs-on: windows-latest
+    runs-on: windows-2019
     steps:
       - name: Get the sources
         uses: actions/checkout@v2
@@ -36,35 +36,6 @@ jobs:
           path: ./BuildArtifacts/Packages/NuGet
       - name: Run integration tests
         run: ./build.ps1 --verbosity=diagnostic
-        working-directory: ./tests/script-runner/
-        shell: powershell
-      - name: Publish generated reports as build artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: Integration Tests Script Runner Windows (.NET Framework)
-          path: ./tests/script-runner/BuildArtifacts/output/
-  # Integration Tests Script Runner Windows (.NET Core tool)
-  Test_Windows_DotNetCoreTool:
-    name: Integration Tests Script Runner Windows (.NET Core tool)
-    needs: Build
-    runs-on: windows-latest
-    steps:
-      - name: Get the sources
-        uses: actions/checkout@v2
-      - name: Install required tools
-        run: npm install -g markdownlint-cli
-        shell: powershell
-      - name: Download build artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: NuGet Package
-          path: ./BuildArtifacts/Packages/NuGet
-      - name: Restore .NET Core tool
-        run: dotnet tool restore
-        working-directory: ./tests/script-runner/
-        shell: powershell
-      - name: Run integration tests
-        run: dotnet cake
         working-directory: ./tests/script-runner/
         shell: powershell
       - name: Publish generated reports as build artifact

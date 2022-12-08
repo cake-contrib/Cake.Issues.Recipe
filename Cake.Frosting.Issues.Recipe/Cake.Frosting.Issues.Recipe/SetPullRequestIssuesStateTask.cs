@@ -9,25 +9,22 @@ namespace Cake.Frosting.Issues.Recipe
     /// </summary>
     [TaskName("Set-PullRequestIssuesState")]
     [IsDependentOn(typeof(ReadIssuesTask))]
-    public sealed class SetPullRequestIssuesStateTask : FrostingTask<IssuesContext>
+    public sealed class SetPullRequestIssuesStateTask : FrostingTask<IIssuesContext>
     {
-#pragma warning disable SA1123 // Do not place regions within elements
-        #region DupFinder Exclusion
-#pragma warning restore SA1123 // Do not place regions within elements
         /// <inheritdoc/>
-        public override bool ShouldRun(IssuesContext context)
+        public override bool ShouldRun(IIssuesContext context)
         {
             context.NotNull(nameof(context));
 
             return
                 !context.BuildSystem().IsLocalBuild &&
-                context.Parameters.PullRequestSystem.ShouldReportIssuesToPullRequest &&
+                (context.Parameters.PullRequestSystem.ShouldSetPullRequestStatus ||
+                context.Parameters.PullRequestSystem.ShouldSetSeparatePullRequestStatusForEachIssueProviderAndRun) &&
                 context.State.BuildServer != null && context.State.BuildServer.DetermineIfPullRequest(context);
         }
-        #endregion
 
         /// <inheritdoc/>
-        public override void Run(IssuesContext context)
+        public override void Run(IIssuesContext context)
         {
             context.NotNull(nameof(context));
 

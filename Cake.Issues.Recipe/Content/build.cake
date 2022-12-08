@@ -44,97 +44,80 @@ IssuesBuildTasks.ReadIssuesTask = Task("Read-Issues")
     .Description("Reads issues from the provided log files.")
     .Does<IssuesData>((data) =>
 {
-    // Define default settings.
-    var defaultSettings = new ReadIssuesSettings(data.ProjectRootDirectory);
-
-    if (data.PullRequestSystem != null)
-    {
-        defaultSettings.FileLinkSettings =
-            data.PullRequestSystem.GetFileLinkSettings(Context, data);
-    }
-
     // Read MSBuild log files created by XmlFileLogger.
     foreach (var logFile in IssuesParameters.InputFiles.MsBuildXmlFileLoggerLogFilePaths)
     {
         data.AddIssues(
-            ReadIssues(
-                MsBuildIssuesFromFilePath(
-                    logFile.Key,
-                    MsBuildXmlFileLoggerFormat),
-                GetSettings(logFile.Value, defaultSettings)));
+            MsBuildIssuesFromFilePath(
+                logFile.Key,
+                MsBuildXmlFileLoggerFormat),
+            logFile.Value);
     }
 
     // Read MSBuild binary log files.
     foreach (var logFile in IssuesParameters.InputFiles.MsBuildBinaryLogFilePaths)
     {
         data.AddIssues(
-            ReadIssues(
-                MsBuildIssuesFromFilePath(
-                    logFile.Key,
-                    MsBuildBinaryLogFileFormat),
-                GetSettings(logFile.Value, defaultSettings)));
+            MsBuildIssuesFromFilePath(
+                logFile.Key,
+                MsBuildBinaryLogFileFormat),
+            logFile.Value);
     }
 
     // Read InspectCode log files.
     foreach (var logFile in IssuesParameters.InputFiles.InspectCodeLogFilePaths)
     {
         data.AddIssues(
-            ReadIssues(
-                InspectCodeIssuesFromFilePath(logFile.Key),
-                GetSettings(logFile.Value, defaultSettings)));
+            InspectCodeIssuesFromFilePath(logFile.Key),
+            logFile.Value);
     }
 
     // Read dupFinder log files.
     foreach (var logFile in IssuesParameters.InputFiles.DupFinderLogFilePaths)
     {
         data.AddIssues(
-            ReadIssues(
-                DupFinderIssuesFromFilePath(logFile.Key),
-                GetSettings(logFile.Value, defaultSettings)));
+            DupFinderIssuesFromFilePath(logFile.Key),
+            logFile.Value);
     }
 
     // Read markdownlint-cli log files.
     foreach (var logFile in IssuesParameters.InputFiles.MarkdownlintCliLogFilePaths)
     {
         data.AddIssues(
-            ReadIssues(
-                MarkdownlintIssuesFromFilePath(
-                    logFile.Key,
-                    MarkdownlintCliLogFileFormat),
-                GetSettings(logFile.Value, defaultSettings)));
+            MarkdownlintIssuesFromFilePath(
+                logFile.Key,
+                MarkdownlintCliLogFileFormat),
+            logFile.Value);
     }
 
     // Read markdownlint-cli log files created with --json.
     foreach (var logFile in IssuesParameters.InputFiles.MarkdownlintCliJsonLogFilePaths)
     {
         data.AddIssues(
-            ReadIssues(
-                MarkdownlintIssuesFromFilePath(
-                    logFile.Key,
-                    MarkdownlintCliJsonLogFileFormat),
-                GetSettings(logFile.Value, defaultSettings)));
+            MarkdownlintIssuesFromFilePath(
+                logFile.Key,
+                MarkdownlintCliJsonLogFileFormat),
+            logFile.Value);
     }
 
     // Read markdownlint log files in version 1.
     foreach (var logFile in IssuesParameters.InputFiles.MarkdownlintV1LogFilePaths)
     {
         data.AddIssues(
-            ReadIssues(
-                MarkdownlintIssuesFromFilePath(
-                    logFile.Key,
-                    MarkdownlintV1LogFileFormat),
-                GetSettings(logFile.Value, defaultSettings)));
+            MarkdownlintIssuesFromFilePath(
+                logFile.Key,
+                MarkdownlintV1LogFileFormat),
+            logFile.Value);
     }
 
     // Read ESLint log files in JSON format.
     foreach (var logFile in IssuesParameters.InputFiles.EsLintJsonLogFilePaths)
     {
         data.AddIssues(
-            ReadIssues(
-                EsLintIssuesFromFilePath(
-                    logFile.Key,
-                    EsLintJsonFormat),
-                GetSettings(logFile.Value, defaultSettings)));
+            EsLintIssuesFromFilePath(
+                logFile.Key,
+                EsLintJsonFormat),
+            logFile.Value);
     }
 
     Information("{0} issues are found.", data.Issues.Count());
@@ -232,7 +215,9 @@ IssuesBuildTasks.ReportIssuesToPullRequestTask = Task("Report-IssuesToPullReques
 IssuesBuildTasks.SetPullRequestIssuesStateTask = Task("Set-PullRequestIssuesState")
     .Description("Set pull request status.")
     .WithCriteria(() => !BuildSystem.IsLocalBuild, "Not running on build server")
-    .WithCriteria(() => IssuesParameters.PullRequestSystem.ShouldSetPullRequestStatus, "Setting of pull request status is disabled")
+    .WithCriteria(() => 
+        IssuesParameters.PullRequestSystem.ShouldSetPullRequestStatus || IssuesParameters.PullRequestSystem.ShouldSetSeparatePullRequestStatusForEachIssueProviderAndRun,
+        "Setting of pull request status is disabled")
     .WithCriteria<IssuesData>((context, data) => data.BuildServer != null ? data.BuildServer.DetermineIfPullRequest(context) : false, "Not a pull request build")
     .IsDependentOn("Read-Issues")
     .Does<IssuesData>((data) =>
@@ -245,24 +230,5 @@ IssuesBuildTasks.SetPullRequestIssuesStateTask = Task("Set-PullRequestIssuesStat
 
     data.PullRequestSystem.SetPullRequestIssuesState(Context, data);
 });
-
-///////////////////////////////////////////////////////////////////////////////
-// HELPER Functions
-///////////////////////////////////////////////////////////////////////////////
-
-private static IReadIssuesSettings GetSettings(IReadIssuesSettings configuredSettings, IReadIssuesSettings defaultSettings)
-{
-    if (configuredSettings == null)
-    {
-        return defaultSettings;
-    }
-
-    if (configuredSettings.FileLinkSettings == null)
-    {
-        configuredSettings.FileLinkSettings = defaultSettings.FileLinkSettings;
-    }
-
-    return configuredSettings;
-}
 
 #load tasks/tasks.cake

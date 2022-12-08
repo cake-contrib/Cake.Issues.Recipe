@@ -9,4 +9,4 @@ updates:
   ignore:
   - dependency-name: Cake.Frosting
     versions:
-    - "> 1.0.0, < 2"
+    - "(,3.0)"
