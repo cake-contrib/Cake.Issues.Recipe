@@ -40,6 +40,9 @@ namespace Cake.Frosting.Issues.Recipe
         public FilePath FullIssuesReport { get; set; }
 
         /// <inheritdoc />
+        public FilePath SarifReport { get; set; }
+
+        /// <inheritdoc />
         public FilePath SummaryIssuesReport { get; set; }
 
         /// <inheritdoc />

@@ -84,5 +84,12 @@ public class AppVeyorBuildServer : BaseBuildServer
         {
             context.AppVeyor().UploadArtifact(data.FullIssuesReport);
         }
+
+        if (IssuesParameters.BuildServer.ShouldPublishSarifReport &&
+            data.SarifReport != null &&
+            context.FileExists(data.SarifReport))
+        {
+            context.AppVeyor().UploadArtifact(data.SarifReport);
+        }
     }
 }

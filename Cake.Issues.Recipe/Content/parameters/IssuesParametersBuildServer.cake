@@ -16,6 +16,12 @@ public class IssuesParametersBuildServer
     public bool ShouldPublishFullIssuesReport { get; set; } = true;
 
     /// <summary>
+    /// Gets or sets a value indicating whether report in SARIF format should be published as artifact to the build system.
+    /// Default value is <c>true</c>.
+    /// </summary>
+    public bool ShouldPublishSarifReport { get; set; } = true;
+
+    /// <summary>
     /// Gets or sets a value indicating whether summary issues report should be created.
     /// Default value is <c>true</c>.
     /// </summary>

@@ -40,6 +40,11 @@ public class IssuesData
     public FilePath FullIssuesReport { get; set; }
 
     /// <summary>
+    /// Gets or sets the path to the SARIF report.
+    /// </summary>
+    public FilePath SarifReport { get; set; }
+
+    /// <summary>
     /// Gets or sets the path to the summary issues report.
     /// </summary>
     public FilePath SummaryIssuesReport { get; set; }
