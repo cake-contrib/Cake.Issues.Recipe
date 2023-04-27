@@ -15,6 +15,16 @@ jobs:
   pool:
     vmImage: 'windows-2022'
   steps:
+  - task: UseDotNet@2
+    inputs:
+      version: '3.1.x'
+  # .NET 5 required for GitVersion
+  - task: UseDotNet@2
+    inputs:
+      version: '5.x'
+  - task: UseDotNet@2
+    inputs:
+      version: '6.x'
   - powershell: ./build.ps1
     displayName: 'Build'
   - publish: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
@@ -27,6 +37,11 @@ jobs:
   pool:
     vmImage: 'windows-2019'
   steps:
+  - task: UseDotNet@2
+    inputs:
+      version: '5.x'
+  - powershell: ./build.ps1
+    displayName: 'Build'
   - task: NodeTool@0
     inputs:
       versionSpec: '14.x'
@@ -54,6 +69,9 @@ jobs:
   pool:
     vmImage: 'windows-2022'
   steps:
+  - task: UseDotNet@2
+    inputs:
+      version: '6.x'
   - task: NodeTool@0
     inputs:
       versionSpec: '14.x'
@@ -81,6 +99,9 @@ jobs:
   pool:
     vmImage: 'windows-2019'
   steps:
+  - task: UseDotNet@2
+    inputs:
+      version: '6.x'
   - task: NodeTool@0
     inputs:
       versionSpec: '14.x'
@@ -108,6 +129,9 @@ jobs:
   pool:
     vmImage: 'windows-2022'
   steps:
+  - task: UseDotNet@2
+    inputs:
+      version: '6.x'
   - task: NodeTool@0
     inputs:
       versionSpec: '14.x'
@@ -135,6 +159,9 @@ jobs:
   pool:
     vmImage: 'macOS-11'
   steps:
+  - task: UseDotNet@2
+    inputs:
+      version: '5.x'
   - task: NodeTool@0
     inputs:
       versionSpec: '14.x'
@@ -164,6 +191,9 @@ jobs:
   pool:
     vmImage: 'macOS-12'
   steps:
+  - task: UseDotNet@2
+    inputs:
+      version: '6.x'
   - task: NodeTool@0
     inputs:
       versionSpec: '14.x'
@@ -193,6 +223,9 @@ jobs:
   pool:
     vmImage: 'macOS-11'
   steps:
+  - task: UseDotNet@2
+    inputs:
+      version: '6.x'
   - task: NodeTool@0
     inputs:
       versionSpec: '14.x'
@@ -222,6 +255,9 @@ jobs:
   pool:
     vmImage: 'macOS-12'
   steps:
+  - task: UseDotNet@2
+    inputs:
+      version: '6.x'
   - task: NodeTool@0
     inputs:
       versionSpec: '14.x'
@@ -251,6 +287,9 @@ jobs:
   pool:
     vmImage: 'ubuntu-20.04'
   steps:
+  - task: UseDotNet@2
+    inputs:
+      version: '6.x'
   - task: NodeTool@0
     inputs:
       versionSpec: '14.x'
@@ -280,6 +319,9 @@ jobs:
   pool:
     vmImage: 'ubuntu-22.04'
   steps:
+  - task: UseDotNet@2
+    inputs:
+      version: '6.x'
   - task: NodeTool@0
     inputs:
       versionSpec: '14.x'
@@ -309,6 +351,9 @@ jobs:
   pool:
     vmImage: 'ubuntu-20.04'
   steps:
+  - task: UseDotNet@2
+    inputs:
+      version: '6.x'
   - task: NodeTool@0
     inputs:
       versionSpec: '14.x'
@@ -338,6 +383,9 @@ jobs:
   pool:
     vmImage: 'ubuntu-22.04'
   steps:
+  - task: UseDotNet@2
+    inputs:
+      version: '6.x'
   - task: NodeTool@0
     inputs:
       versionSpec: '14.x'
