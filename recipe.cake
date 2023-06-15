@@ -33,9 +33,8 @@ Task("Generate-Version-File")
             "./Cake.Issues.Recipe/cake-version.yml",
             @"TargetCakeVersion: 2.0.0
 TargetFrameworks:
-- netcoreapp3.1
-- net5.0
-- net6.0"
+- net6.0
+- net7.0"
         );
 
         // Write metadata to class for use when running a build
