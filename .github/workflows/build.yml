@@ -15,7 +15,6 @@ jobs:
         with:
           # .NET 5 required for GitVersion
           dotnet-version: |
-            3.1.x 
             5.x
             6.x
             7.x
