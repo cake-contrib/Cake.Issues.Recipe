@@ -24,7 +24,7 @@ Cake.Issues recipes will add the following addins to your build:
 
 | Addin Cake.Issues.Recipe                       | Addin.Frosting.Issues.Recipe                   | Remarks |
 |------------------------------------------------|------------------------------------------------|-|
-| [Cake.Git] 2.0.0                               | [Cake.Git] 2.0.0                               | Only used if `RepositoryInfoProvider` type is set to `RepositoryInfoProviderType.CakeGit`. See [Git repository information configuration] for details. |
+| [Cake.Git] 3.0.0                               | [Cake.Git] 3.0.0                               | Only used if `RepositoryInfoProvider` type is set to `RepositoryInfoProviderType.CakeGit`. See [Git repository information configuration] for details. |
 | [Cake.Issues] 2.0.0                            | [Cake.Issues] 2.0.0                            | |
 | [Cake.Issues.MsBuild] 2.0.0                    | [Cake.Issues.MsBuild] 2.0.0                    | |
 | [Cake.Issues.InspectCode] 2.0.0                | [Cake.Issues.InspectCode] 2.0.0                | |
