@@ -98,22 +98,6 @@ Task("Run-InspectCode")
     IssuesParameters.InputFiles.AddInspectCodeLogFile(data.InspectCodeLogFilePath);
 });
 
-Task("Run-DupFinder")
-    .WithCriteria((context) => context.IsRunningOnWindows(), "DupFinder is only supported on Windows.")
-    .Does<BuildData>((data) =>
-{
-    var settings = new DupFinderSettings() {
-        OutputFile = data.DupFinderLogFilePath
-    };
-
-    DupFinder(
-        data.IssuesData.BuildRootDirectory.Combine("src").CombineWithFilePath("ClassLibrary1.sln"),
-        settings);
-
-    // Pass path to dupFinder log file to Cake.Issues.Recipe
-    IssuesParameters.InputFiles.AddDupFinderLogFile(data.DupFinderLogFilePath);
-});
-
 Task("Lint-Documentation")
     .Does<BuildData>((data) =>
 {
@@ -130,7 +114,6 @@ Task("Lint-Documentation")
 
 Task("Lint")
     .IsDependentOn("Run-InspectCode")
-    .IsDependentOn("Run-DupFinder")
     .IsDependentOn("Lint-Documentation");
 
 // Make sure build and linters run before issues task.

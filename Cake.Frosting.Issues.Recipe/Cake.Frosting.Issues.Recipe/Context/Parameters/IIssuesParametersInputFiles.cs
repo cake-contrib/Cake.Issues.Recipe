@@ -25,11 +25,6 @@ namespace Cake.Frosting.Issues.Recipe
         IDictionary<FilePath, IReadIssuesSettings> InspectCodeLogFilePaths { get; } 
 
         /// <summary>
-        /// Gets list of registered paths to dupFinder log files.
-        /// </summary>
-        IDictionary<FilePath, IReadIssuesSettings> DupFinderLogFilePaths { get; } 
-
-        /// <summary>
         /// Gets list of registered paths to markdownlint-cli log files.
         /// </summary>
         IDictionary<FilePath, IReadIssuesSettings> MarkdownlintCliLogFilePaths { get; }
@@ -87,19 +82,6 @@ namespace Cake.Frosting.Issues.Recipe
         /// <param name="logfilePath">Path to the InspectCode log file.</param>
         /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
         void AddInspectCodeLogFile(FilePath logfilePath, IReadIssuesSettings settings);
-
-        /// <summary>
-        /// Adds a path to a dupFinder log file.
-        /// </summary>
-        /// <param name="logfilePath">Path to the dupFinder log file.</param>
-        void AddDupFinderLogFile(FilePath logfilePath);
-
-        /// <summary>
-        /// Adds a path to a dupFinder log file.
-        /// </summary>
-        /// <param name="logfilePath">Path to the dupFinder log file.</param>
-        /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
-        void AddDupFinderLogFile(FilePath logfilePath, IReadIssuesSettings settings);
 
         /// <summary>
         /// Adds a path to a markdownlint-cli log file.

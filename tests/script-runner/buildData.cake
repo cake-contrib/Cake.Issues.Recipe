@@ -6,8 +6,6 @@ public class BuildData
 
     public FilePath InspectCodeLogFilePath { get; }
 
-    public FilePath DupFinderLogFilePath { get; }
-
     public FilePath MarkdownlintCliLogFilePath { get; }
 
     public BuildData(ICakeContext context)
@@ -25,7 +23,6 @@ public class BuildData
         var logDirectory = buildArtifactsDirectory.Combine("logs");
         this.MsBuildLogFilePath = logDirectory.CombineWithFilePath("msbuild.binlog");
         this.InspectCodeLogFilePath = logDirectory.CombineWithFilePath("inspectCode.log");
-        this.DupFinderLogFilePath = logDirectory.CombineWithFilePath("dupFinder.log");
         this.MarkdownlintCliLogFilePath = logDirectory.CombineWithFilePath("markdownlintCli.log");
     }
 }
