@@ -19,9 +19,6 @@ namespace Cake.Frosting.Issues.Recipe
         public IDictionary<FilePath, IReadIssuesSettings> InspectCodeLogFilePaths { get; } = new Dictionary<FilePath, IReadIssuesSettings>();
 
         /// <inheritdoc />
-        public IDictionary<FilePath, IReadIssuesSettings> DupFinderLogFilePaths { get; } = new Dictionary<FilePath, IReadIssuesSettings>();
-
-        /// <inheritdoc />
         public IDictionary<FilePath, IReadIssuesSettings> MarkdownlintCliLogFilePaths { get; } = new Dictionary<FilePath, IReadIssuesSettings>();
 
         /// <inheritdoc />
@@ -79,22 +76,6 @@ namespace Cake.Frosting.Issues.Recipe
             logfilePath.NotNull(nameof(logfilePath));
 
             this.InspectCodeLogFilePaths.Add(logfilePath, settings);
-        }
-
-        /// <inheritdoc />
-        public void AddDupFinderLogFile(FilePath logfilePath)
-        {
-            logfilePath.NotNull(nameof(logfilePath));
-
-            this.AddDupFinderLogFile(logfilePath, null);
-        }
-
-        /// <inheritdoc />
-        public void AddDupFinderLogFile(FilePath logfilePath, IReadIssuesSettings settings)
-        {
-            logfilePath.NotNull(nameof(logfilePath));
-
-            this.DupFinderLogFilePaths.Add(logfilePath, settings);
         }
 
         /// <inheritdoc />

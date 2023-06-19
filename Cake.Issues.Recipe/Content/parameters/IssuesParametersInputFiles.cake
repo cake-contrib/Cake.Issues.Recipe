@@ -19,11 +19,6 @@ public class IssuesParametersInputFiles
     public IDictionary<FilePath, IReadIssuesSettings> InspectCodeLogFilePaths { get; } = new Dictionary<FilePath, IReadIssuesSettings>();
 
     /// <summary>
-    /// Gets list of registered paths to dupFinder log files.
-    /// </summary>
-    public IDictionary<FilePath, IReadIssuesSettings> DupFinderLogFilePaths { get; } = new Dictionary<FilePath, IReadIssuesSettings>();
-
-    /// <summary>
     /// Gets list of registered paths to markdownlint-cli log files.
     /// </summary>
     public IDictionary<FilePath, IReadIssuesSettings> MarkdownlintCliLogFilePaths { get; } = new Dictionary<FilePath, IReadIssuesSettings>();
@@ -104,27 +99,6 @@ public class IssuesParametersInputFiles
     {
         logfilePath.NotNull(nameof(logfilePath));
         this.InspectCodeLogFilePaths.Add(logfilePath, settings);
-    }
-
-    /// <summary>
-    /// Adds a path to a dupFinder log file.
-    /// </summary>
-    /// <param name="logfilePath">Path to the dupFinder log file.</param>
-    public void AddDupFinderLogFile(FilePath logfilePath)
-    {
-        logfilePath.NotNull(nameof(logfilePath));
-        this.AddDupFinderLogFile(logfilePath, null);
-    }
-
-    /// <summary>
-    /// Adds a path to a dupFinder log file.
-    /// </summary>
-    /// <param name="logfilePath">Path to the dupFinder log file.</param>
-    /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
-    public void AddDupFinderLogFile(FilePath logfilePath, IReadIssuesSettings settings)
-    {
-        logfilePath.NotNull(nameof(logfilePath));
-        this.DupFinderLogFilePaths.Add(logfilePath, settings);
     }
 
     /// <summary>
