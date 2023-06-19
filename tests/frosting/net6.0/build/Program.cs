@@ -67,7 +67,7 @@ public class BuildState : IssuesState
 
 public class Lifetime : FrostingLifetime<BuildContext>
 {
-    public override void Setup(BuildContext context)
+    public override void Setup(BuildContext context, ISetupContext info)
     {
         // Determine Build Identifier
         var platform = context.Environment.Platform.Family.ToString();
