@@ -3,7 +3,7 @@
 
 #addin "Cake.Markdownlint"
 
-#tool nuget:?package=JetBrains.ReSharper.CommandLineTools&version=2021.2.2
+#tool nuget:?package=JetBrains.ReSharper.CommandLineTools&version=2023.1.2
 #tool nuget:?package=MSBuild.Extension.Pack&version=1.9.1
 
 //////////////////////////////////////////////////
