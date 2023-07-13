@@ -3,7 +3,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #addin nuget:?package=Cake.Git&version=3.0.0
-#addin nuget:?package=Cake.Issues&version=3.0.0-beta0002
+#addin nuget:?package=Cake.Issues&version=3.0.0
 #addin nuget:?package=Cake.Issues.MsBuild&version=3.0.0-beta0001
 #addin nuget:?package=Cake.Issues.InspectCode&version=3.0.0-beta0001
 #addin nuget:?package=Cake.Issues.Markdownlint&version=3.0.0-beta0001
