@@ -11,7 +11,7 @@ jobs:
       - name: Fetch all tags and branches
         run: git fetch --prune --unshallow
       - name: Install .NET
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@3447fd6a9f9e57506b15f895c5b76d3b197dc7c2 # v3
         with:
           # .NET 5 required for GitVersion
           dotnet-version: |
@@ -22,7 +22,7 @@ jobs:
         run: .\build.ps1
         shell: powershell
       - name: Publish NuGet package as build artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@82c141cc518b40d92cc801eee768e7aafc9c2fa2 # v2
         with:
           name: NuGet Package
           path: ./BuildArtifacts/Packages/NuGet/
@@ -38,12 +38,12 @@ jobs:
         run: npm install -g markdownlint-cli
         shell: powershell
       - name: Download build artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@cbed621e49e4c01b044d60f6c80ea4ed6328b281 # v2
         with:
           name: NuGet Package
           path: ./BuildArtifacts/Packages/NuGet
       - name: Install .NET
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@3447fd6a9f9e57506b15f895c5b76d3b197dc7c2 # v3
         with:
           dotnet-version: |
             6.x
@@ -52,7 +52,7 @@ jobs:
         working-directory: ./tests/script-runner/
         shell: powershell
       - name: Publish generated reports as build artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@82c141cc518b40d92cc801eee768e7aafc9c2fa2 # v2
         with:
           name: Integration Tests Script Runner Windows (.NET Core tool)
           path: ./tests/script-runner/BuildArtifacts/output/
