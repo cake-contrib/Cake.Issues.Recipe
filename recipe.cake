@@ -16,6 +16,7 @@ BuildParameters.SetParameters(
     appVeyorAccountName: "cakecontrib",
     solutionFilePath: "./Cake.Frosting.Issues.Recipe/Cake.Frosting.Issues.Recipe.sln",
     shouldRunDotNetCorePack: true,
+    shouldPostToGitter: false, // Disabled because it's currently failing
     shouldGenerateDocumentation: false);
 
 BuildParameters.PrintParameters(Context);
