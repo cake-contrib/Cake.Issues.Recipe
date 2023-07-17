@@ -3,7 +3,7 @@
 
 #addin "Cake.Markdownlint"
 
-#tool nuget:?package=JetBrains.ReSharper.CommandLineTools&version=2021.2.2
+#tool nuget:?package=JetBrains.ReSharper.CommandLineTools&version=2023.1.2
 #tool nuget:?package=MSBuild.Extension.Pack&version=1.9.1
 
 //////////////////////////////////////////////////
@@ -47,10 +47,10 @@ Task("Build")
             .CombineWithFilePath("ClassLibrary1.sln");
 
 #if NETCOREAPP
-    DotNetCoreRestore(solutionFile.FullPath);
+    DotNetRestore(solutionFile.FullPath);
 
     var settings =
-        new DotNetCoreMSBuildSettings()
+        new DotNetMSBuildSettings()
             .WithTarget("Rebuild")
             .WithLogger(
                 "BinaryLogger," + Context.Tools.Resolve("Cake.Issues.MsBuild*/**/StructuredLogger.dll"),
@@ -58,9 +58,9 @@ Task("Build")
                 data.MsBuildLogFilePath.FullPath
             );
 
-    DotNetCoreBuild(
+    DotNetBuild(
         solutionFile.FullPath,
-        new DotNetCoreBuildSettings
+        new DotNetBuildSettings
         {
             MSBuildSettings = settings
         });
@@ -98,22 +98,6 @@ Task("Run-InspectCode")
     IssuesParameters.InputFiles.AddInspectCodeLogFile(data.InspectCodeLogFilePath);
 });
 
-Task("Run-DupFinder")
-    .WithCriteria((context) => context.IsRunningOnWindows(), "DupFinder is only supported on Windows.")
-    .Does<BuildData>((data) =>
-{
-    var settings = new DupFinderSettings() {
-        OutputFile = data.DupFinderLogFilePath
-    };
-
-    DupFinder(
-        data.IssuesData.BuildRootDirectory.Combine("src").CombineWithFilePath("ClassLibrary1.sln"),
-        settings);
-
-    // Pass path to dupFinder log file to Cake.Issues.Recipe
-    IssuesParameters.InputFiles.AddDupFinderLogFile(data.DupFinderLogFilePath);
-});
-
 Task("Lint-Documentation")
     .Does<BuildData>((data) =>
 {
@@ -130,7 +114,6 @@ Task("Lint-Documentation")
 
 Task("Lint")
     .IsDependentOn("Run-InspectCode")
-    .IsDependentOn("Run-DupFinder")
     .IsDependentOn("Lint-Documentation");
 
 // Make sure build and linters run before issues task.

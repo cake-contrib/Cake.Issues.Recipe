@@ -1,4 +1,4 @@
-#load nuget:https://pkgs.dev.azure.com/cake-contrib/Home/_packaging/addins/nuget/v3/index.json?package=Cake.Recipe&version=3.0.0-beta0001-0007&prerelease
+#load nuget:?package=Cake.Recipe&version=3.0.0
 
 //*************************************************************************************************
 // Settings
@@ -31,11 +31,10 @@ Task("Generate-Version-File")
         // Write metadata to configuration file
         System.IO.File.WriteAllText(
             "./Cake.Issues.Recipe/cake-version.yml",
-            @"TargetCakeVersion: 2.0.0
+            @"TargetCakeVersion: 3.0.0
 TargetFrameworks:
-- netcoreapp3.1
-- net5.0
-- net6.0"
+- net6.0
+- net7.0"
         );
 
         // Write metadata to class for use when running a build

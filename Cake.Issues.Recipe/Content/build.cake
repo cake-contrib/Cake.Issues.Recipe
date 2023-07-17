@@ -72,14 +72,6 @@ IssuesBuildTasks.ReadIssuesTask = Task("Read-Issues")
             logFile.Value);
     }
 
-    // Read dupFinder log files.
-    foreach (var logFile in IssuesParameters.InputFiles.DupFinderLogFilePaths)
-    {
-        data.AddIssues(
-            DupFinderIssuesFromFilePath(logFile.Key),
-            logFile.Value);
-    }
-
     // Read markdownlint-cli log files.
     foreach (var logFile in IssuesParameters.InputFiles.MarkdownlintCliLogFilePaths)
     {

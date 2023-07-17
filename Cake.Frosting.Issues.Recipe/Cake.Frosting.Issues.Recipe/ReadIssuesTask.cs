@@ -1,6 +1,5 @@
 ﻿using Cake.Common.Diagnostics;
 using Cake.Issues;
-using Cake.Issues.DupFinder;
 using Cake.Issues.EsLint;
 using Cake.Issues.InspectCode;
 using Cake.Issues.Markdownlint;
@@ -45,14 +44,6 @@ namespace Cake.Frosting.Issues.Recipe
             {
                 context.State.AddIssues(
                     context.InspectCodeIssuesFromFilePath(logFile.Key),
-                    logFile.Value);
-            }
-
-            // Read dupFinder log files.
-            foreach (var logFile in context.Parameters.InputFiles.DupFinderLogFilePaths)
-            {
-                context.State.AddIssues(
-                    context.DupFinderIssuesFromFilePath(logFile.Key),
                     logFile.Value);
             }
 
