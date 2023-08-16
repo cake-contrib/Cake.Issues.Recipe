@@ -15,5 +15,8 @@ namespace Cake.Frosting.Issues.Recipe
             GenericIssueReportFormatSettings
                 .FromEmbeddedTemplate(GenericIssueReportTemplate.HtmlDxDataGrid)
                 .WithOption(HtmlDxDataGridOption.Theme, DevExtremeTheme.MaterialBlueLight);
+
+        /// <inheritdoc />
+        public bool ShouldCreateSarifReport { get; set; } = true;
     }
 }

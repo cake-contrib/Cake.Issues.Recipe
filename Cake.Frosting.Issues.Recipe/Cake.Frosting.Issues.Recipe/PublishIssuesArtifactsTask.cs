@@ -9,6 +9,7 @@ namespace Cake.Frosting.Issues.Recipe
     /// </summary>
     [TaskName("Publish-IssuesArtifacts")]
     [IsDependentOn(typeof(CreateFullIssuesReportTask))]
+    [IsDependentOn(typeof(CreateSarifReportTask))]
     public sealed class PublishIssuesArtifactsTask : FrostingTask<IIssuesContext>
     {
         /// <inheritdoc/>

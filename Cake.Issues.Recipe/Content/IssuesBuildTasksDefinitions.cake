@@ -19,6 +19,11 @@ public class IssuesBuildTaskDefinitions
     public CakeTaskBuilder CreateFullIssuesReportTask { get; set; }
 
     /// <summary>
+    /// Gets or sets the task for creating a report in SARIF format.
+    /// </summary>
+    public CakeTaskBuilder CreateSarifReportTask { get; set; }
+
+    /// <summary>
     /// Gets or sets the task for publishing issues artifacts.
     /// </summary>
     public CakeTaskBuilder PublishIssuesArtifactsTask { get; set; }

@@ -140,10 +140,36 @@ IssuesBuildTasks.CreateFullIssuesReportTask = Task("Create-FullIssuesReport")
         data.FullIssuesReport);
 });
 
+IssuesBuildTasks.CreateSarifReportTask = Task("Create-SarifReport")
+    .Description("Creates report in SARIF format.")
+    .WithCriteria(() => IssuesParameters.Reporting.ShouldCreateSarifReport, "Creating of report in SARIF format is disabled")
+    .IsDependentOn("Read-Issues")
+    .Does<IssuesData>((data) =>
+{
+    var reportFileName = "report";
+    if (!string.IsNullOrWhiteSpace(IssuesParameters.BuildIdentifier))
+    {
+        reportFileName += $"-{IssuesParameters.BuildIdentifier}";
+    }
+    reportFileName += ".sarif";
+
+    data.SarifReport =
+        IssuesParameters.OutputDirectory.CombineWithFilePath(reportFileName);
+    EnsureDirectoryExists(IssuesParameters.OutputDirectory);
+
+    // Create SARIF report.
+    CreateIssueReport(
+        data.Issues,
+        SarifIssueReportFormat(),
+        data.ProjectRootDirectory,
+        data.SarifReport);
+});
+
 IssuesBuildTasks.PublishIssuesArtifactsTask = Task("Publish-IssuesArtifacts")
     .Description("Publish issue artifacts to build server.")
     .WithCriteria(() => !BuildSystem.IsLocalBuild, "Not running on build server")
     .IsDependentOn("Create-FullIssuesReport")
+    .IsDependentOn("Create-SarifReport")
     .Does<IssuesData>((data) =>
 {
     if (data.BuildServer == null)
