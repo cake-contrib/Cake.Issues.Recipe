@@ -18,6 +18,12 @@ namespace Cake.Frosting.Issues.Recipe
         bool ShouldPublishFullIssuesReport { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether report in SARIF format should be published as artifact to the build system.
+        /// Default value is <c>true</c>.
+        /// </summary>
+        bool ShouldPublishSarifReport { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether summary issues report should be created.
         /// Default value is <c>true</c>.
         /// </summary>

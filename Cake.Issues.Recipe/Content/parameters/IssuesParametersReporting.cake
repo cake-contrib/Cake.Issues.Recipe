@@ -18,4 +18,10 @@ public class IssuesParametersReporting
         GenericIssueReportFormatSettings
             .FromEmbeddedTemplate(GenericIssueReportTemplate.HtmlDxDataGrid)
             .WithOption(HtmlDxDataGridOption.Theme, DevExtremeTheme.MaterialBlueLight);
+
+    /// <summary>
+    /// Gets or sets a value indicating whether report in SARIF format should be created.
+    /// Default value is <c>true</c>.
+    /// </summary>
+    public bool ShouldCreateSarifReport { get; set; } = true;
 }

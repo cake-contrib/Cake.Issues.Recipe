@@ -126,6 +126,14 @@ namespace Cake.Frosting.Issues.Recipe
             {
                 context.AzurePipelines().Commands.UploadArtifact("Issues", context.State.FullIssuesReport, "Issues");
             }
+
+            if (context.Parameters.BuildServer.ShouldPublishSarifReport &&
+                context.State.SarifReport != null &&
+                context.FileExists(context.State.SarifReport))
+            {
+                context.AzurePipelines().Commands.UploadArtifact("Issues", context.State.SarifReport, "CodeAnalysisLogs");
+            }
+
         }
     }
 }

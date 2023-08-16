@@ -12,6 +12,9 @@ namespace Cake.Frosting.Issues.Recipe
         public bool ShouldPublishFullIssuesReport { get; set; } = true;
 
         /// <inheritdoc />
+        public bool ShouldPublishSarifReport { get; set; } = true;
+
+        /// <inheritdoc />
         public bool ShouldCreateSummaryIssuesReport { get; set; } = true;
     }
 }

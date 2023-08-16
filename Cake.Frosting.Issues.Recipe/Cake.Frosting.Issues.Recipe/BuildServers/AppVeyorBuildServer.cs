@@ -89,6 +89,13 @@ namespace Cake.Frosting.Issues.Recipe
             {
                 context.AppVeyor().UploadArtifact(context.State.FullIssuesReport);
             }
+
+            if (context.Parameters.BuildServer.ShouldPublishSarifReport &&
+                context.State.SarifReport != null &&
+                context.FileExists(context.State.SarifReport))
+            {
+                context.AppVeyor().UploadArtifact(context.State.SarifReport);
+            }
         }
     }
 }

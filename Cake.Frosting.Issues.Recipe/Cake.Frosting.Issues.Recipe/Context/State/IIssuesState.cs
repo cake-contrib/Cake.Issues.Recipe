@@ -42,6 +42,11 @@ namespace Cake.Frosting.Issues.Recipe
         FilePath FullIssuesReport { get; set; }
 
         /// <summary>
+        /// Gets or sets the path to the SARIF report.
+        /// </summary>
+        FilePath SarifReport { get; set; }
+
+        /// <summary>
         /// Gets or sets the path to the summary issues report.
         /// </summary>
         FilePath SummaryIssuesReport { get; set; }

@@ -19,5 +19,11 @@ namespace Cake.Frosting.Issues.Recipe
         /// with <see cref="DevExtremeTheme.MaterialBlueLight"/> theme.
         /// </summary>
         GenericIssueReportFormatSettings FullIssuesReportSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether report in SARIF format should be created.
+        /// Default value is <c>true</c>.
+        /// </summary>
+        bool ShouldCreateSarifReport { get; set; }
     }
 }

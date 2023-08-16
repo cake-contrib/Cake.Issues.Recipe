@@ -107,5 +107,12 @@ public class AzureDevOpsBuildServer : BaseBuildServer
         {
             context.AzurePipelines().Commands.UploadArtifact("Issues", data.FullIssuesReport, "Issues");
         }
+
+        if (IssuesParameters.BuildServer.ShouldPublishSarifReport &&
+            data.SarifReport != null &&
+            context.FileExists(data.SarifReport))
+        {
+            context.AzurePipelines().Commands.UploadArtifact("Issues", data.SarifReport, "CodeAnalysisLogs");
+        }
     }
 }
