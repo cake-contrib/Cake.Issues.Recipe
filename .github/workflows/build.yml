@@ -7,7 +7,7 @@ jobs:
     runs-on: windows-2022
     steps:
       - name: Get the sources
-        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3
+        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4
       - name: Fetch all tags and branches
         run: git fetch --prune --unshallow
       - name: Install .NET
@@ -22,7 +22,7 @@ jobs:
         run: .\build.ps1
         shell: powershell
       - name: Publish NuGet package as build artifact
-        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3
+        uses: actions/upload-artifact@a8a3f3ad30e3422c9c7b888a15615d19a852ae32 # v3
         with:
           name: NuGet Package
           path: ./BuildArtifacts/Packages/NuGet/
@@ -33,7 +33,7 @@ jobs:
     runs-on: windows-2019
     steps:
       - name: Get the sources
-        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3
+        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4
       - name: Install required tools
         run: npm install -g markdownlint-cli
         shell: powershell
@@ -52,7 +52,7 @@ jobs:
         working-directory: ./tests/script-runner/
         shell: powershell
       - name: Publish generated reports as build artifact
-        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3
+        uses: actions/upload-artifact@a8a3f3ad30e3422c9c7b888a15615d19a852ae32 # v3
         with:
           name: Integration Tests Script Runner Windows (.NET Core tool)
           path: ./tests/script-runner/BuildArtifacts/output/
