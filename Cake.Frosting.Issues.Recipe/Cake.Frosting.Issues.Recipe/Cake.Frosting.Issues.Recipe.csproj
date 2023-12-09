@@ -44,7 +44,7 @@ For recipe compatible with Cake Script Runners see Cake.Issues.Recipe.</Descript
     <PackageReference Include="Cake.Issues.InspectCode" Version="3.0.0" />
     <PackageReference Include="Cake.Issues.Markdownlint" Version="3.0.0" />
     <PackageReference Include="Cake.Issues.MsBuild" Version="3.0.0" />
-    <PackageReference Include="Cake.Issues.PullRequests" Version="3.0.0" />
+    <PackageReference Include="Cake.Issues.PullRequests" Version="4.0.0-beta0001" />
     <PackageReference Include="Cake.Issues.PullRequests.AppVeyor" Version="3.0.0" />
     <PackageReference Include="Cake.Issues.PullRequests.AzureDevOps" Version="3.0.0" />
     <PackageReference Include="Cake.Issues.PullRequests.GitHubActions" Version="3.0.0" />
