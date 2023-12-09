@@ -8,7 +8,7 @@
 #addin nuget:?package=Cake.Issues.InspectCode&version=3.0.0
 #addin nuget:?package=Cake.Issues.Markdownlint&version=3.0.0
 #addin nuget:?package=Cake.Issues.EsLint&version=3.0.0
-#addin nuget:?package=Cake.Issues.Reporting&version=3.0.0
+#addin nuget:?package=Cake.Issues.Reporting&version=4.0.0-beta0001
 #addin nuget:?package=Cake.Issues.Reporting.Generic&version=3.0.0
 #addin nuget:?package=Cake.Issues.Reporting.Sarif&version=3.0.1
 #addin nuget:?package=Cake.Issues.PullRequests&version=3.0.0

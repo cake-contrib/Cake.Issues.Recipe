@@ -30,7 +30,7 @@ Cake.Issues recipes will add the following addins to your build:
 | [Cake.Issues.InspectCode] 3.0.0                | [Cake.Issues.InspectCode] 3.0.0                | |
 | [Cake.Issues.Markdownlint] 3.0.0               | [Cake.Issues.Markdownlint] 3.0.0               | |
 | [Cake.Issues.EsLint] 3.0.0                     | [Cake.Issues.EsLint] 3.0.0                     | |
-| [Cake.Issues.Reporting] 3.0.0                  | [Cake.Issues.Reporting] 3.0.0                  | |
+| [Cake.Issues.Reporting] 4.0.0-beta0001         | [Cake.Issues.Reporting] 4.0.0-beta0001         | |
 | [Cake.Issues.Reporting.Generic] 3.0.0          | [Cake.Frosting.Issues.Reporting.Generic] 3.0.0 | |
 | [Cake.Issues.PullRequests] 3.0.0               | [Cake.Issues.PullRequests] 3.0.0               | |
 | [Cake.Issues.PullRequests.AppVeyor] 3.0.0      | [Cake.Issues.PullRequests.AppVeyor] 3.0.0      | |
