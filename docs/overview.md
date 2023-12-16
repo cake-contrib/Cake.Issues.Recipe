@@ -33,7 +33,7 @@ Cake.Issues recipes will add the following addins to your build:
 | [Cake.Issues.Reporting] 4.0.0-beta0001                | [Cake.Issues.Reporting] 4.0.0-beta0001                  | |
 | [Cake.Issues.Reporting.Generic] 4.0.0-beta0001        | [Cake.Frosting.Issues.Reporting.Generic] 4.0.0-beta0001 | |
 | [Cake.Issues.PullRequests] 4.0.0-beta0001             | [Cake.Issues.PullRequests] 4.0.0-beta0001               | |
-| [Cake.Issues.PullRequests.AppVeyor] 3.0.0             | [Cake.Issues.PullRequests.AppVeyor] 3.0.0               | |
+| [Cake.Issues.PullRequests.AppVeyor] 4.0.0-beta0001    | [Cake.Issues.PullRequests.AppVeyor] 4.0.0-beta0001      | |
 | [Cake.Issues.PullRequests.AzureDevOps] 4.0.0-beta0001 | [Cake.Issues.PullRequests.AzureDevOps] 4.0.0-beta0001   | |
 | [Cake.Issues.PullRequests.GitHubActions] 3.0.0        | [Cake.Issues.PullRequests.GitHubActions] 3.0.0          | |
 | [Cake.AzureDevOps] 4.0.0-beta0001                     | [Cake.AzureDevOps] 4.0.0-beta0001                       | |
