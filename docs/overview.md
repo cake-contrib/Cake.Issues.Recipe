@@ -22,21 +22,21 @@ See [supported tools] for a list of supported linters, build servers and pull re
 
 Cake.Issues recipes will add the following addins to your build:
 
-| Addin Cake.Issues.Recipe                              | Addin.Frosting.Issues.Recipe                            | Remarks |
-|-------------------------------------------------------|---------------------------------------------------------|-|
-| [Cake.Git] 3.0.0                                      | [Cake.Git] 3.0.0                                        | Only used if `RepositoryInfoProvider` type is set to `RepositoryInfoProviderType.CakeGit`. See [Git repository information configuration] for details. |
-| [Cake.Issues] 4.0.0-beta0001                          | [Cake.Issues] 4.0.0-beta0001                            | |
-| [Cake.Issues.MsBuild] 4.0.0-beta0001                  | [Cake.Frosting.Issues.MsBuild] 4.0.0-beta0001           | |
-| [Cake.Issues.InspectCode] 4.0.0-beta0001              | [Cake.Issues.InspectCode] 4.0.0-beta0001                | |
-| [Cake.Issues.Markdownlint] 3.0.0                      | [Cake.Issues.Markdownlint] 3.0.0                        | |
-| [Cake.Issues.EsLint] 4.0.0-beta0001                   | [Cake.Issues.EsLint] 4.0.0-beta0001                     | |
-| [Cake.Issues.Reporting] 4.0.0-beta0001                | [Cake.Issues.Reporting] 4.0.0-beta0001                  | |
-| [Cake.Issues.Reporting.Generic] 4.0.0-beta0001        | [Cake.Frosting.Issues.Reporting.Generic] 4.0.0-beta0001 | |
-| [Cake.Issues.PullRequests] 4.0.0-beta0001             | [Cake.Issues.PullRequests] 4.0.0-beta0001               | |
-| [Cake.Issues.PullRequests.AppVeyor] 4.0.0-beta0001    | [Cake.Issues.PullRequests.AppVeyor] 4.0.0-beta0001      | |
-| [Cake.Issues.PullRequests.AzureDevOps] 4.0.0-beta0001 | [Cake.Issues.PullRequests.AzureDevOps] 4.0.0-beta0001   | |
-| [Cake.Issues.PullRequests.GitHubActions] 3.0.0        | [Cake.Issues.PullRequests.GitHubActions] 3.0.0          | |
-| [Cake.AzureDevOps] 4.0.0-beta0001                     | [Cake.AzureDevOps] 4.0.0-beta0001                       | |
+| Addin Cake.Issues.Recipe                                | Addin.Frosting.Issues.Recipe                            | Remarks |
+|---------------------------------------------------------|---------------------------------------------------------|-|
+| [Cake.Git] 3.0.0                                        | [Cake.Git] 3.0.0                                        | Only used if `RepositoryInfoProvider` type is set to `RepositoryInfoProviderType.CakeGit`. See [Git repository information configuration] for details. |
+| [Cake.Issues] 4.0.0-beta0001                            | [Cake.Issues] 4.0.0-beta0001                            | |
+| [Cake.Issues.MsBuild] 4.0.0-beta0001                    | [Cake.Frosting.Issues.MsBuild] 4.0.0-beta0001           | |
+| [Cake.Issues.InspectCode] 4.0.0-beta0001                | [Cake.Issues.InspectCode] 4.0.0-beta0001                | |
+| [Cake.Issues.Markdownlint] 3.0.0                        | [Cake.Issues.Markdownlint] 3.0.0                        | |
+| [Cake.Issues.EsLint] 4.0.0-beta0001                     | [Cake.Issues.EsLint] 4.0.0-beta0001                     | |
+| [Cake.Issues.Reporting] 4.0.0-beta0001                  | [Cake.Issues.Reporting] 4.0.0-beta0001                  | |
+| [Cake.Issues.Reporting.Generic] 4.0.0-beta0001          | [Cake.Frosting.Issues.Reporting.Generic] 4.0.0-beta0001 | |
+| [Cake.Issues.PullRequests] 4.0.0-beta0001               | [Cake.Issues.PullRequests] 4.0.0-beta0001               | |
+| [Cake.Issues.PullRequests.AppVeyor] 4.0.0-beta0001      | [Cake.Issues.PullRequests.AppVeyor] 4.0.0-beta0001      | |
+| [Cake.Issues.PullRequests.AzureDevOps] 4.0.0-beta0001   | [Cake.Issues.PullRequests.AzureDevOps] 4.0.0-beta0001   | |
+| [Cake.Issues.PullRequests.GitHubActions] 4.0.0-beta0001 | [Cake.Issues.PullRequests.GitHubActions] 4.0.0-beta0001 | |
+| [Cake.AzureDevOps] 4.0.0-beta0001                       | [Cake.AzureDevOps] 4.0.0-beta0001                       | |
 
 [Cake.Issues.Recipe]: https://www.nuget.org/packages/Cake.Issues.Recipe
 [Cake.Frosting.Issues.Recipe]: https://www.nuget.org/packages/Cake.Frosting.Issues.Recipe
