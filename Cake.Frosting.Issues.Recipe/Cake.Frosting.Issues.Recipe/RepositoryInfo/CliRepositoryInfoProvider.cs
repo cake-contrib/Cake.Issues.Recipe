@@ -51,7 +51,7 @@ namespace Cake.Frosting.Issues.Recipe
             DirectoryPath repositoryRootFolder,
             params string[] arguments)
         {
-            if (!arguments.Any())
+            if (arguments.Length == 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(arguments));
             }
