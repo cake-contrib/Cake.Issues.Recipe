@@ -5,22 +5,13 @@ namespace Cake.Frosting.Issues.Recipe
     /// <summary>
     /// Parameters and state for the build run.
     /// </summary>
-    public class IssuesContext : IssuesContext<IssuesParameters, IssuesState>
+    /// <param name="context">The Cake context.</param>
+    /// <param name="repositoryInfoProviderType">Defines how information about the Git repository should be determined.</param>
+    public class IssuesContext(
+        ICakeContext context,
+        RepositoryInfoProviderType repositoryInfoProviderType) : IssuesContext<IssuesParameters, IssuesState>(context)
     {
-        private readonly RepositoryInfoProviderType repositoryInfoProviderType;
-
-        /// <summary>
-        /// Creates a new instance of the <see cref="IssuesContext"/> class.
-        /// </summary>
-        /// <param name="context">The Cake context.</param>
-        /// <param name="repositoryInfoProviderType">Defines how information about the Git repository should be determined.</param>
-        public IssuesContext(
-            ICakeContext context,
-            RepositoryInfoProviderType repositoryInfoProviderType)
-            : base(context)
-        {
-            this.repositoryInfoProviderType = repositoryInfoProviderType;
-        }
+        private readonly RepositoryInfoProviderType repositoryInfoProviderType = repositoryInfoProviderType;
 
         /// <inheritdoc />
         protected override IssuesParameters CreateIssuesParameters()
