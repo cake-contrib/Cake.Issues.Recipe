@@ -10,7 +10,7 @@ namespace Cake.Frosting.Issues.Recipe
     /// <summary>
     /// Support for builds running on GitHub Actions.
     /// </summary>
-    internal class GitHubActionsBuildServer : BaseBuildServer
+    internal sealed class GitHubActionsBuildServer : BaseBuildServer
     {
         /// <inheritdoc />
         public override Uri DetermineRepositoryRemoteUrl(

@@ -11,7 +11,7 @@ namespace Cake.Frosting.Issues.Recipe
     /// <summary>
     /// Support for AppVeyor builds.
     /// </summary>
-    internal class AppVeyorBuildServer : BaseBuildServer
+    internal sealed class AppVeyorBuildServer : BaseBuildServer
     {
         /// <inheritdoc />
         public override Uri DetermineRepositoryRemoteUrl(

@@ -13,7 +13,7 @@ namespace Cake.Frosting.Issues.Recipe
     /// <summary>
     /// Support for Azure DevOps / Azure Repository hosted code.
     /// </summary>
-    internal class AzureDevOpsPullRequestSystem : BasePullRequestSystem
+    internal sealed class AzureDevOpsPullRequestSystem : BasePullRequestSystem
     {
         /// <inheritdoc />
         public override void ReportIssuesToPullRequest(IIssuesContext context)

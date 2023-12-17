@@ -10,7 +10,7 @@ namespace Cake.Frosting.Issues.Recipe
     /// <summary>
     /// Provider to retrieve repository information using <see href="https://cakebuild.net/extensions/cake-git/">Cake.Git addin</see>.
     /// </summary>
-    internal class CakeGitRepositoryInfoProvider : IRepositoryInfoProvider
+    internal sealed class CakeGitRepositoryInfoProvider : IRepositoryInfoProvider
     {
         /// <inheritdoc />
         public DirectoryPath GetRepositoryRootDirectory(ICakeContext context, DirectoryPath buildRootDirectory)

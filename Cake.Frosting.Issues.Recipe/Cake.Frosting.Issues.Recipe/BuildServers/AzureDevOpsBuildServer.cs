@@ -14,7 +14,7 @@ namespace Cake.Frosting.Issues.Recipe
     /// <summary>
     /// Support for Azure DevOps / Azure Pipelines builds.
     /// </summary>
-    internal class AzureDevOpsBuildServer : BaseBuildServer
+    internal sealed class AzureDevOpsBuildServer : BaseBuildServer
     {
         /// <inheritdoc />
         public override Uri DetermineRepositoryRemoteUrl(

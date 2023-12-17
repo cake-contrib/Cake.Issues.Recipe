@@ -11,7 +11,7 @@ namespace Cake.Frosting.Issues.Recipe
     /// <summary>
     /// Provider to retrieve repository information using Git CLI.
     /// </summary>
-    internal class CliRepositoryInfoProvider : IRepositoryInfoProvider
+    internal sealed class CliRepositoryInfoProvider : IRepositoryInfoProvider
     {
         /// <inheritdoc />
         public DirectoryPath GetRepositoryRootDirectory(ICakeContext context, DirectoryPath buildRootDirectory)
