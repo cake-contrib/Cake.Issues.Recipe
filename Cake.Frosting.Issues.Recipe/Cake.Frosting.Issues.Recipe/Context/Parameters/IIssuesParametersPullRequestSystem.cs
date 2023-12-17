@@ -1,9 +1,9 @@
-using Cake.Issues;
-using Cake.Issues.PullRequests;
-using System.Collections.Generic;
-
 namespace Cake.Frosting.Issues.Recipe
 {
+    using Cake.Issues;
+    using Cake.Issues.PullRequests;
+    using System.Collections.Generic;
+
     /// <summary>
     /// Parameters for pull request integration.
     /// </summary>

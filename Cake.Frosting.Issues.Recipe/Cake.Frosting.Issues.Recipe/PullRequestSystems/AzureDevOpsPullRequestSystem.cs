@@ -1,15 +1,15 @@
-using Cake.AzureDevOps;
-using Cake.AzureDevOps.Repos.PullRequest;
-using Cake.Common;
-using Cake.Common.Diagnostics;
-using Cake.Issues;
-using Cake.Issues.PullRequests;
-using Cake.Issues.PullRequests.AzureDevOps;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace Cake.Frosting.Issues.Recipe
 {
+    using Cake.AzureDevOps;
+    using Cake.AzureDevOps.Repos.PullRequest;
+    using Cake.Common;
+    using Cake.Common.Diagnostics;
+    using Cake.Issues;
+    using Cake.Issues.PullRequests;
+    using Cake.Issues.PullRequests.AzureDevOps;
+    using System.Collections.Generic;
+    using System.Linq;
+
     /// <summary>
     /// Support for Azure DevOps / Azure Repository hosted code.
     /// </summary>

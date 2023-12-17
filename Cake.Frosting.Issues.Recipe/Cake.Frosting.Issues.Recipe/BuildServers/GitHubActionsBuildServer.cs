@@ -1,12 +1,12 @@
-using Cake.Common.Build;
-using Cake.Core.IO;
-using Cake.Issues;
-using Cake.Issues.PullRequests;
-using Cake.Issues.PullRequests.GitHubActions;
-using System;
-
 namespace Cake.Frosting.Issues.Recipe
 {
+    using Cake.Common.Build;
+    using Cake.Core.IO;
+    using Cake.Issues;
+    using Cake.Issues.PullRequests;
+    using Cake.Issues.PullRequests.GitHubActions;
+    using System;
+
     /// <summary>
     /// Support for builds running on GitHub Actions.
     /// </summary>

@@ -1,16 +1,16 @@
-using Cake.Common;
-using Cake.Common.Build;
-using Cake.Common.Build.AzurePipelines.Data;
-using Cake.Common.IO;
-using Cake.Core.IO;
-using Cake.Issues;
-using Cake.Issues.Reporting;
-using Cake.Issues.Reporting.Generic;
-using System;
-using System.IO;
-
 namespace Cake.Frosting.Issues.Recipe
 {
+    using Cake.Common;
+    using Cake.Common.Build;
+    using Cake.Common.Build.AzurePipelines.Data;
+    using Cake.Common.IO;
+    using Cake.Core.IO;
+    using Cake.Issues;
+    using Cake.Issues.Reporting;
+    using Cake.Issues.Reporting.Generic;
+    using System;
+    using System.IO;
+
     /// <summary>
     /// Support for Azure DevOps / Azure Pipelines builds.
     /// </summary>

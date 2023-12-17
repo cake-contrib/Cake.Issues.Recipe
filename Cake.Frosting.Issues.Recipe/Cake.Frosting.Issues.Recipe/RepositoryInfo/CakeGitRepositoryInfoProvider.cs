@@ -1,12 +1,12 @@
-﻿using Cake.Core;
-using Cake.Core.IO;
-using Cake.Git;
-using Cake.Issues;
-using System;
-using System.Linq;
-
-namespace Cake.Frosting.Issues.Recipe
+﻿namespace Cake.Frosting.Issues.Recipe
 {
+    using Cake.Core;
+    using Cake.Core.IO;
+    using Cake.Git;
+    using Cake.Issues;
+    using System;
+    using System.Linq;
+
     /// <summary>
     /// Provider to retrieve repository information using <see href="https://cakebuild.net/extensions/cake-git/">Cake.Git addin</see>.
     /// </summary>

@@ -1,13 +1,13 @@
-﻿using Cake.Common.Diagnostics;
-using Cake.Issues;
-using Cake.Issues.EsLint;
-using Cake.Issues.InspectCode;
-using Cake.Issues.Markdownlint;
-using Cake.Issues.MsBuild;
-using System.Linq;
-
-namespace Cake.Frosting.Issues.Recipe
+﻿namespace Cake.Frosting.Issues.Recipe
 {
+    using Cake.Common.Diagnostics;
+    using Cake.Issues;
+    using Cake.Issues.EsLint;
+    using Cake.Issues.InspectCode;
+    using Cake.Issues.Markdownlint;
+    using Cake.Issues.MsBuild;
+    using System.Linq;
+
     /// <summary>
     /// Reads issues from the provided log files.
     /// </summary>

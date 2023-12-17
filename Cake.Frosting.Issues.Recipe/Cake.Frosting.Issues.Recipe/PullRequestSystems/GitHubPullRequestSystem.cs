@@ -1,7 +1,7 @@
-using Cake.Issues;
-
 namespace Cake.Frosting.Issues.Recipe
 {
+    using Cake.Issues;
+
     /// <summary>
     /// Support for GitHub hosted code.
     /// </summary>

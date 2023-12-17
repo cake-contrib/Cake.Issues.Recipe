@@ -1,15 +1,14 @@
-﻿using Cake.Common;
-using Cake.Common.Build;
-using Cake.Common.Diagnostics;
-using Cake.Common.IO;
-using Cake.Core.IO;
-using Cake.Issues;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-
-namespace Cake.Frosting.Issues.Recipe
+﻿namespace Cake.Frosting.Issues.Recipe
 {
+    using Cake.Common;
+    using Cake.Common.Build;
+    using Cake.Common.Diagnostics;
+    using Cake.Common.IO;
+    using Cake.Core.IO;
+    using Cake.Issues;
+    using System;
+    using System.Collections.Generic;
+
     /// <summary>
     /// Mutable state of the build run.
     /// </summary>

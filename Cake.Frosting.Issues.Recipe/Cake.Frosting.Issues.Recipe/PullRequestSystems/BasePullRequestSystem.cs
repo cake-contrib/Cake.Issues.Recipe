@@ -1,8 +1,8 @@
-using Cake.Issues;
-using Cake.Issues.PullRequests;
-
 namespace Cake.Frosting.Issues.Recipe
 {
+    using Cake.Issues;
+    using Cake.Issues.PullRequests;
+
     /// <summary>
     /// Basic implementation for all pull request server.
     /// </summary>

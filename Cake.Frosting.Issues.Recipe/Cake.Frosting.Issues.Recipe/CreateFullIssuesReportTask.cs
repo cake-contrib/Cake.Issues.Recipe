@@ -1,10 +1,10 @@
-﻿using Cake.Common.IO;
-using Cake.Issues;
-using Cake.Issues.Reporting;
-using Cake.Issues.Reporting.Generic;
-
-namespace Cake.Frosting.Issues.Recipe
+﻿namespace Cake.Frosting.Issues.Recipe
 {
+    using Cake.Common.IO;
+    using Cake.Issues;
+    using Cake.Issues.Reporting;
+    using Cake.Issues.Reporting.Generic;
+
     /// <summary>
     /// Creates issue report.
     /// </summary>

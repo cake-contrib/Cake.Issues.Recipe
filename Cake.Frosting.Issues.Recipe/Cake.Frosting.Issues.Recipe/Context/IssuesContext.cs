@@ -1,7 +1,7 @@
-﻿using Cake.Core; 
-
-namespace Cake.Frosting.Issues.Recipe
+﻿namespace Cake.Frosting.Issues.Recipe
 {
+    using Cake.Core;
+
     /// <summary>
     /// Parameters and state for the build run.
     /// </summary>
