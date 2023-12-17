@@ -237,10 +237,7 @@ namespace Cake.Frosting.Issues.Recipe
                 return defaultSettings;
             }
 
-            if (configuredSettings.FileLinkSettings == null)
-            {
-                configuredSettings.FileLinkSettings = defaultSettings.FileLinkSettings;
-            }
+            configuredSettings.FileLinkSettings ??= defaultSettings.FileLinkSettings;
 
             return configuredSettings;
         }
