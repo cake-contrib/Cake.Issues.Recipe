@@ -129,8 +129,10 @@ namespace Cake.Frosting.Issues.Recipe
                     context.State.BuildServer.DeterminePullRequestId(context).Value,
                     context.AzureDevOpsAuthenticationOAuth(context.EnvironmentVariable("SYSTEM_ACCESSTOKEN")));
 
+            var issuesList = issues.ToList();
+
             var pullRequestStatusName = "Issues";
-            var pullRequestDescriptionIfIssues = $"Found {issues.Count()} issues";
+            var pullRequestDescriptionIfIssues = $"Found {issuesList.Count} issues";
             var pullRequestDescriptionIfNoIssues = "No issues found";
 
             if (!string.IsNullOrWhiteSpace(issueIdentifier))
@@ -148,7 +150,7 @@ namespace Cake.Frosting.Issues.Recipe
             }
 
             var state =
-                issues.Any() ? 
+                issuesList.Count != 0 ? 
                     AzureDevOpsPullRequestStatusState.Failed : 
                     AzureDevOpsPullRequestStatusState.Succeeded;
 
@@ -159,7 +161,7 @@ namespace Cake.Frosting.Issues.Recipe
                 {
                     Genre = "Cake.Issues.Recipe",
                     State = state,
-                    Description = issues.Any() ? pullRequestDescriptionIfIssues : pullRequestDescriptionIfNoIssues
+                    Description = issuesList.Count != 0 ? pullRequestDescriptionIfIssues : pullRequestDescriptionIfNoIssues
                 };
 
             context.AzureDevOpsSetPullRequestStatus(
