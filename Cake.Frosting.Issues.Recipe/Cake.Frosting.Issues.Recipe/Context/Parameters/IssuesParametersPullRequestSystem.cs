@@ -27,6 +27,6 @@ namespace Cake.Frosting.Issues.Recipe
         public int? MaxIssuesToPostForEachIssueProvider { get; set; } = 100;
 
         /// <inheritdoc />
-        public Dictionary<string, IProviderIssueLimits> ProviderIssueLimits => new Dictionary<string, IProviderIssueLimits>();
+        public Dictionary<string, IProviderIssueLimits> ProviderIssueLimits => new();
     }
 }

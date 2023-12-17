@@ -17,9 +17,9 @@ namespace Cake.Frosting.Issues.Recipe
     {
         private readonly IIssuesContext context;
 
-        private readonly List<IIssue> issues = new List<IIssue>();
+        private readonly List<IIssue> issues = [];
 
-        private readonly List<(IIssueProvider, string)> issueProvidersAndRuns = new List<(IIssueProvider, string)>();
+        private readonly List<(IIssueProvider, string)> issueProvidersAndRuns = [];
 
         /// <inheritdoc />
         public DirectoryPath RepositoryRootDirectory { get; }
