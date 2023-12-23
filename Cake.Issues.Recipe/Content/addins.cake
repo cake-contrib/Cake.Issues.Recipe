@@ -13,6 +13,6 @@
 #addin nuget:?package=Cake.Issues.Reporting.Sarif&version=4.0.0-beta0001
 #addin nuget:?package=Cake.Issues.PullRequests&version=4.0.0
 #addin nuget:?package=Cake.Issues.PullRequests.AppVeyor&version=4.0.0-beta0001
-#addin nuget:?package=Cake.Issues.PullRequests.AzureDevOps&version=4.0.0-beta0001
+#addin nuget:?package=Cake.Issues.PullRequests.AzureDevOps&version=4.0.0
 #addin nuget:?package=Cake.Issues.PullRequests.GitHubActions&version=4.0.0-beta0001
 #addin nuget:?package=Cake.AzureDevOps&version=4.0.0
