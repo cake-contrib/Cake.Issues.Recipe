@@ -1,6 +1,3 @@
-using Cake.Core.IO;
-using System;
-
 namespace Cake.Frosting.Issues.Recipe
 {
     /// <summary>

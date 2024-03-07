@@ -1,11 +1,11 @@
-using Cake.Issues;
-
 namespace Cake.Frosting.Issues.Recipe
 {
+    using Cake.Issues;
+
     /// <summary>
     /// Support for GitHub hosted code.
     /// </summary>
-    internal class GitHubPullRequestSystem : BasePullRequestSystem
+    internal sealed class GitHubPullRequestSystem : BasePullRequestSystem
     {
         /// <inheritdoc />
         public override void ReportIssuesToPullRequest(IIssuesContext context)

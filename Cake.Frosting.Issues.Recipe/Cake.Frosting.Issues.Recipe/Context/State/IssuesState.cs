@@ -1,15 +1,14 @@
-﻿using Cake.Common;
-using Cake.Common.Build;
-using Cake.Common.Diagnostics;
-using Cake.Common.IO;
-using Cake.Core.IO;
-using Cake.Issues;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-
-namespace Cake.Frosting.Issues.Recipe
+﻿namespace Cake.Frosting.Issues.Recipe
 {
+    using Cake.Common;
+    using Cake.Common.Build;
+    using Cake.Common.Diagnostics;
+    using Cake.Common.IO;
+    using Cake.Core.IO;
+    using Cake.Issues;
+    using System;
+    using System.Collections.Generic;
+
     /// <summary>
     /// Mutable state of the build run.
     /// </summary>
@@ -17,9 +16,9 @@ namespace Cake.Frosting.Issues.Recipe
     {
         private readonly IIssuesContext context;
 
-        private readonly List<IIssue> issues = new List<IIssue>();
+        private readonly List<IIssue> issues = [];
 
-        private readonly List<(IIssueProvider, string)> issueProvidersAndRuns = new List<(IIssueProvider, string)>();
+        private readonly List<(IIssueProvider, string)> issueProvidersAndRuns = [];
 
         /// <inheritdoc />
         public DirectoryPath RepositoryRootDirectory { get; }
@@ -237,10 +236,7 @@ namespace Cake.Frosting.Issues.Recipe
                 return defaultSettings;
             }
 
-            if (configuredSettings.FileLinkSettings == null)
-            {
-                configuredSettings.FileLinkSettings = defaultSettings.FileLinkSettings;
-            }
+            configuredSettings.FileLinkSettings ??= defaultSettings.FileLinkSettings;
 
             return configuredSettings;
         }

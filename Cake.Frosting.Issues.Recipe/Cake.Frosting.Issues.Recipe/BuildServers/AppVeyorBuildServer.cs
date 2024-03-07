@@ -1,17 +1,17 @@
-using Cake.Common.Build;
-using Cake.Common.IO;
-using Cake.Core.IO;
-using Cake.Issues;
-using Cake.Issues.PullRequests;
-using Cake.Issues.PullRequests.AppVeyor;
-using System;
-
 namespace Cake.Frosting.Issues.Recipe
 {
+    using Cake.Common.Build;
+    using Cake.Common.IO;
+    using Cake.Core.IO;
+    using Cake.Issues;
+    using Cake.Issues.PullRequests;
+    using Cake.Issues.PullRequests.AppVeyor;
+    using System;
+
     /// <summary>
     /// Support for AppVeyor builds.
     /// </summary>
-    internal class AppVeyorBuildServer : BaseBuildServer
+    internal sealed class AppVeyorBuildServer : BaseBuildServer
     {
         /// <inheritdoc />
         public override Uri DetermineRepositoryRemoteUrl(
@@ -20,14 +20,14 @@ namespace Cake.Frosting.Issues.Recipe
         {
             context.NotNull(nameof(context));
 
-            switch (context.AppVeyor().Environment.Repository.Provider)
+            return context.AppVeyor().Environment.Repository.Provider switch
             {
-                case "bitBucket": return new Uri($"https://bitbucket.org/{context.AppVeyor().Environment.Repository.Name}/src");
-                case "gitHub": return new Uri($"https://github.com/{context.AppVeyor().Environment.Repository.Name}.git");
-                case "gitLab": return new Uri($"https://gitlab.com/{context.AppVeyor().Environment.Repository.Name}.git");
-                case "vso": return new Uri($"https://dev.azure.com/{context.AppVeyor().Environment.Repository.Name}");
-                default: return new Uri(context.AppVeyor().Environment.Repository.Name);
-            }
+                "bitBucket" => new Uri($"https://bitbucket.org/{context.AppVeyor().Environment.Repository.Name}/src"),
+                "gitHub" => new Uri($"https://github.com/{context.AppVeyor().Environment.Repository.Name}.git"),
+                "gitLab" => new Uri($"https://gitlab.com/{context.AppVeyor().Environment.Repository.Name}.git"),
+                "vso" => new Uri($"https://dev.azure.com/{context.AppVeyor().Environment.Repository.Name}"),
+                _ => new Uri(context.AppVeyor().Environment.Repository.Name),
+            };
         }
 
         /// <inheritdoc />

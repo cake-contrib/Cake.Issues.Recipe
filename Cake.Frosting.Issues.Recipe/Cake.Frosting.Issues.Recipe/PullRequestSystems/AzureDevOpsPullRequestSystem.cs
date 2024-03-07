@@ -1,19 +1,19 @@
-using Cake.AzureDevOps;
-using Cake.AzureDevOps.Repos.PullRequest;
-using Cake.Common;
-using Cake.Common.Diagnostics;
-using Cake.Issues;
-using Cake.Issues.PullRequests;
-using Cake.Issues.PullRequests.AzureDevOps;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace Cake.Frosting.Issues.Recipe
 {
+    using Cake.AzureDevOps;
+    using Cake.AzureDevOps.Repos.PullRequest;
+    using Cake.Common;
+    using Cake.Common.Diagnostics;
+    using Cake.Issues;
+    using Cake.Issues.PullRequests;
+    using Cake.Issues.PullRequests.AzureDevOps;
+    using System.Collections.Generic;
+    using System.Linq;
+
     /// <summary>
     /// Support for Azure DevOps / Azure Repository hosted code.
     /// </summary>
-    internal class AzureDevOpsPullRequestSystem : BasePullRequestSystem
+    internal sealed class AzureDevOpsPullRequestSystem : BasePullRequestSystem
     {
         /// <inheritdoc />
         public override void ReportIssuesToPullRequest(IIssuesContext context)
@@ -129,8 +129,10 @@ namespace Cake.Frosting.Issues.Recipe
                     context.State.BuildServer.DeterminePullRequestId(context).Value,
                     context.AzureDevOpsAuthenticationOAuth(context.EnvironmentVariable("SYSTEM_ACCESSTOKEN")));
 
+            var issuesList = issues.ToList();
+
             var pullRequestStatusName = "Issues";
-            var pullRequestDescriptionIfIssues = $"Found {issues.Count()} issues";
+            var pullRequestDescriptionIfIssues = $"Found {issuesList.Count} issues";
             var pullRequestDescriptionIfNoIssues = "No issues found";
 
             if (!string.IsNullOrWhiteSpace(issueIdentifier))
@@ -148,7 +150,7 @@ namespace Cake.Frosting.Issues.Recipe
             }
 
             var state =
-                issues.Any() ? 
+                issuesList.Count != 0 ? 
                     AzureDevOpsPullRequestStatusState.Failed : 
                     AzureDevOpsPullRequestStatusState.Succeeded;
 
@@ -159,7 +161,7 @@ namespace Cake.Frosting.Issues.Recipe
                 {
                     Genre = "Cake.Issues.Recipe",
                     State = state,
-                    Description = issues.Any() ? pullRequestDescriptionIfIssues : pullRequestDescriptionIfNoIssues
+                    Description = issuesList.Count != 0 ? pullRequestDescriptionIfIssues : pullRequestDescriptionIfNoIssues
                 };
 
             context.AzureDevOpsSetPullRequestStatus(

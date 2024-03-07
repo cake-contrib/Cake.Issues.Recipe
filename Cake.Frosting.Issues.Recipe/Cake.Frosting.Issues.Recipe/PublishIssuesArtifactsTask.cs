@@ -1,9 +1,9 @@
-﻿using Cake.Common.Build;
-using Cake.Common.Diagnostics;
-using Cake.Issues;
-
-namespace Cake.Frosting.Issues.Recipe
+﻿namespace Cake.Frosting.Issues.Recipe
 {
+    using Cake.Common.Build;
+    using Cake.Common.Diagnostics;
+    using Cake.Issues;
+
     /// <summary>
     /// Publish issue artifacts to build server.
     /// </summary>
