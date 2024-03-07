@@ -1,8 +1,8 @@
-using Cake.Core.IO;
-using System;
-
 namespace Cake.Frosting.Issues.Recipe
 {
+    using Cake.Core.IO;
+    using System;
+
     /// <summary>
     /// Parameters of the build.
     /// </summary>

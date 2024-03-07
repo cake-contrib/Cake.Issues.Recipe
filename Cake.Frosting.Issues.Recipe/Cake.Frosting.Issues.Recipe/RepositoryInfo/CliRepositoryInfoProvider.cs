@@ -1,17 +1,17 @@
-﻿using Cake.Common;
-using Cake.Core;
-using Cake.Core.IO;
-using Cake.Issues;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Cake.Frosting.Issues.Recipe
+﻿namespace Cake.Frosting.Issues.Recipe
 {
+    using Cake.Common;
+    using Cake.Core;
+    using Cake.Core.IO;
+    using Cake.Issues;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     /// <summary>
     /// Provider to retrieve repository information using Git CLI.
     /// </summary>
-    internal class CliRepositoryInfoProvider : IRepositoryInfoProvider
+    internal sealed class CliRepositoryInfoProvider : IRepositoryInfoProvider
     {
         /// <inheritdoc />
         public DirectoryPath GetRepositoryRootDirectory(ICakeContext context, DirectoryPath buildRootDirectory)
@@ -51,7 +51,7 @@ namespace Cake.Frosting.Issues.Recipe
             DirectoryPath repositoryRootFolder,
             params string[] arguments)
         {
-            if (!arguments.Any())
+            if (arguments.Length == 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(arguments));
             }

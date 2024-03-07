@@ -19,12 +19,19 @@ jobs:
   - task: UseDotNet@2
     inputs:
       version: '5.x'
+    displayName: 'Install .NET 5'
   - task: UseDotNet@2
     inputs:
       version: '6.x'
+    displayName: 'Install .NET 6'
   - task: UseDotNet@2
     inputs:
       version: '7.x'
+    displayName: 'Install .NET 7'
+  - task: UseDotNet@2
+    inputs:
+      version: '8.x'
+    displayName: 'Install .NET 8'
   - powershell: ./build.ps1
     displayName: 'Build'
   - publish: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
@@ -40,6 +47,7 @@ jobs:
   - task: UseDotNet@2
     inputs:
       version: '6.x'
+    displayName: 'Install .NET 6'
   - task: NodeTool@0
     inputs:
       versionSpec: '14.x'
@@ -70,6 +78,7 @@ jobs:
   - task: UseDotNet@2
     inputs:
       version: '7.x'
+    displayName: 'Install .NET 7'
   - task: NodeTool@0
     inputs:
       versionSpec: '14.x'
@@ -90,6 +99,37 @@ jobs:
   - publish: $(Build.SourcesDirectory)/tests/frosting/net7.0/build/BuildArtifacts/output
     artifact: Integration Tests Frosting Windows 2022 (.NET 7)
     displayName: 'Publish generated reports as build artifact'
+# Integration Tests Frosting Windows (.NET 8)
+- job: Test_Frosting_Windows_2022_Net8
+  displayName: Integration Tests Frosting Windows 2022 (.NET 8)
+  dependsOn: Build
+  pool:
+    vmImage: 'windows-2022'
+  steps:
+  - task: UseDotNet@2
+    inputs:
+      version: '8.x'
+    displayName: 'Install .NET 8'
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '14.x'
+    displayName: 'Install NodeJs 14.x'
+  - powershell: choco install markdownlint-cli --no-progress
+    displayName: 'Install required tools'
+  - download: current
+    artifact: NuGet Package
+    displayName: 'Download build artifact'
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: $(Pipeline.Workspace)/NuGet Package
+      targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    displayName: 'Copy build artifact for test run'
+  - powershell: ./build.ps1 --verbosity=diagnostic
+    workingDirectory: ./tests/frosting/net8.0
+    displayName: 'Run integration tests'
+  - publish: $(Build.SourcesDirectory)/tests/frosting/net8.0/build/BuildArtifacts/output
+    artifact: Integration Tests Frosting Windows 2022 (.NET 8)
+    displayName: 'Publish generated reports as build artifact'
 # Integration Tests Script Runner Windows 2019 (.NET Core tool)
 - job: Test_Script_Runner_Windows_2019_DotNetCoreTool
   displayName: Integration Tests Script Runner Windows 2019 (.NET Core tool)
@@ -100,6 +140,7 @@ jobs:
   - task: UseDotNet@2
     inputs:
       version: '6.x'
+    displayName: 'Install .NET 6'
   - task: NodeTool@0
     inputs:
       versionSpec: '14.x'
@@ -130,6 +171,7 @@ jobs:
   - task: UseDotNet@2
     inputs:
       version: '6.x'
+    displayName: 'Install .NET 6'
   - task: NodeTool@0
     inputs:
       versionSpec: '14.x'
@@ -160,6 +202,7 @@ jobs:
   - task: UseDotNet@2
     inputs:
       version: '6.x'
+    displayName: 'Install .NET 6'
   - task: NodeTool@0
     inputs:
       versionSpec: '14.x'
@@ -192,6 +235,7 @@ jobs:
   - task: UseDotNet@2
     inputs:
       version: '7.x'
+    displayName: 'Install .NET 7'
   - task: NodeTool@0
     inputs:
       versionSpec: '14.x'
@@ -214,6 +258,39 @@ jobs:
   - publish: $(Build.SourcesDirectory)/tests/frosting/net7.0/build/BuildArtifacts/output
     artifact: Integration Tests Frosting macOS 12 (.NET 7)
     displayName: 'Publish generated reports as build artifact'
+# Integration Tests Frosting macOS 12 (.NET 8)
+- job: Test_Frosting_macOS_12_Net8
+  displayName: Integration Tests Frosting macOS 12 (.NET 8)
+  dependsOn: Build
+  pool:
+    vmImage: 'macOS-12'
+  steps:
+  - task: UseDotNet@2
+    inputs:
+      version: '8.x'
+    displayName: 'Install .NET 8'
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '14.x'
+    displayName: 'Install NodeJs 14.x'
+  - bash: |
+      npm install -g markdownlint-cli
+    displayName: 'Install required tools'
+  - download: current
+    artifact: NuGet Package
+    displayName: 'Download build artifact'
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: $(Pipeline.Workspace)/NuGet Package
+      targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    displayName: 'Copy build artifact for test run'
+  - bash: |
+      ./build.sh --verbosity=diagnostic
+    workingDirectory: ./tests/frosting/net8.0
+    displayName: 'Run integration tests'
+  - publish: $(Build.SourcesDirectory)/tests/frosting/net8.0/build/BuildArtifacts/output
+    artifact: Integration Tests Frosting macOS 12 (.NET 8)
+    displayName: 'Publish generated reports as build artifact'
 # Integration Tests Script Runner macOS 11 (.NET Core tool)
 - job: Test_Script_Runner_macOS_11_DotNetCoreTool
   displayName: Integration Tests Script Runner macOS 11 (.NET Core tool)
@@ -224,6 +301,7 @@ jobs:
   - task: UseDotNet@2
     inputs:
       version: '6.x'
+    displayName: 'Install .NET 6'
   - task: NodeTool@0
     inputs:
       versionSpec: '14.x'
@@ -256,6 +334,7 @@ jobs:
   - task: UseDotNet@2
     inputs:
       version: '6.x'
+    displayName: 'Install .NET 6'
   - task: NodeTool@0
     inputs:
       versionSpec: '14.x'
@@ -288,6 +367,7 @@ jobs:
   - task: UseDotNet@2
     inputs:
       version: '6.x'
+    displayName: 'Install .NET 6'
   - task: NodeTool@0
     inputs:
       versionSpec: '14.x'
@@ -311,7 +391,7 @@ jobs:
     artifact: Integration Tests Frosting Ubuntu 20.04 (.NET 6)
     displayName: 'Publish generated reports as build artifact'
 # Integration Tests Frosting Ubuntu 22.04 (.NET 7)
-- job: Test_Frosting_ubuntu_2204_Net6
+- job: Test_Frosting_ubuntu_2204_Net7
   displayName: Integration Tests Frosting Ubuntu 22.04 (.NET 7)
   dependsOn: Build
   pool:
@@ -320,6 +400,7 @@ jobs:
   - task: UseDotNet@2
     inputs:
       version: '7.x'
+    displayName: 'Install .NET 7'
   - task: NodeTool@0
     inputs:
       versionSpec: '14.x'
@@ -342,6 +423,39 @@ jobs:
   - publish: $(Build.SourcesDirectory)/tests/frosting/net7.0/build/BuildArtifacts/output
     artifact: Integration Tests Frosting Ubuntu 22.04 (.NET 7)
     displayName: 'Publish generated reports as build artifact'
+# Integration Tests Frosting Ubuntu 22.04 (.NET 8)
+- job: Test_Frosting_ubuntu_2204_Net8
+  displayName: Integration Tests Frosting Ubuntu 22.04 (.NET 8)
+  dependsOn: Build
+  pool:
+    vmImage: 'ubuntu-22.04'
+  steps:
+  - task: UseDotNet@2
+    inputs:
+      version: '8.x'
+    displayName: 'Install .NET 8'
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '14.x'
+    displayName: 'Install NodeJs 14.x'
+  - bash: |
+      npm install -g markdownlint-cli
+    displayName: 'Install required tools'
+  - download: current
+    artifact: NuGet Package
+    displayName: 'Download build artifact'
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: $(Pipeline.Workspace)/NuGet Package
+      targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    displayName: 'Copy build artifact for test run'
+  - bash: |
+      ./build.sh --verbosity=diagnostic
+    workingDirectory: ./tests/frosting/net8.0
+    displayName: 'Run integration tests'
+  - publish: $(Build.SourcesDirectory)/tests/frosting/net8.0/build/BuildArtifacts/output
+    artifact: Integration Tests Frosting Ubuntu 22.04 (.NET 8)
+    displayName: 'Publish generated reports as build artifact'
 # Integration Tests Script Runner Ubuntu 20.04 (.NET Core tool)
 - job: Test_Script_Runner_ubuntu_2004_DotNetCoreTool
   displayName: Integration Tests Script Runner Ubuntu 20.04 (.NET Core tool)
@@ -352,6 +466,7 @@ jobs:
   - task: UseDotNet@2
     inputs:
       version: '6.x'
+    displayName: 'Install .NET 6'
   - task: NodeTool@0
     inputs:
       versionSpec: '14.x'
@@ -384,6 +499,7 @@ jobs:
   - task: UseDotNet@2
     inputs:
       version: '6.x'
+    displayName: 'Install .NET 6'
   - task: NodeTool@0
     inputs:
       versionSpec: '14.x'

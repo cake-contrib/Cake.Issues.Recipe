@@ -1,9 +1,9 @@
-﻿using Cake.Core;
-using Cake.Core.IO;
-using System;
-
-namespace Cake.Frosting.Issues.Recipe
+﻿namespace Cake.Frosting.Issues.Recipe
 {
+    using Cake.Core;
+    using Cake.Core.IO;
+    using System;
+
     /// <summary>
     /// Description of a provider to retrieve repository information.
     /// </summary>

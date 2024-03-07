@@ -1,7 +1,7 @@
-using Cake.Issues;
-
 namespace Cake.Frosting.Issues.Recipe
 {
+    using Cake.Issues;
+
     /// <summary>
     /// Description of a pull request system implementation.
     /// </summary>
