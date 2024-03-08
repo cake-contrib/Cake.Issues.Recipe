@@ -4,7 +4,7 @@
 
 #addin nuget:?package=Cake.Git&version=4.0.0
 #addin nuget:?package=Cake.Issues&version=4.1.0
-#addin nuget:?package=Cake.Issues.MsBuild&version=4.0.0
+#addin nuget:?package=Cake.Issues.MsBuild&version=4.1.0
 #addin nuget:?package=Cake.Issues.InspectCode&version=4.0.0
 #addin nuget:?package=Cake.Issues.Markdownlint&version=4.0.0
 #addin nuget:?package=Cake.Issues.EsLint&version=4.0.0
