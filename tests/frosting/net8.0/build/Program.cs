@@ -2,12 +2,16 @@ using System;
 using System.Reflection;
 using Cake.Common;
 using Cake.Common.Diagnostics;
+using Cake.Common.Tools.DotNet;
+using Cake.Common.Tools.DotNet.Build;
+using Cake.Common.Tools.DotNet.MSBuild;
 using Cake.Common.Tools.InspectCode;
 using Cake.Core;
 using Cake.Core.Diagnostics;
 using Cake.Core.IO;
 using Cake.Frosting;
 using Cake.Frosting.Issues.Recipe;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 public static class Program
 {
@@ -83,6 +87,33 @@ public class Lifetime : FrostingLifetime<BuildContext>
     }
 }
 
+[TaskName("Build")]
+public sealed class BuildTask : FrostingTask<BuildContext>
+{
+    public override void Run(BuildContext context)
+    {
+        var solutionFile = context.State.SolutionFilePath;
+        var msBuildLogFilePath = context.Parameters.LogDirectoryPath.CombineWithFilePath("msbuild.binlog");
+
+        context.DotNetRestore(solutionFile.FullPath);
+
+        var settings =
+            new DotNetMSBuildSettings()
+                .WithTarget("Rebuild")
+                .EnableBinaryLogger(msBuildLogFilePath.FullPath);
+
+        context.DotNetBuild(
+            solutionFile.FullPath,
+                new DotNetBuildSettings
+                {
+                    MSBuildSettings = settings
+                });
+
+        // Pass path to log file to Cake.Frosting.Issues.Recipe.
+        context.Parameters.InputFiles.AddMsBuildBinaryLogFile(msBuildLogFilePath);
+    }
+}
+
 [TaskName("Run-InspectCode")]
 public sealed class RunInspectCodeTask : FrostingTask<BuildContext>
 {
@@ -112,6 +143,7 @@ public sealed class RunInspectCodeTask : FrostingTask<BuildContext>
 }
 
 [TaskName("Lint")]
+[IsDependentOn(typeof(BuildTask))]
 [IsDependentOn(typeof(RunInspectCodeTask))]
 [IsDependeeOf(typeof(ReadIssuesTask))]
 public class LintTask : FrostingTask
