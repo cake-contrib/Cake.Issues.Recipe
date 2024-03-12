@@ -31,7 +31,7 @@ jobs:
   Test_Windows_DotNetCoreTool:
     name: Integration Tests Script Runner Windows (.NET Core tool)
     needs: Build
-    runs-on: windows-2019
+    runs-on: windows-2022
     steps:
       - name: Get the sources
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
