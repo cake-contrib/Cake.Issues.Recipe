@@ -7,7 +7,7 @@ jobs:
     runs-on: windows-2022
     steps:
       - name: Get the sources
-        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
       - name: Fetch all tags and branches
         run: git fetch --prune --unshallow
       - name: Install .NET
@@ -34,7 +34,7 @@ jobs:
     runs-on: windows-2019
     steps:
       - name: Get the sources
-        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
       - name: Install required tools
         run: npm install -g markdownlint-cli
         shell: powershell
