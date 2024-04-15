@@ -1,7 +1,10 @@
 ﻿namespace Cake.Frosting.Issues.Recipe
 {
+    using Cake.Common.Diagnostics;
     using Cake.Core;
     using System;
+    using System.Diagnostics;
+    using System.Reflection;
 
     /// <summary>
     /// Base class for parameters and state of the build run.
@@ -38,6 +41,10 @@
         protected IssuesContext(ICakeContext context)
             : base(context)
         {
+            var assembly = Assembly.GetAssembly(typeof(IssuesTask));
+            var versionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
+            context.Information("Initializing Cake.Frosting.Issues.Recipe (Version {0})...", versionInfo.FileVersion);
+
             this.parameters = new Lazy<TParameters>(() => this.CreateIssuesParameters());
             this.state = new Lazy<TState>(() => this.CreateIssuesState());
         }
