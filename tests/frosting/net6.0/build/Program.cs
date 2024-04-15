@@ -16,7 +16,7 @@ public static class Program
         return new CakeHost()
             .UseContext<BuildContext>()
             .UseLifetime<Lifetime>()
-            .InstallTool(new Uri("nuget:?package=JetBrains.ReSharper.CommandLineTools"))
+            .InstallTool(new Uri("nuget:?package=JetBrains.ReSharper.CommandLineTools&version=2023.3.4"))
             // Register Cake.Frosting.Issues.Recipe tasks.
             .AddAssembly(Assembly.GetAssembly(typeof(IssuesTask)))
             .Run(args);
