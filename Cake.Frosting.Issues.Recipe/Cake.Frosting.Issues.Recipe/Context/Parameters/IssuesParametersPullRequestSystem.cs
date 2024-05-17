@@ -1,6 +1,8 @@
 namespace Cake.Frosting.Issues.Recipe
 {
+    using Cake.Issues;
     using Cake.Issues.PullRequests;
+    using System;
     using System.Collections.Generic;
 
     /// <summary>
@@ -28,5 +30,8 @@ namespace Cake.Frosting.Issues.Recipe
 
         /// <inheritdoc />
         public Dictionary<string, IProviderIssueLimits> ProviderIssueLimits => new();
+
+        /// <inheritdoc />
+        public IList<Func<IEnumerable<IIssue>, IEnumerable<IIssue>>> IssueFilters => [];
     }
 }
