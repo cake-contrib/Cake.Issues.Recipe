@@ -40,6 +40,11 @@ namespace Cake.Frosting.Issues.Recipe
                 settings.ProviderIssueLimits.Add(providerIssueLimit.Key, providerIssueLimit.Value);
             }
 
+            foreach (var issueFilter in context.Parameters.PullRequestSystem.IssueFilters)
+            {
+                settings.IssueFilters.Add(issueFilter);
+            }
+
             return settings;
         }
     }

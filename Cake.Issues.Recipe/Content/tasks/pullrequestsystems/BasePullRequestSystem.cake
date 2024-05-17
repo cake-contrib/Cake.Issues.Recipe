@@ -32,10 +32,17 @@ public abstract class BasePullRequestSystem : IIssuesPullRequestSystem
                 MaxIssuesToPostAcrossRuns = IssuesParameters.PullRequestSystem.MaxIssuesToPostAcrossRuns,
                 MaxIssuesToPostForEachIssueProvider = IssuesParameters.PullRequestSystem.MaxIssuesToPostForEachIssueProvider
             };
+
         foreach (var providerIssueLimit in IssuesParameters.PullRequestSystem.ProviderIssueLimits)
         {
             settings.ProviderIssueLimits.Add(providerIssueLimit.Key, providerIssueLimit.Value);
         }
+
+        foreach (var issueFilter in IssuesParameters.PullRequestSystem.IssueFilters)
+        {
+            settings.IssueFilters.Add(issueFilter);
+        }
+
         return settings;
     }
 }

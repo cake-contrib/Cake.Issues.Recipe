@@ -47,6 +47,11 @@ public class IssuesParametersPullRequestSystem
     /// </summary>
     public Dictionary<string, IProviderIssueLimits> ProviderIssueLimits { get; } = new Dictionary<string, IProviderIssueLimits>();
 
+    /// <summary>
+    /// Gets list of filter functions which should be applied before posting issues to pull requests.
+    /// </summary>
+    public List<Func<IEnumerable<IIssue>, IEnumerable<IIssue>>> IssueFilters { get; } = new List<Func<IEnumerable<IIssue>, IEnumerable<IIssue>>>();
+
     /// Gets or sets a value indicating whether a status on the pull request should be set if there are any issues found.
     /// The status is succeeded if there are no issues and fails as soon as issues from any issue provider or run have been found.
     /// Use <see cref="ShouldSetSeparatePullRequestStatusForEachIssueProviderAndRun"/> to report additional status for issues of every issue provider and run.
