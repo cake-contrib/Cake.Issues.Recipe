@@ -2,7 +2,6 @@
 {
     using Cake.Common.Diagnostics;
     using Cake.Core;
-    using System;
     using System.Diagnostics;
     using System.Reflection;
 

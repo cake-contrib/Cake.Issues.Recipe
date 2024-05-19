@@ -2,7 +2,6 @@
 {
     using Cake.Common.Build;
     using Cake.Common.Diagnostics;
-    using Cake.Issues;
 
     /// <summary>
     /// Creates a summary issue report.

@@ -1,8 +1,6 @@
 namespace Cake.Frosting.Issues.Recipe
 {
     using Cake.Core.IO;
-    using Cake.Issues;
-    using System.Collections.Generic;
 
     /// <summary>
     /// Parameters for passing input files.
