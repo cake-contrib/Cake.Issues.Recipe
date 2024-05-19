@@ -3,10 +3,6 @@
     using Cake.Common;
     using Cake.Core;
     using Cake.Core.IO;
-    using Cake.Issues;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
 
     /// <summary>
     /// Provider to retrieve repository information using Git CLI.

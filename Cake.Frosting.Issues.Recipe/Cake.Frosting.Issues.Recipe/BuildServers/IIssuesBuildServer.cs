@@ -1,7 +1,6 @@
 namespace Cake.Frosting.Issues.Recipe
 {
     using Cake.Core.IO;
-    using System;
 
     /// <summary>
     /// Description of a build server implementation.

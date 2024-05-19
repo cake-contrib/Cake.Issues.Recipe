@@ -2,7 +2,6 @@
 {
     using Cake.Core;
     using Cake.Core.IO;
-    using System;
 
     /// <summary>
     /// Description of a provider to retrieve repository information.

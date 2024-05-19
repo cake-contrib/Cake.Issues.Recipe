@@ -1,9 +1,6 @@
 ﻿namespace Cake.Frosting.Issues.Recipe
 {
     using Cake.Common.IO;
-    using Cake.Issues;
-    using Cake.Issues.Reporting;
-    using Cake.Issues.Reporting.Sarif;
 
     /// <summary>
     /// Creates issue report in SARIF format.

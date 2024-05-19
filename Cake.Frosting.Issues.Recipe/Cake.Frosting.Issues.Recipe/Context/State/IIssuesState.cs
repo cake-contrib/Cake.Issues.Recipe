@@ -1,9 +1,6 @@
 ﻿namespace Cake.Frosting.Issues.Recipe
 {
     using Cake.Core.IO;
-    using Cake.Issues;
-    using System;
-    using System.Collections.Generic;
 
     /// <summary>
     /// Description of the mutable state of the build run.

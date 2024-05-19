@@ -1,7 +1,5 @@
 namespace Cake.Frosting.Issues.Recipe
 {
-    using Cake.Issues.Reporting.Generic;
-
     /// <summary>
     /// Parameters for reporting.
     /// </summary>
