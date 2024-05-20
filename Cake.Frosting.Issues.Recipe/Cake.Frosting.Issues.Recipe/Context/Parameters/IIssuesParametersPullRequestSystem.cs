@@ -1,9 +1,5 @@
 namespace Cake.Frosting.Issues.Recipe
 {
-    using Cake.Issues;
-    using Cake.Issues.PullRequests;
-    using System.Collections.Generic;
-
     /// <summary>
     /// Parameters for pull request integration.
     /// </summary>
@@ -52,6 +48,11 @@ namespace Cake.Frosting.Issues.Recipe
         /// Use <see cref="MaxIssuesToPostForEachIssueProvider"/> to set the same limit to all issue providers.
         /// </summary>
         Dictionary<string, IProviderIssueLimits> ProviderIssueLimits { get; }
+
+        /// <summary>
+        /// Gets list of filter functions which should be applied before posting issues to pull requests.
+        /// </summary>
+        IList<Func<IEnumerable<IIssue>, IEnumerable<IIssue>>> IssueFilters { get; }
 
         /// <summary>
         /// Gets or sets a value indicating whether a status on the pull request should be set if there are any issues found.

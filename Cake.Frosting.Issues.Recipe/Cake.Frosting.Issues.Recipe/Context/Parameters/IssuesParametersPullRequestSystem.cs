@@ -1,8 +1,5 @@
 namespace Cake.Frosting.Issues.Recipe
 {
-    using Cake.Issues.PullRequests;
-    using System.Collections.Generic;
-
     /// <summary>
     /// Parameters for pull request integration.
     /// </summary>
@@ -28,5 +25,8 @@ namespace Cake.Frosting.Issues.Recipe
 
         /// <inheritdoc />
         public Dictionary<string, IProviderIssueLimits> ProviderIssueLimits => new();
+
+        /// <inheritdoc />
+        public IList<Func<IEnumerable<IIssue>, IEnumerable<IIssue>>> IssueFilters => [];
     }
 }

@@ -3,10 +3,6 @@ namespace Cake.Frosting.Issues.Recipe
     using Cake.Common.Build;
     using Cake.Common.IO;
     using Cake.Core.IO;
-    using Cake.Issues;
-    using Cake.Issues.PullRequests;
-    using Cake.Issues.PullRequests.AppVeyor;
-    using System;
 
     /// <summary>
     /// Support for AppVeyor builds.

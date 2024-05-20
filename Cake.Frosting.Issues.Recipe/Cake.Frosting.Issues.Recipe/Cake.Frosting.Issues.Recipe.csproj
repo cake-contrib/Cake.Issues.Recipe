@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\Cake.Frosting.Issues.Recipe.xml</DocumentationFile>
+    <ImplicitUsings>enable</ImplicitUsings>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <AnalysisMode>AllEnabledByDefault</AnalysisMode>
   </PropertyGroup>
@@ -24,7 +25,7 @@ For recipe compatible with Cake Script Runners see Cake.Issues.Recipe.</Descript
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/cake-contrib/Cake.Issues.Recipe.git</RepositoryUrl>
-    <PackageReleaseNotes>https://github.com/cake-contrib/Cake.Issues.Recipe/releases/tag/4.3.1</PackageReleaseNotes>
+    <PackageReleaseNotes>https://github.com/cake-contrib/Cake.Issues.Recipe/releases/tag/4.4.0</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
@@ -33,24 +34,26 @@ For recipe compatible with Cake Script Runners see Cake.Issues.Recipe.</Descript
 
   <ItemGroup>
     <None Include="icon.png" Pack="true" PackagePath="\" />
+    <None Include="Cake.Frosting.Issues.Recipe.targets" Pack="true" PackagePath="build" />
+    <None Include="Cake.Frosting.Issues.Recipe.targets" Pack="true" PackagePath="buildTransitive" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Cake.AzureDevOps" Version="4.0.0" />
     <PackageReference Include="Cake.Frosting" Version="4.0.0" PrivateAssets="All" />
     <PackageReference Include="Cake.Frosting.Git" Version="4.0.0" />
-    <PackageReference Include="Cake.Issues" Version="4.3.1" />
-    <PackageReference Include="Cake.Frosting.Issues.EsLint" Version="4.3.1" />
-    <PackageReference Include="Cake.Frosting.Issues.InspectCode" Version="4.3.1" />
-    <PackageReference Include="Cake.Frosting.Issues.Markdownlint" Version="4.3.1" />
-    <PackageReference Include="Cake.Frosting.Issues.MsBuild" Version="4.3.1" />
-    <PackageReference Include="Cake.Frosting.Issues.PullRequests" Version="4.3.1" />
-    <PackageReference Include="Cake.Frosting.Issues.PullRequests.AppVeyor" Version="4.3.1" />
-    <PackageReference Include="Cake.Frosting.Issues.PullRequests.AzureDevOps" Version="4.3.1" />
-    <PackageReference Include="Cake.Frosting.Issues.PullRequests.GitHubActions" Version="4.3.1" />
-    <PackageReference Include="Cake.Frosting.Issues.Reporting" Version="4.3.1" />
-    <PackageReference Include="Cake.Frosting.Issues.Reporting.Sarif" Version="4.3.1" />    
-    <PackageReference Include="Cake.Frosting.Issues.Reporting.Generic" Version="4.3.1" />
+    <PackageReference Include="Cake.Issues" Version="4.4.0" />
+    <PackageReference Include="Cake.Frosting.Issues.EsLint" Version="4.4.0" />
+    <PackageReference Include="Cake.Frosting.Issues.InspectCode" Version="4.4.0" />
+    <PackageReference Include="Cake.Frosting.Issues.Markdownlint" Version="4.4.0" />
+    <PackageReference Include="Cake.Frosting.Issues.MsBuild" Version="4.4.0" />
+    <PackageReference Include="Cake.Frosting.Issues.PullRequests" Version="4.4.0" />
+    <PackageReference Include="Cake.Frosting.Issues.PullRequests.AppVeyor" Version="4.4.0" />
+    <PackageReference Include="Cake.Frosting.Issues.PullRequests.AzureDevOps" Version="4.4.0" />
+    <PackageReference Include="Cake.Frosting.Issues.PullRequests.GitHubActions" Version="4.4.0" />
+    <PackageReference Include="Cake.Frosting.Issues.Reporting" Version="4.4.0" />
+    <PackageReference Include="Cake.Frosting.Issues.Reporting.Sarif" Version="4.4.0" />    
+    <PackageReference Include="Cake.Frosting.Issues.Reporting.Generic" Version="4.4.0" />
   </ItemGroup>
 
 </Project>

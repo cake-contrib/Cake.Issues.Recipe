@@ -1,8 +1,5 @@
 namespace Cake.Frosting.Issues.Recipe
 {
-    using Cake.Issues;
-    using Cake.Issues.PullRequests;
-
     /// <summary>
     /// Basic implementation for all pull request server.
     /// </summary>
@@ -38,6 +35,11 @@ namespace Cake.Frosting.Issues.Recipe
             foreach (var providerIssueLimit in context.Parameters.PullRequestSystem.ProviderIssueLimits)
             {
                 settings.ProviderIssueLimits.Add(providerIssueLimit.Key, providerIssueLimit.Value);
+            }
+
+            foreach (var issueFilter in context.Parameters.PullRequestSystem.IssueFilters)
+            {
+                settings.IssueFilters.Add(issueFilter);
             }
 
             return settings;

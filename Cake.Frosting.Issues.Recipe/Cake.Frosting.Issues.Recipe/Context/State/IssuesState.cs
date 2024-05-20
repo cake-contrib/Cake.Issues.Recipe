@@ -5,9 +5,6 @@
     using Cake.Common.Diagnostics;
     using Cake.Common.IO;
     using Cake.Core.IO;
-    using Cake.Issues;
-    using System;
-    using System.Collections.Generic;
 
     /// <summary>
     /// Mutable state of the build run.
