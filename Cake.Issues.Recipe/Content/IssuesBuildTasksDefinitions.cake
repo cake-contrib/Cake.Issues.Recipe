@@ -47,4 +47,9 @@ public class IssuesBuildTaskDefinitions
     /// Gets or sets the task for settings the state on the pull request.
     /// </summary>
     public CakeTaskBuilder SetPullRequestIssuesStateTask { get; set; }
+
+    /// <summary>
+    /// Gets or sets the task for reporting issues to the console.
+    /// </summary>
+    public CakeTaskBuilder ReportIssuesToConsoleTask { get; set; }
 }
