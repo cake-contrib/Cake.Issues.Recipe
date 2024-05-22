@@ -16,5 +16,12 @@ namespace Cake.Frosting.Issues.Recipe
 
         /// <inheritdoc />
         public bool ShouldCreateSarifReport { get; set; } = true;
+
+        /// <inheritdoc />
+        public bool ShouldReportIssuesToConsole { get; set; }
+
+        /// <inheritdoc />
+        public ConsoleIssueReportFormatSettings ReportToConsoleSettings { get; set; } = 
+            new ConsoleIssueReportFormatSettings();
     }
 }

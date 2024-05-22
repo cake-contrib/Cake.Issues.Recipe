@@ -23,5 +23,16 @@ namespace Cake.Frosting.Issues.Recipe
         /// Default value is <c>true</c>.
         /// </summary>
         bool ShouldCreateSarifReport { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether issues should be written to the console.
+        /// Default value is <c>false</c>.
+        /// </summary>
+        bool ShouldReportIssuesToConsole { get; set; }
+
+        /// <summary>
+        /// Gets or sets the settings for reporting issues to the console.
+        /// </summary>
+        ConsoleIssueReportFormatSettings ReportToConsoleSettings { get; set; }
     }
 }

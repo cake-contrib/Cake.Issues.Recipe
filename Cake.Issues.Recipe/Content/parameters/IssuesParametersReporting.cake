@@ -24,4 +24,15 @@ public class IssuesParametersReporting
     /// Default value is <c>true</c>.
     /// </summary>
     public bool ShouldCreateSarifReport { get; set; } = true;
+
+    /// <summary>
+    /// Gets or sets a value indicating whether issues should be written to the console.
+    /// Default value is <c>false</c>.
+    /// </summary>
+    public bool ShouldReportIssuesToConsole { get; set; }
+
+    /// <summary>
+    /// Gets or sets the settings for reporting issues to the console.
+    /// </summary>
+    public ConsoleIssueReportFormatSettings ReportToConsoleSettings { get; set; } = new ConsoleIssueReportFormatSettings();
 }
