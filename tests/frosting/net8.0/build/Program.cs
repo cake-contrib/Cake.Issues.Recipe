@@ -7,6 +7,8 @@ using Cake.Core;
 using Cake.Core.Diagnostics;
 using Cake.Core.IO;
 using Cake.Frosting;
+using Cake.Issues.MsBuild;
+using Cake.Issues.PullRequests;
 
 public static class Program
 {
@@ -92,6 +94,13 @@ public sealed class RunInspectCodeTask : FrostingTask<BuildContext>
 
     public override void Run(BuildContext context)
     {
+        context.Parameters.PullRequestSystem.ProviderIssueLimits.Add(
+            context.MsBuildIssuesProviderTypeName(),
+            new ProviderIssueLimits { MaxIssuesToPost = 0 });
+        if (context.Parameters.PullRequestSystem.ProviderIssueLimits.Count == 0)
+        {
+            throw new Exception("No issue limits are defined for any issue provider.");
+        }
         // Run InspectCode.
         var inspectCodeLogFilePath = context.Parameters.LogDirectoryPath.CombineWithFilePath("inspectCode.log");
 
