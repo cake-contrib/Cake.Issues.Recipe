@@ -38,7 +38,8 @@ IssuesBuildTasks.IssuesTask = Task("Issues")
     .IsDependentOn("Report-IssuesToBuildServer")
     .IsDependentOn("Create-SummaryIssuesReport")
     .IsDependentOn("Report-IssuesToPullRequest")
-    .IsDependentOn("Set-PullRequestIssuesState");
+    .IsDependentOn("Set-PullRequestIssuesState")
+    .IsDependentOn("Report-IssuesToConsole");
 
 IssuesBuildTasks.ReadIssuesTask = Task("Read-Issues")
     .Description("Reads issues from the provided log files.")
@@ -247,6 +248,20 @@ IssuesBuildTasks.SetPullRequestIssuesStateTask = Task("Set-PullRequestIssuesStat
     }
 
     data.PullRequestSystem.SetPullRequestIssuesState(Context, data);
+});
+
+IssuesBuildTasks.ReportIssuesToConsoleTask = Task("Report-IssuesToConsole")
+    .Description("Reports issues to the console.")
+    .WithCriteria(() => IssuesParameters.Reporting.ShouldReportIssuesToConsole, "Reporting of issues to the console is disabled")
+    .IsDependentOn("Read-Issues")
+    .Does<IssuesData>((data) =>
+{
+    // Print issues to console.
+    CreateIssueReport(
+        data.Issues,
+        ConsoleIssueReportFormat(IssuesParameters.Reporting.ReportToConsoleSettings),
+        data.ProjectRootDirectory,
+        string.Empty);
 });
 
 #load tasks/tasks.cake
