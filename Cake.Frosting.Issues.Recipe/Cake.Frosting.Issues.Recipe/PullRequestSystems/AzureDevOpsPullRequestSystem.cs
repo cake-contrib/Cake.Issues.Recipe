@@ -41,55 +41,22 @@ namespace Cake.Frosting.Issues.Recipe
                 return;
             }
 
-            // Set status across all issues
-            if (context.Parameters.PullRequestSystem.ShouldSetPullRequestStatus)
+            var status = PullRequestStatusCalculator.GetPullRequestStates(context).ToList();
+            if (status.Count > 0)
             {
-                SetPullRequestStatus(
-                    context,
-                    context.State.Issues,
-                    null);
-            }
+                var pullRequestSettings =
+                    new AzureDevOpsPullRequestSettings(
+                        context.State.BuildServer.DetermineRepositoryRemoteUrl(context, context.State.RepositoryRootDirectory),
+                        context.State.BuildServer.DeterminePullRequestId(context).Value,
+                        context.AzureDevOpsAuthenticationOAuth(context.EnvironmentVariable("SYSTEM_ACCESSTOKEN")));
 
-            // Set status for individual issue providers
-            if (context.Parameters.PullRequestSystem.ShouldSetSeparatePullRequestStatusForEachIssueProviderAndRun)
-            {
-                // Determine issue providers and runs from the list of issues providers from which issues were read
-                // and issue providers and runs of the reported issues.
-                var issueProvidersAndRuns =
-                    context.State.IssueProvidersAndRuns
-                        .Select(x => 
-                            new 
-                            { 
-                                x.Item1.ProviderName, 
-                                Run = x.Item2 
-                            })
-                        .Union(
-                            context.State.Issues
-                                .GroupBy(x => 
-                                    new 
-                                    { 
-                                        x.ProviderName, 
-                                        x.Run 
-                                    })
-                                .Select(x => 
-                                    new 
-                                    { 
-                                        x.Key.ProviderName, 
-                                        x.Key.Run 
-                                    }));
-
-                foreach (var item in issueProvidersAndRuns)
+                foreach (var item in status)
                 {
-                    var issueProvider = item.ProviderName;
-                    if (!string.IsNullOrEmpty(item.Run))
-                    {
-                        issueProvider += $" ({item.Run})";
-                    }
+                    context.Information("Set status {0} to {1}", item.Name, item.State);
 
-                    SetPullRequestStatus(
-                        context,
-                        context.State.Issues.Where(x => x.ProviderName == item.ProviderName && x.Run == item.Run),
-                        issueProvider);
+                    context.AzureDevOpsSetPullRequestStatus(
+                        pullRequestSettings,
+                        item.ToAzureDevOpsPullRequestStatus());
                 }
             }
         }
@@ -105,63 +72,6 @@ namespace Cake.Frosting.Issues.Recipe
                 context.State.RepositoryRemoteUrl,
                 context.State.CommitId,
                 rootPath.FullPath);
-        }
-
-        /// <summary>
-        /// Reports a status to the pull request of the current build.
-        /// </summary>
-        /// <param name="context">The Cake context.</param>
-        /// <param name="issues">Issues for which the status should be reported.</param>
-        /// <param name="issueIdentifier">Identifier for the issues passed in <paramref name="issues"/>.</param>
-        private static void SetPullRequestStatus(
-            IIssuesContext context,
-            IEnumerable<IIssue> issues,
-            string issueIdentifier)
-        {
-            var pullRequestSettings =
-                new AzureDevOpsPullRequestSettings(
-                    context.State.BuildServer.DetermineRepositoryRemoteUrl(context, context.State.RepositoryRootDirectory),
-                    context.State.BuildServer.DeterminePullRequestId(context).Value,
-                    context.AzureDevOpsAuthenticationOAuth(context.EnvironmentVariable("SYSTEM_ACCESSTOKEN")));
-
-            var issuesList = issues.ToList();
-
-            var pullRequestStatusName = "Issues";
-            var pullRequestDescriptionIfIssues = $"Found {issuesList.Count} issues";
-            var pullRequestDescriptionIfNoIssues = "No issues found";
-
-            if (!string.IsNullOrWhiteSpace(issueIdentifier))
-            {
-                pullRequestStatusName += $"-{issueIdentifier}";
-                pullRequestDescriptionIfIssues += $" for {issueIdentifier}";
-                pullRequestDescriptionIfNoIssues += $" for {issueIdentifier}";
-            }
-
-            if (!string.IsNullOrWhiteSpace(context.Parameters.BuildIdentifier))
-            {
-                pullRequestStatusName += $"-{context.Parameters.BuildIdentifier}";
-                pullRequestDescriptionIfIssues += $" in build {context.Parameters.BuildIdentifier}";
-                pullRequestDescriptionIfNoIssues += $" in build {context.Parameters.BuildIdentifier}";
-            }
-
-            var state =
-                issuesList.Count != 0 ? 
-                    AzureDevOpsPullRequestStatusState.Failed : 
-                    AzureDevOpsPullRequestStatusState.Succeeded;
-
-            context.Information("Set status {0} to {1}", pullRequestStatusName, state);
-
-            var pullRequestStatus =
-                new AzureDevOpsPullRequestStatus(pullRequestStatusName)
-                {
-                    Genre = "Cake.Issues.Recipe",
-                    State = state,
-                    Description = issuesList.Count != 0 ? pullRequestDescriptionIfIssues : pullRequestDescriptionIfNoIssues
-                };
-
-            context.AzureDevOpsSetPullRequestStatus(
-                pullRequestSettings,
-                pullRequestStatus);
         }
     }
 }
