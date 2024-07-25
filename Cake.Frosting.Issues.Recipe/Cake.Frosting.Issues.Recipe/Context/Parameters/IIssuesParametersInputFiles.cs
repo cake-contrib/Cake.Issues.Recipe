@@ -43,6 +43,11 @@ namespace Cake.Frosting.Issues.Recipe
         IDictionary<FilePath, IReadIssuesSettings> EsLintJsonLogFilePaths { get; }
 
         /// <summary>
+        /// Gets list of registered paths to SARIF log files.
+        /// </summary>
+        IDictionary<FilePath, IReadIssuesSettings> SarifLogFilePaths { get; }
+
+        /// <summary>
         /// Adds a path to a MSBuild log file created by XmlFileLogger.
         /// </summary>
         /// <param name="logfilePath">Path to the MSBuild log file.</param>
@@ -132,5 +137,18 @@ namespace Cake.Frosting.Issues.Recipe
         /// <param name="logfilePath">Path to the ESLint log file.</param>
         /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
         void AddEsLintJsonLogFile(FilePath logfilePath, IReadIssuesSettings settings);
+
+        /// <summary>
+        /// Adds a path to a log file in SARIF format.
+        /// </summary>
+        /// <param name="logfilePath">Path to the SARIF log file.</param>
+        void AddSarifLogFile(FilePath logfilePath);
+
+        /// <summary>
+        /// Adds a path to a log file in SARIF format.
+        /// </summary>
+        /// <param name="logfilePath">Path to the SARIF log file.</param>
+        /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
+        void AddSarifLogFile(FilePath logfilePath, IReadIssuesSettings settings);
     }
 }

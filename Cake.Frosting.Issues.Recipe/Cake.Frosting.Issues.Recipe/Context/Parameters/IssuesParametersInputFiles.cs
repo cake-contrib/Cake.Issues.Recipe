@@ -29,6 +29,9 @@ namespace Cake.Frosting.Issues.Recipe
         public IDictionary<FilePath, IReadIssuesSettings> EsLintJsonLogFilePaths { get; } = new Dictionary<FilePath, IReadIssuesSettings>();
 
         /// <inheritdoc />
+        public IDictionary<FilePath, IReadIssuesSettings> SarifLogFilePaths { get; } = new Dictionary<FilePath, IReadIssuesSettings>();
+
+        /// <inheritdoc />
         public void AddMsBuildXmlFileLoggerLogFile(FilePath logfilePath)
         {
             logfilePath.NotNull(nameof(logfilePath));
@@ -139,6 +142,22 @@ namespace Cake.Frosting.Issues.Recipe
             logfilePath.NotNull(nameof(logfilePath));
 
             this.EsLintJsonLogFilePaths.Add(logfilePath, settings);
+        }
+
+        /// <inheritdoc />
+        public void AddSarifLogFile(FilePath logfilePath)
+        {
+            logfilePath.NotNull(nameof(logfilePath));
+
+            this.AddSarifLogFile(logfilePath, null);
+        }
+
+        /// <inheritdoc />
+        public void AddSarifLogFile(FilePath logfilePath, IReadIssuesSettings settings)
+        {
+            logfilePath.NotNull(nameof(logfilePath));
+
+            this.SarifLogFilePaths.Add(logfilePath, settings);
         }
     }
 }

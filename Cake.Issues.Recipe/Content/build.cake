@@ -113,6 +113,20 @@ IssuesBuildTasks.ReadIssuesTask = Task("Read-Issues")
             logFile.Value);
     }
 
+    // Read SARIF log files.
+    foreach (var logFile in IssuesParameters.InputFiles.SarifLogFilePaths)
+    {
+        data.AddIssues(
+            SarifIssues(
+                new SarifIssuesSettings(logFile.Key)
+                {
+                    // Since there might be multiple SARIF log files we need to have a predictable
+                    // issue provider name for reporting pull request states.
+                    UseToolNameAsIssueProviderName = false
+                }),
+            logFile.Value);
+    }
+
     Information("{0} issues are found.", data.Issues.Count());
 });
 
