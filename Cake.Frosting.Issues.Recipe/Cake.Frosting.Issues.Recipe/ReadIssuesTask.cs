@@ -81,6 +81,20 @@
                     logFile.Value);
             }
 
+            // Read SARIF log files.
+            foreach (var logFile in context.Parameters.InputFiles.SarifLogFilePaths)
+            {
+                context.State.AddIssues(
+                    context.SarifIssues(
+                        new SarifIssuesSettings(logFile.Key)
+                        {
+                            // Since there might be multiple SARIF log files we need to have a predictable
+                            // issue provider name for reporting pull request states.
+                            UseToolNameAsIssueProviderName = false
+                        }),
+                    logFile.Value);
+            }
+
             context.Information("{0} issues are found.", context.State.Issues.Count());
         }
     }
