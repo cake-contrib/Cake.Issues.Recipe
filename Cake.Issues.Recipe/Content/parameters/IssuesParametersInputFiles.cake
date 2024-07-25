@@ -39,6 +39,11 @@ public class IssuesParametersInputFiles
     public IDictionary<FilePath, IReadIssuesSettings> EsLintJsonLogFilePaths { get; } = new Dictionary<FilePath, IReadIssuesSettings>();
 
     /// <summary>
+    /// Gets list of registered paths to SARIF log files.
+    /// </summary>
+    public IDictionary<FilePath, IReadIssuesSettings> SarifLogFilePaths { get; } = new Dictionary<FilePath, IReadIssuesSettings>();
+
+    /// <summary>
     /// Adds a path to a MSBuild log file created by XmlFileLogger.
     /// </summary>
     /// <param name="logfilePath">Path to the MSBuild log file.</param>
@@ -183,5 +188,25 @@ public class IssuesParametersInputFiles
     {
         logfilePath.NotNull(nameof(logfilePath));
         this.EsLintJsonLogFilePaths.Add(logfilePath, settings);
+    }
+
+    /// <summary>
+    /// Adds a path to a log file in SARIF format.
+    /// </summary>
+    /// <param name="logfilePath">Path to the SARIF log file.</param>
+    public void AddSarifLogFile(FilePath logfilePath)
+    {
+        logfilePath.NotNull(nameof(logfilePath));
+        this.AddSarifLogFile(logfilePath, null);
+    }
+    /// <summary>
+    /// Adds a path to a log file in SARIF format.
+    /// </summary>
+    /// <param name="logfilePath">Path to the SARIF log file.</param>
+    /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
+    public void AddSarifLogFile(FilePath logfilePath, IReadIssuesSettings settings)
+    {
+        logfilePath.NotNull(nameof(logfilePath));
+        this.SarifLogFilePaths.Add(logfilePath, settings);
     }
 }
