@@ -55,6 +55,17 @@ IssuesBuildTasks.ReadIssuesTask = Task("Read-Issues")
             logFile.Value);
     }
 
+    // Read MSBuild log content created by XmlFileLogger.
+    foreach (var logFileContent in IssuesParameters.InputFiles.MsBuildXmlFileLoggerLogFileContent)
+    {
+        data.AddIssues(
+            MsBuildIssues(
+                new MsBuildIssuesSettings(
+                    logFileContent.Key, 
+                    MsBuildXmlFileLoggerFormat)),
+            logFileContent.Value);
+    }
+
     // Read MSBuild binary log files.
     foreach (var logFile in IssuesParameters.InputFiles.MsBuildBinaryLogFilePaths)
     {
@@ -65,12 +76,32 @@ IssuesBuildTasks.ReadIssuesTask = Task("Read-Issues")
             logFile.Value);
     }
 
+    // Read MSBuild binary log content.
+    foreach (var logFileContent in IssuesParameters.InputFiles.MsBuildBinaryLogFileContent)
+    {
+        data.AddIssues(
+            MsBuildIssues(
+                new MsBuildIssuesSettings(
+                    logFileContent.Key,
+                    MsBuildBinaryLogFileFormat)),
+            logFileContent.Value);
+    }
+
     // Read InspectCode log files.
     foreach (var logFile in IssuesParameters.InputFiles.InspectCodeLogFilePaths)
     {
         data.AddIssues(
             InspectCodeIssuesFromFilePath(logFile.Key),
             logFile.Value);
+    }
+
+    // Read InspectCode log content.
+    foreach (var logFileContent in IssuesParameters.InputFiles.InspectCodeLogFileContent)
+    {
+        data.AddIssues(
+            InspectCodeIssues(
+                new InspectCodeIssuesSettings(logFileContent.Key)),
+            logFileContent.Value);
     }
 
     // Read markdownlint-cli log files.
@@ -83,6 +114,17 @@ IssuesBuildTasks.ReadIssuesTask = Task("Read-Issues")
             logFile.Value);
     }
 
+    // Read markdownlint-cli log content.
+    foreach (var logFileContent in IssuesParameters.InputFiles.MarkdownlintCliLogFileContent)
+    {
+        data.AddIssues(
+            MarkdownlintIssues(
+                new MarkdownlintIssuesSettings(
+                    logFileContent.Key,
+                    MarkdownlintCliLogFileFormat)),
+            logFileContent.Value);
+    }
+
     // Read markdownlint-cli log files created with --json.
     foreach (var logFile in IssuesParameters.InputFiles.MarkdownlintCliJsonLogFilePaths)
     {
@@ -91,6 +133,17 @@ IssuesBuildTasks.ReadIssuesTask = Task("Read-Issues")
                 logFile.Key,
                 MarkdownlintCliJsonLogFileFormat),
             logFile.Value);
+    }
+
+    // Read markdownlint-cli log content created with --json.
+    foreach (var logFileContent in IssuesParameters.InputFiles.MarkdownlintCliJsonLogFileContent)
+    {
+        data.AddIssues(
+            MarkdownlintIssues(
+                new MarkdownlintIssuesSettings(
+                    logFileContent.Key,
+                    MarkdownlintCliJsonLogFileFormat)),
+            logFileContent.Value);
     }
 
     // Read markdownlint log files in version 1.
@@ -103,6 +156,17 @@ IssuesBuildTasks.ReadIssuesTask = Task("Read-Issues")
             logFile.Value);
     }
 
+    // Read markdownlint log content in version 1.
+    foreach (var logFileContent in IssuesParameters.InputFiles.MarkdownlintV1LogFileContent)
+    {
+        data.AddIssues(
+            MarkdownlintIssues(
+                new MarkdownlintIssuesSettings(
+                    logFileContent.Key,
+                    MarkdownlintV1LogFileFormat)),
+            logFileContent.Value);
+    }
+
     // Read ESLint log files in JSON format.
     foreach (var logFile in IssuesParameters.InputFiles.EsLintJsonLogFilePaths)
     {
@@ -111,6 +175,17 @@ IssuesBuildTasks.ReadIssuesTask = Task("Read-Issues")
                 logFile.Key,
                 EsLintJsonFormat),
             logFile.Value);
+    }
+
+    // Read ESLint log content in JSON format.
+    foreach (var logFileContent in IssuesParameters.InputFiles.EsLintJsonLogFileContent)
+    {
+        data.AddIssues(
+            EsLintIssues(
+                new EsLintIssuesSettings(
+                    logFileContent.Key,
+                    EsLintJsonFormat)),
+            logFileContent.Value);
     }
 
     // Read SARIF log files.
@@ -125,6 +200,20 @@ IssuesBuildTasks.ReadIssuesTask = Task("Read-Issues")
                     UseToolNameAsIssueProviderName = false
                 }),
             logFile.Value);
+    }
+
+    // Read SARIF content.
+    foreach (var logFileContent in IssuesParameters.InputFiles.SarifLogFileContent)
+    {
+        data.AddIssues(
+            SarifIssues(
+                new SarifIssuesSettings(logFileContent.Key)
+                {
+                    // Since there might be multiple SARIF log files we need to have a predictable
+                    // issue provider name for reporting pull request states.
+                    UseToolNameAsIssueProviderName = false
+                }),
+            logFileContent.Value);
     }
 
     Information("{0} issues are found.", data.Issues.Count());
