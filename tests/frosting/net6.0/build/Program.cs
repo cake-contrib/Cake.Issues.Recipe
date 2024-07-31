@@ -106,7 +106,7 @@ public sealed class RunInspectCodeTask : FrostingTask<BuildContext>
             settings);
 
         // Pass path to InspectCode log file to Cake.Frosting.Issues.Recipe.
-        context.Parameters.InputFiles.AddInspectCodeLogFile(inspectCodeLogFilePath);
+        context.Parameters.InputFiles.AddInspectCodeLogFilePath(inspectCodeLogFilePath);
     }
 }
 

@@ -78,7 +78,7 @@ Task("Build")
 #endif
 
     // Pass path to MsBuild log file to Cake.Issues.Recipe
-    IssuesParameters.InputFiles.AddMsBuildBinaryLogFile(data.MsBuildLogFilePath);
+    IssuesParameters.InputFiles.AddMsBuildBinaryLogFilePath(data.MsBuildLogFilePath);
 });
 
 Task("Run-InspectCode")
@@ -95,7 +95,7 @@ Task("Run-InspectCode")
         settings);
 
     // Pass path to InspectCode log file to Cake.Issues.Recipe
-    IssuesParameters.InputFiles.AddInspectCodeLogFile(data.InspectCodeLogFilePath);
+    IssuesParameters.InputFiles.AddInspectCodeLogFilePath(data.InspectCodeLogFilePath);
 });
 
 Task("Lint-Documentation")
@@ -109,7 +109,7 @@ Task("Lint-Documentation")
     RunMarkdownlintNodeJs(settings);
 
     // Pass path to markdownlint-cli log file to Cake.Issues.Recipe
-    IssuesParameters.InputFiles.AddMarkdownlintCliLogFile(data.MarkdownlintCliLogFilePath);
+    IssuesParameters.InputFiles.AddMarkdownlintCliLogFilePath(data.MarkdownlintCliLogFilePath);
 });
 
 Task("Lint")
