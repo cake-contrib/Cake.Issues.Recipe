@@ -1,18 +1,21 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "github>cake-contrib/renovate-presets:cake-issues",
-    "github>cake-contrib/renovate-presets:frosting-addin"
-  ],
-  "packageRules": [
-    {
-        "description": "Group Cake.Issues addins",
-        "matchManagers": ["cake", "nuget"],
-        "matchPackagePatterns": [
-            "Cake.Issues",
-            "Cake.Frosting.Issues"
-        ],
-        "groupName": "Cake.Issues"
-    }
-  ]
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": [
+        "github>cake-contrib/renovate-presets:cake-issues",
+        "github>cake-contrib/renovate-presets:frosting-addin"
+    ],
+    "packageRules": [
+        {
+            "description": "Group Cake.Issues addins",
+            "matchManagers": [
+                "cake",
+                "nuget"
+            ],
+            "groupName": "Cake.Issues",
+            "matchPackageNames": [
+                "/Cake.Issues/",
+                "/Cake.Frosting.Issues/"
+            ]
+        }
+    ]
 }
