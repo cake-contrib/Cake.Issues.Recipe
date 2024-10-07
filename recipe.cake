@@ -1,4 +1,4 @@
-#load nuget:?package=Cake.Recipe&version=3.1.1
+#load nuget:https://pkgs.dev.azure.com/cake-contrib/Home/_packaging/addins/nuget/v3/index.json?package=Cake.Recipe&version=4.0.0-alpha0126
 
 //*************************************************************************************************
 // Settings
@@ -16,15 +16,9 @@ BuildParameters.SetParameters(
     appVeyorAccountName: "cakecontrib",
     solutionFilePath: "./Cake.Frosting.Issues.Recipe/Cake.Frosting.Issues.Recipe.sln",
     shouldRunDotNetCorePack: true,
-    shouldPostToGitter: false, // Disabled because it's currently failing
     shouldGenerateDocumentation: false);
 
 BuildParameters.PrintParameters(Context);
-
-ToolSettings.SetToolPreprocessorDirectives(
-    gitReleaseManagerGlobalTool: "#tool dotnet:?package=GitReleaseManager.Tool&version=0.17.0",
-    gitVersionGlobalTool: "#tool dotnet:?package=GitVersion.Tool&version=5.12.0"
-);
 
 ToolSettings.SetToolSettings(context: Context);
 
