@@ -15,6 +15,7 @@ BuildParameters.SetParameters(
     repositoryName: "Cake.Issues.Recipe",
     appVeyorAccountName: "cakecontrib",
     solutionFilePath: "./Cake.Frosting.Issues.Recipe/Cake.Frosting.Issues.Recipe.sln",
+    shouldRunInspectCode: false, // Currently failing on AppVeyor since .NET 9 update
     shouldRunDotNetCorePack: true,
     shouldGenerateDocumentation: false);
 
@@ -33,9 +34,8 @@ Task("Generate-Version-File")
             "./Cake.Issues.Recipe/cake-version.yml",
             @"TargetCakeVersion: 4.0.0
 TargetFrameworks:
-- net6.0
-- net7.0
-- net8.0"
+- net8.0
+- net9.0"
         );
 
         // Write metadata to class for use when running a build
