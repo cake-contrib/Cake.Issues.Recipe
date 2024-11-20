@@ -15,6 +15,7 @@ BuildParameters.SetParameters(
     repositoryName: "Cake.Issues.Recipe",
     appVeyorAccountName: "cakecontrib",
     solutionFilePath: "./Cake.Frosting.Issues.Recipe/Cake.Frosting.Issues.Recipe.sln",
+    shouldRunInspectCode: false, // Currently failing on AppVeyor since .NET 9 update
     shouldRunDotNetCorePack: true,
     shouldGenerateDocumentation: false);
 
