@@ -11,8 +11,8 @@
     /// <typeparam name="TParameters">Type of the parameters description.</typeparam>
     /// <typeparam name="TState">Type of the build state description.</typeparam>
     public abstract class IssuesContext<TParameters, TState> : FrostingContext, IIssuesContext
-        where TParameters: IIssuesParameters
-        where TState: IIssuesState
+        where TParameters : IIssuesParameters
+        where TState : IIssuesState
     {
         private readonly Lazy<TParameters> parameters;
         private readonly Lazy<TState> state;

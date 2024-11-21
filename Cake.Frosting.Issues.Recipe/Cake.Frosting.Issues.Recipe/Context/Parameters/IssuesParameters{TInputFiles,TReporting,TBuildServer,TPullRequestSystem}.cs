@@ -10,10 +10,10 @@ namespace Cake.Frosting.Issues.Recipe
     /// <typeparam name="TBuildServer">Type of parameters for build server integration.</typeparam>
     /// <typeparam name="TPullRequestSystem">Type of parameters for pull request system integration</typeparam>
     public abstract class IssuesParameters<TInputFiles, TReporting, TBuildServer, TPullRequestSystem> : IIssuesParameters
-        where TInputFiles: IIssuesParametersInputFiles
-        where TReporting: IIssuesParametersReporting
-        where TBuildServer: IIssuesParametersBuildServer
-        where TPullRequestSystem: IIssuesParametersPullRequestSystem
+        where TInputFiles : IIssuesParametersInputFiles
+        where TReporting : IIssuesParametersReporting
+        where TBuildServer : IIssuesParametersBuildServer
+        where TPullRequestSystem : IIssuesParametersPullRequestSystem
     {
         private readonly Lazy<TInputFiles> inputFiles;
         private readonly Lazy<TReporting> reporting;

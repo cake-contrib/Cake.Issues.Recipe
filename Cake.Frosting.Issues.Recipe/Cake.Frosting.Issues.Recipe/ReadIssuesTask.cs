@@ -20,7 +20,7 @@
                 context.State.AddIssues(
                     context.MsBuildIssuesFromFilePath(
                         logFile.Key,
-                        context.MsBuildXmlFileLoggerFormat()), 
+                        context.MsBuildXmlFileLoggerFormat()),
                     logFile.Value);
             }
 
@@ -30,7 +30,7 @@
                 context.State.AddIssues(
                     context.MsBuildIssues(
                         new MsBuildIssuesSettings(
-                            logFileContent.Key, 
+                            logFileContent.Key,
                             context.MsBuildXmlFileLoggerFormat())),
                     logFileContent.Value);
             }

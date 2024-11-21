@@ -21,7 +21,7 @@ namespace Cake.Frosting.Issues.Recipe
         public bool ShouldReportIssuesToConsole { get; set; }
 
         /// <inheritdoc />
-        public ConsoleIssueReportFormatSettings ReportToConsoleSettings { get; set; } = 
+        public ConsoleIssueReportFormatSettings ReportToConsoleSettings { get; set; } =
             new ConsoleIssueReportFormatSettings();
     }
 }

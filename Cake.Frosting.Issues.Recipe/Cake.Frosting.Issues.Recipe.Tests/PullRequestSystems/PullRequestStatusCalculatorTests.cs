@@ -337,7 +337,7 @@ public sealed class PullRequestStatusCalculatorTests
                 // Then
                 result.Count().ShouldBe(2);
 
-                result.ShouldContain(x => 
+                result.ShouldContain(x =>
                     x.Name == "Issues-Fake Issue Provider (Run 1)" &&
                     x.Genre == "Cake.Issues.Recipe" &&
                     x.State == PullRequestStatusState.Failed &&
