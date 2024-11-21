@@ -95,7 +95,7 @@ public class IssuesData
     /// <param name="repositoryInfoProviderType">Defines how information about the Git repository should be determined.</param>
     public IssuesData(ICakeContext context, RepositoryInfoProviderType repositoryInfoProviderType)
     {
-        context.NotNull(nameof(context));
+        context.NotNull();
 
         this.context = context;
 
@@ -134,7 +134,7 @@ public class IssuesData
     /// <param name="issue">Issue which should be added.</param>
     public void AddIssue(IIssue issue)
     {
-        issue.NotNull(nameof(issue));
+        issue.NotNull();
 
         this.issues.Add(issue);
     }
@@ -146,7 +146,7 @@ public class IssuesData
     /// <param name="issues">Issues which should be added.</param>
     public void AddIssues(IEnumerable<IIssue> issues)
     {
-        issues.NotNull(nameof(issues));
+        issues.NotNull();
 
         this.issues.AddRange(issues);
     }
@@ -159,7 +159,7 @@ public class IssuesData
     /// <returns>List of issues read from issue provider.</returns>
     public IEnumerable<IIssue> AddIssues(IIssueProvider issueProvider, IReadIssuesSettings settings)
     {
-        issueProvider.NotNull(nameof(issueProvider));
+        issueProvider.NotNull();
 
         this.issueProvidersAndRuns.Add((issueProvider, settings?.Run));
 
@@ -192,7 +192,7 @@ public class IssuesData
         ICakeContext context,
         RepositoryInfoProviderType repositoryInfoProviderType)
     {
-        context.NotNull(nameof(context));
+        context.NotNull();
 
         switch (repositoryInfoProviderType)
         {
@@ -214,7 +214,7 @@ public class IssuesData
     /// <returns>The build server on which the build is running or <c>null</c> if unknown build server.</returns>
     private static IIssuesBuildServer DetermineBuildServer(ICakeContext context)
     {
-        context.NotNull(nameof(context));
+        context.NotNull();
 
         // Could be simplified once https://github.com/cake-build/cake/issues/1684 / https://github.com/cake-build/cake/issues/1580 are fixed.
         if (!string.IsNullOrWhiteSpace(context.EnvironmentVariable("TF_BUILD")) &&
@@ -251,8 +251,8 @@ public class IssuesData
     /// <returns>The pull request system or <c>null</c> if unknown pull request system.</returns>
     private static IIssuesPullRequestSystem DeterminePullRequestSystem(ICakeContext context, Uri repositoryUrl)
     {
-        context.NotNull(nameof(context));
-        repositoryUrl.NotNull(nameof(repositoryUrl));
+        context.NotNull();
+        repositoryUrl.NotNull();
 
         if (repositoryUrl.Host == "dev.azure.com" || repositoryUrl.Host.EndsWith("visualstudio.com", StringComparison.InvariantCulture))
         {

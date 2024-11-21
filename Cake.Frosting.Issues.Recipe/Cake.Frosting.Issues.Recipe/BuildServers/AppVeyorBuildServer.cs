@@ -14,7 +14,7 @@ namespace Cake.Frosting.Issues.Recipe
             IIssuesContext context,
             DirectoryPath repositoryRootDirectory)
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             return context.AppVeyor().Environment.Repository.Provider switch
             {
@@ -31,7 +31,7 @@ namespace Cake.Frosting.Issues.Recipe
             IIssuesContext context,
             DirectoryPath repositoryRootDirectory)
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             return context.AppVeyor().Environment.Repository.Commit.Id;
         }
@@ -39,7 +39,7 @@ namespace Cake.Frosting.Issues.Recipe
         /// <inheritdoc />
         public override bool DetermineIfPullRequest(IIssuesContext context)
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             return context.AppVeyor().Environment.PullRequest.IsPullRequest;
         }
@@ -47,7 +47,7 @@ namespace Cake.Frosting.Issues.Recipe
         /// <inheritdoc />
         public override int? DeterminePullRequestId(IIssuesContext context)
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             return context.AppVeyor().Environment.PullRequest.Number;
         }
@@ -56,7 +56,7 @@ namespace Cake.Frosting.Issues.Recipe
         public override void ReportIssuesToBuildServer(
             IIssuesContext context)
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             context.ReportIssuesToPullRequest(
                 context.State.Issues,
@@ -69,7 +69,7 @@ namespace Cake.Frosting.Issues.Recipe
             IIssuesContext context,
             [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "")
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             // Summary issues report is not supported for AppVeyor.
         }
@@ -77,7 +77,7 @@ namespace Cake.Frosting.Issues.Recipe
         /// <inheritdoc />
         public override void PublishIssuesArtifacts(IIssuesContext context)
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             if (context.Parameters.BuildServer.ShouldPublishFullIssuesReport &&
                 context.State.FullIssuesReport != null &&

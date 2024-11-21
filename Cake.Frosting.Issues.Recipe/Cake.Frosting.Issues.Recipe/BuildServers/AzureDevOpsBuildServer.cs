@@ -16,7 +16,7 @@ namespace Cake.Frosting.Issues.Recipe
             IIssuesContext context,
             DirectoryPath repositoryRootDirectory)
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             return new Uri(context.EnvironmentVariable("BUILD_REPOSITORY_URI"));
         }
@@ -26,7 +26,7 @@ namespace Cake.Frosting.Issues.Recipe
             IIssuesContext context,
             DirectoryPath repositoryRootDirectory)
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             return context.AzurePipelines().Environment.Repository.SourceVersion;
         }
@@ -34,7 +34,7 @@ namespace Cake.Frosting.Issues.Recipe
         /// <inheritdoc />
         public override bool DetermineIfPullRequest(IIssuesContext context)
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             // Could be simplified once https://github.com/cake-build/cake/issues/2149 is fixed
             return !string.IsNullOrWhiteSpace(context.EnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID"));
@@ -43,7 +43,7 @@ namespace Cake.Frosting.Issues.Recipe
         /// <inheritdoc />
         public override int? DeterminePullRequestId(IIssuesContext context)
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             return Int32.TryParse(context.EnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID"), out var pullRequestId)
                 ? pullRequestId
@@ -54,7 +54,7 @@ namespace Cake.Frosting.Issues.Recipe
         public override void ReportIssuesToBuildServer(
             IIssuesContext context)
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             foreach (var issue in context.State.Issues)
             {
@@ -73,7 +73,7 @@ namespace Cake.Frosting.Issues.Recipe
             IIssuesContext context,
             [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "")
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             var summaryFileName = "summary";
             if (!string.IsNullOrWhiteSpace(context.Parameters.BuildIdentifier))
@@ -108,7 +108,7 @@ namespace Cake.Frosting.Issues.Recipe
         /// <inheritdoc />
         public override void PublishIssuesArtifacts(IIssuesContext context)
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             if (context.Parameters.BuildServer.ShouldPublishFullIssuesReport &&
                 context.State.FullIssuesReport != null &&

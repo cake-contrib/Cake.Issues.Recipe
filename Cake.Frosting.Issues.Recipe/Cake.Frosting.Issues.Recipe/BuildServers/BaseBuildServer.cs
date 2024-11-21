@@ -12,8 +12,8 @@ namespace Cake.Frosting.Issues.Recipe
             IIssuesContext context,
             DirectoryPath repositoryRootDirectory)
         {
-            context.NotNull(nameof(context));
-            repositoryRootDirectory.NotNull(nameof(repositoryRootDirectory));
+            context.NotNull();
+            repositoryRootDirectory.NotNull();
 
             return context.State.RepositoryInfo.GetRepositoryRemoteUrl(context, repositoryRootDirectory);
         }
@@ -23,8 +23,8 @@ namespace Cake.Frosting.Issues.Recipe
             IIssuesContext context,
             DirectoryPath repositoryRootDirectory)
         {
-            context.NotNull(nameof(context));
-            repositoryRootDirectory.NotNull(nameof(repositoryRootDirectory));
+            context.NotNull();
+            repositoryRootDirectory.NotNull();
 
             return context.State.RepositoryInfo.GetCommitId(context, repositoryRootDirectory);
         }
@@ -32,7 +32,7 @@ namespace Cake.Frosting.Issues.Recipe
         /// <inheritdoc />
         public virtual bool DetermineIfPullRequest(IIssuesContext context)
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             return false;
         }
@@ -40,7 +40,7 @@ namespace Cake.Frosting.Issues.Recipe
         /// <inheritdoc />
         public virtual int? DeterminePullRequestId(IIssuesContext context)
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             return null;
         }

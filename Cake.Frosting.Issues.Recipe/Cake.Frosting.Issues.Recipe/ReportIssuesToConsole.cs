@@ -10,7 +10,7 @@
         /// <inheritdoc/>
         public override bool ShouldRun(IIssuesContext context)
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             return context.Parameters.Reporting.ShouldReportIssuesToConsole;
         }
@@ -18,7 +18,7 @@
         /// <inheritdoc/>
         public override void Run(IIssuesContext context)
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             // Print issues to console.
             context.CreateIssueReport(

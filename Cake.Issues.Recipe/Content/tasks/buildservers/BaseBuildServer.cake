@@ -8,8 +8,8 @@ public abstract class BaseBuildServer : IIssuesBuildServer
         ICakeContext context,
         DirectoryPath repositoryRootDirectory)
     {
-        context.NotNull(nameof(context));
-        repositoryRootDirectory.NotNull(nameof(repositoryRootDirectory));
+        context.NotNull();
+        repositoryRootDirectory.NotNull();
 
         var currentBranch = context.GitBranchCurrent(repositoryRootDirectory);
         return new Uri(currentBranch.Remotes.Single(x => x.Name == "origin").Url);
@@ -20,8 +20,8 @@ public abstract class BaseBuildServer : IIssuesBuildServer
         ICakeContext context,
         DirectoryPath repositoryRootDirectory)
     {
-        context.NotNull(nameof(context));
-        repositoryRootDirectory.NotNull(nameof(repositoryRootDirectory));
+        context.NotNull();
+        repositoryRootDirectory.NotNull();
 
         return context.GitLogTip(repositoryRootDirectory).Sha;
     }
@@ -29,7 +29,7 @@ public abstract class BaseBuildServer : IIssuesBuildServer
     /// <inheritdoc />
     public virtual bool DetermineIfPullRequest(ICakeContext context)
     {
-        context.NotNull(nameof(context));
+        context.NotNull();
 
         return false;
     }
@@ -37,7 +37,7 @@ public abstract class BaseBuildServer : IIssuesBuildServer
     /// <inheritdoc />
     public virtual int? DeterminePullRequestId(ICakeContext context)
     {
-        context.NotNull(nameof(context));
+        context.NotNull();
 
         return null;
    }

@@ -13,7 +13,7 @@ namespace Cake.Frosting.Issues.Recipe
             IIssuesContext context,
             DirectoryPath repositoryRootDirectory)
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             return new Uri($"https://github.com/{context.GitHubActions().Environment.Workflow.Repository}.git");
         }
@@ -23,7 +23,7 @@ namespace Cake.Frosting.Issues.Recipe
             IIssuesContext context,
             DirectoryPath repositoryRootDirectory)
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             return context.GitHubActions().Environment.Workflow.Sha;
         }
@@ -31,7 +31,7 @@ namespace Cake.Frosting.Issues.Recipe
         /// <inheritdoc />
         public override bool DetermineIfPullRequest(IIssuesContext context)
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             return context.GitHubActions().Environment.PullRequest.IsPullRequest;
         }
@@ -39,7 +39,7 @@ namespace Cake.Frosting.Issues.Recipe
         /// <inheritdoc />
         public override int? DeterminePullRequestId(IIssuesContext context)
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             // Not supported by GitHub Actions
             return null;
@@ -49,7 +49,7 @@ namespace Cake.Frosting.Issues.Recipe
         public override void ReportIssuesToBuildServer(
             IIssuesContext context)
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             context.ReportIssuesToPullRequest(
                 context.State.Issues,
@@ -62,7 +62,7 @@ namespace Cake.Frosting.Issues.Recipe
             IIssuesContext context,
             [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "")
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             // Summary issues report is not supported for GitHub Actions.
         }
@@ -70,7 +70,7 @@ namespace Cake.Frosting.Issues.Recipe
         /// <inheritdoc />
         public override void PublishIssuesArtifacts(IIssuesContext context)
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             // Publishing artifacts is currently not supported for GitHub Actions.
         }

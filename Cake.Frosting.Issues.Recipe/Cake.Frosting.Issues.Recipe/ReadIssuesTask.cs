@@ -12,7 +12,7 @@
         /// <inheritdoc/>
         public override void Run(IIssuesContext context)
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             // Read MSBuild log files created by XmlFileLogger.
             foreach (var logFile in context.Parameters.InputFiles.MsBuildXmlFileLoggerLogFilePaths)

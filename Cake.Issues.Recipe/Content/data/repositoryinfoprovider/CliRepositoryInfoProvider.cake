@@ -6,8 +6,8 @@ public class CliRepositoryInfoProvider : IRepositoryInfoProvider
     /// <inheritdoc />
     public DirectoryPath GetRepositoryRootDirectory(ICakeContext context, DirectoryPath buildRootDirectory)
     {
-        context.NotNull(nameof(context));
-        buildRootDirectory.NotNull(nameof(buildRootDirectory));
+        context.NotNull();
+        buildRootDirectory.NotNull();
 
         var result =
             GitCommand(context, buildRootDirectory, "rev-parse", "--show-toplevel");
@@ -17,8 +17,8 @@ public class CliRepositoryInfoProvider : IRepositoryInfoProvider
     /// <inheritdoc />
     public Uri GetRepositoryRemoteUrl(ICakeContext context, DirectoryPath repositoryRootDirectory)
     {
-        context.NotNull(nameof(context));
-        repositoryRootDirectory.NotNull(nameof(repositoryRootDirectory));
+        context.NotNull();
+        repositoryRootDirectory.NotNull();
 
         var result =
             GitCommand(context, repositoryRootDirectory, "config", "--get", "remote.origin.url");
@@ -28,8 +28,8 @@ public class CliRepositoryInfoProvider : IRepositoryInfoProvider
     /// <inheritdoc />
     public string GetCommitId(ICakeContext context, DirectoryPath repositoryRootDirectory)
     {
-        context.NotNull(nameof(context));
-        repositoryRootDirectory.NotNull(nameof(repositoryRootDirectory));
+        context.NotNull();
+        repositoryRootDirectory.NotNull();
 
         return
             GitCommand(context, repositoryRootDirectory, "rev-parse", "HEAD")

@@ -12,7 +12,7 @@
         /// <inheritdoc/>
         public override bool ShouldRun(IIssuesContext context)
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             return context.Parameters.Reporting.ShouldCreateFullIssuesReport;
         }
@@ -20,7 +20,7 @@
         /// <inheritdoc/>
         public override void Run(IIssuesContext context)
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             var reportFileName = "report";
             if (!string.IsNullOrWhiteSpace(context.Parameters.BuildIdentifier))

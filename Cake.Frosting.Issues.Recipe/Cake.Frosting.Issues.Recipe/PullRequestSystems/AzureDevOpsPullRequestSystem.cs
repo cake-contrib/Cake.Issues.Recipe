@@ -13,7 +13,7 @@ namespace Cake.Frosting.Issues.Recipe
         /// <inheritdoc />
         public override void ReportIssuesToPullRequest(IIssuesContext context)
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             if (string.IsNullOrWhiteSpace(context.EnvironmentVariable("SYSTEM_ACCESSTOKEN")))
             {
@@ -33,7 +33,7 @@ namespace Cake.Frosting.Issues.Recipe
         /// <inheritdoc />
         public override void SetPullRequestIssuesState(IIssuesContext context)
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             if (string.IsNullOrWhiteSpace(context.EnvironmentVariable("SYSTEM_ACCESSTOKEN")))
             {
@@ -64,7 +64,7 @@ namespace Cake.Frosting.Issues.Recipe
         /// <inheritdoc />
         public override FileLinkSettings GetFileLinkSettings(IIssuesContext context)
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             var rootPath = context.State.RepositoryRootDirectory.GetRelativePath(context.State.ProjectRootDirectory);
 

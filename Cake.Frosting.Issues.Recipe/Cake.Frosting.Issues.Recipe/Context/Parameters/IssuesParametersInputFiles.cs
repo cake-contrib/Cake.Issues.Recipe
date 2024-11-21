@@ -98,7 +98,7 @@ namespace Cake.Frosting.Issues.Recipe
         /// <inheritdoc />
         public void AddMsBuildBinaryLogFilePath(FilePath logfilePath, IReadIssuesSettings settings)
         {
-            logfilePath.NotNull(nameof(logfilePath));
+            logfilePath.NotNull();
 
             this.MsBuildBinaryLogFilePaths.Add(logfilePath, settings);
         }
@@ -126,7 +126,7 @@ namespace Cake.Frosting.Issues.Recipe
         /// <inheritdoc />
         public void AddInspectCodeLogFilePath(FilePath logfilePath, IReadIssuesSettings settings)
         {
-            logfilePath.NotNull(nameof(logfilePath));
+            logfilePath.NotNull();
 
             this.InspectCodeLogFilePaths.Add(logfilePath, settings);
         }
@@ -154,7 +154,7 @@ namespace Cake.Frosting.Issues.Recipe
         /// <inheritdoc />
         public void AddMarkdownlintCliLogFilePath(FilePath logfilePath, IReadIssuesSettings settings)
         {
-            logfilePath.NotNull(nameof(logfilePath));
+            logfilePath.NotNull();
 
             this.MarkdownlintCliLogFilePaths.Add(logfilePath, settings);
         }
@@ -182,7 +182,7 @@ namespace Cake.Frosting.Issues.Recipe
         /// <inheritdoc />
         public void AddMarkdownlintCliJsonLogFilePath(FilePath logfilePath, IReadIssuesSettings settings)
         {
-            logfilePath.NotNull(nameof(logfilePath));
+            logfilePath.NotNull();
 
             this.MarkdownlintCliJsonLogFilePaths.Add(logfilePath, settings);
         }
@@ -210,7 +210,7 @@ namespace Cake.Frosting.Issues.Recipe
         /// <inheritdoc />
         public void AddMarkdownlintV1LogFilePath(FilePath logfilePath, IReadIssuesSettings settings)
         {
-            logfilePath.NotNull(nameof(logfilePath));
+            logfilePath.NotNull();
 
             this.MarkdownlintV1LogFilePaths.Add(logfilePath, settings);
         }
@@ -238,7 +238,7 @@ namespace Cake.Frosting.Issues.Recipe
         /// <inheritdoc />
         public void AddEsLintJsonLogFilePath(FilePath logfilePath, IReadIssuesSettings settings)
         {
-            logfilePath.NotNull(nameof(logfilePath));
+            logfilePath.NotNull();
 
             this.EsLintJsonLogFilePaths.Add(logfilePath, settings);
         }
@@ -266,7 +266,7 @@ namespace Cake.Frosting.Issues.Recipe
         /// <inheritdoc />
         public void AddSarifLogFilePath(FilePath logfilePath, IReadIssuesSettings settings)
         {
-            logfilePath.NotNull(nameof(logfilePath));
+            logfilePath.NotNull();
 
             this.SarifLogFilePaths.Add(logfilePath, settings);
         }

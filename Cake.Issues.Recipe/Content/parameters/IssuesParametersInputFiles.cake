@@ -186,7 +186,7 @@ public class IssuesParametersInputFiles
     [Obsolete("Use AddMsBuildBinaryLogFilePath")]
     public void AddMsBuildBinaryLogFile(FilePath logfilePath)
     {
-        logfilePath.NotNull(nameof(logfilePath));
+        logfilePath.NotNull();
         this.AddMsBuildBinaryLogFile(logfilePath, null);
     }
 
@@ -198,7 +198,7 @@ public class IssuesParametersInputFiles
     [Obsolete("Use AddMsBuildBinaryLogFilePath")]
     public void AddMsBuildBinaryLogFile(FilePath logfilePath, IReadIssuesSettings settings)
     {
-        logfilePath.NotNull(nameof(logfilePath));
+        logfilePath.NotNull();
         this.MsBuildBinaryLogFilePaths.Add(logfilePath, settings);
     }
 
@@ -220,7 +220,7 @@ public class IssuesParametersInputFiles
     /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
     public void AddMsBuildBinaryLogFilePath(FilePath logfilePath, IReadIssuesSettings settings)
     {
-        logfilePath.NotNull(nameof(logfilePath));
+        logfilePath.NotNull();
 
         this.MsBuildBinaryLogFilePaths.Add(logfilePath, settings);
     }
@@ -282,7 +282,7 @@ public class IssuesParametersInputFiles
     [Obsolete("Use AddInspectCodeLogFilePath")]
     public void AddInspectCodeLogFile(FilePath logfilePath)
     {
-        logfilePath.NotNull(nameof(logfilePath));
+        logfilePath.NotNull();
         this.AddInspectCodeLogFile(logfilePath, null);
     }
 
@@ -294,7 +294,7 @@ public class IssuesParametersInputFiles
     [Obsolete("Use AddInspectCodeLogFilePath")]
     public void AddInspectCodeLogFile(FilePath logfilePath, IReadIssuesSettings settings)
     {
-        logfilePath.NotNull(nameof(logfilePath));
+        logfilePath.NotNull();
         this.InspectCodeLogFilePaths.Add(logfilePath, settings);
     }
 
@@ -316,7 +316,7 @@ public class IssuesParametersInputFiles
     /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
     public void AddInspectCodeLogFilePath(FilePath logfilePath, IReadIssuesSettings settings)
     {
-        logfilePath.NotNull(nameof(logfilePath));
+        logfilePath.NotNull();
 
         this.InspectCodeLogFilePaths.Add(logfilePath, settings);
     }
@@ -378,7 +378,7 @@ public class IssuesParametersInputFiles
     [Obsolete("Use AddMarkdownlintCliLogFilePath")]
     public void AddMarkdownlintCliLogFile(FilePath logfilePath)
     {
-        logfilePath.NotNull(nameof(logfilePath));
+        logfilePath.NotNull();
         this.AddMarkdownlintCliLogFile(logfilePath, null);
     }
 
@@ -390,7 +390,7 @@ public class IssuesParametersInputFiles
     [Obsolete("Use AddMarkdownlintCliLogFilePath")]
     public void AddMarkdownlintCliLogFile(FilePath logfilePath, IReadIssuesSettings settings)
     {
-        logfilePath.NotNull(nameof(logfilePath));
+        logfilePath.NotNull();
         this.MarkdownlintCliLogFilePaths.Add(logfilePath, settings);
     }
 
@@ -412,7 +412,7 @@ public class IssuesParametersInputFiles
     /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
     public void AddMarkdownlintCliLogFilePath(FilePath logfilePath, IReadIssuesSettings settings)
     {
-        logfilePath.NotNull(nameof(logfilePath));
+        logfilePath.NotNull();
 
         this.MarkdownlintCliLogFilePaths.Add(logfilePath, settings);
     }
@@ -475,7 +475,7 @@ public class IssuesParametersInputFiles
     [Obsolete("Use AddMarkdownlintCliJsonLogFilePath")]
     public void AddMarkdownlintCliJsonLogFile(FilePath logfilePath)
     {
-        logfilePath.NotNull(nameof(logfilePath));
+        logfilePath.NotNull();
         this.AddMarkdownlintCliJsonLogFile(logfilePath, null);
     }
 
@@ -487,7 +487,7 @@ public class IssuesParametersInputFiles
     [Obsolete("Use AddMarkdownlintCliJsonLogFilePath")]
     public void AddMarkdownlintCliJsonLogFile(FilePath logfilePath, IReadIssuesSettings settings)
     {
-        logfilePath.NotNull(nameof(logfilePath));
+        logfilePath.NotNull();
         this.MarkdownlintCliJsonLogFilePaths.Add(logfilePath, settings);
     }
 
@@ -509,7 +509,7 @@ public class IssuesParametersInputFiles
     /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
     public void AddMarkdownlintCliJsonLogFilePath(FilePath logfilePath, IReadIssuesSettings settings)
     {
-        logfilePath.NotNull(nameof(logfilePath));
+        logfilePath.NotNull();
 
         this.MarkdownlintCliJsonLogFilePaths.Add(logfilePath, settings);
     }
@@ -571,7 +571,7 @@ public class IssuesParametersInputFiles
     [Obsolete("Use AddMarkdownlintV1LogFilePath")]
     public void AddMarkdownlintV1LogFile(FilePath logfilePath)
     {
-        logfilePath.NotNull(nameof(logfilePath));
+        logfilePath.NotNull();
         this.AddMarkdownlintV1LogFile(logfilePath, null);
     }
 
@@ -583,7 +583,7 @@ public class IssuesParametersInputFiles
     [Obsolete("Use AddMarkdownlintV1LogFilePath")]
     public void AddMarkdownlintV1LogFile(FilePath logfilePath, IReadIssuesSettings settings)
     {
-        logfilePath.NotNull(nameof(logfilePath));
+        logfilePath.NotNull();
         this.MarkdownlintV1LogFilePaths.Add(logfilePath, settings);
     }
 
@@ -605,7 +605,7 @@ public class IssuesParametersInputFiles
     /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
     public void AddMarkdownlintV1LogFilePath(FilePath logfilePath, IReadIssuesSettings settings)
     {
-        logfilePath.NotNull(nameof(logfilePath));
+        logfilePath.NotNull();
 
         this.MarkdownlintV1LogFilePaths.Add(logfilePath, settings);
     }
@@ -667,7 +667,7 @@ public class IssuesParametersInputFiles
     [Obsolete("Use EsLintJsonLogFilePath")]
     public void AddEsLintJsonLogFile(FilePath logfilePath)
     {
-        logfilePath.NotNull(nameof(logfilePath));
+        logfilePath.NotNull();
         this.AddEsLintJsonLogFile(logfilePath, null);
     }
 
@@ -679,7 +679,7 @@ public class IssuesParametersInputFiles
     [Obsolete("Use EsLintJsonLogFilePath")]
     public void AddEsLintJsonLogFile(FilePath logfilePath, IReadIssuesSettings settings)
     {
-        logfilePath.NotNull(nameof(logfilePath));
+        logfilePath.NotNull();
         this.EsLintJsonLogFilePaths.Add(logfilePath, settings);
     }
 
@@ -701,7 +701,7 @@ public class IssuesParametersInputFiles
     /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
     public void AddEsLintJsonLogFilePath(FilePath logfilePath, IReadIssuesSettings settings)
     {
-        logfilePath.NotNull(nameof(logfilePath));
+        logfilePath.NotNull();
 
         this.EsLintJsonLogFilePaths.Add(logfilePath, settings);
     }
@@ -763,7 +763,7 @@ public class IssuesParametersInputFiles
     [Obsolete("Use AddSarifLogFilePath")]
     public void AddSarifLogFile(FilePath logfilePath)
     {
-        logfilePath.NotNull(nameof(logfilePath));
+        logfilePath.NotNull();
         this.AddSarifLogFile(logfilePath, null);
     }
     /// <summary>
@@ -774,7 +774,7 @@ public class IssuesParametersInputFiles
     [Obsolete("Use AddSarifLogFilePath")]
     public void AddSarifLogFile(FilePath logfilePath, IReadIssuesSettings settings)
     {
-        logfilePath.NotNull(nameof(logfilePath));
+        logfilePath.NotNull();
         this.SarifLogFilePaths.Add(logfilePath, settings);
     }
 
@@ -796,7 +796,7 @@ public class IssuesParametersInputFiles
     /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
     public void AddSarifLogFilePath(FilePath logfilePath, IReadIssuesSettings settings)
     {
-        logfilePath.NotNull(nameof(logfilePath));
+        logfilePath.NotNull();
 
         this.SarifLogFilePaths.Add(logfilePath, settings);
     }

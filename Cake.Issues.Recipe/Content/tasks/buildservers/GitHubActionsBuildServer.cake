@@ -8,7 +8,7 @@ public class GitHubActionsBuildServer : BaseBuildServer
         ICakeContext context,
         DirectoryPath repositoryRootDirectory)
     {
-        context.NotNull(nameof(context));
+        context.NotNull();
 
         return new System.Uri($"https://github.com/{context.GitHubActions().Environment.Workflow.Repository}.git");
     }
@@ -18,7 +18,7 @@ public class GitHubActionsBuildServer : BaseBuildServer
         ICakeContext context,
         DirectoryPath repositoryRootDirectory)
     {
-        context.NotNull(nameof(context));
+        context.NotNull();
 
         return context.GitHubActions().Environment.Workflow.Sha;
     }
@@ -26,7 +26,7 @@ public class GitHubActionsBuildServer : BaseBuildServer
     /// <inheritdoc />
     public override bool DetermineIfPullRequest(ICakeContext context)
     {
-        context.NotNull(nameof(context));
+        context.NotNull();
 
         return context.GitHubActions().Environment.PullRequest.IsPullRequest;
     }
@@ -34,7 +34,7 @@ public class GitHubActionsBuildServer : BaseBuildServer
     /// <inheritdoc />
     public override int? DeterminePullRequestId(ICakeContext context)
     {
-        context.NotNull(nameof(context));
+        context.NotNull();
 
         // Not supported by GitHub Actions
         return null;
@@ -45,8 +45,8 @@ public class GitHubActionsBuildServer : BaseBuildServer
         ICakeContext context,
         IssuesData data)
     {
-        context.NotNull(nameof(context));
-        data.NotNull(nameof(data));
+        context.NotNull();
+        data.NotNull();
 
         context.ReportIssuesToPullRequest(
             data.Issues,
@@ -60,8 +60,8 @@ public class GitHubActionsBuildServer : BaseBuildServer
         IssuesData data,
         [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "")
     {
-        context.NotNull(nameof(context));
-        data.NotNull(nameof(data));
+        context.NotNull();
+        data.NotNull();
 
         // Summary issues report is not supported for GitHub Actions.
     }
@@ -69,8 +69,8 @@ public class GitHubActionsBuildServer : BaseBuildServer
     /// <inheritdoc />
     public override void PublishIssuesArtifacts(ICakeContext context, IssuesData data)
     {
-        context.NotNull(nameof(context));
-        data.NotNull(nameof(data));
+        context.NotNull();
+        data.NotNull();
 
         // Publishing artifacts is currently not supported for GitHub Actions.
     }
