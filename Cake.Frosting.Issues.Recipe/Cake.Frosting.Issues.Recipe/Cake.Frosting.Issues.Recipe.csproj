@@ -40,7 +40,7 @@ For recipe compatible with Cake Script Runners see Cake.Issues.Recipe.</Descript
 
   <ItemGroup>
     <PackageReference Include="Cake.AzureDevOps" Version="4.0.0" />
-    <PackageReference Include="Cake.Frosting" Version="4.0.0" PrivateAssets="All" />
+    <PackageReference Include="Cake.Frosting" Version="5.0.0" PrivateAssets="All" />
     <PackageReference Include="Cake.Frosting.Git" Version="4.0.0" />
     <PackageReference Include="Cake.Issues" Version="4.12.0" />
     <PackageReference Include="Cake.Frosting.Issues.EsLint" Version="4.12.0" />
