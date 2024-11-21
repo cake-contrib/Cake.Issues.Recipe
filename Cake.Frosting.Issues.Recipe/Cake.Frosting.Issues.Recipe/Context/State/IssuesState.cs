@@ -226,7 +226,7 @@
             return null;
         }
 
-        private static IReadIssuesSettings GetSettings(IReadIssuesSettings configuredSettings, IReadIssuesSettings defaultSettings)
+        private static IReadIssuesSettings GetSettings(IReadIssuesSettings configuredSettings, ReadIssuesSettings defaultSettings)
         {
             if (configuredSettings == null)
             {
