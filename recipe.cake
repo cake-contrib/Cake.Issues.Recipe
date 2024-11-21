@@ -32,7 +32,7 @@ Task("Generate-Version-File")
         // Write metadata to configuration file
         System.IO.File.WriteAllText(
             "./Cake.Issues.Recipe/cake-version.yml",
-            @"TargetCakeVersion: 4.0.0
+            @"TargetCakeVersion: 5.0.0
 TargetFrameworks:
 - net8.0
 - net9.0"
