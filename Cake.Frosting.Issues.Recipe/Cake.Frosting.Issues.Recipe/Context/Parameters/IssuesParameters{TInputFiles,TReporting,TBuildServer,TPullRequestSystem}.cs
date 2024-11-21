@@ -51,10 +51,10 @@ namespace Cake.Frosting.Issues.Recipe
         /// </summary>
         protected IssuesParameters()
         {
-            this.inputFiles = new Lazy<TInputFiles>(() => this.CreateInputFilesParameters());
-            this.reporting = new Lazy<TReporting>(() => this.CreateReportingParameters());
-            this.buildServer = new Lazy<TBuildServer>(() => this.CreateBuildServerParameters());
-            this.pullRequestSystem = new Lazy<TPullRequestSystem>(() => this.CreatePullRequestSystemParameters());
+            this.inputFiles = new Lazy<TInputFiles>(this.CreateInputFilesParameters);
+            this.reporting = new Lazy<TReporting>(this.CreateReportingParameters);
+            this.buildServer = new Lazy<TBuildServer>(this.CreateBuildServerParameters);
+            this.pullRequestSystem = new Lazy<TPullRequestSystem>(this.CreatePullRequestSystemParameters);
         }
 
         /// <summary>

@@ -44,8 +44,8 @@
             var versionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
             context.Information("Initializing Cake.Frosting.Issues.Recipe (Version {0})...", versionInfo.FileVersion);
 
-            this.parameters = new Lazy<TParameters>(() => this.CreateIssuesParameters());
-            this.state = new Lazy<TState>(() => this.CreateIssuesState());
+            this.parameters = new Lazy<TParameters>(this.CreateIssuesParameters);
+            this.state = new Lazy<TState>(this.CreateIssuesState);
         }
 
         /// <summary>
