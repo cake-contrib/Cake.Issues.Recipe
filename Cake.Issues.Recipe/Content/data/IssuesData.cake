@@ -260,12 +260,7 @@ public class IssuesData
             return new AzureDevOpsPullRequestSystem();
         }
 
-        if (repositoryUrl.Host == "github.com")
-        {
-            return new GitHubPullRequestSystem();
-        }
-
-        return null;
+        return repositoryUrl.Host == "github.com" ? new GitHubPullRequestSystem() : null;
     }
 
     private static IReadIssuesSettings GetSettings(IReadIssuesSettings configuredSettings, IReadIssuesSettings defaultSettings)

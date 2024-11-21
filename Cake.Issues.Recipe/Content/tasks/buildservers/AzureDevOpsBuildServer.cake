@@ -37,14 +37,9 @@ public class AzureDevOpsBuildServer : BaseBuildServer
     {
         context.NotNull(nameof(context));
 
-        if (!Int32.TryParse(context.EnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID"), out var pullRequestId))
-        {
-            throw new Exception(string.Format("Invalid pull request ID: {0}", context.EnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID")));
-        }
-        else
-        {
-            return pullRequestId;
-        }
+        return Int32.TryParse(context.EnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID"), out var pullRequestId)
+            ? pullRequestId
+            : throw new Exception($"Invalid pull request ID: {context.EnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID")}");
    }
 
     /// <inheritdoc />

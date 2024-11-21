@@ -58,12 +58,11 @@ public class CliRepositoryInfoProvider : IRepositoryInfoProvider
             out var redirectedStandardOutput,
             out var redirectedErrorOutput
         );
-        if (exitCode != 0)
-        {
-            throw new Exception(
-                $"Git command failed with arguments {gitArguments}. Exit code: {exitCode}. Error output: {string.Join(System.Environment.NewLine, redirectedErrorOutput)}"
+
+        return exitCode == 0
+            ? redirectedStandardOutput
+            : throw new Exception(
+                $"Git command failed with arguments {gitArguments}. Exit code: {exitCode}. Error output: {string.Join(Environment.NewLine, redirectedErrorOutput)}"
             );
-        }
-        return redirectedStandardOutput;
     }
 }
