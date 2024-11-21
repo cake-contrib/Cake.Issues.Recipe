@@ -89,27 +89,6 @@ public class IssuesParametersInputFiles
     /// Adds a path to a MSBuild log file created by XmlFileLogger.
     /// </summary>
     /// <param name="logfilePath">Path to the MSBuild log file.</param>
-    [Obsolete("Use AddMsBuildXmlFileLoggerLogFilePath")]
-    public void AddMsBuildXmlFileLoggerLogFile(FilePath logfilePath)
-    {
-        this.AddMsBuildXmlFileLoggerLogFilePath(logfilePath);
-    }
-
-    /// <summary>
-    /// Adds a path to a MSBuild log file created by XmlFileLogger.
-    /// </summary>
-    /// <param name="logfilePath">Path to the MSBuild log file.</param>
-    /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
-    [Obsolete("Use AddMsBuildXmlFileLoggerLogFilePath")]
-    public void AddMsBuildXmlFileLoggerLogFile(FilePath logfilePath, IReadIssuesSettings settings)
-    {
-        this.AddMsBuildXmlFileLoggerLogFilePath(logfilePath, settings);
-    }
-
-    /// <summary>
-    /// Adds a path to a MSBuild log file created by XmlFileLogger.
-    /// </summary>
-    /// <param name="logfilePath">Path to the MSBuild log file.</param>
     public void AddMsBuildXmlFileLoggerLogFilePath(FilePath logfilePath)
     {
         logfilePath.NotNull();
@@ -178,29 +157,6 @@ public class IssuesParametersInputFiles
     #endregion
 
     #region MsBuildBinaryLogFile
-
-    /// <summary>
-    /// Adds a path to a MSBuild binary log file.
-    /// </summary>
-    /// <param name="logfilePath">Path to the MSBuild log file.</param>
-    [Obsolete("Use AddMsBuildBinaryLogFilePath")]
-    public void AddMsBuildBinaryLogFile(FilePath logfilePath)
-    {
-        logfilePath.NotNull();
-        this.AddMsBuildBinaryLogFile(logfilePath, null);
-    }
-
-    /// <summary>
-    /// Adds a path to a MSBuild binary log file.
-    /// </summary>
-    /// <param name="logfilePath">Path to the MSBuild log file.</param>
-    /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
-    [Obsolete("Use AddMsBuildBinaryLogFilePath")]
-    public void AddMsBuildBinaryLogFile(FilePath logfilePath, IReadIssuesSettings settings)
-    {
-        logfilePath.NotNull();
-        this.MsBuildBinaryLogFilePaths.Add(logfilePath, settings);
-    }
 
     /// <summary>
     /// Adds a path to a MSBuild binary log file.
@@ -276,29 +232,6 @@ public class IssuesParametersInputFiles
     #region InspectCodeLogFile
 
     /// <summary>
-    /// Adds a path to a InspectCode log file.
-    /// </summary>
-    /// <param name="logfilePath">Path to the InspectCode log file.</param>
-    [Obsolete("Use AddInspectCodeLogFilePath")]
-    public void AddInspectCodeLogFile(FilePath logfilePath)
-    {
-        logfilePath.NotNull();
-        this.AddInspectCodeLogFile(logfilePath, null);
-    }
-
-    /// <summary>
-    /// Adds a path to a InspectCode log file.
-    /// </summary>
-    /// <param name="logfilePath">Path to the InspectCode log file.</param>
-    /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
-    [Obsolete("Use AddInspectCodeLogFilePath")]
-    public void AddInspectCodeLogFile(FilePath logfilePath, IReadIssuesSettings settings)
-    {
-        logfilePath.NotNull();
-        this.InspectCodeLogFilePaths.Add(logfilePath, settings);
-    }
-
-    /// <summary>
     /// Adds a path to an InspectCode log file.
     /// </summary>
     /// <param name="logfilePath">Path to the InspectCode log file.</param>
@@ -370,29 +303,6 @@ public class IssuesParametersInputFiles
     #endregion
 
     #region MarkdownlintCliLogFile
-
-    /// <summary>
-    /// Adds a path to a markdownlint-cli log file.
-    /// </summary>
-    /// <param name="logfilePath">Path to the markdownlint-cli log file.</param>
-    [Obsolete("Use AddMarkdownlintCliLogFilePath")]
-    public void AddMarkdownlintCliLogFile(FilePath logfilePath)
-    {
-        logfilePath.NotNull();
-        this.AddMarkdownlintCliLogFile(logfilePath, null);
-    }
-
-    /// <summary>
-    /// Adds a path to a markdownlint-cli log file.
-    /// </summary>
-    /// <param name="logfilePath">Path to the markdownlint-cli log file.</param>
-    /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
-    [Obsolete("Use AddMarkdownlintCliLogFilePath")]
-    public void AddMarkdownlintCliLogFile(FilePath logfilePath, IReadIssuesSettings settings)
-    {
-        logfilePath.NotNull();
-        this.MarkdownlintCliLogFilePaths.Add(logfilePath, settings);
-    }
 
     /// <summary>
     /// Adds a path to a markdownlint-cli log file.
@@ -472,29 +382,6 @@ public class IssuesParametersInputFiles
     /// Adds a path to a markdownlint-cli log file created with <c>--json</c>.
     /// </summary>
     /// <param name="logfilePath">Path to the markdownlint-cli log file.</param>
-    [Obsolete("Use AddMarkdownlintCliJsonLogFilePath")]
-    public void AddMarkdownlintCliJsonLogFile(FilePath logfilePath)
-    {
-        logfilePath.NotNull();
-        this.AddMarkdownlintCliJsonLogFile(logfilePath, null);
-    }
-
-    /// <summary>
-    /// Adds a path to a markdownlint-cli log file created with <c>--json</c>.
-    /// </summary>
-    /// <param name="logfilePath">Path to the markdownlint-cli log file.</param>
-    /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
-    [Obsolete("Use AddMarkdownlintCliJsonLogFilePath")]
-    public void AddMarkdownlintCliJsonLogFile(FilePath logfilePath, IReadIssuesSettings settings)
-    {
-        logfilePath.NotNull();
-        this.MarkdownlintCliJsonLogFilePaths.Add(logfilePath, settings);
-    }
-
-    /// <summary>
-    /// Adds a path to a markdownlint-cli log file created with <c>--json</c>.
-    /// </summary>
-    /// <param name="logfilePath">Path to the markdownlint-cli log file.</param>
     public void AddMarkdownlintCliJsonLogFilePath(FilePath logfilePath)
     {
         logfilePath.NotNull();
@@ -563,29 +450,6 @@ public class IssuesParametersInputFiles
     #endregion
 
     #region MarkdownlintV1LogFile
-
-    /// <summary>
-    /// Adds a path to a markdownlint log file in version 1.
-    /// </summary>
-    /// <param name="logfilePath">Path to the markdownlint log file.</param>
-    [Obsolete("Use AddMarkdownlintV1LogFilePath")]
-    public void AddMarkdownlintV1LogFile(FilePath logfilePath)
-    {
-        logfilePath.NotNull();
-        this.AddMarkdownlintV1LogFile(logfilePath, null);
-    }
-
-    /// <summary>
-    /// Adds a path to a markdownlint log file in version 1.
-    /// </summary>
-    /// <param name="logfilePath">Path to the markdownlint log file.</param>
-    /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
-    [Obsolete("Use AddMarkdownlintV1LogFilePath")]
-    public void AddMarkdownlintV1LogFile(FilePath logfilePath, IReadIssuesSettings settings)
-    {
-        logfilePath.NotNull();
-        this.MarkdownlintV1LogFilePaths.Add(logfilePath, settings);
-    }
 
     /// <summary>
     /// Adds a path to a markdownlint log file in version 1.
@@ -664,29 +528,6 @@ public class IssuesParametersInputFiles
     /// Adds a path to a ESLint log file in JSON format.
     /// </summary>
     /// <param name="logfilePath">Path to the ESLint log file.</param>
-    [Obsolete("Use EsLintJsonLogFilePath")]
-    public void AddEsLintJsonLogFile(FilePath logfilePath)
-    {
-        logfilePath.NotNull();
-        this.AddEsLintJsonLogFile(logfilePath, null);
-    }
-
-    /// <summary>
-    /// Adds a path to a ESLint log file in JSON format.
-    /// </summary>
-    /// <param name="logfilePath">Path to the ESLint log file.</param>
-    /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
-    [Obsolete("Use EsLintJsonLogFilePath")]
-    public void AddEsLintJsonLogFile(FilePath logfilePath, IReadIssuesSettings settings)
-    {
-        logfilePath.NotNull();
-        this.EsLintJsonLogFilePaths.Add(logfilePath, settings);
-    }
-
-    /// <summary>
-    /// Adds a path to a ESLint log file in JSON format.
-    /// </summary>
-    /// <param name="logfilePath">Path to the ESLint log file.</param>
     public void AddEsLintJsonLogFilePath(FilePath logfilePath)
     {
         logfilePath.NotNull();
@@ -755,28 +596,6 @@ public class IssuesParametersInputFiles
     #endregion
 
     #region SarifLogFile
-
-    /// <summary>
-    /// Adds a path to a log file in SARIF format.
-    /// </summary>
-    /// <param name="logfilePath">Path to the SARIF log file.</param>
-    [Obsolete("Use AddSarifLogFilePath")]
-    public void AddSarifLogFile(FilePath logfilePath)
-    {
-        logfilePath.NotNull();
-        this.AddSarifLogFile(logfilePath, null);
-    }
-    /// <summary>
-    /// Adds a path to a log file in SARIF format.
-    /// </summary>
-    /// <param name="logfilePath">Path to the SARIF log file.</param>
-    /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
-    [Obsolete("Use AddSarifLogFilePath")]
-    public void AddSarifLogFile(FilePath logfilePath, IReadIssuesSettings settings)
-    {
-        logfilePath.NotNull();
-        this.SarifLogFilePaths.Add(logfilePath, settings);
-    }
 
     /// <summary>
     /// Adds a path to a log file in SARIF format.

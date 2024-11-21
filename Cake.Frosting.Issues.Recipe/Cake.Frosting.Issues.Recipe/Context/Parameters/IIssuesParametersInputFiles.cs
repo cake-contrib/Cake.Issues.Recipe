@@ -91,21 +91,6 @@ namespace Cake.Frosting.Issues.Recipe
         /// Adds a path to a MSBuild log file created by XmlFileLogger.
         /// </summary>
         /// <param name="logfilePath">Path to the MSBuild log file.</param>
-        [Obsolete("Use AddMsBuildXmlFileLoggerLogFilePath")]
-        void AddMsBuildXmlFileLoggerLogFile(FilePath logfilePath);
-
-        /// <summary>
-        /// Adds a path to a MSBuild log file created by XmlFileLogger.
-        /// </summary>
-        /// <param name="logfilePath">Path to the MSBuild log file.</param>
-        /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
-        [Obsolete("Use AddMsBuildXmlFileLoggerLogFilePath")]
-        void AddMsBuildXmlFileLoggerLogFile(FilePath logfilePath, IReadIssuesSettings settings);
-
-        /// <summary>
-        /// Adds a path to a MSBuild log file created by XmlFileLogger.
-        /// </summary>
-        /// <param name="logfilePath">Path to the MSBuild log file.</param>
         /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
         void AddMsBuildXmlFileLoggerLogFilePath(FilePath logfilePath, IReadIssuesSettings settings);
 
@@ -115,21 +100,6 @@ namespace Cake.Frosting.Issues.Recipe
         /// <param name="logfileContent">Content of the MSBuild log file.</param>
         /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
         void AddMsBuildXmlFileLoggerLogFileContent(byte[] logfileContent, IReadIssuesSettings settings);
-
-        /// <summary>
-        /// Adds a path to a MSBuild binary log file.
-        /// </summary>
-        /// <param name="logfilePath">Path to the MSBuild log file.</param>
-        [Obsolete("Use AddMsBuildBinaryLogFilePath")]
-        void AddMsBuildBinaryLogFile(FilePath logfilePath);
-
-        /// <summary>
-        /// Adds a path to a MSBuild binary log file.
-        /// </summary>
-        /// <param name="logfilePath">Path to the MSBuild log file.</param>
-        /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
-        [Obsolete("Use AddMsBuildBinaryLogFilePath")]
-        void AddMsBuildBinaryLogFile(FilePath logfilePath, IReadIssuesSettings settings);
 
         /// <summary>
         /// Adds a path to a MSBuild binary log file.
@@ -149,21 +119,6 @@ namespace Cake.Frosting.Issues.Recipe
         /// Adds a path to a InspectCode log file.
         /// </summary>
         /// <param name="logfilePath">Path to the InspectCode log file.</param>
-        [Obsolete("Use AddInspectCodeLogFilePath")]
-        void AddInspectCodeLogFile(FilePath logfilePath);
-
-        /// <summary>
-        /// Adds a path to a InspectCode log file.
-        /// </summary>
-        /// <param name="logfilePath">Path to the InspectCode log file.</param>
-        /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
-        [Obsolete("Use AddInspectCodeLogFilePath")]
-        void AddInspectCodeLogFile(FilePath logfilePath, IReadIssuesSettings settings);
-
-        /// <summary>
-        /// Adds a path to a InspectCode log file.
-        /// </summary>
-        /// <param name="logfilePath">Path to the InspectCode log file.</param>
         /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
         void AddInspectCodeLogFilePath(FilePath logfilePath, IReadIssuesSettings settings);
 
@@ -173,21 +128,6 @@ namespace Cake.Frosting.Issues.Recipe
         /// <param name="logfileContent">Content of the InspectCode log file.</param>
         /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
         void AddInspectCodeLogFileContent(byte[] logfileContent, IReadIssuesSettings settings);
-
-        /// <summary>
-        /// Adds a path to a markdownlint-cli log file.
-        /// </summary>
-        /// <param name="logfilePath">Path to the markdownlint-cli log file.</param>
-        [Obsolete("Use AddMarkdownlintCliLogFilePath")]
-        void AddMarkdownlintCliLogFile(FilePath logfilePath);
-
-        /// <summary>
-        /// Adds a path to a markdownlint-cli log file.
-        /// </summary>
-        /// <param name="logfilePath">Path to the markdownlint-cli log file.</param>
-        /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
-        [Obsolete("Use AddMarkdownlintCliLogFilePath")]
-        void AddMarkdownlintCliLogFile(FilePath logfilePath, IReadIssuesSettings settings);
 
         /// <summary>
         /// Adds a path to a markdownlint-cli log file.
@@ -207,21 +147,6 @@ namespace Cake.Frosting.Issues.Recipe
         /// Adds a path to a markdownlint-cli log file created with <c>--json</c>.
         /// </summary>
         /// <param name="logfilePath">Path to the markdownlint-cli log file.</param>
-        [Obsolete("Use AddMarkdownlintCliJsonLogFilePath")]
-        void AddMarkdownlintCliJsonLogFile(FilePath logfilePath);
-
-        /// <summary>
-        /// Adds a path to a markdownlint-cli log file created with <c>--json</c>.
-        /// </summary>
-        /// <param name="logfilePath">Path to the markdownlint-cli log file.</param>
-        /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
-        [Obsolete("Use AddMarkdownlintCliJsonLogFilePath")]
-        void AddMarkdownlintCliJsonLogFile(FilePath logfilePath, IReadIssuesSettings settings);
-
-        /// <summary>
-        /// Adds a path to a markdownlint-cli log file created with <c>--json</c>.
-        /// </summary>
-        /// <param name="logfilePath">Path to the markdownlint-cli log file.</param>
         /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
         void AddMarkdownlintCliJsonLogFilePath(FilePath logfilePath, IReadIssuesSettings settings);
 
@@ -231,21 +156,6 @@ namespace Cake.Frosting.Issues.Recipe
         /// <param name="logfileContent">Content of the markdownlint-cli log file.</param>
         /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
         void AddMarkdownlintCliJsonLogFileContent(byte[] logfileContent, IReadIssuesSettings settings);
-
-        /// <summary>
-        /// Adds a path to a markdownlint log file in version 1.
-        /// </summary>
-        /// <param name="logfilePath">Path to the markdownlint log file.</param>
-        [Obsolete("Use AddMarkdownlintV1LogFilePath")]
-        void AddMarkdownlintV1LogFile(FilePath logfilePath);
-
-        /// <summary>
-        /// Adds a path to a markdownlint log file in version 1.
-        /// </summary>
-        /// <param name="logfilePath">Path to the markdownlint log file.</param>
-        /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
-        [Obsolete("Use AddMarkdownlintV1LogFilePath")]
-        void AddMarkdownlintV1LogFile(FilePath logfilePath, IReadIssuesSettings settings);
 
         /// <summary>
         /// Adds a path to a markdownlint log file in version 1.
@@ -265,21 +175,6 @@ namespace Cake.Frosting.Issues.Recipe
         /// Adds a path to a ESLint log file in JSON format.
         /// </summary>
         /// <param name="logfilePath">Path to the ESLint log file.</param>
-        [Obsolete("Use AddEsLintJsonLogFilePath")]
-        void AddEsLintJsonLogFile(FilePath logfilePath);
-
-        /// <summary>
-        /// Adds a path to a ESLint log file in JSON format.
-        /// </summary>
-        /// <param name="logfilePath">Path to the ESLint log file.</param>
-        /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
-        [Obsolete("Use AddEsLintJsonLogFilePath")]
-        void AddEsLintJsonLogFile(FilePath logfilePath, IReadIssuesSettings settings);
-
-        /// <summary>
-        /// Adds a path to a ESLint log file in JSON format.
-        /// </summary>
-        /// <param name="logfilePath">Path to the ESLint log file.</param>
         /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
         void AddEsLintJsonLogFilePath(FilePath logfilePath, IReadIssuesSettings settings);
 
@@ -289,21 +184,6 @@ namespace Cake.Frosting.Issues.Recipe
         /// <param name="logfileContent">Content of the ESLint log file.</param>
         /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
         void AddEsLintJsonLogFileContent(byte[] logfileContent, IReadIssuesSettings settings);
-
-        /// <summary>
-        /// Adds a path to a log file in SARIF format.
-        /// </summary>
-        /// <param name="logfilePath">Path to the SARIF log file.</param>
-        [Obsolete("Use AddSarifLogFilePath")]
-        void AddSarifLogFile(FilePath logfilePath);
-
-        /// <summary>
-        /// Adds a path to a log file in SARIF format.
-        /// </summary>
-        /// <param name="logfilePath">Path to the SARIF log file.</param>
-        /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
-        [Obsolete("Use AddSarifLogFilePath")]
-        void AddSarifLogFile(FilePath logfilePath, IReadIssuesSettings settings);
 
         /// <summary>
         /// Adds a path to a log file in SARIF format.
