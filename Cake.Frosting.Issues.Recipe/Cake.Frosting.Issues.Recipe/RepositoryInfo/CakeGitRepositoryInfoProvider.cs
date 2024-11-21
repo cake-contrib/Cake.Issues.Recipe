@@ -12,8 +12,8 @@
         /// <inheritdoc />
         public DirectoryPath GetRepositoryRootDirectory(ICakeContext context, DirectoryPath buildRootDirectory)
         {
-            context.NotNull(nameof(context));
-            buildRootDirectory.NotNull(nameof(buildRootDirectory));
+            context.NotNull();
+            buildRootDirectory.NotNull();
 
             return context.GitFindRootFromPath(buildRootDirectory);
         }
@@ -21,8 +21,8 @@
         /// <inheritdoc />
         public Uri GetRepositoryRemoteUrl(ICakeContext context, DirectoryPath repositoryRootDirectory)
         {
-            context.NotNull(nameof(context));
-            repositoryRootDirectory.NotNull(nameof(repositoryRootDirectory));
+            context.NotNull();
+            repositoryRootDirectory.NotNull();
 
             var currentBranch = context.GitBranchCurrent(repositoryRootDirectory);
             return new Uri(currentBranch.Remotes.Single(x => x.Name == "origin").Url);
@@ -31,8 +31,8 @@
         /// <inheritdoc />
         public string GetCommitId(ICakeContext context, DirectoryPath repositoryRootDirectory)
         {
-            context.NotNull(nameof(context));
-            repositoryRootDirectory.NotNull(nameof(repositoryRootDirectory));
+            context.NotNull();
+            repositoryRootDirectory.NotNull();
 
             return context.GitLogTip(repositoryRootDirectory).Sha;
         }

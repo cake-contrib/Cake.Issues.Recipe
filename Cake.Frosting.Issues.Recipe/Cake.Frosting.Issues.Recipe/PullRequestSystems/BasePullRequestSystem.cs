@@ -37,9 +37,9 @@ namespace Cake.Frosting.Issues.Recipe
             foreach (var providerIssueLimit in context.Parameters.PullRequestSystem.ProviderIssueLimits)
             {
                 context.Log.Verbose(
-                    "Setting issue limit for provider '{0}' to MaxIssuesToPost '{1}' and MaxIssuesToPostAcrossRuns '{2}'...", 
-                    providerIssueLimit.Key, 
-                    providerIssueLimit.Value.MaxIssuesToPost, 
+                    "Setting issue limit for provider '{0}' to MaxIssuesToPost '{1}' and MaxIssuesToPostAcrossRuns '{2}'...",
+                    providerIssueLimit.Key,
+                    providerIssueLimit.Value.MaxIssuesToPost,
                     providerIssueLimit.Value.MaxIssuesToPostAcrossRuns);
                 settings.ProviderIssueLimits.Add(providerIssueLimit.Key, providerIssueLimit.Value);
             }

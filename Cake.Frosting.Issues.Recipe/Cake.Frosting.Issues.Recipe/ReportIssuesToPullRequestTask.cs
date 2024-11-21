@@ -13,7 +13,7 @@
         /// <inheritdoc/>
         public override bool ShouldRun(IIssuesContext context)
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             return
                 !context.BuildSystem().IsLocalBuild &&
@@ -24,7 +24,7 @@
         /// <inheritdoc/>
         public override void Run(IIssuesContext context)
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             if (context.State.PullRequestSystem == null)
             {

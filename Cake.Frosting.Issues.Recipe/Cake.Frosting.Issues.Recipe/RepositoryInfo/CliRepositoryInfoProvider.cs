@@ -12,8 +12,8 @@
         /// <inheritdoc />
         public DirectoryPath GetRepositoryRootDirectory(ICakeContext context, DirectoryPath buildRootDirectory)
         {
-            context.NotNull(nameof(context));
-            buildRootDirectory.NotNull(nameof(buildRootDirectory));
+            context.NotNull();
+            buildRootDirectory.NotNull();
 
             var result =
                 GitCommand(context, buildRootDirectory, "rev-parse", "--show-toplevel");
@@ -23,8 +23,8 @@
         /// <inheritdoc />
         public Uri GetRepositoryRemoteUrl(ICakeContext context, DirectoryPath repositoryRootDirectory)
         {
-            context.NotNull(nameof(context));
-            repositoryRootDirectory.NotNull(nameof(repositoryRootDirectory));
+            context.NotNull();
+            repositoryRootDirectory.NotNull();
 
             var result =
                 GitCommand(context, repositoryRootDirectory, "config", "--get", "remote.origin.url");
@@ -34,8 +34,8 @@
         /// <inheritdoc />
         public string GetCommitId(ICakeContext context, DirectoryPath repositoryRootDirectory)
         {
-            context.NotNull(nameof(context));
-            repositoryRootDirectory.NotNull(nameof(repositoryRootDirectory));
+            context.NotNull();
+            repositoryRootDirectory.NotNull();
 
             return
                 GitCommand(context, repositoryRootDirectory, "rev-parse", "HEAD")
@@ -67,15 +67,11 @@
                 out var redirectedErrorOutput
             );
 
-            if (exitCode != 0)
-            {
-                throw new Exception(
+            return exitCode == 0
+                ? redirectedStandardOutput
+                : throw new Exception(
                     $"Git command failed with arguments {gitArguments}. Exit code: {exitCode}. Error output: {string.Join(Environment.NewLine, redirectedErrorOutput)}"
                 );
-            }
-
-            return redirectedStandardOutput;
-
         }
     }
 }

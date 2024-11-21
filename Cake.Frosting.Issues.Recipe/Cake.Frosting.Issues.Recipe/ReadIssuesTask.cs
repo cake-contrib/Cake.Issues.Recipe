@@ -12,7 +12,7 @@
         /// <inheritdoc/>
         public override void Run(IIssuesContext context)
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             // Read MSBuild log files created by XmlFileLogger.
             foreach (var logFile in context.Parameters.InputFiles.MsBuildXmlFileLoggerLogFilePaths)
@@ -20,7 +20,7 @@
                 context.State.AddIssues(
                     context.MsBuildIssuesFromFilePath(
                         logFile.Key,
-                        context.MsBuildXmlFileLoggerFormat()), 
+                        context.MsBuildXmlFileLoggerFormat()),
                     logFile.Value);
             }
 
@@ -30,7 +30,7 @@
                 context.State.AddIssues(
                     context.MsBuildIssues(
                         new MsBuildIssuesSettings(
-                            logFileContent.Key, 
+                            logFileContent.Key,
                             context.MsBuildXmlFileLoggerFormat())),
                     logFileContent.Value);
             }

@@ -13,7 +13,7 @@
         /// </summary>
         /// <param name="context">Context of the build.</param>
         /// <returns>Status which should be reported to the pull request.</returns>
-        public static IEnumerable<PullRequestStatus> GetPullRequestStates(IIssuesContext context) 
+        public static IEnumerable<PullRequestStatus> GetPullRequestStates(IIssuesContext context)
         {
             return GetPullRequestStates(
                 context.State.IssueProvidersAndRuns,
@@ -119,7 +119,7 @@
         }
 
         private static PullRequestStatus CreatePullRequestState(
-            IEnumerable<IIssue> issues, 
+            IEnumerable<IIssue> issues,
             string issueIdentifier,
             string buildIdentifier)
         {

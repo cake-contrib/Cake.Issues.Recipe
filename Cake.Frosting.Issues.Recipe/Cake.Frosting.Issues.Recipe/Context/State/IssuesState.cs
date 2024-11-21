@@ -65,7 +65,7 @@
             IIssuesContext context,
             RepositoryInfoProviderType repositoryInfoProviderType)
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             this.context = context;
 
@@ -101,7 +101,7 @@
         /// <inheritdoc />
         public void AddIssue(IIssue issue)
         {
-            issue.NotNull(nameof(issue));
+            issue.NotNull();
 
             this.issues.Add(issue);
         }
@@ -109,7 +109,7 @@
         /// <inheritdoc />
         public void AddIssues(IEnumerable<IIssue> issues)
         {
-            issues.NotNull(nameof(issues));
+            issues.NotNull();
 
             this.issues.AddRange(issues);
         }
@@ -117,7 +117,7 @@
         /// <inheritdoc />
         public IEnumerable<IIssue> AddIssues(IIssueProvider issueProvider, IReadIssuesSettings settings)
         {
-            issueProvider.NotNull(nameof(issueProvider));
+            issueProvider.NotNull();
 
             this.issueProvidersAndRuns.Add((issueProvider, settings?.Run));
 
@@ -150,7 +150,7 @@
             IIssuesContext context,
             RepositoryInfoProviderType repositoryInfoProviderType)
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             switch (repositoryInfoProviderType)
             {
@@ -172,7 +172,7 @@
         /// <returns>The build server on which the build is running or <c>null</c> if unknown build server.</returns>
         private static IIssuesBuildServer DetermineBuildServer(IIssuesContext context)
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             // Could be simplified once https://github.com/cake-build/cake/issues/1684 / https://github.com/cake-build/cake/issues/1580 are fixed.
             if (!string.IsNullOrWhiteSpace(context.EnvironmentVariable("TF_BUILD")) &&
@@ -209,8 +209,8 @@
         /// <returns>The pull request system or <c>null</c> if unknown pull request system.</returns>
         private static IIssuesPullRequestSystem DeterminePullRequestSystem(IIssuesContext context, Uri repositoryUrl)
         {
-            context.NotNull(nameof(context));
-            repositoryUrl.NotNull(nameof(repositoryUrl));
+            context.NotNull();
+            repositoryUrl.NotNull();
 
             if (repositoryUrl.Host == "dev.azure.com" || repositoryUrl.Host.EndsWith("visualstudio.com", StringComparison.InvariantCulture))
             {
@@ -218,15 +218,10 @@
                 return new AzureDevOpsPullRequestSystem();
             }
 
-            if (repositoryUrl.Host == "github.com")
-            {
-                return new GitHubPullRequestSystem();
-            }
-
-            return null;
+            return repositoryUrl.Host == "github.com" ? new GitHubPullRequestSystem() : null;
         }
 
-        private static IReadIssuesSettings GetSettings(IReadIssuesSettings configuredSettings, IReadIssuesSettings defaultSettings)
+        private static IReadIssuesSettings GetSettings(IReadIssuesSettings configuredSettings, ReadIssuesSettings defaultSettings)
         {
             if (configuredSettings == null)
             {

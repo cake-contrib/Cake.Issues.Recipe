@@ -8,7 +8,7 @@ namespace Cake.Frosting.Issues.Recipe
         /// <inheritdoc />
         public override void ReportIssuesToPullRequest(IIssuesContext context)
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             // Not supported yet
         }
@@ -16,7 +16,7 @@ namespace Cake.Frosting.Issues.Recipe
         /// <inheritdoc />
         public override void SetPullRequestIssuesState(IIssuesContext context)
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             // Not supported yet
         }
@@ -24,7 +24,7 @@ namespace Cake.Frosting.Issues.Recipe
         /// <inheritdoc />
         public override FileLinkSettings GetFileLinkSettings(IIssuesContext context)
         {
-            context.NotNull(nameof(context));
+            context.NotNull();
 
             var rootPath = context.State.RepositoryRootDirectory.GetRelativePath(context.State.ProjectRootDirectory);
 

@@ -11,8 +11,8 @@
     /// <typeparam name="TParameters">Type of the parameters description.</typeparam>
     /// <typeparam name="TState">Type of the build state description.</typeparam>
     public abstract class IssuesContext<TParameters, TState> : FrostingContext, IIssuesContext
-        where TParameters: IIssuesParameters
-        where TState: IIssuesState
+        where TParameters : IIssuesParameters
+        where TState : IIssuesState
     {
         private readonly Lazy<TParameters> parameters;
         private readonly Lazy<TState> state;
@@ -44,8 +44,8 @@
             var versionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
             context.Information("Initializing Cake.Frosting.Issues.Recipe (Version {0})...", versionInfo.FileVersion);
 
-            this.parameters = new Lazy<TParameters>(() => this.CreateIssuesParameters());
-            this.state = new Lazy<TState>(() => this.CreateIssuesState());
+            this.parameters = new Lazy<TParameters>(this.CreateIssuesParameters);
+            this.state = new Lazy<TState>(this.CreateIssuesState);
         }
 
         /// <summary>

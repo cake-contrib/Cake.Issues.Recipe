@@ -8,7 +8,7 @@ public class AppVeyorBuildServer : BaseBuildServer
         ICakeContext context,
         DirectoryPath repositoryRootDirectory)
     {
-        context.NotNull(nameof(context));
+        context.NotNull();
 
         switch(context.AppVeyor().Environment.Repository.Provider)
         {
@@ -25,7 +25,7 @@ public class AppVeyorBuildServer : BaseBuildServer
         ICakeContext context,
         DirectoryPath repositoryRootDirectory)
     {
-        context.NotNull(nameof(context));
+        context.NotNull();
 
         return context.AppVeyor().Environment.Repository.Commit.Id;
     }
@@ -33,7 +33,7 @@ public class AppVeyorBuildServer : BaseBuildServer
     /// <inheritdoc />
     public override bool DetermineIfPullRequest(ICakeContext context)
     {
-        context.NotNull(nameof(context));
+        context.NotNull();
 
         return context.AppVeyor().Environment.PullRequest.IsPullRequest;
     }
@@ -41,7 +41,7 @@ public class AppVeyorBuildServer : BaseBuildServer
     /// <inheritdoc />
     public override int? DeterminePullRequestId(ICakeContext context)
     {
-        context.NotNull(nameof(context));
+        context.NotNull();
 
         return context.AppVeyor().Environment.PullRequest.Number;
    }
@@ -51,8 +51,8 @@ public class AppVeyorBuildServer : BaseBuildServer
         ICakeContext context,
         IssuesData data)
     {
-        context.NotNull(nameof(context));
-        data.NotNull(nameof(data));
+        context.NotNull();
+        data.NotNull();
 
         context.ReportIssuesToPullRequest(
             data.Issues,
@@ -66,8 +66,8 @@ public class AppVeyorBuildServer : BaseBuildServer
         IssuesData data,
         [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "")
     {
-        context.NotNull(nameof(context));
-        data.NotNull(nameof(data));
+        context.NotNull();
+        data.NotNull();
 
         // Summary issues report is not supported for AppVeyor.
     }
@@ -75,8 +75,8 @@ public class AppVeyorBuildServer : BaseBuildServer
     /// <inheritdoc />
     public override void PublishIssuesArtifacts(ICakeContext context, IssuesData data)
     {
-        context.NotNull(nameof(context));
-        data.NotNull(nameof(data));
+        context.NotNull();
+        data.NotNull();
 
         if (IssuesParameters.BuildServer.ShouldPublishFullIssuesReport &&
             data.FullIssuesReport != null &&
