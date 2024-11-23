@@ -45,7 +45,7 @@ internal sealed class AzureDevOpsBuildServer : BaseBuildServer
     {
         context.NotNull();
 
-        return Int32.TryParse(context.EnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID"), out var pullRequestId)
+        return int.TryParse(context.EnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID"), out var pullRequestId)
             ? pullRequestId
             : throw new Exception($"Invalid pull request ID: {context.EnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID")}");
     }
