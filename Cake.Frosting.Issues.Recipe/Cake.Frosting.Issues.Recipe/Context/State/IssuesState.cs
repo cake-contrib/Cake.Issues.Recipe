@@ -84,11 +84,11 @@ public class IssuesState : IIssuesState
         if (this.BuildServer != null)
         {
             this.RepositoryRemoteUrl =
-                BuildServer.DetermineRepositoryRemoteUrl(context, this.RepositoryRootDirectory);
+                this.BuildServer.DetermineRepositoryRemoteUrl(context, this.RepositoryRootDirectory);
             context.Information("Repository remote URL: {0}", this.RepositoryRemoteUrl);
 
             this.CommitId =
-                BuildServer.DetermineCommitId(context, this.RepositoryRootDirectory);
+                this.BuildServer.DetermineCommitId(context, this.RepositoryRootDirectory);
             context.Information("CommitId: {0}", this.CommitId);
 
             this.PullRequestSystem =
@@ -127,15 +127,15 @@ public class IssuesState : IIssuesState
         if (this.PullRequestSystem != null)
         {
             defaultSettings.FileLinkSettings =
-                this.PullRequestSystem.GetFileLinkSettings(context);
+                this.PullRequestSystem.GetFileLinkSettings(this.context);
         }
 
         var issues =
-            context.ReadIssues(
+            this.context.ReadIssues(
                 issueProvider,
                 GetSettings(settings, defaultSettings));
 
-        AddIssues(issues);
+        this.AddIssues(issues);
 
         return issues;
     }
