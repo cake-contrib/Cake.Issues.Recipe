@@ -130,14 +130,14 @@ public class IssuesState : IIssuesState
                 this.PullRequestSystem.GetFileLinkSettings(this.context);
         }
 
-        var issues =
+        var issuesToAdd =
             this.context.ReadIssues(
                 issueProvider,
                 GetSettings(settings, defaultSettings));
 
-        this.AddIssues(issues);
+        this.AddIssues(issuesToAdd);
 
-        return issues;
+        return issuesToAdd;
     }
 
     /// <summary>
