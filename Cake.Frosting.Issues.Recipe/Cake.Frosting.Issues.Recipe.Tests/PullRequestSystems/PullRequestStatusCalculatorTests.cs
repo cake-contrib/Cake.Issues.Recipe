@@ -512,7 +512,7 @@ public sealed class PullRequestStatusCalculatorTests
                 };
                 var shouldSetPullRequestStatus = true;
                 var shouldSetSeparatePullRequestStatusForEachIssueProviderAndRun = false;
-                string buildIdentifier = "Build Identifier";
+                var buildIdentifier = "Build Identifier";
 
                 // When
                 var result =
