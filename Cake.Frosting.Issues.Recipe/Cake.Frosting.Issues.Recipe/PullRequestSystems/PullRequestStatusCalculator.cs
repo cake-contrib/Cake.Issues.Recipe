@@ -13,15 +13,13 @@ internal class PullRequestStatusCalculator
     /// </summary>
     /// <param name="context">Context of the build.</param>
     /// <returns>Status which should be reported to the pull request.</returns>
-    public static IEnumerable<PullRequestStatus> GetPullRequestStates(IIssuesContext context)
-    {
-        return GetPullRequestStates(
+    public static IEnumerable<PullRequestStatus> GetPullRequestStates(IIssuesContext context) =>
+        GetPullRequestStates(
             context.State.IssueProvidersAndRuns,
             context.State.Issues,
             context.Parameters.PullRequestSystem.ShouldSetPullRequestStatus,
             context.Parameters.PullRequestSystem.ShouldSetSeparatePullRequestStatusForEachIssueProviderAndRun,
             context.Parameters.BuildIdentifier);
-    }
 
     /// <summary>
     /// Returns the status which should be reported to the pull request.
@@ -100,10 +98,8 @@ internal class PullRequestStatusCalculator
 
     private class IssueProviderAndRunComparer : IEqualityComparer<PullRequestStateIssue>
     {
-        public bool Equals(PullRequestStateIssue x, PullRequestStateIssue y)
-        {
-            return x.ProviderType == y.ProviderType && x.Run == y.Run;
-        }
+        public bool Equals(PullRequestStateIssue x, PullRequestStateIssue y) =>
+            x.ProviderType == y.ProviderType && x.Run == y.Run;
 
         public int GetHashCode(PullRequestStateIssue obj)
         {

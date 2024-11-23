@@ -6,20 +6,10 @@ namespace Cake.Frosting.Issues.Recipe;
 internal sealed class GitHubPullRequestSystem : BasePullRequestSystem
 {
     /// <inheritdoc />
-    public override void ReportIssuesToPullRequest(IIssuesContext context)
-    {
-        context.NotNull();
-
-        // Not supported yet
-    }
+    public override void ReportIssuesToPullRequest(IIssuesContext context) => context.NotNull(); // Not supported yet
 
     /// <inheritdoc />
-    public override void SetPullRequestIssuesState(IIssuesContext context)
-    {
-        context.NotNull();
-
-        // Not supported yet
-    }
+    public override void SetPullRequestIssuesState(IIssuesContext context) => context.NotNull(); // Not supported yet
 
     /// <inheritdoc />
     public override FileLinkSettings GetFileLinkSettings(IIssuesContext context)

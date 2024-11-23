@@ -8,13 +8,11 @@ internal static class PullRequestStatusStateExtensions
     /// </summary>
     /// <param name="status">Status to convert.</param>
     /// <returns>Converted status.</returns>
-    public static AzureDevOpsPullRequestStatusState ToAzureDevOpsPullRequestStatusState(PullRequestStatusState status)
-    {
-        return status switch
+    public static AzureDevOpsPullRequestStatusState ToAzureDevOpsPullRequestStatusState(PullRequestStatusState status) =>
+        status switch
         {
             PullRequestStatusState.Succeeded => AzureDevOpsPullRequestStatusState.Succeeded,
             PullRequestStatusState.Failed => AzureDevOpsPullRequestStatusState.Failed,
             _ => AzureDevOpsPullRequestStatusState.Succeeded,
         };
-    }
 }

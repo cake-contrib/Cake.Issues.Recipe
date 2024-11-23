@@ -60,18 +60,10 @@ internal sealed class GitHubActionsBuildServer : BaseBuildServer
     /// <inheritdoc />
     public override void CreateSummaryIssuesReport(
         IIssuesContext context,
-        [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "")
-    {
-        context.NotNull();
-
-        // Summary issues report is not supported for GitHub Actions.
-    }
+        [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "") =>
+            context.NotNull(); // Summary issues report is not supported for GitHub Actions.
 
     /// <inheritdoc />
-    public override void PublishIssuesArtifacts(IIssuesContext context)
-    {
-        context.NotNull();
-
-        // Publishing artifacts is currently not supported for GitHub Actions.
-    }
+    public override void PublishIssuesArtifacts(IIssuesContext context) => 
+        context.NotNull(); // Publishing artifacts is currently not supported for GitHub Actions.
 }

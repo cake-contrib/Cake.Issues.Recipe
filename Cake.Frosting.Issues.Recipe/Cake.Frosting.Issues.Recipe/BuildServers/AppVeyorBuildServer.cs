@@ -67,12 +67,8 @@ internal sealed class AppVeyorBuildServer : BaseBuildServer
     /// <inheritdoc />
     public override void CreateSummaryIssuesReport(
         IIssuesContext context,
-        [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "")
-    {
-        context.NotNull();
-
-        // Summary issues report is not supported for AppVeyor.
-    }
+        [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "") =>
+            context.NotNull(); // Summary issues report is not supported for AppVeyor.
 
     /// <inheritdoc />
     public override void PublishIssuesArtifacts(IIssuesContext context)
