@@ -14,8 +14,8 @@ public class IssuesContext(
     private readonly RepositoryInfoProviderType repositoryInfoProviderType = repositoryInfoProviderType;
 
     /// <inheritdoc />
-    protected override IssuesParameters CreateIssuesParameters() => new IssuesParameters();
+    protected override IssuesParameters CreateIssuesParameters() => new();
 
     /// <inheritdoc />
-    protected override IssuesState CreateIssuesState() => new IssuesState(this, this.repositoryInfoProviderType);
+    protected override IssuesState CreateIssuesState() => new(this, this.repositoryInfoProviderType);
 }

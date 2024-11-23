@@ -9,7 +9,7 @@ internal static class PullRequestStatusExtensions
     /// <param name="status">Status to convert.</param>
     /// <returns>Converted status.</returns>
     public static AzureDevOpsPullRequestStatus ToAzureDevOpsPullRequestStatus(PullRequestStatus status) =>
-        new AzureDevOpsPullRequestStatus(status.Name)
+        new (status.Name)
         {
             Genre = status.Genre,
             State = PullRequestStatusStateExtensions.ToAzureDevOpsPullRequestStatusState(status.State),

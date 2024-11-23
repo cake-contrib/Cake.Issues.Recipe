@@ -6,14 +6,14 @@ namespace Cake.Frosting.Issues.Recipe;
 public class IssuesParameters : IssuesParameters<IssuesParametersInputFiles, IssuesParametersReporting, IssuesParametersBuildServer, IssuesParametersPullRequestSystem>
 {
     /// <inheritdoc />
-    protected override IssuesParametersBuildServer CreateBuildServerParameters() => new IssuesParametersBuildServer();
+    protected override IssuesParametersBuildServer CreateBuildServerParameters() => new();
 
     /// <inheritdoc />
-    protected override IssuesParametersInputFiles CreateInputFilesParameters() => new IssuesParametersInputFiles();
+    protected override IssuesParametersInputFiles CreateInputFilesParameters() => new();
 
     /// <inheritdoc />
-    protected override IssuesParametersPullRequestSystem CreatePullRequestSystemParameters() => new IssuesParametersPullRequestSystem();
+    protected override IssuesParametersPullRequestSystem CreatePullRequestSystemParameters() => new();
 
     /// <inheritdoc />
-    protected override IssuesParametersReporting CreateReportingParameters() => new IssuesParametersReporting();
+    protected override IssuesParametersReporting CreateReportingParameters() => new();
 }
