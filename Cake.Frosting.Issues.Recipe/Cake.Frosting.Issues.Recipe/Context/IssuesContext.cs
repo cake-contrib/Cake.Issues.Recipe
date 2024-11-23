@@ -1,28 +1,27 @@
-﻿namespace Cake.Frosting.Issues.Recipe
+﻿namespace Cake.Frosting.Issues.Recipe;
+
+using Cake.Core;
+
+/// <summary>
+/// Parameters and state for the build run.
+/// </summary>
+/// <param name="context">The Cake context.</param>
+/// <param name="repositoryInfoProviderType">Defines how information about the Git repository should be determined.</param>
+public class IssuesContext(
+    ICakeContext context,
+    RepositoryInfoProviderType repositoryInfoProviderType) : IssuesContext<IssuesParameters, IssuesState>(context)
 {
-    using Cake.Core;
+    private readonly RepositoryInfoProviderType repositoryInfoProviderType = repositoryInfoProviderType;
 
-    /// <summary>
-    /// Parameters and state for the build run.
-    /// </summary>
-    /// <param name="context">The Cake context.</param>
-    /// <param name="repositoryInfoProviderType">Defines how information about the Git repository should be determined.</param>
-    public class IssuesContext(
-        ICakeContext context,
-        RepositoryInfoProviderType repositoryInfoProviderType) : IssuesContext<IssuesParameters, IssuesState>(context)
+    /// <inheritdoc />
+    protected override IssuesParameters CreateIssuesParameters()
     {
-        private readonly RepositoryInfoProviderType repositoryInfoProviderType = repositoryInfoProviderType;
+        return new IssuesParameters();
+    }
 
-        /// <inheritdoc />
-        protected override IssuesParameters CreateIssuesParameters()
-        {
-            return new IssuesParameters();
-        }
-
-        /// <inheritdoc />
-        protected override IssuesState CreateIssuesState()
-        {
-            return new IssuesState(this, this.repositoryInfoProviderType);
-        }
+    /// <inheritdoc />
+    protected override IssuesState CreateIssuesState()
+    {
+        return new IssuesState(this, this.repositoryInfoProviderType);
     }
 }

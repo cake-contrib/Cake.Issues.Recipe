@@ -1,32 +1,31 @@
-namespace Cake.Frosting.Issues.Recipe
+namespace Cake.Frosting.Issues.Recipe;
+
+/// <summary>
+/// Parameters of the build.
+/// </summary>
+public class IssuesParameters : IssuesParameters<IssuesParametersInputFiles, IssuesParametersReporting, IssuesParametersBuildServer, IssuesParametersPullRequestSystem>
 {
-    /// <summary>
-    /// Parameters of the build.
-    /// </summary>
-    public class IssuesParameters : IssuesParameters<IssuesParametersInputFiles, IssuesParametersReporting, IssuesParametersBuildServer, IssuesParametersPullRequestSystem>
+    /// <inheritdoc />
+    protected override IssuesParametersBuildServer CreateBuildServerParameters()
     {
-        /// <inheritdoc />
-        protected override IssuesParametersBuildServer CreateBuildServerParameters()
-        {
-            return new IssuesParametersBuildServer();
-        }
+        return new IssuesParametersBuildServer();
+    }
 
-        /// <inheritdoc />
-        protected override IssuesParametersInputFiles CreateInputFilesParameters()
-        {
-            return new IssuesParametersInputFiles();
-        }
+    /// <inheritdoc />
+    protected override IssuesParametersInputFiles CreateInputFilesParameters()
+    {
+        return new IssuesParametersInputFiles();
+    }
 
-        /// <inheritdoc />
-        protected override IssuesParametersPullRequestSystem CreatePullRequestSystemParameters()
-        {
-            return new IssuesParametersPullRequestSystem();
-        }
+    /// <inheritdoc />
+    protected override IssuesParametersPullRequestSystem CreatePullRequestSystemParameters()
+    {
+        return new IssuesParametersPullRequestSystem();
+    }
 
-        /// <inheritdoc />
-        protected override IssuesParametersReporting CreateReportingParameters()
-        {
-            return new IssuesParametersReporting();
-        }
+    /// <inheritdoc />
+    protected override IssuesParametersReporting CreateReportingParameters()
+    {
+        return new IssuesParametersReporting();
     }
 }
