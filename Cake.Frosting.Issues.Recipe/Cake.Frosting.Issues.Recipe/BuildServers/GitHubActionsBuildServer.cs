@@ -64,6 +64,6 @@ internal sealed class GitHubActionsBuildServer : BaseBuildServer
             context.NotNull(); // Summary issues report is not supported for GitHub Actions.
 
     /// <inheritdoc />
-    public override void PublishIssuesArtifacts(IIssuesContext context) => 
+    public override void PublishIssuesArtifacts(IIssuesContext context) =>
         context.NotNull(); // Publishing artifacts is currently not supported for GitHub Actions.
 }
