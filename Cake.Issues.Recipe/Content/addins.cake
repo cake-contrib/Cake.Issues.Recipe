@@ -17,4 +17,4 @@
 #addin nuget:?package=Cake.Issues.PullRequests.AppVeyor&version=5.0.0-beta0001
 #addin nuget:?package=Cake.Issues.PullRequests.AzureDevOps&version=5.0.0-beta0001
 #addin nuget:?package=Cake.Issues.PullRequests.GitHubActions&version=5.0.0-beta0001
-#addin nuget:?package=Cake.AzureDevOps&version=5.0.0-beta0001
+#addin nuget:?package=Cake.AzureDevOps&version=5.0.0
