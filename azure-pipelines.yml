@@ -33,63 +33,15 @@ jobs:
   - publish: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
     artifact: NuGet Package
     displayName: 'Publish NuGet package as build artifact'
-# Integration Tests Frosting Windows 2019 (.NET 8)
+# Integration Tests Frosting
 - template: .azuredevops/pipelines/templates/jobs/test-frosting.yml
   parameters:
-    vmImage: 'windows-2019'
-    dotNetVersion: 8
-# Integration Tests Frosting Windows 2019 (.NET 9)
-- template: .azuredevops/pipelines/templates/jobs/test-frosting.yml
-  parameters:
-    vmImage: 'windows-2022'
-    dotNetVersion: 9
-# Integration Tests Script Runner Windows 2019 (.NET 8)
+    images: [ 'windows-2019', 'windows-2022', 'macOS-13', 'macOS-14', 'ubuntu-22.04', 'ubuntu-24.04' ]
+    dotNetVersions: [ 8, 9 ]
+    repositoryInfoProviders: [ 'git-cli', 'cake-git' ]
+# Integration Tests Script Runner
 - template: .azuredevops/pipelines/templates/jobs/test-scripting.yml
   parameters:
-    vmImage: 'windows-2019'
-    dotNetVersion: 8
-# Integration Tests Script Runner Windows 2022 (.NET 9)
-- template: .azuredevops/pipelines/templates/jobs/test-scripting.yml
-  parameters:
-    vmImage: 'windows-2022'
-    dotNetVersion: 9
-# Integration Tests Frosting macOS 13 (.NET 8)
-- template: .azuredevops/pipelines/templates/jobs/test-frosting.yml
-  parameters:
-    vmImage: 'macOS-13'
-    dotNetVersion: 8
-# Integration Tests Frosting macOS 14 (.NET 9)
-- template: .azuredevops/pipelines/templates/jobs/test-frosting.yml
-  parameters:
-    vmImage: 'macOS-14'
-    dotNetVersion: 9
-# Integration Tests Script Runner macOS 13 (.NET 8)
-- template: .azuredevops/pipelines/templates/jobs/test-scripting.yml
-  parameters:
-    vmImage: 'macOS-13'
-    dotNetVersion: 8
-# Integration Tests Script Runner macOS 14 (.NET 9)
-- template: .azuredevops/pipelines/templates/jobs/test-scripting.yml
-  parameters:
-    vmImage: 'macOS-14'
-    dotNetVersion: 9
-# Integration Tests Frosting Ubuntu 22.04 (.NET 8)
-- template: .azuredevops/pipelines/templates/jobs/test-frosting.yml
-  parameters:
-    vmImage: 'ubuntu-22.04'
-    dotNetVersion: 8
-# Integration Tests Frosting Ubuntu 24.04 (.NET 9)
-- template: .azuredevops/pipelines/templates/jobs/test-frosting.yml
-  parameters:
-    vmImage: 'ubuntu-24.04'
-    dotNetVersion: 9
-# Integration Tests Script Runner Ubuntu 22.04 (.NET tool)
-- template: .azuredevops/pipelines/templates/jobs/test-scripting.yml
-  parameters:
-    vmImage: 'ubuntu-22.04'
-    dotNetVersion: 8
-# Integration Tests Script Runner Ubuntu 24.04 (.NET tool)
-- template: .azuredevops/pipelines/templates/jobs/test-scripting.yml
-  parameters:
-    vmImage: 'ubuntu-24.04'
-    dotNetVersion: 9
+    images: [ 'windows-2019', 'windows-2022', 'macOS-13', 'macOS-14', 'ubuntu-22.04', 'ubuntu-24.04' ]
+    dotNetVersions: [ 8, 9 ]
+    repositoryInfoProviders: [ 'git-cli', 'cake-git' ]

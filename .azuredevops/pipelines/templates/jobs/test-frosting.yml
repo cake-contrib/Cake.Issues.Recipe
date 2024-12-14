@@ -1,23 +1,28 @@
 parameters:
-- name: vmImage
-  type: string
-- name: dotNetVersion
-  type: string
+  - name: images
+    type: object
+  - name: dotNetVersions
+    type: object
+  - name: repositoryInfoProviders
+    type: object
 
 jobs:
-- job: Test_Frosting_${{ replace(replace(parameters.vmImage,'-','_'),'.','_') }}_Net${{ parameters.dotNetVersion }}
-  displayName: Integration Tests Frosting ${{ parameters.vmImage }} (.NET ${{ parameters.dotNetVersion }})
-  dependsOn: Build
-  pool:
-    vmImage: '${{ parameters.vmImage }}'
-  steps:
-  - template: ../steps/prepare-test.yml
-    parameters:
-      dotNetVersion: ${{ parameters.dotNetVersion }}
-  - bash: |
-      ./build.sh --verbosity=diagnostic
-    workingDirectory: ./tests/frosting/net${{ parameters.dotNetVersion }}.0
-    displayName: 'Run integration tests'
-  - publish: $(Build.SourcesDirectory)/tests/frosting/net${{ parameters.dotNetVersion }}.0/build/BuildArtifacts/output
-    artifact: Integration Tests Frosting ${{ parameters.vmImage }} (.NET ${{ parameters.dotNetVersion }})
-    displayName: 'Publish generated reports as build artifact'
+  - ${{ each image in parameters.images }}:
+    - ${{ each dotnetVersion in parameters.dotNetVersions }}:
+      - ${{ each repositoryInfoProvider in parameters.repositoryInfoProviders }}:
+        - job: Test_Frosting_${{ replace(replace(image,'-','_'),'.','_') }}_Net${{ dotNetVersion }}_${{ replace(repositoryInfoProvider,'-','_') }}
+          displayName: Integration Tests Frosting ${{ image }} (.NET ${{ dotNetVersion }} / ${{ repositoryInfoProvider }})
+          dependsOn: Build
+          pool:
+            vmImage: '${{ image }}'
+          steps:
+          - template: ../steps/prepare-test.yml
+            parameters:
+              dotNetVersion: ${{ dotNetVersion }}
+          - bash: |
+              ./build.sh --verbosity=diagnostic
+            workingDirectory: ./tests/frosting/net${{ dotNetVersion }}.0-${{ repositoryInfoProvider }}
+            displayName: 'Run integration tests'
+          - publish: $(Build.SourcesDirectory)/tests/frosting/net${{ dotNetVersion }}.0-${{ repositoryInfoProvider }}/build/BuildArtifacts/output
+            artifact: Integration Tests Frosting ${{ image }} (.NET ${{ dotNetVersion }} + ${{ repositoryInfoProvider }})
+            displayName: 'Publish generated reports as build artifact'

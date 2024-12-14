@@ -49,7 +49,7 @@ jobs:
             8.x
       - name: Run integration tests
         run: ./build.ps1 --verbosity=diagnostic
-        working-directory: ./tests/script-runner/net8.0/
+        working-directory: ./tests/script-runner/net8.0-git-cli/
         shell: powershell
       - name: Publish generated reports as build artifact
         uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b # v4
