@@ -1,77 +1,76 @@
-﻿namespace Cake.Frosting.Issues.Recipe
+﻿namespace Cake.Frosting.Issues.Recipe;
+
+using Cake.Common;
+using Cake.Core;
+using Cake.Core.IO;
+
+/// <summary>
+/// Provider to retrieve repository information using Git CLI.
+/// </summary>
+internal sealed class CliRepositoryInfoProvider : IRepositoryInfoProvider
 {
-    using Cake.Common;
-    using Cake.Core;
-    using Cake.Core.IO;
-
-    /// <summary>
-    /// Provider to retrieve repository information using Git CLI.
-    /// </summary>
-    internal sealed class CliRepositoryInfoProvider : IRepositoryInfoProvider
+    /// <inheritdoc />
+    public DirectoryPath GetRepositoryRootDirectory(ICakeContext context, DirectoryPath buildRootDirectory)
     {
-        /// <inheritdoc />
-        public DirectoryPath GetRepositoryRootDirectory(ICakeContext context, DirectoryPath buildRootDirectory)
-        {
-            context.NotNull();
-            buildRootDirectory.NotNull();
+        context.NotNull();
+        buildRootDirectory.NotNull();
 
-            var result =
-                GitCommand(context, buildRootDirectory, "rev-parse", "--show-toplevel");
-            return new DirectoryPath(result.Single());
+        var result =
+            GitCommand(context, buildRootDirectory, "rev-parse", "--show-toplevel");
+        return new DirectoryPath(result.Single());
+    }
+
+    /// <inheritdoc />
+    public Uri GetRepositoryRemoteUrl(ICakeContext context, DirectoryPath repositoryRootDirectory)
+    {
+        context.NotNull();
+        repositoryRootDirectory.NotNull();
+
+        var result =
+            GitCommand(context, repositoryRootDirectory, "config", "--get", "remote.origin.url");
+        return new Uri(result.Single());
+    }
+
+    /// <inheritdoc />
+    public string GetCommitId(ICakeContext context, DirectoryPath repositoryRootDirectory)
+    {
+        context.NotNull();
+        repositoryRootDirectory.NotNull();
+
+        return
+            GitCommand(context, repositoryRootDirectory, "rev-parse", "HEAD")
+            .Single();
+    }
+
+    private static IEnumerable<string> GitCommand(
+        ICakeContext context,
+        DirectoryPath repositoryRootFolder,
+        params string[] arguments)
+    {
+        if (arguments.Length == 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(arguments));
         }
 
-        /// <inheritdoc />
-        public Uri GetRepositoryRemoteUrl(ICakeContext context, DirectoryPath repositoryRootDirectory)
-        {
-            context.NotNull();
-            repositoryRootDirectory.NotNull();
+        var gitArguments = string.Join(" ", arguments);
 
-            var result =
-                GitCommand(context, repositoryRootDirectory, "config", "--get", "remote.origin.url");
-            return new Uri(result.Single());
-        }
-
-        /// <inheritdoc />
-        public string GetCommitId(ICakeContext context, DirectoryPath repositoryRootDirectory)
-        {
-            context.NotNull();
-            repositoryRootDirectory.NotNull();
-
-            return
-                GitCommand(context, repositoryRootDirectory, "rev-parse", "HEAD")
-                .Single();
-        }
-
-        private static IEnumerable<string> GitCommand(
-            ICakeContext context,
-            DirectoryPath repositoryRootFolder,
-            params string[] arguments)
-        {
-            if (arguments.Length == 0)
+        var exitCode = context.StartProcess(
+            "git",
+            new ProcessSettings
             {
-                throw new ArgumentOutOfRangeException(nameof(arguments));
-            }
+                Arguments = gitArguments,
+                WorkingDirectory = repositoryRootFolder.FullPath,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true
+            },
+            out var redirectedStandardOutput,
+            out var redirectedErrorOutput
+        );
 
-            var gitArguments = string.Join(" ", arguments);
-
-            var exitCode = context.StartProcess(
-                "git",
-                new ProcessSettings
-                {
-                    Arguments = gitArguments,
-                    WorkingDirectory = repositoryRootFolder.FullPath,
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true
-                },
-                out var redirectedStandardOutput,
-                out var redirectedErrorOutput
+        return exitCode == 0
+            ? redirectedStandardOutput
+            : throw new Exception(
+                $"Git command failed with arguments {gitArguments}. Exit code: {exitCode}. Error output: {string.Join(Environment.NewLine, redirectedErrorOutput)}"
             );
-
-            return exitCode == 0
-                ? redirectedStandardOutput
-                : throw new Exception(
-                    $"Git command failed with arguments {gitArguments}. Exit code: {exitCode}. Error output: {string.Join(Environment.NewLine, redirectedErrorOutput)}"
-                );
-        }
     }
 }

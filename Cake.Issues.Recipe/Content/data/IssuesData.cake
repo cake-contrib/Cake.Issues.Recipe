@@ -172,14 +172,14 @@ public class IssuesData
                 this.PullRequestSystem.GetFileLinkSettings(this.context, this);
         }
 
-        var issues =
+        var issuesToAdd =
             context.ReadIssues(
                 issueProvider,
                 GetSettings(settings, defaultSettings));
 
-        AddIssues(issues);
+        AddIssues(issuesToAdd);
 
-        return issues;
+        return issuesToAdd;
     }
 
     /// <summary>

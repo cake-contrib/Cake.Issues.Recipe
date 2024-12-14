@@ -1,36 +1,35 @@
-﻿namespace Cake.Frosting.Issues.Recipe
+﻿namespace Cake.Frosting.Issues.Recipe;
+
+using Cake.Common.Build;
+using Cake.Common.Diagnostics;
+
+/// <summary>
+/// Publish issue artifacts to build server.
+/// </summary>
+[TaskName("Publish-IssuesArtifacts")]
+[IsDependentOn(typeof(CreateFullIssuesReportTask))]
+[IsDependentOn(typeof(CreateSarifReportTask))]
+public sealed class PublishIssuesArtifactsTask : FrostingTask<IIssuesContext>
 {
-    using Cake.Common.Build;
-    using Cake.Common.Diagnostics;
-
-    /// <summary>
-    /// Publish issue artifacts to build server.
-    /// </summary>
-    [TaskName("Publish-IssuesArtifacts")]
-    [IsDependentOn(typeof(CreateFullIssuesReportTask))]
-    [IsDependentOn(typeof(CreateSarifReportTask))]
-    public sealed class PublishIssuesArtifactsTask : FrostingTask<IIssuesContext>
+    /// <inheritdoc/>
+    public override bool ShouldRun(IIssuesContext context)
     {
-        /// <inheritdoc/>
-        public override bool ShouldRun(IIssuesContext context)
-        {
-            context.NotNull();
+        context.NotNull();
 
-            return !context.BuildSystem().IsLocalBuild;
+        return !context.BuildSystem().IsLocalBuild;
+    }
+
+    /// <inheritdoc/>
+    public override void Run(IIssuesContext context)
+    {
+        context.NotNull();
+
+        if (context.State.BuildServer == null)
+        {
+            context.Information("Not supported build server.");
+            return;
         }
 
-        /// <inheritdoc/>
-        public override void Run(IIssuesContext context)
-        {
-            context.NotNull();
-
-            if (context.State.BuildServer == null)
-            {
-                context.Information("Not supported build server.");
-                return;
-            }
-
-            context.State.BuildServer.PublishIssuesArtifacts(context);
-        }
+        context.State.BuildServer.PublishIssuesArtifacts(context);
     }
 }
