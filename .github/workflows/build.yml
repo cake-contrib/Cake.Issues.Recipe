@@ -16,9 +16,8 @@ jobs:
           # .NET 5 required for GitVersion
           dotnet-version: |
             5.x
-            6.x
-            7.x
             8.x
+            9.x
       - name: Build
         run: .\build.ps1
         shell: powershell
@@ -27,9 +26,9 @@ jobs:
         with:
           name: NuGet Package
           path: ./BuildArtifacts/Packages/NuGet/
-  # Integration Tests Script Runner Windows (.NET Core tool)
-  Test_Windows_DotNetCoreTool:
-    name: Integration Tests Script Runner Windows (.NET Core tool)
+  # Integration Tests Script Runner Windows (.NET tool)
+  Test_Windows_DotNetTool:
+    name: Integration Tests Script Runner Windows (.NET tool)
     needs: Build
     runs-on: windows-2019
     steps:
@@ -47,7 +46,7 @@ jobs:
         uses: actions/setup-dotnet@3e891b0cb619bf60e2c25674b222b8940e2c1c25 # v4
         with:
           dotnet-version: |
-            6.x
+            8.x
       - name: Run integration tests
         run: ./build.ps1 --verbosity=diagnostic
         working-directory: ./tests/script-runner/
@@ -55,5 +54,5 @@ jobs:
       - name: Publish generated reports as build artifact
         uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4
         with:
-          name: Integration Tests Script Runner Windows (.NET Core tool)
+          name: Integration Tests Script Runner Windows (.NET tool)
           path: ./tests/script-runner/BuildArtifacts/output/

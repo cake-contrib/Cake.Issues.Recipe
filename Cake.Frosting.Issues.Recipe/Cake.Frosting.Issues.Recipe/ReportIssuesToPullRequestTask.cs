@@ -1,38 +1,37 @@
-﻿namespace Cake.Frosting.Issues.Recipe
+﻿namespace Cake.Frosting.Issues.Recipe;
+
+using Cake.Common.Build;
+using Cake.Common.Diagnostics;
+
+/// <summary>
+/// Report issues to build server.
+/// </summary>
+[TaskName("Report-IssuesToPullRequest")]
+[IsDependentOn(typeof(ReadIssuesTask))]
+public sealed class ReportIssuesToPullRequestTask : FrostingTask<IIssuesContext>
 {
-    using Cake.Common.Build;
-    using Cake.Common.Diagnostics;
-
-    /// <summary>
-    /// Report issues to build server.
-    /// </summary>
-    [TaskName("Report-IssuesToPullRequest")]
-    [IsDependentOn(typeof(ReadIssuesTask))]
-    public sealed class ReportIssuesToPullRequestTask : FrostingTask<IIssuesContext>
+    /// <inheritdoc/>
+    public override bool ShouldRun(IIssuesContext context)
     {
-        /// <inheritdoc/>
-        public override bool ShouldRun(IIssuesContext context)
-        {
-            context.NotNull(nameof(context));
+        context.NotNull();
 
-            return
-                !context.BuildSystem().IsLocalBuild &&
-                context.Parameters.PullRequestSystem.ShouldReportIssuesToPullRequest &&
-                context.State.BuildServer != null && context.State.BuildServer.DetermineIfPullRequest(context);
+        return
+            !context.BuildSystem().IsLocalBuild &&
+            context.Parameters.PullRequestSystem.ShouldReportIssuesToPullRequest &&
+            context.State.BuildServer != null && context.State.BuildServer.DetermineIfPullRequest(context);
+    }
+
+    /// <inheritdoc/>
+    public override void Run(IIssuesContext context)
+    {
+        context.NotNull();
+
+        if (context.State.PullRequestSystem == null)
+        {
+            context.Information("Not supported pull request system.");
+            return;
         }
 
-        /// <inheritdoc/>
-        public override void Run(IIssuesContext context)
-        {
-            context.NotNull(nameof(context));
-
-            if (context.State.PullRequestSystem == null)
-            {
-                context.Information("Not supported pull request system.");
-                return;
-            }
-
-            context.State.PullRequestSystem.ReportIssuesToPullRequest(context);
-        }
+        context.State.PullRequestSystem.ReportIssuesToPullRequest(context);
     }
 }

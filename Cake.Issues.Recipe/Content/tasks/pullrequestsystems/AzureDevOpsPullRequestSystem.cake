@@ -6,8 +6,8 @@ public class AzureDevOpsPullRequestSystem : BasePullRequestSystem
     /// <inheritdoc />
     public override void ReportIssuesToPullRequest(ICakeContext context, IssuesData data)
     {
-        context.NotNull(nameof(context));
-        data.NotNull(nameof(data));
+        context.NotNull();
+        data.NotNull();
 
         if (string.IsNullOrWhiteSpace(context.EnvironmentVariable("SYSTEM_ACCESSTOKEN")))
         {
@@ -27,8 +27,8 @@ public class AzureDevOpsPullRequestSystem : BasePullRequestSystem
     /// <inheritdoc />
     public override void SetPullRequestIssuesState(ICakeContext context, IssuesData data)
     {
-        context.NotNull(nameof(context));
-        data.NotNull(nameof(data));
+        context.NotNull();
+        data.NotNull();
 
         if (string.IsNullOrWhiteSpace(context.EnvironmentVariable("SYSTEM_ACCESSTOKEN")))
         {
@@ -59,8 +59,8 @@ public class AzureDevOpsPullRequestSystem : BasePullRequestSystem
     /// <inheritdoc />
     public override FileLinkSettings GetFileLinkSettings(ICakeContext context, IssuesData data)
     {
-        context.NotNull(nameof(context));
-        data.NotNull(nameof(data));
+        context.NotNull();
+        data.NotNull();
 
         var rootPath = data.RepositoryRootDirectory.GetRelativePath(data.ProjectRootDirectory);
 

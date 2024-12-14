@@ -1,18 +1,17 @@
-﻿namespace Cake.Frosting.Issues.Recipe
+﻿namespace Cake.Frosting.Issues.Recipe;
+
+/// <summary>
+/// Possible states of a pull request status.
+/// </summary>
+internal enum PullRequestStatusState
 {
     /// <summary>
-    /// Possible states of a pull request status.
+    /// Status succeeded.
     /// </summary>
-    internal enum PullRequestStatusState
-    {
-        /// <summary>
-        /// Status succeeded.
-        /// </summary>
-        Succeeded,
+    Succeeded,
 
-        /// <summary>
-        /// Status failed.
-        /// </summary>
-        Failed
-    }
+    /// <summary>
+    /// Status failed.
+    /// </summary>
+    Failed
 }

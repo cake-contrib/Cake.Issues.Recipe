@@ -8,7 +8,6 @@ using Cake.Core.Diagnostics;
 /// </summary>
 internal class FakeIssueProvider2 : FakeIssueProvider
 {
-    private readonly List<IIssue> issues = [];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="FakeIssueProvider2"/> class.

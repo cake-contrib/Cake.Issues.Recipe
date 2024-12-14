@@ -1,31 +1,30 @@
-﻿namespace Cake.Frosting.Issues.Recipe
+﻿namespace Cake.Frosting.Issues.Recipe;
+
+/// <summary>
+/// Reports issues to the console.
+/// </summary>
+[TaskName("Report-IssuesToConsole")]
+[IsDependentOn(typeof(ReadIssuesTask))]
+public sealed class ReportIssuesToConsoleTask : FrostingTask<IIssuesContext>
 {
-    /// <summary>
-    /// Reports issues to the console.
-    /// </summary>
-    [TaskName("Report-IssuesToConsole")]
-    [IsDependentOn(typeof(ReadIssuesTask))]
-    public sealed class ReportIssuesToConsoleTask : FrostingTask<IIssuesContext>
+    /// <inheritdoc/>
+    public override bool ShouldRun(IIssuesContext context)
     {
-        /// <inheritdoc/>
-        public override bool ShouldRun(IIssuesContext context)
-        {
-            context.NotNull(nameof(context));
+        context.NotNull();
 
-            return context.Parameters.Reporting.ShouldReportIssuesToConsole;
-        }
+        return context.Parameters.Reporting.ShouldReportIssuesToConsole;
+    }
 
-        /// <inheritdoc/>
-        public override void Run(IIssuesContext context)
-        {
-            context.NotNull(nameof(context));
+    /// <inheritdoc/>
+    public override void Run(IIssuesContext context)
+    {
+        context.NotNull();
 
-            // Print issues to console.
-            context.CreateIssueReport(
-                context.State.Issues,
-                context.ConsoleIssueReportFormat(context.Parameters.Reporting.ReportToConsoleSettings),
-                context.State.ProjectRootDirectory,
-                string.Empty);
-        }
+        // Print issues to console.
+        context.CreateIssueReport(
+            context.State.Issues,
+            context.ConsoleIssueReportFormat(context.Parameters.Reporting.ReportToConsoleSettings),
+            context.State.ProjectRootDirectory,
+            string.Empty);
     }
 }
