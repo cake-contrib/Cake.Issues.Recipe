@@ -2,7 +2,7 @@
 // ADDINS
 ///////////////////////////////////////////////////////////////////////////////
 
-#addin nuget:?package=Cake.Git&version=5.0.0
+#addin nuget:?package=Cake.Git&version=5.0.1
 #addin nuget:?package=Cake.Issues&version=5.0.0
 #addin nuget:?package=Cake.Issues.MsBuild&version=5.0.0
 #addin nuget:?package=Cake.Issues.InspectCode&version=5.0.0
