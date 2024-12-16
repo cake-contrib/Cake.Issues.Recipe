@@ -1,0 +1,23 @@
+parameters:
+- name: vmImage
+  type: string
+- name: dotNetVersion
+  type: string
+
+jobs:
+- job: Test_Script_Runner_${{ replace(replace(parameters.vmImage,'-','_'),'.','_') }}_Net${{ parameters.dotNetVersion }}
+  displayName: Integration Tests Script Runner ${{ parameters.vmImage }} (.NET ${{ parameters.dotNetVersion }})
+  dependsOn: Build
+  pool:
+    vmImage: '${{ parameters.vmImage }}'
+  steps:
+  - template: ../steps/prepare-test.yml
+    parameters:
+      dotNetVersion: ${{ parameters.dotNetVersion }}
+  - bash: |
+      ./build.sh --verbosity=diagnostic
+    workingDirectory: ./tests/script-runner/net${{ parameters.dotNetVersion }}.0
+    displayName: 'Run integration tests'
+  - publish: $(Build.SourcesDirectory)/tests/script-runner/net${{ parameters.dotNetVersion }}.0/BuildArtifacts/output
+    artifact: Integration Tests Script Runner ${{ parameters.vmImage }} (.NET ${{ parameters.dotNetVersion }})
+    displayName: 'Publish generated reports as build artifact'

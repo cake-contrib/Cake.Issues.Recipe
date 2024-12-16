@@ -1,0 +1,24 @@
+parameters:
+- name: dotNetVersion
+  type: string
+
+steps:
+  - task: UseDotNet@2
+    inputs:
+      version: '${{ parameters.dotNetVersion }}.x'
+    displayName: 'Install .NET ${{ parameters.dotNetVersion }}'
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '20.x'
+    displayName: 'Install NodeJs 20.x'
+  - script: |
+      npm install -g markdownlint-cli
+    displayName: 'Install required tools'
+  - download: current
+    artifact: NuGet Package
+    displayName: 'Download build artifact'
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: $(Pipeline.Workspace)/NuGet Package
+      targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    displayName: 'Copy build artifact for test run'

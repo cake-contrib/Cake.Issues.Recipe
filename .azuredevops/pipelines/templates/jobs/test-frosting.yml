@@ -1,0 +1,23 @@
+parameters:
+- name: vmImage
+  type: string
+- name: dotNetVersion
+  type: string
+
+jobs:
+- job: Test_Frosting_${{ replace(replace(parameters.vmImage,'-','_'),'.','_') }}_Net${{ parameters.dotNetVersion }}
+  displayName: Integration Tests Frosting ${{ parameters.vmImage }} (.NET ${{ parameters.dotNetVersion }})
+  dependsOn: Build
+  pool:
+    vmImage: '${{ parameters.vmImage }}'
+  steps:
+  - template: ../steps/prepare-test.yml
+    parameters:
+      dotNetVersion: ${{ parameters.dotNetVersion }}
+  - bash: |
+      ./build.sh --verbosity=diagnostic
+    workingDirectory: ./tests/frosting/net${{ parameters.dotNetVersion }}.0
+    displayName: 'Run integration tests'
+  - publish: $(Build.SourcesDirectory)/tests/frosting/net${{ parameters.dotNetVersion }}.0/build/BuildArtifacts/output
+    artifact: Integration Tests Frosting ${{ parameters.vmImage }} (.NET ${{ parameters.dotNetVersion }})
+    displayName: 'Publish generated reports as build artifact'
