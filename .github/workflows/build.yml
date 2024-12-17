@@ -26,7 +26,7 @@ jobs:
         with:
           name: NuGet Package
           path: ./BuildArtifacts/Packages/NuGet/
-  # Integration Tests Script Runner Windows (.NET tool)
+  # Integration Tests Script Runner Windows 2019 (.NET 8)
   Test_Windows_DotNetTool:
     name: Integration Tests Script Runner Windows (.NET tool)
     needs: Build
@@ -49,10 +49,10 @@ jobs:
             8.x
       - name: Run integration tests
         run: ./build.ps1 --verbosity=diagnostic
-        working-directory: ./tests/script-runner/
+        working-directory: ./tests/script-runner/net8.0/
         shell: powershell
       - name: Publish generated reports as build artifact
         uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4
         with:
           name: Integration Tests Script Runner Windows (.NET tool)
-          path: ./tests/script-runner/BuildArtifacts/output/
+          path: ./tests/script-runner/net8.0/BuildArtifacts/output/
