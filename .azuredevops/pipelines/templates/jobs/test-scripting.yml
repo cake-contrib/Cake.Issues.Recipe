@@ -1,0 +1,28 @@
+parameters:
+  - name: images
+    type: object
+  - name: dotNetVersions
+    type: object
+  - name: repositoryInfoProviders
+    type: object
+
+jobs:
+  - ${{ each image in parameters.images }}:
+    - ${{ each dotnetVersion in parameters.dotNetVersions }}:
+      - ${{ each repositoryInfoProvider in parameters.repositoryInfoProviders }}:
+        - job: Test_Script_Runner_${{ replace(replace(image,'-','_'),'.','_') }}_Net${{ dotNetVersion }}_${{ replace(repositoryInfoProvider,'-','_') }}
+          displayName: Integration Tests Script Runner ${{ image }} (.NET ${{ dotNetVersion }} / ${{ repositoryInfoProvider }})
+          dependsOn: Build
+          pool:
+            vmImage: '${{ image }}'
+          steps:
+          - template: ../steps/prepare-test.yml
+            parameters:
+              dotNetVersion: ${{ dotNetVersion }}
+          - bash: |
+              ./build.sh --verbosity=diagnostic
+            workingDirectory: ./tests/script-runner/net${{ dotNetVersion }}.0-${{ repositoryInfoProvider }}
+            displayName: 'Run integration tests'
+          - publish: $(Build.SourcesDirectory)/tests/script-runner/net${{ dotNetVersion }}.0-${{ repositoryInfoProvider }}/BuildArtifacts/output
+            artifact: Integration Tests Script Runner ${{ image }} (.NET ${{ dotNetVersion }} + ${{ repositoryInfoProvider }})
+            displayName: 'Publish generated reports as build artifact'
