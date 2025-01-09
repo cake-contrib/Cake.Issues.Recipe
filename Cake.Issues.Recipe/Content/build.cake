@@ -39,7 +39,21 @@ IssuesBuildTasks.IssuesTask = Task("Issues")
     .IsDependentOn("Create-SummaryIssuesReport")
     .IsDependentOn("Report-IssuesToPullRequest")
     .IsDependentOn("Set-PullRequestIssuesState")
-    .IsDependentOn("Report-IssuesToConsole");
+    .IsDependentOn("Report-IssuesToConsole")
+    .Does<IssuesData>((data) =>
+{
+    if (IssuesParameters.BuildBreaking.ShouldFailBuildOnIssues)
+    {
+        BreakBuildOnIssues(
+            data.Issues,
+            new BuildBreakingSettings
+            {
+                MinimumPriority = IssuesParameters.BuildBreaking.MinimumPriority,
+                IssueProvidersToConsider = IssuesParameters.BuildBreaking.IssueProvidersToConsider,
+                IssueProvidersToIgnore = IssuesParameters.BuildBreaking.IssueProvidersToIgnore
+            });
+    }
+});
 
 IssuesBuildTasks.ReadIssuesTask = Task("Read-Issues")
     .Description("Reads issues from the provided log files.")
