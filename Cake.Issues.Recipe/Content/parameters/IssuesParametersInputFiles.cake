@@ -105,6 +105,13 @@ public class IssuesParametersInputFiles
     {
         logfilePath.NotNull();
 
+        if (this.MsBuildXmlFileLoggerLogFilePaths.ContainsKey(logfilePath))
+        {
+            throw new ArgumentException(
+                $"The path '{logfilePath.FullPath}' is already registered for the MsBuildXmlFileLogger log file format.",
+                nameof(logfilePath));
+        }
+
         this.MsBuildXmlFileLoggerLogFilePaths.Add(logfilePath, settings);
     }
 
@@ -177,6 +184,13 @@ public class IssuesParametersInputFiles
     public void AddMsBuildBinaryLogFilePath(FilePath logfilePath, IReadIssuesSettings settings)
     {
         logfilePath.NotNull();
+
+        if (this.MsBuildBinaryLogFilePaths.ContainsKey(logfilePath))
+        {
+            throw new ArgumentException(
+                $"The path '{logfilePath.FullPath}' is already registered for the MsBuildBinary log file format.",
+                nameof(logfilePath));
+        }
 
         this.MsBuildBinaryLogFilePaths.Add(logfilePath, settings);
     }
@@ -251,6 +265,13 @@ public class IssuesParametersInputFiles
     {
         logfilePath.NotNull();
 
+        if (this.InspectCodeLogFilePaths.ContainsKey(logfilePath))
+        {
+            throw new ArgumentException(
+                $"The path '{logfilePath.FullPath}' is already registered for InspectCode issue provider.",
+                nameof(logfilePath));
+        }
+
         this.InspectCodeLogFilePaths.Add(logfilePath, settings);
     }
 
@@ -323,6 +344,13 @@ public class IssuesParametersInputFiles
     public void AddMarkdownlintCliLogFilePath(FilePath logfilePath, IReadIssuesSettings settings)
     {
         logfilePath.NotNull();
+
+        if (this.MarkdownlintCliLogFilePaths.ContainsKey(logfilePath))
+        {
+            throw new ArgumentException(
+                $"The path '{logfilePath.FullPath}' is already registered for the MarkdownlintCli log file format.",
+                nameof(logfilePath));
+        }
 
         this.MarkdownlintCliLogFilePaths.Add(logfilePath, settings);
     }
@@ -398,6 +426,13 @@ public class IssuesParametersInputFiles
     {
         logfilePath.NotNull();
 
+        if (this.MarkdownlintCliJsonLogFilePaths.ContainsKey(logfilePath))
+        {
+            throw new ArgumentException(
+                $"The path '{logfilePath.FullPath}' is already registered for the MarkdownlintCliJson log file format.",
+                nameof(logfilePath));
+        }
+
         this.MarkdownlintCliJsonLogFilePaths.Add(logfilePath, settings);
     }
 
@@ -470,6 +505,13 @@ public class IssuesParametersInputFiles
     public void AddMarkdownlintV1LogFilePath(FilePath logfilePath, IReadIssuesSettings settings)
     {
         logfilePath.NotNull();
+
+        if (this.MarkdownlintV1LogFilePaths.ContainsKey(logfilePath))
+        {
+            throw new ArgumentException(
+                $"The path '{logfilePath.FullPath}' is already registered for the MarkdownlintV1 log file format.",
+                nameof(logfilePath));
+        }
 
         this.MarkdownlintV1LogFilePaths.Add(logfilePath, settings);
     }
@@ -544,6 +586,13 @@ public class IssuesParametersInputFiles
     {
         logfilePath.NotNull();
 
+        if (this.EsLintJsonLogFilePaths.ContainsKey(logfilePath))
+        {
+            throw new ArgumentException(
+                $"The path '{logfilePath.FullPath}' is already registered for the EsLintJson log file format.",
+                nameof(logfilePath));
+        }
+
         this.EsLintJsonLogFilePaths.Add(logfilePath, settings);
     }
 
@@ -616,6 +665,13 @@ public class IssuesParametersInputFiles
     public void AddSarifLogFilePath(FilePath logfilePath, IReadIssuesSettings settings)
     {
         logfilePath.NotNull();
+
+        if (this.SarifLogFilePaths.ContainsKey(logfilePath))
+        {
+            throw new ArgumentException(
+                $"The path '{logfilePath.FullPath}' is already registered for the SARIF issue provider.",
+                nameof(logfilePath));
+        }
 
         this.SarifLogFilePaths.Add(logfilePath, settings);
     }
