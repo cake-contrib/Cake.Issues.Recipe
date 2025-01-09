@@ -37,4 +37,9 @@ public static class IssuesParameters
     /// Gets the parameters for pull request system integration.
     /// </summary>
     public static IssuesParametersPullRequestSystem PullRequestSystem { get; } = new IssuesParametersPullRequestSystem();
+
+    /// <summary>
+    /// Gets the parameters for build breaking.
+    /// </summary>
+    public static IssuesParametersBuildBreaking BuildBreaking { get; } = new IssuesParametersBuildBreaking();
 }

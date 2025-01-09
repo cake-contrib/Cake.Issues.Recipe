@@ -41,4 +41,9 @@ public interface IIssuesParameters
     /// Gets the parameters for pull request system integration.
     /// </summary>
     IIssuesParametersPullRequestSystem PullRequestSystem { get; }
+
+    /// <summary>
+    /// Gets the parameters for build breaking.
+    /// </summary>
+    IIssuesParametersBuildBreaking BuildBreaking { get; }
 }
