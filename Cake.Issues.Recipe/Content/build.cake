@@ -51,6 +51,20 @@ IssuesBuildTasks.IssuesTask = Task("Issues")
                 MinimumPriority = IssuesParameters.BuildBreaking.MinimumPriority,
                 IssueProvidersToConsider = IssuesParameters.BuildBreaking.IssueProvidersToConsider,
                 IssueProvidersToIgnore = IssuesParameters.BuildBreaking.IssueProvidersToIgnore
+            },
+            x =>
+            {
+                // Print issues to console before failing build.
+                _ = CreateIssueReport(
+                    x,
+                    ConsoleIssueReportFormat(
+                        new ConsoleIssueReportFormatSettings
+                        {
+                            Compact = true,
+                            GroupByRule = true,
+                        }),
+                    data.ProjectRootDirectory,
+                    string.Empty);
             });
     }
 });
