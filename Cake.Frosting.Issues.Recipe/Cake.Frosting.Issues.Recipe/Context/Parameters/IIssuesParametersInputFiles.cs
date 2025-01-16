@@ -88,6 +88,36 @@ public interface IIssuesParametersInputFiles
     IDictionary<byte[], IReadIssuesSettings> SarifLogFileContent { get; }
 
     /// <summary>
+    /// Gets list of registered paths to TAP log files.
+    /// </summary>
+    IDictionary<FilePath, IReadIssuesSettings> GenericTapLogFilePaths { get; }
+
+    /// <summary>
+    /// Gets list of registered content of TAP log files.
+    /// </summary>
+    IDictionary<byte[], IReadIssuesSettings> GenericTapLogFileContent { get; }
+
+    /// <summary>
+    /// Gets list of registered paths to Stylelint TAP log files.
+    /// </summary>
+    IDictionary<FilePath, IReadIssuesSettings> StylelintTapLogFilePaths { get; }
+
+    /// <summary>
+    /// Gets list of registered content of Stylelint TAP log files.
+    /// </summary>
+    IDictionary<byte[], IReadIssuesSettings> StylelintTapLogFileContent { get; }
+
+    /// <summary>
+    /// Gets list of registered paths to Textlint TAP log files.
+    /// </summary>
+    IDictionary<FilePath, IReadIssuesSettings> TextlintTapLogFilePaths { get; }
+
+    /// <summary>
+    /// Gets list of registered content of Textlint TAP log files.
+    /// </summary>
+    IDictionary<byte[], IReadIssuesSettings> TextlintTapLogFileContent { get; }
+
+    /// <summary>
     /// Adds a path to a MSBuild log file created by XmlFileLogger.
     /// </summary>
     /// <param name="logfilePath">Path to the MSBuild log file.</param>
@@ -198,4 +228,46 @@ public interface IIssuesParametersInputFiles
     /// <param name="logfileContent">Content of the SARIF log file.</param>
     /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
     void AddSarifLogFileContent(byte[] logfileContent, IReadIssuesSettings settings);
+
+    /// <summary>
+    /// Adds a path to a log file in Test Anything Protocol format.
+    /// </summary>
+    /// <param name="logfilePath">Path to the log file in Test Anything Protocol format.</param>
+    /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
+    void AddGenericTapLogFilePath(FilePath logfilePath, IReadIssuesSettings settings);
+
+    /// <summary>
+    /// Adds content of a log file in Test Anything Protocol format.
+    /// </summary>
+    /// <param name="logfileContent">Content of the log file in Test Anything Protocol format.</param>
+    /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
+    void AddGenericTapLogFileContent(byte[] logfileContent, IReadIssuesSettings settings);
+
+    /// <summary>
+    /// Adds a path to a Stylelint log file in Test Anything Protocol format.
+    /// </summary>
+    /// <param name="logfilePath">Path to the Stylelint log file in Test Anything Protocol format.</param>
+    /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
+    void AddStylelintTapLogFilePath(FilePath logfilePath, IReadIssuesSettings settings);
+
+    /// <summary>
+    /// Adds content of a Stylelint log file in Test Anything Protocol format.
+    /// </summary>
+    /// <param name="logfileContent">Content of the Stylelint log file in Test Anything Protocol format.</param>
+    /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
+    void AddStylelintTapLogFileContent(byte[] logfileContent, IReadIssuesSettings settings);
+
+    /// <summary>
+    /// Adds a path to a Textlint log file in Test Anything Protocol format.
+    /// </summary>
+    /// <param name="logfilePath">Path to the Textlint log file in Test Anything Protocol format.</param>
+    /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
+    void AddTextlintTapLogFilePath(FilePath logfilePath, IReadIssuesSettings settings);
+
+    /// <summary>
+    /// Adds content of a Textlint log file in Test Anything Protocol format.
+    /// </summary>
+    /// <param name="logfileContent">Content of the Textlint log file in Test Anything Protocol format.</param>
+    /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
+    void AddTextlintTapLogFileContent(byte[] logfileContent, IReadIssuesSettings settings);
 }

@@ -534,4 +534,202 @@ public static class IIssuesParametersInputFilesExtensions
     }
 
     #endregion
+
+    #region GenericTapLogFile
+
+    /// <summary>
+    /// Adds a path to a log file in Test Anything Protocol format.
+    /// </summary>
+    /// <param name="parameters">Parameter instance.</param>
+    /// <param name="logfilePath">Path to the log file in Test Anything Protocol format.</param>
+    public static void AddGenericTapLogFilePath(
+        this IIssuesParametersInputFiles parameters,
+        FilePath logfilePath)
+    {
+        parameters.NotNull();
+        logfilePath.NotNull();
+
+        parameters.AddGenericTapLogFilePath(logfilePath, null);
+    }
+
+    /// <summary>
+    /// Adds content of a log file in Test Anything Protocol format.
+    /// </summary>
+    /// <param name="parameters">Parameter instance.</param>
+    /// <param name="logfileContent">Content of the log file in Test Anything Protocol format.</param>
+    public static void AddGenericTapLogFileContent(
+        this IIssuesParametersInputFiles parameters,
+        string logfileContent)
+    {
+        parameters.NotNull();
+        logfileContent.NotNullOrWhiteSpace();
+
+        parameters.AddGenericTapLogFileContent(logfileContent.ToByteArray(), null);
+    }
+
+    /// <summary>
+    /// Adds content of a log file in Test Anything Protocol format.
+    /// </summary>
+    /// <param name="parameters">Parameter instance.</param>
+    /// <param name="logfileContent">Content of the log file in Test Anything Protocol format.</param>
+    public static void AddGenericTapLogFileContent(
+        this IIssuesParametersInputFiles parameters,
+        byte[] logfileContent)
+    {
+        parameters.NotNull();
+        logfileContent.NotNullOrEmpty();
+
+        parameters.AddGenericTapLogFileContent(logfileContent, null);
+    }
+
+    /// <summary>
+    /// Adds content of a log file in Test Anything Protocol format.
+    /// </summary>
+    /// <param name="parameters">Parameter instance.</param>
+    /// <param name="logfileContent">Content of the log file in Test Anything Protocol format.</param>
+    /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
+    public static void AddGenericTapLogFileContent(
+        this IIssuesParametersInputFiles parameters,
+        string logfileContent,
+        IReadIssuesSettings settings)
+    {
+        parameters.NotNull();
+        logfileContent.NotNullOrEmpty();
+
+        parameters.AddGenericTapLogFileContent(logfileContent.ToByteArray(), settings);
+    }
+
+    #endregion
+
+    #region StylelintTapLogFile
+
+    /// <summary>
+    /// Adds a path to a Stylelint log file in Test Anything Protocol format.
+    /// </summary>
+    /// <param name="parameters">Parameter instance.</param>
+    /// <param name="logfilePath">Path to the Stylelint log file in Test Anything Protocol format.</param>
+    public static void AddStylelintTapLogFilePath(
+        this IIssuesParametersInputFiles parameters,
+        FilePath logfilePath)
+    {
+        parameters.NotNull();
+        logfilePath.NotNull();
+
+        parameters.AddStylelintTapLogFilePath(logfilePath, null);
+    }
+
+    /// <summary>
+    /// Adds content of a Stylelint log file in Test Anything Protocol format.
+    /// </summary>
+    /// <param name="parameters">Parameter instance.</param>
+    /// <param name="logfileContent">Content of the Stylelint log file in Test Anything Protocol format.</param>
+    public static void AddStylelintTapLogFileContent(
+        this IIssuesParametersInputFiles parameters,
+        string logfileContent)
+    {
+        parameters.NotNull();
+        logfileContent.NotNullOrWhiteSpace();
+
+        parameters.AddStylelintTapLogFileContent(logfileContent.ToByteArray(), null);
+    }
+
+    /// <summary>
+    /// Adds content of a Stylelint log file in Test Anything Protocol format.
+    /// </summary>
+    /// <param name="parameters">Parameter instance.</param>
+    /// <param name="logfileContent">Content of the Stylelint log file in Test Anything Protocol format.</param>
+    public static void AddStylelintTapLogFileContent(
+        this IIssuesParametersInputFiles parameters,
+        byte[] logfileContent)
+    {
+        parameters.NotNull();
+        logfileContent.NotNullOrEmpty();
+
+        parameters.AddStylelintTapLogFileContent(logfileContent, null);
+    }
+
+    /// <summary>
+    /// Adds content of a Stylelint log file in Test Anything Protocol format.
+    /// </summary>
+    /// <param name="parameters">Parameter instance.</param>
+    /// <param name="logfileContent">Content of the Stylelint log file in Test Anything Protocol format.</param>
+    /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
+    public static void AddStylelintTapLogFileContent(
+        this IIssuesParametersInputFiles parameters,
+        string logfileContent,
+        IReadIssuesSettings settings)
+    {
+        parameters.NotNull();
+        logfileContent.NotNullOrEmpty();
+
+        parameters.AddStylelintTapLogFileContent(logfileContent.ToByteArray(), settings);
+    }
+
+    #endregion
+
+    #region TextlintTapLogFile
+
+    /// <summary>
+    /// Adds a path to a Textlint log file in Test Anything Protocol format.
+    /// </summary>
+    /// <param name="parameters">Parameter instance.</param>
+    /// <param name="logfilePath">Path to the Textlint log file in Test Anything Protocol format.</param>
+    public static void AddTextlintTapLogFilePath(
+        this IIssuesParametersInputFiles parameters,
+        FilePath logfilePath)
+    {
+        parameters.NotNull();
+        logfilePath.NotNull();
+
+        parameters.AddTextlintTapLogFilePath(logfilePath, null);
+    }
+
+    /// <summary>
+    /// Adds content of a Textlint log file in Test Anything Protocol format.
+    /// </summary>
+    /// <param name="parameters">Parameter instance.</param>
+    /// <param name="logfileContent">Content of the Textlint log file in Test Anything Protocol format.</param>
+    public static void AddTextlintTapLogFileContent(
+        this IIssuesParametersInputFiles parameters,
+        string logfileContent)
+    {
+        parameters.NotNull();
+        logfileContent.NotNullOrWhiteSpace();
+
+        parameters.AddTextlintTapLogFileContent(logfileContent.ToByteArray(), null);
+    }
+
+    /// <summary>
+    /// Adds content of a Textlint log file in Test Anything Protocol format.
+    /// </summary>
+    /// <param name="parameters">Parameter instance.</param>
+    /// <param name="logfileContent">Content of the Textlint log file in Test Anything Protocol format.</param>
+    public static void AddTextlintTapLogFileContent(
+        this IIssuesParametersInputFiles parameters,
+        byte[] logfileContent)
+    {
+        parameters.NotNull();
+        logfileContent.NotNullOrEmpty();
+
+        parameters.AddTextlintTapLogFileContent(logfileContent, null);
+    }
+
+    /// <summary>
+    /// Adds content of a Textlint log file in Test Anything Protocol format.
+    /// </summary>
+    /// <param name="parameters">Parameter instance.</param>
+    /// <param name="logfileContent">Content of the Textlint log file in Test Anything Protocol format.</param>
+    /// <param name="settings">Settings for reading the log file. <c>Null</c> for default values.</param>
+    public static void AddTextlintTapLogFileContent(
+        this IIssuesParametersInputFiles parameters,
+        string logfileContent,
+        IReadIssuesSettings settings)
+    {
+        parameters.NotNull();
+        logfileContent.NotNullOrEmpty();
+
+        parameters.AddTextlintTapLogFileContent(logfileContent.ToByteArray(), settings);
+    }
+
+    #endregion
 }

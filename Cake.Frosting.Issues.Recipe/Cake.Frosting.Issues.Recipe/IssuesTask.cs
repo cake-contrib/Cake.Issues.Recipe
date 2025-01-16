@@ -25,6 +25,20 @@ public sealed class IssuesTask : FrostingTask<IIssuesContext>
                     MinimumPriority = context.Parameters.BuildBreaking.MinimumPriority,
                     IssueProvidersToConsider = context.Parameters.BuildBreaking.IssueProvidersToConsider,
                     IssueProvidersToIgnore = context.Parameters.BuildBreaking.IssueProvidersToIgnore
+                },
+                x =>
+                {
+                    // Print issues to console before failing build.
+                    _ = context.CreateIssueReport(
+                        x,
+                        context.ConsoleIssueReportFormat(
+                            new ConsoleIssueReportFormatSettings
+                            {
+                                Compact = true,
+                                GroupByRule = true,
+                            }),
+                        context.State.ProjectRootDirectory,
+                        string.Empty);
                 });
         }
     }
