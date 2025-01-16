@@ -56,6 +56,24 @@ public class IssuesParametersInputFiles : IIssuesParametersInputFiles
     public IDictionary<byte[], IReadIssuesSettings> SarifLogFileContent { get; } = new Dictionary<byte[], IReadIssuesSettings>();
 
     /// <inheritdoc />
+    public IDictionary<FilePath, IReadIssuesSettings> GenericTapLogFilePaths { get; } = new Dictionary<FilePath, IReadIssuesSettings>();
+
+    /// <inheritdoc />
+    public IDictionary<byte[], IReadIssuesSettings> GenericTapLogFileContent { get; } = new Dictionary<byte[], IReadIssuesSettings>();
+
+    /// <inheritdoc />
+    public IDictionary<FilePath, IReadIssuesSettings> StylelintTapLogFilePaths { get; } = new Dictionary<FilePath, IReadIssuesSettings>();
+
+    /// <inheritdoc />
+    public IDictionary<byte[], IReadIssuesSettings> StylelintTapLogFileContent { get; } = new Dictionary<byte[], IReadIssuesSettings>();
+
+    /// <inheritdoc />
+    public IDictionary<FilePath, IReadIssuesSettings> TextlintTapLogFilePaths { get; } = new Dictionary<FilePath, IReadIssuesSettings>();
+
+    /// <inheritdoc />
+    public IDictionary<byte[], IReadIssuesSettings> TextlintTapLogFileContent { get; } = new Dictionary<byte[], IReadIssuesSettings>();
+
+    /// <inheritdoc />
     public void AddMsBuildXmlFileLoggerLogFilePath(FilePath logfilePath, IReadIssuesSettings settings)
     {
         logfilePath.NotNull();
@@ -237,5 +255,74 @@ public class IssuesParametersInputFiles : IIssuesParametersInputFiles
         logfileContent.NotNullOrEmpty();
 
         this.SarifLogFileContent.Add(logfileContent, settings);
+    }
+
+    /// <inheritdoc />
+    public void AddGenericTapLogFilePath(FilePath logfilePath, IReadIssuesSettings settings)
+    {
+        logfilePath.NotNull();
+
+        if (this.GenericTapLogFilePaths.ContainsKey(logfilePath))
+        {
+            throw new ArgumentException(
+                $"The path '{logfilePath.FullPath}' is already registered for the Generic TAP issue provider.",
+                nameof(logfilePath));
+        }
+
+        this.GenericTapLogFilePaths.Add(logfilePath, settings);
+    }
+
+    /// <inheritdoc />
+    public void AddGenericTapLogFileContent(byte[] logfileContent, IReadIssuesSettings settings)
+    {
+        logfileContent.NotNullOrEmpty();
+
+        this.GenericTapLogFileContent.Add(logfileContent, settings);
+    }
+
+    /// <inheritdoc />
+    public void AddStylelintTapLogFilePath(FilePath logfilePath, IReadIssuesSettings settings)
+    {
+        logfilePath.NotNull();
+
+        if (this.StylelintTapLogFilePaths.ContainsKey(logfilePath))
+        {
+            throw new ArgumentException(
+                $"The path '{logfilePath.FullPath}' is already registered for the Stylelint TAP issue provider.",
+                nameof(logfilePath));
+        }
+
+        this.StylelintTapLogFilePaths.Add(logfilePath, settings);
+    }
+
+    /// <inheritdoc />
+    public void AddStylelintTapLogFileContent(byte[] logfileContent, IReadIssuesSettings settings)
+    {
+        logfileContent.NotNullOrEmpty();
+
+        this.StylelintTapLogFileContent.Add(logfileContent, settings);
+    }
+
+    /// <inheritdoc />
+    public void AddTextlintTapLogFilePath(FilePath logfilePath, IReadIssuesSettings settings)
+    {
+        logfilePath.NotNull();
+
+        if (this.StylelintTapLogFilePaths.ContainsKey(logfilePath))
+        {
+            throw new ArgumentException(
+                $"The path '{logfilePath.FullPath}' is already registered for the Textlint TAP issue provider.",
+                nameof(logfilePath));
+        }
+
+        this.StylelintTapLogFilePaths.Add(logfilePath, settings);
+    }
+
+    /// <inheritdoc />
+    public void AddTextlintTapLogFileContent(byte[] logfileContent, IReadIssuesSettings settings)
+    {
+        logfileContent.NotNullOrEmpty();
+
+        this.StylelintTapLogFileContent.Add(logfileContent, settings);
     }
 }

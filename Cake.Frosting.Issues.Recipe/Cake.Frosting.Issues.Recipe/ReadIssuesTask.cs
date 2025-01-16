@@ -185,6 +185,60 @@ public sealed class ReadIssuesTask : FrostingTask<IIssuesContext>
                 logFileContent.Value);
         }
 
+        // Read generic TAP log files.
+        foreach (var logFile in context.Parameters.InputFiles.GenericTapLogFilePaths)
+        {
+            context.State.AddIssues(
+                context.TapIssues(
+                    new TapIssuesSettings(logFile.Key, context.GenericLogFileFormat())),
+                logFile.Value);
+        }
+
+        // Read generic TAP content.
+        foreach (var logFileContent in context.Parameters.InputFiles.GenericTapLogFileContent)
+        {
+            context.State.AddIssues(
+                context.TapIssues(
+                    new TapIssuesSettings(logFileContent.Key, context.GenericLogFileFormat())),
+                logFileContent.Value);
+        }
+
+        // Read Stylelint TAP log files.
+        foreach (var logFile in context.Parameters.InputFiles.StylelintTapLogFilePaths)
+        {
+            context.State.AddIssues(
+                context.TapIssues(
+                    new TapIssuesSettings(logFile.Key, context.StylelintLogFileFormat())),
+                logFile.Value);
+        }
+
+        // Read Stylelint TAP content.
+        foreach (var logFileContent in context.Parameters.InputFiles.StylelintTapLogFileContent)
+        {
+            context.State.AddIssues(
+                context.TapIssues(
+                    new TapIssuesSettings(logFileContent.Key, context.StylelintLogFileFormat())),
+                logFileContent.Value);
+        }
+
+        // Read Textlint TAP log files.
+        foreach (var logFile in context.Parameters.InputFiles.TextlintTapLogFilePaths)
+        {
+            context.State.AddIssues(
+                context.TapIssues(
+                    new TapIssuesSettings(logFile.Key, context.TextlintLogFileFormat())),
+                logFile.Value);
+        }
+
+        // Read Textlint TAP content.
+        foreach (var logFileContent in context.Parameters.InputFiles.TextlintTapLogFileContent)
+        {
+            context.State.AddIssues(
+                context.TapIssues(
+                    new TapIssuesSettings(logFileContent.Key, context.TextlintLogFileFormat())),
+                logFileContent.Value);
+        }
+
         context.Information("{0} issues are found.", context.State.Issues.Count());
     }
 }

@@ -48,6 +48,7 @@ For recipe compatible with Cake Script Runners see Cake.Issues.Recipe.</Descript
     <PackageReference Include="Cake.Frosting.Issues.Markdownlint" Version="5.4.0" />
     <PackageReference Include="Cake.Frosting.Issues.MsBuild" Version="5.4.0" />
     <PackageReference Include="Cake.Frosting.Issues.Sarif" Version="5.4.0" />
+    <PackageReference Include="Cake.Frosting.Issues.Tap" Version="5.4.0" />
     <PackageReference Include="Cake.Frosting.Issues.PullRequests" Version="5.4.0" />
     <PackageReference Include="Cake.Frosting.Issues.PullRequests.AppVeyor" Version="5.4.0" />
     <PackageReference Include="Cake.Frosting.Issues.PullRequests.AzureDevOps" Version="5.4.0" />

@@ -244,6 +244,72 @@ IssuesBuildTasks.ReadIssuesTask = Task("Read-Issues")
             logFileContent.Value);
     }
 
+    // Read generic TAP log files.
+    foreach (var logFile in IssuesParameters.InputFiles.GenericTapLogFilePaths)
+    {
+        data.AddIssues(
+            TapIssues(
+                new TapIssuesSettings(
+                    logFile.Key,
+                    GenericLogFileFormat)),
+            logFile.Value);
+    }
+
+    // Read generic TAP content.
+    foreach (var logFileContent in IssuesParameters.InputFiles.GenericTapLogFileContent)
+    {
+        data.AddIssues(
+            TapIssues(
+                new TapIssuesSettings(
+                    logFileContent.Key,
+                    GenericLogFileFormat)),
+            logFileContent.Value);
+    }
+
+    // Read Stylelint TAP log files.
+    foreach (var logFile in IssuesParameters.InputFiles.GenericTapLogFilePaths)
+    {
+        data.AddIssues(
+            TapIssues(
+                new TapIssuesSettings(
+                    logFile.Key,
+                    StylelintLogFileFormat)),
+            logFile.Value);
+    }
+
+    // Read Stylelint TAP content.
+    foreach (var logFileContent in IssuesParameters.InputFiles.GenericTapLogFileContent)
+    {
+        data.AddIssues(
+            TapIssues(
+                new TapIssuesSettings(
+                    logFileContent.Key,
+                    StylelintLogFileFormat)),
+            logFileContent.Value);
+    }
+
+    // Read Textlint TAP log files.
+    foreach (var logFile in IssuesParameters.InputFiles.GenericTapLogFilePaths)
+    {
+        data.AddIssues(
+            TapIssues(
+                new TapIssuesSettings(
+                    logFile.Key,
+                    TextlintLogFileFormat)),
+            logFile.Value);
+    }
+
+    // Read Textlint TAP content.
+    foreach (var logFileContent in IssuesParameters.InputFiles.GenericTapLogFileContent)
+    {
+        data.AddIssues(
+            TapIssues(
+                new TapIssuesSettings(
+                    logFileContent.Key,
+                    TextlintLogFileFormat)),
+            logFileContent.Value);
+    }
+
     Information("{0} issues are found.", data.Issues.Count());
 });
 
