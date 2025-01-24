@@ -1,4 +1,7 @@
 ﻿namespace Cake.Frosting.Issues.Recipe;
+
+using Cake.Common.Diagnostics;
+
 /// <summary>
 /// Main task for issue management integration.
 /// </summary>
@@ -28,6 +31,13 @@ public sealed class IssuesTask : FrostingTask<IIssuesContext>
                 },
                 x =>
                 {
+                    var issueCount = x.Count();
+                    context.Error(
+                        issueCount == 1
+                        ? "{0} issue was found in the build."
+                        : "{0} issues were found in the build",
+                        issueCount);
+                    context.Error("Issues containing file location information are printed below. Note that there might be more issues which cannot be listed.");
                     // Print issues to console before failing build.
                     _ = context.CreateIssueReport(
                         x,
