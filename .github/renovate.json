@@ -16,6 +16,18 @@
                 "/Cake.Issues/",
                 "/Cake.Frosting.Issues/"
             ]
+        },
+        {
+            "description": "Group Cake.AzureDevOps addins",
+            "matchManagers": [
+                "cake",
+                "nuget"
+            ],
+            "groupName": "Cake.AzureDevOps",
+            "matchPackageNames": [
+                "/Cake.AzureDevOps/",
+                "/Cake.Frosting.AzureDevOps/"
+            ]
         }
     ]
 }
