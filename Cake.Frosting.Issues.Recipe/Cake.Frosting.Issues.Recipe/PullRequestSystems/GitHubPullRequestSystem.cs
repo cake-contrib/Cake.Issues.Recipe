@@ -75,7 +75,7 @@ internal sealed class GitHubPullRequestSystem : BasePullRequestSystem
     /// <param name="owner">The extracted owner/organization name.</param>
     /// <param name="repository">The extracted repository name.</param>
     /// <returns>True if parsing was successful, false otherwise.</returns>
-    private static bool TryParseGitHubUrl(string repositoryUrl, out string owner, out string repository)
+    internal static bool TryParseGitHubUrl(string repositoryUrl, out string owner, out string repository)
     {
         owner = null;
         repository = null;
