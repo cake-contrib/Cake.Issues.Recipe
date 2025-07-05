@@ -15,4 +15,17 @@ internal static class PullRequestStatusStateExtensions
             PullRequestStatusState.Failed => AzureDevOpsPullRequestStatusState.Failed,
             _ => AzureDevOpsPullRequestStatusState.Succeeded,
         };
+
+    /// <summary>
+    /// Converts the <see cref="PullRequestStatusState"/> to GitHub status state.
+    /// </summary>
+    /// <param name="status">Status to convert.</param>
+    /// <returns>Converted status.</returns>
+    public static GitHubStatusState ToGitHubStatusState(PullRequestStatusState status) =>
+        status switch
+        {
+            PullRequestStatusState.Succeeded => GitHubStatusState.Success,
+            PullRequestStatusState.Failed => GitHubStatusState.Failure,
+            _ => GitHubStatusState.Success,
+        };
 }
