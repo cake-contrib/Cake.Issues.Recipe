@@ -4,6 +4,7 @@ using Cake.Core;
 using Cake.Core.IO;
 using GitReader;
 using GitReader.Structures;
+using System.IO;
 
 /// <summary>
 /// Provider to retrieve repository information using <see href="https://github.com/kekyo/GitReader">GitReader library</see>.
@@ -20,7 +21,7 @@ internal sealed class GitReaderRepositoryInfoProvider : IRepositoryInfoProvider
         var currentDir = new DirectoryInfo(buildRootDirectory.FullPath);
         while (currentDir != null)
         {
-            var gitDir = Path.Combine(currentDir.FullName, ".git");
+            var gitDir = System.IO.Path.Combine(currentDir.FullName, ".git");
             if (Directory.Exists(gitDir) || File.Exists(gitDir))
             {
                 return new DirectoryPath(currentDir.FullName);
@@ -40,7 +41,7 @@ internal sealed class GitReaderRepositoryInfoProvider : IRepositoryInfoProvider
         try
         {
             // Read the origin remote URL from .git/config
-            var configPath = Path.Combine(repositoryRootDirectory.FullPath, ".git", "config");
+            var configPath = System.IO.Path.Combine(repositoryRootDirectory.FullPath, ".git", "config");
             if (File.Exists(configPath))
             {
                 var configLines = File.ReadAllLines(configPath);
