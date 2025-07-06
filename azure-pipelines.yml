@@ -36,12 +36,12 @@ jobs:
 # Integration Tests Frosting
 - template: .azuredevops/pipelines/templates/jobs/test-frosting.yml
   parameters:
-    images: [ 'windows-2019', 'windows-2022', 'macOS-13', 'macOS-14', 'ubuntu-22.04', 'ubuntu-24.04' ]
+    images: [ 'windows-2022', 'windows-2025', 'macOS-13', 'macOS-14', 'ubuntu-22.04', 'ubuntu-24.04' ]
     dotNetVersions: [ 8, 9 ]
     repositoryInfoProviders: [ 'git-cli', 'cake-git' ]
 # Integration Tests Script Runner
 - template: .azuredevops/pipelines/templates/jobs/test-scripting.yml
   parameters:
-    images: [ 'windows-2019', 'windows-2022', 'macOS-13', 'macOS-14', 'ubuntu-22.04', 'ubuntu-24.04' ]
+    images: [ 'windows-2022', 'windows-2025', 'macOS-13', 'macOS-14', 'ubuntu-22.04', 'ubuntu-24.04' ]
     dotNetVersions: [ 8, 9 ]
     repositoryInfoProviders: [ 'git-cli', 'cake-git' ]
