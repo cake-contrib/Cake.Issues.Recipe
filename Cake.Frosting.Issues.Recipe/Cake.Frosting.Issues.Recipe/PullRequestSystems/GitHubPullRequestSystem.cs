@@ -44,7 +44,7 @@ internal sealed class GitHubPullRequestSystem : BasePullRequestSystem
             {
                 context.Information("Setting GitHub status {0} to {1}", item.Name, item.State);
 
-                context.GitHubStatus(
+                _ = context.GitHubStatus(
                     null, // Use null for username when using access token
                     githubToken,
                     owner,
@@ -85,34 +85,36 @@ internal sealed class GitHubPullRequestSystem : BasePullRequestSystem
             return false;
         }
 
+        Uri uri;
         try
         {
-            var uri = new Uri(repositoryUrl);
-            if (!uri.Host.Equals("github.com", StringComparison.OrdinalIgnoreCase))
-            {
-                return false;
-            }
-
-            var pathSegments = uri.AbsolutePath.Trim('/').Split('/');
-            if (pathSegments.Length < 2)
-            {
-                return false;
-            }
-
-            owner = pathSegments[0];
-            repository = pathSegments[1];
-
-            // Remove .git suffix if present
-            if (repository.EndsWith(".git", StringComparison.OrdinalIgnoreCase))
-            {
-                repository = repository.Substring(0, repository.Length - 4);
-            }
-
-            return !string.IsNullOrWhiteSpace(owner) && !string.IsNullOrWhiteSpace(repository);
+            uri = new Uri(repositoryUrl);
         }
-        catch
+        catch (UriFormatException)
         {
             return false;
         }
+
+        if (!uri.Host.Equals("github.com", StringComparison.OrdinalIgnoreCase))
+        {
+            return false;
+        }
+
+        var pathSegments = uri.AbsolutePath.Trim('/').Split('/');
+        if (pathSegments.Length < 2)
+        {
+            return false;
+        }
+
+        owner = pathSegments[0];
+        repository = pathSegments[1];
+
+        // Remove .git suffix if present
+        if (repository.EndsWith(".git", StringComparison.OrdinalIgnoreCase))
+        {
+            repository = repository[..^4];
+        }
+
+        return !string.IsNullOrWhiteSpace(owner) && !string.IsNullOrWhiteSpace(repository);
     }
 }
