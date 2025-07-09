@@ -20,3 +20,4 @@
 #addin nuget:?package=Cake.Issues.PullRequests.GitHubActions&version=5.6.0
 #addin nuget:?package=Cake.AzureDevOps&version=5.0.1
 #addin nuget:?package=Cake.GitHub&version=1.0.0
+#addin nuget:?package=Octokit&version=13.0.1
