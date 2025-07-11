@@ -15,4 +15,17 @@ internal static class PullRequestStatusExtensions
             State = PullRequestStatusStateExtensions.ToAzureDevOpsPullRequestStatusState(status.State),
             Description = status.Description
         };
+
+    /// <summary>
+    /// Converts the <see cref="PullRequestStatus"/> to <see cref="GitHubStatusSettings"/>.
+    /// </summary>
+    /// <param name="status">Status to convert.</param>
+    /// <returns>Converted status.</returns>
+    public static GitHubStatusSettings ToGitHubStatusSettings(PullRequestStatus status) =>
+        new GitHubStatusSettings
+        {
+            State = PullRequestStatusStateExtensions.ToGitHubStatusState(status.State),
+            Context = status.Name,
+            Description = status.Description
+        };
 }
