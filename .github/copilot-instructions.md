@@ -33,3 +33,4 @@ To have verbose output of build.sh the following parameter can be add `--verbosi
 1. Maintain existing code structure and organization
 2. Write unit tests for new functionality.
 3. Write integration tests for new functionality which can't be tested with unit tests.
+4. Ensure Cake.Issues.Recipe and Cake.Frosting.Issues.Recipe are kept in sync regarding the features they provide.
