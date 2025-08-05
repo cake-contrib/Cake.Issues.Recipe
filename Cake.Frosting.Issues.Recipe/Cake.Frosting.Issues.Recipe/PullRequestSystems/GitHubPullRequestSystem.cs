@@ -39,7 +39,7 @@ internal sealed class GitHubPullRequestSystem : BasePullRequestSystem
         {
             foreach (var item in status)
             {
-                context.Information("Setting GitHub status {0} to {1}", item.Name, item.State);
+                context.Information("Setting GitHub status {0} for commit {1} to {2}", item.Name, context.State.CommitId, item.State);
 
                 _ = context.GitHubStatus(
                     null, // Use null for username when using access token
