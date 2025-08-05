@@ -6,6 +6,7 @@ using Cake.Common.Diagnostics;
 using Cake.Common.IO;
 using Cake.Core.IO;
 using System.Net;
+using System.Net.Http;
 
 /// <summary>
 /// Support for builds running on GitHub Actions.
@@ -161,7 +162,7 @@ internal sealed class GitHubActionsBuildServer : BaseBuildServer
             if (response.StatusCode == HttpStatusCode.Forbidden)
             {
                 var errorContent = response.Content.ReadAsStringAsync().Result;
-                if (errorContent.Contains("Code Security must be enabled"))
+                if (errorContent.Contains("Code Security must be enabled", StringComparison.Ordinal))
                 {
                     return false;
                 }
@@ -172,11 +173,25 @@ internal sealed class GitHubActionsBuildServer : BaseBuildServer
             context.Warning($"Unable to determine code scanning status. Response: {response.StatusCode}");
             return true;
         }
+        catch (HttpRequestException ex)
+        {
+            // If there's an HTTP exception checking the status, assume code scanning might be enabled
+            context.Warning($"HTTP error checking code scanning status: {ex.Message}");
+            return true;
+        }
+        catch (TaskCanceledException ex)
+        {
+            // If there's a timeout checking the status, assume code scanning might be enabled
+            context.Warning($"Timeout checking code scanning status: {ex.Message}");
+            return true;
+        }
+#pragma warning disable CA1031 // Do not catch general exception types - intentional fail-safe behavior
         catch (Exception ex)
         {
-            // If there's an exception checking the status, assume code scanning might be enabled
+            // If there's any other exception checking the status, assume code scanning might be enabled
             context.Warning($"Error checking code scanning status: {ex.Message}");
             return true;
         }
+#pragma warning restore CA1031 // Do not catch general exception types
     }
 }

@@ -161,7 +161,7 @@ public class GitHubActionsBuildServer : BaseBuildServer
             if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
             {
                 var errorContent = response.Content.ReadAsStringAsync().Result;
-                if (errorContent.Contains("Code Security must be enabled"))
+                if (errorContent.Contains("Code Security must be enabled", System.StringComparison.Ordinal))
                 {
                     return false;
                 }
@@ -172,9 +172,21 @@ public class GitHubActionsBuildServer : BaseBuildServer
             context.Warning($"Unable to determine code scanning status. Response: {response.StatusCode}");
             return true;
         }
+        catch (System.Net.Http.HttpRequestException ex)
+        {
+            // If there's an HTTP exception checking the status, assume code scanning might be enabled
+            context.Warning($"HTTP error checking code scanning status: {ex.Message}");
+            return true;
+        }
+        catch (System.Threading.Tasks.TaskCanceledException ex)
+        {
+            // If there's a timeout checking the status, assume code scanning might be enabled
+            context.Warning($"Timeout checking code scanning status: {ex.Message}");
+            return true;
+        }
         catch (System.Exception ex)
         {
-            // If there's an exception checking the status, assume code scanning might be enabled
+            // If there's any other exception checking the status, assume code scanning might be enabled
             context.Warning($"Error checking code scanning status: {ex.Message}");
             return true;
         }
