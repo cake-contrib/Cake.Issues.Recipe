@@ -33,35 +33,30 @@ internal sealed class GitHubActionsBuildServer : BaseBuildServer
         // For pull request events, use the actual HEAD commit instead of the merge commit SHA
         if (this.DetermineIfPullRequest(context))
         {
-            try
-            {
-                // Use git to get the actual HEAD commit SHA
-                var exitCode = context.StartProcess(
-                    "git",
-                    new ProcessSettings
-                    {
-                        Arguments = "rev-parse HEAD",
-                        WorkingDirectory = repositoryRootDirectory.FullPath,
-                        RedirectStandardOutput = true,
-                        RedirectStandardError = true
-                    },
-                    out var redirectedStandardOutput,
-                    out var redirectedErrorOutput
-                );
+            var eventPath = context.EnvironmentVariable("GITHUB_EVENT_PATH");
 
-                if (exitCode == 0 && redirectedStandardOutput.Any())
-                {
-                    return redirectedStandardOutput.First().Trim();
-                }
-            }
-            catch (System.Exception)
+            if (!string.IsNullOrWhiteSpace(eventPath) && System.IO.File.Exists(eventPath))
             {
-                // Fall through to default behavior if git command fails
-                // We catch all exceptions here to ensure robustness in CI environments
+                try
+                {
+                    var eventJson = System.IO.File.ReadAllText(eventPath);
+                    var eventData = Newtonsoft.Json.JsonConvert.DeserializeObject(eventJson) as Newtonsoft.Json.Linq.JObject;
+                    var prHeadSha = eventData?["pull_request"]?["head"]?["sha"];
+
+                    if (prHeadSha != null)
+                    {
+                        return prHeadSha.ToString();
+                    }
+                }
+                catch (System.Exception)
+                {
+                    // Fall through to default behavior if event parsing fails
+                    // We catch all exceptions here to ensure robustness in CI environments
+                }
             }
         }
 
-        // Default behavior for non-PR events or when git command is not available
+        // Default behavior for non-PR events or when event data is not available
         return context.GitHubActions().Environment.Workflow.Sha;
     }
 
