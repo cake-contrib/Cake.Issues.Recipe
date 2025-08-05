@@ -27,13 +27,10 @@ internal sealed class GitHubPullRequestSystem : BasePullRequestSystem
             return;
         }
 
-        var repositoryUrl = context.State.BuildServer.DetermineRepositoryRemoteUrl(context, context.State.RepositoryRootDirectory);
-        var commitSha = context.State.BuildServer.DetermineCommitId(context, context.State.RepositoryRootDirectory);
-
         // Parse repository URL to get owner and repository name
-        if (!TryParseGitHubUrl(repositoryUrl.ToString(), out var owner, out var repository))
+        if (!TryParseGitHubUrl(context.State.RepositoryRemoteUrl.ToString(), out var owner, out var repository))
         {
-            context.Warning($"Could not parse GitHub repository URL: {repositoryUrl}");
+            context.Warning($"Could not parse GitHub repository URL: {context.State.RepositoryRemoteUrl}");
             return;
         }
 
@@ -49,7 +46,7 @@ internal sealed class GitHubPullRequestSystem : BasePullRequestSystem
                     githubToken,
                     owner,
                     repository,
-                    commitSha,
+                    context.State.CommitId,
                     item.ToGitHubStatusSettings());
             }
         }
