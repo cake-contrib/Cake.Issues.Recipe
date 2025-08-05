@@ -99,7 +99,6 @@ internal sealed class GitHubActionsBuildServer : BaseBuildServer
             return;
         }
 
-        var commitSha = context.GitHubActions().Environment.Workflow.Sha;
         var ref_ = context.GitHubActions().Environment.Workflow.Ref;
 
         // Read and encode SARIF file
@@ -110,7 +109,7 @@ internal sealed class GitHubActionsBuildServer : BaseBuildServer
         var apiUrl = new Uri($"https://api.github.com/repos/{repository}/code-scanning/sarifs");
         var requestBody = new
         {
-            commit_sha = commitSha,
+            commit_sha = context.State.CommitId,
             ref_,
             sarif = sarifBase64,
             tool_name = "Cake.Issues.Recipe"
