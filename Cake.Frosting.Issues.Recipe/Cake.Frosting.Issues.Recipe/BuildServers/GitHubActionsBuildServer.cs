@@ -5,6 +5,7 @@ using Cake.Common.Build;
 using Cake.Common.Diagnostics;
 using Cake.Common.IO;
 using Cake.Core.IO;
+using System.Net;
 
 /// <summary>
 /// Support for builds running on GitHub Actions.
@@ -89,6 +90,14 @@ internal sealed class GitHubActionsBuildServer : BaseBuildServer
         }
 
         var repository = context.GitHubActions().Environment.Workflow.Repository;
+        
+        // Check if code scanning is enabled before attempting upload
+        if (!IsCodeScanningEnabled(context, repository, token))
+        {
+            context.Information("GitHub code scanning is not enabled for this repository. Skipping SARIF upload.");
+            return;
+        }
+
         var commitSha = context.GitHubActions().Environment.Workflow.Sha;
         var ref_ = context.GitHubActions().Environment.Workflow.Ref;
 
@@ -125,6 +134,49 @@ internal sealed class GitHubActionsBuildServer : BaseBuildServer
         {
             var errorContent = response.Content.ReadAsStringAsync().Result;
             context.Warning($"Failed to upload SARIF report to GitHub code scanning. Status: {response.StatusCode}, Error: {errorContent}");
+        }
+    }
+
+    private static bool IsCodeScanningEnabled(IIssuesContext context, string repository, string token)
+    {
+        // Check if code scanning is enabled by attempting to fetch code scanning alerts
+        var apiUrl = new Uri($"https://api.github.com/repos/{repository}/code-scanning/alerts?per_page=1");
+        
+        using var httpClient = new HttpClient();
+        httpClient.DefaultRequestHeaders.Add("Authorization", $"token {token}");
+        httpClient.DefaultRequestHeaders.Add("Accept", "application/vnd.github.v3+json");
+        httpClient.DefaultRequestHeaders.Add("User-Agent", "Cake.Issues.Recipe");
+
+        try
+        {
+            var response = httpClient.GetAsync(apiUrl).Result;
+            
+            // If we get a successful response (200) or even a 404 for no alerts, code scanning is enabled
+            if (response.IsSuccessStatusCode || response.StatusCode == HttpStatusCode.NotFound)
+            {
+                return true;
+            }
+            
+            // If we get a 403 (Forbidden), check if it's because code scanning is not enabled
+            if (response.StatusCode == HttpStatusCode.Forbidden)
+            {
+                var errorContent = response.Content.ReadAsStringAsync().Result;
+                if (errorContent.Contains("Code Security must be enabled"))
+                {
+                    return false;
+                }
+            }
+            
+            // For any other error, assume code scanning might be enabled but there's another issue
+            // Log the issue but don't block the upload attempt
+            context.Warning($"Unable to determine code scanning status. Response: {response.StatusCode}");
+            return true;
+        }
+        catch (Exception ex)
+        {
+            // If there's an exception checking the status, assume code scanning might be enabled
+            context.Warning($"Error checking code scanning status: {ex.Message}");
+            return true;
         }
     }
 }
