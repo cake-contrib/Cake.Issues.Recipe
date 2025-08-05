@@ -91,7 +91,7 @@ internal sealed class GitHubActionsBuildServer : BaseBuildServer
         }
 
         var repository = context.GitHubActions().Environment.Workflow.Repository;
-        
+
         // Check if code scanning is enabled before attempting upload
         if (!IsCodeScanningEnabled(context, repository, token))
         {
@@ -142,7 +142,7 @@ internal sealed class GitHubActionsBuildServer : BaseBuildServer
     {
         // Check if code scanning is enabled by attempting to fetch code scanning alerts
         var apiUrl = new Uri($"https://api.github.com/repos/{repository}/code-scanning/alerts?per_page=1");
-        
+
         using var httpClient = new HttpClient();
         httpClient.DefaultRequestHeaders.Add("Authorization", $"token {token}");
         httpClient.DefaultRequestHeaders.Add("Accept", "application/vnd.github.v3+json");
@@ -151,13 +151,13 @@ internal sealed class GitHubActionsBuildServer : BaseBuildServer
         try
         {
             var response = httpClient.GetAsync(apiUrl).Result;
-            
+
             // If we get a successful response (200) or even a 404 for no alerts, code scanning is enabled
             if (response.IsSuccessStatusCode || response.StatusCode == HttpStatusCode.NotFound)
             {
                 return true;
             }
-            
+
             // If we get a 403 (Forbidden), check if it's because code scanning is not enabled
             if (response.StatusCode == HttpStatusCode.Forbidden)
             {
@@ -167,7 +167,7 @@ internal sealed class GitHubActionsBuildServer : BaseBuildServer
                     return false;
                 }
             }
-            
+
             // For any other error, assume code scanning might be enabled but there's another issue
             // Log the issue but don't block the upload attempt
             context.Warning($"Unable to determine code scanning status. Response: {response.StatusCode}");
