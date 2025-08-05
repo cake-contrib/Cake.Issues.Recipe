@@ -101,7 +101,7 @@ internal sealed class GitHubActionsBuildServer : BaseBuildServer
         var requestBody = new
         {
             commit_sha = commitSha,
-            ref_ = ref_,
+            ref_,
             sarif = sarifBase64,
             tool_name = "Cake.Issues.Recipe"
         };
