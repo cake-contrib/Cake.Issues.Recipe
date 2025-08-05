@@ -28,18 +28,38 @@ internal sealed class GitHubActionsBuildServer : BaseBuildServer
     {
         context.NotNull();
 
-        // For pull request events, use the head SHA instead of the merge commit SHA
-        var eventName = context.EnvironmentVariable("GITHUB_EVENT_NAME");
-        if (eventName == "pull_request" || eventName == "pull_request_target")
+        // For pull request events, use the actual HEAD commit instead of the merge commit SHA
+        if (this.DetermineIfPullRequest(context))
         {
-            var headSha = context.EnvironmentVariable("GITHUB_HEAD_SHA");
-            if (!string.IsNullOrWhiteSpace(headSha))
+            try
             {
-                return headSha;
+                // Use git to get the actual HEAD commit SHA
+                var exitCode = context.StartProcess(
+                    "git",
+                    new ProcessSettings
+                    {
+                        Arguments = "rev-parse HEAD",
+                        WorkingDirectory = repositoryRootDirectory.FullPath,
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true
+                    },
+                    out var redirectedStandardOutput,
+                    out var redirectedErrorOutput
+                );
+
+                if (exitCode == 0 && redirectedStandardOutput.Any())
+                {
+                    return redirectedStandardOutput.First().Trim();
+                }
+            }
+            catch (System.Exception)
+            {
+                // Fall through to default behavior if git command fails
+                // We catch all exceptions here to ensure robustness in CI environments
             }
         }
 
-        // Fallback to the default behavior for non-PR events or when GITHUB_HEAD_SHA is not available
+        // Default behavior for non-PR events or when git command is not available
         return context.GitHubActions().Environment.Workflow.Sha;
     }
 
