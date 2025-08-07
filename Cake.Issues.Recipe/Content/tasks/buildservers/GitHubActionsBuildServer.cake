@@ -38,10 +38,17 @@ public class GitHubActionsBuildServer : BaseBuildServer
                         return prHeadSha.ToString();
                     }
                 }
-                catch (System.Exception)
+                catch (System.IO.IOException)
                 {
-                    // Fall through to default behavior if event parsing fails
-                    // We catch all exceptions here to ensure robustness in CI environments
+                    // Fall through to default behavior if file I/O fails
+                }
+                catch (System.UnauthorizedAccessException)
+                {
+                    // Fall through to default behavior if access is denied
+                }
+                catch (Newtonsoft.Json.JsonException)
+                {
+                    // Fall through to default behavior if JSON parsing fails
                 }
             }
         }
