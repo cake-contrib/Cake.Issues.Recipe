@@ -20,6 +20,40 @@ public class GitHubActionsBuildServer : BaseBuildServer
     {
         context.NotNull();
 
+        // For pull request events, use the actual HEAD commit instead of the merge commit SHA
+        if (this.DetermineIfPullRequest(context))
+        {
+            var eventPath = context.EnvironmentVariable("GITHUB_EVENT_PATH");
+
+            if (!string.IsNullOrWhiteSpace(eventPath) && System.IO.File.Exists(eventPath))
+            {
+                try
+                {
+                    var eventJson = System.IO.File.ReadAllText(eventPath);
+                    var eventData = Newtonsoft.Json.JsonConvert.DeserializeObject(eventJson) as Newtonsoft.Json.Linq.JObject;
+                    var prHeadSha = eventData?["pull_request"]?["head"]?["sha"];
+
+                    if (prHeadSha != null)
+                    {
+                        return prHeadSha.ToString();
+                    }
+                }
+                catch (System.IO.IOException)
+                {
+                    // Fall through to default behavior if file I/O fails
+                }
+                catch (System.UnauthorizedAccessException)
+                {
+                    // Fall through to default behavior if access is denied
+                }
+                catch (Newtonsoft.Json.JsonException)
+                {
+                    // Fall through to default behavior if JSON parsing fails
+                }
+            }
+        }
+
+        // Default behavior for non-PR events or when event data is not available
         return context.GitHubActions().Environment.Workflow.Sha;
     }
 
@@ -98,7 +132,6 @@ public class GitHubActionsBuildServer : BaseBuildServer
             return;
         }
 
-        var commitSha = context.GitHubActions().Environment.Workflow.Sha;
         var ref_ = context.GitHubActions().Environment.Workflow.Ref;
 
         // Read and encode SARIF file
@@ -109,8 +142,8 @@ public class GitHubActionsBuildServer : BaseBuildServer
         var apiUrl = new System.Uri($"https://api.github.com/repos/{repository}/code-scanning/sarifs");
         var requestBody = new
         {
-            commit_sha = commitSha,
-            ref_ = ref_,
+            commit_sha = data.CommitId,
+            ref_,
             sarif = sarifBase64,
             tool_name = "Cake.Issues.Recipe"
         };
