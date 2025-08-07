@@ -202,6 +202,9 @@ public class IssuesData
             case RepositoryInfoProviderType.Cli:
                 context.Information("Using Git CLI for providing repository information");
                 return new CliRepositoryInfoProvider();
+            case RepositoryInfoProviderType.GitReader:
+                context.Information("Using GitReader for providing repository information");
+                return new GitReaderRepositoryInfoProvider();
             default:
                 throw new NotImplementedException("Unsupported repository info provider");
         }
