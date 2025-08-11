@@ -26,13 +26,10 @@ public class GitHubPullRequestSystem : BasePullRequestSystem
             return;
         }
 
-        var repositoryUrl = data.BuildServer.DetermineRepositoryRemoteUrl(context, data.RepositoryRootDirectory);
-        var commitSha = data.BuildServer.DetermineCommitId(context, data.RepositoryRootDirectory);
-
         // Parse repository URL to get owner and repository name
-        if (!TryParseGitHubUrl(repositoryUrl.ToString(), out var owner, out var repository))
+        if (!TryParseGitHubUrl(data.RepositoryRemoteUrl.ToString(), out var owner, out var repository))
         {
-            context.Warning($"Could not parse GitHub repository URL: {repositoryUrl}");
+            context.Warning($"Could not parse GitHub repository URL: {data.RepositoryRemoteUrl}");
             return;
         }
 
@@ -41,14 +38,14 @@ public class GitHubPullRequestSystem : BasePullRequestSystem
         {
             foreach (var item in status)
             {
-                context.Information("Setting GitHub status {0} to {1}", item.Name, item.State);
+                context.Information("Setting GitHub status {0} for commit {1} to {2}", item.Name, data.CommitId, item.State);
 
                 context.GitHubStatus(
                     null, // Use null for username when using access token
                     githubToken,
                     owner,
                     repository,
-                    commitSha,
+                    data.CommitId,
                     PullRequestStatusExtensions.ToGitHubStatusSettings(item));
             }
         }
