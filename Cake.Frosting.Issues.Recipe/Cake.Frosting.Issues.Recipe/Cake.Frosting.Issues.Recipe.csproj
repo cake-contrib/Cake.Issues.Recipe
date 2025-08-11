@@ -30,6 +30,7 @@ For recipe compatible with Cake Script Runners see Cake.Issues.Recipe.</Descript
 
   <ItemGroup>
     <EmbeddedResource Include="BuildServers\AzurePipelineSummary.cshtml" />
+    <EmbeddedResource Include="BuildServers\GitHubActionsSummary.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
