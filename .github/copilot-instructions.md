@@ -14,7 +14,7 @@ Always reference these instructions first and fallback to search or bash command
 - Make build script executable: `chmod +x build.sh`
 - Full build and test: `./build.sh` -- takes 40 seconds. NEVER CANCEL. Set timeout to 120+ seconds.
 - Build only: `./build.sh --target=DotNetCore-Build` -- takes 2.5 minutes. NEVER CANCEL. Set timeout to 300+ seconds.
-- Run tests: `./build.sh --target=Test` -- takes 30 seconds. NEVER CANCEL. Set timeout to 120+ seconds.
+- Run unit tests: `./build.sh --target=Test` -- takes 30 seconds. NEVER CANCEL. Set timeout to 120+ seconds.
 - Create NuGet packages: `./build.sh --target=Create-NuGet-Packages` -- takes 30 seconds. NEVER CANCEL. Set timeout to 120+ seconds.
 
 ### Check available build targets
