@@ -93,6 +93,7 @@ public class IssuesData
     /// Determines the default project root directory.
     /// This method can be overridden in derived classes to customize the project root directory calculation.
     /// Default implementation returns the <see cref="BuildRootDirectory"/>.
+    /// Note: This method should not be called from constructors. Use the projectRootDirectoryProvider parameter instead.
     /// </summary>
     /// <returns>The project root directory.</returns>
     protected virtual DirectoryPath DetermineProjectRootDirectory()
@@ -105,7 +106,8 @@ public class IssuesData
     /// </summary>
     /// <param name="context">The Cake context.</param>
     /// <param name="repositoryInfoProviderType">Defines how information about the Git repository should be determined.</param>
-    public IssuesData(ICakeContext context, RepositoryInfoProviderType repositoryInfoProviderType)
+    /// <param name="projectRootDirectoryProvider">Function to determine the project root directory. If null, uses default logic.</param>
+    public IssuesData(ICakeContext context, RepositoryInfoProviderType repositoryInfoProviderType, Func<IssuesData, DirectoryPath> projectRootDirectoryProvider = null)
     {
         context.NotNull();
 
@@ -114,7 +116,7 @@ public class IssuesData
         this.BuildRootDirectory = context.MakeAbsolute(context.Directory("./"));
         context.Information("Build script root directory: {0}", this.BuildRootDirectory);
 
-        this.ProjectRootDirectory = this.DetermineProjectRootDirectory();
+        this.ProjectRootDirectory = projectRootDirectoryProvider?.Invoke(this) ?? this.BuildRootDirectory;
         context.Information("Project root directory: {0}", this.ProjectRootDirectory);
 
         this.RepositoryInfo = DetermineRepositoryInfoProvider(context, repositoryInfoProviderType);
