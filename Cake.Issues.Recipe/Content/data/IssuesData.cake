@@ -9,6 +9,8 @@ public class IssuesData
 
     private readonly List<(IIssueProvider, string)> issueProvidersAndRuns = new List<(IIssueProvider, string)>();
 
+    private DirectoryPath projectRootDirectoryOverride;
+
     /// <summary>
     /// Gets the root directory of the repository.
     /// </summary>
@@ -23,7 +25,11 @@ public class IssuesData
     /// Gets the root directory of the project.
     /// Default value is the <see cref="BuildRootDirectory"/>.
     /// </summary>
-    public DirectoryPath ProjectRootDirectory { get; set; }
+    public DirectoryPath ProjectRootDirectory 
+    { 
+        get { return this.projectRootDirectoryOverride ?? this.GetProjectRootDirectory(); }
+        set { this.projectRootDirectoryOverride = value; }
+    }
 
     /// Gets the remote URL of the repository.
     /// </summary>
@@ -89,6 +95,17 @@ public class IssuesData
     }
 
     /// <summary>
+    /// Gets the default project root directory.
+    /// This method can be overridden in derived classes to customize the project root directory calculation.
+    /// Default implementation returns the <see cref="BuildRootDirectory"/>.
+    /// </summary>
+    /// <returns>The project root directory.</returns>
+    protected virtual DirectoryPath GetProjectRootDirectory()
+    {
+        return this.BuildRootDirectory;
+    }
+
+    /// <summary>
     /// Creates a new instance of the <see cref="IssuesData"/> class.
     /// </summary>
     /// <param name="context">The Cake context.</param>
@@ -102,7 +119,6 @@ public class IssuesData
         this.BuildRootDirectory = context.MakeAbsolute(context.Directory("./"));
         context.Information("Build script root directory: {0}", this.BuildRootDirectory);
 
-        this.ProjectRootDirectory = this.BuildRootDirectory;
         context.Information("Project root directory: {0}", this.ProjectRootDirectory);
 
         this.RepositoryInfo = DetermineRepositoryInfoProvider(context, repositoryInfoProviderType);

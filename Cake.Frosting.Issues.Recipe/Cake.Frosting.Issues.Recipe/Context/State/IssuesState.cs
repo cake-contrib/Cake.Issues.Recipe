@@ -17,6 +17,8 @@ public class IssuesState : IIssuesState
 
     private readonly List<(IIssueProvider, string)> issueProvidersAndRuns = [];
 
+    private DirectoryPath? projectRootDirectoryOverride;
+
     /// <inheritdoc />
     public DirectoryPath RepositoryRootDirectory { get; }
 
@@ -24,7 +26,11 @@ public class IssuesState : IIssuesState
     public DirectoryPath BuildRootDirectory { get; }
 
     /// <inheritdoc />
-    public DirectoryPath ProjectRootDirectory { get; set; }
+    public DirectoryPath ProjectRootDirectory 
+    { 
+        get => this.projectRootDirectoryOverride ?? this.GetProjectRootDirectory();
+        set => this.projectRootDirectoryOverride = value;
+    }
 
     /// <inheritdoc />
     public Uri RepositoryRemoteUrl { get; }
@@ -57,6 +63,17 @@ public class IssuesState : IIssuesState
     public IList<(IIssueProvider, string)> IssueProvidersAndRuns => this.issueProvidersAndRuns.AsReadOnly();
 
     /// <summary>
+    /// Gets the default project root directory.
+    /// This method can be overridden in derived classes to customize the project root directory calculation.
+    /// Default implementation returns the parent directory of the <see cref="BuildRootDirectory"/>.
+    /// </summary>
+    /// <returns>The project root directory.</returns>
+    protected virtual DirectoryPath GetProjectRootDirectory()
+    {
+        return this.BuildRootDirectory.Combine("..").Collapse();
+    }
+
+    /// <summary>
     /// Creates a new instance of the <see cref="IssuesState"/> class.
     /// </summary>
     /// <param name="context">The Cake context.</param>
@@ -72,7 +89,6 @@ public class IssuesState : IIssuesState
         this.BuildRootDirectory = context.MakeAbsolute(context.Directory("./"));
         context.Information("Build script root directory: {0}", this.BuildRootDirectory);
 
-        this.ProjectRootDirectory = this.BuildRootDirectory.Combine("..").Collapse();
         context.Information("Project root directory: {0}", this.ProjectRootDirectory);
 
         this.RepositoryInfo = DetermineRepositoryInfoProvider(context, repositoryInfoProviderType);
