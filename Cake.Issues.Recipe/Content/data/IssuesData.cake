@@ -9,8 +9,6 @@ public class IssuesData
 
     private readonly List<(IIssueProvider, string)> issueProvidersAndRuns = new List<(IIssueProvider, string)>();
 
-    private DirectoryPath projectRootDirectoryOverride;
-
     /// <summary>
     /// Gets the root directory of the repository.
     /// </summary>
@@ -22,14 +20,10 @@ public class IssuesData
     public DirectoryPath BuildRootDirectory { get; }
 
     /// <summary>
-    /// Gets the root directory of the project.
-    /// Default value is the <see cref="BuildRootDirectory"/>.
+    /// Gets or sets the root directory of the project.
+    /// Default value is determined by the <see cref="DetermineProjectRootDirectory"/> method.
     /// </summary>
-    public DirectoryPath ProjectRootDirectory 
-    { 
-        get { return this.projectRootDirectoryOverride ?? this.DetermineProjectRootDirectory(); }
-        set { this.projectRootDirectoryOverride = value; }
-    }
+    public DirectoryPath ProjectRootDirectory { get; set; }
 
     /// <summary>
     /// Gets the remote URL of the repository.
@@ -120,6 +114,7 @@ public class IssuesData
         this.BuildRootDirectory = context.MakeAbsolute(context.Directory("./"));
         context.Information("Build script root directory: {0}", this.BuildRootDirectory);
 
+        this.ProjectRootDirectory = this.DetermineProjectRootDirectory();
         context.Information("Project root directory: {0}", this.ProjectRootDirectory);
 
         this.RepositoryInfo = DetermineRepositoryInfoProvider(context, repositoryInfoProviderType);

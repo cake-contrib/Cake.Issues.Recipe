@@ -17,8 +17,6 @@ public class IssuesState : IIssuesState
 
     private readonly List<(IIssueProvider, string)> issueProvidersAndRuns = [];
 
-    private DirectoryPath projectRootDirectoryOverride;
-
     /// <inheritdoc />
     public DirectoryPath RepositoryRootDirectory { get; }
 
@@ -26,11 +24,7 @@ public class IssuesState : IIssuesState
     public DirectoryPath BuildRootDirectory { get; }
 
     /// <inheritdoc />
-    public DirectoryPath ProjectRootDirectory 
-    { 
-        get => this.projectRootDirectoryOverride ?? this.DetermineProjectRootDirectory();
-        set => this.projectRootDirectoryOverride = value;
-    }
+    public DirectoryPath ProjectRootDirectory { get; set; }
 
     /// <inheritdoc />
     public Uri RepositoryRemoteUrl { get; }
@@ -89,6 +83,7 @@ public class IssuesState : IIssuesState
         this.BuildRootDirectory = context.MakeAbsolute(context.Directory("./"));
         context.Information("Build script root directory: {0}", this.BuildRootDirectory);
 
+        this.ProjectRootDirectory = this.DetermineProjectRootDirectory();
         context.Information("Project root directory: {0}", this.ProjectRootDirectory);
 
         this.RepositoryInfo = DetermineRepositoryInfoProvider(context, repositoryInfoProviderType);

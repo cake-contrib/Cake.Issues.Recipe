@@ -14,11 +14,11 @@ public sealed class IssuesStateVirtualMethodTests
             // Given
             var buildRootDirectory = new DirectoryPath("/test/build");
             var expectedProjectRoot = buildRootDirectory.Combine("..").Collapse();
-            
+
             // When
             var testState = new TestableIssuesState(buildRootDirectory);
             var actualProjectRoot = testState.TestDetermineProjectRootDirectory();
-            
+
             // Then
             actualProjectRoot.ShouldBe(expectedProjectRoot);
         }
@@ -29,11 +29,11 @@ public sealed class IssuesStateVirtualMethodTests
             // Given
             var buildRootDirectory = new DirectoryPath("/test/build");
             var customProjectRoot = new DirectoryPath("/custom/project/path");
-            
+
             // When
             var testState = new DerivedTestableIssuesState(buildRootDirectory, customProjectRoot);
             var actualProjectRoot = testState.TestDetermineProjectRootDirectory();
-            
+
             // Then
             actualProjectRoot.ShouldBe(customProjectRoot);
             actualProjectRoot.ShouldNotBe(buildRootDirectory.Combine("..").Collapse());
@@ -52,15 +52,9 @@ public sealed class IssuesStateVirtualMethodTests
             this.buildRootDirectory = buildRootDirectory;
         }
 
-        public DirectoryPath TestDetermineProjectRootDirectory()
-        {
-            return DetermineProjectRootDirectory();
-        }
+        public DirectoryPath TestDetermineProjectRootDirectory() => this.DetermineProjectRootDirectory();
 
-        protected virtual DirectoryPath DetermineProjectRootDirectory()
-        {
-            return this.buildRootDirectory.Combine("..").Collapse();
-        }
+        protected virtual DirectoryPath DetermineProjectRootDirectory() => this.buildRootDirectory.Combine("..").Collapse();
     }
 
     /// <summary>
@@ -76,9 +70,6 @@ public sealed class IssuesStateVirtualMethodTests
             this.customProjectRoot = customProjectRoot;
         }
 
-        protected override DirectoryPath DetermineProjectRootDirectory()
-        {
-            return this.customProjectRoot;
-        }
+        protected override DirectoryPath DetermineProjectRootDirectory() => this.customProjectRoot;
     }
 }
