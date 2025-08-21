@@ -21,7 +21,7 @@ public class IssuesData
 
     /// <summary>
     /// Gets or sets the root directory of the project.
-    /// Default value is determined by the <see cref="DetermineProjectRootDirectory"/> method.
+    /// Default value is the <see cref="BuildRootDirectory"/>.
     /// </summary>
     public DirectoryPath ProjectRootDirectory { get; set; }
 
@@ -90,23 +90,12 @@ public class IssuesData
     }
 
     /// <summary>
-    /// Determines the default project root directory.
-    /// This method can be overridden in derived classes to customize the project root directory calculation.
-    /// Default implementation returns the <see cref="BuildRootDirectory"/>.
-    /// Note: This method should not be called from constructors. Use the projectRootDirectoryProvider parameter instead.
-    /// </summary>
-    /// <returns>The project root directory.</returns>
-    protected virtual DirectoryPath DetermineProjectRootDirectory()
-    {
-        return this.BuildRootDirectory;
-    }
-
-    /// <summary>
     /// Creates a new instance of the <see cref="IssuesData"/> class.
     /// </summary>
     /// <param name="context">The Cake context.</param>
     /// <param name="repositoryInfoProviderType">Defines how information about the Git repository should be determined.</param>
-    /// <param name="projectRootDirectoryProvider">Function to determine the project root directory. If null, uses default logic.</param>
+    /// <param name="projectRootDirectoryProvider">Function to determine the project root directory.
+    /// If <c>null</c>, uses <see cref="BuildRootDirectory"/>.</param>
     public IssuesData(ICakeContext context, RepositoryInfoProviderType repositoryInfoProviderType, Func<IssuesData, DirectoryPath> projectRootDirectoryProvider = null)
     {
         context.NotNull();

@@ -58,23 +58,12 @@ public class IssuesState : IIssuesState
     public IList<(IIssueProvider, string)> IssueProvidersAndRuns => this.issueProvidersAndRuns.AsReadOnly();
 
     /// <summary>
-    /// Determines the default project root directory.
-    /// This method can be overridden in derived classes to customize the project root directory calculation.
-    /// Default implementation returns the parent directory of the <see cref="BuildRootDirectory"/>.
-    /// Note: This method should not be called from constructors. Use the projectRootDirectoryProvider parameter instead.
-    /// </summary>
-    /// <returns>The project root directory.</returns>
-    protected virtual DirectoryPath DetermineProjectRootDirectory()
-    {
-        return this.BuildRootDirectory.Combine("..").Collapse();
-    }
-
-    /// <summary>
     /// Creates a new instance of the <see cref="IssuesState"/> class.
     /// </summary>
     /// <param name="context">The Cake context.</param>
     /// <param name="repositoryInfoProviderType">Defines how information about the Git repository should be determined.</param>
-    /// <param name="projectRootDirectoryProvider">Function to determine the project root directory. If null, uses default logic.</param>
+    /// <param name="projectRootDirectoryProvider">Function to determine the project root directory.
+    ///  If <c>null</c>, uses the parent directory of the <see cref="BuildRootDirectory"/>.</param>
     public IssuesState(
         IIssuesContext context,
         RepositoryInfoProviderType repositoryInfoProviderType,
