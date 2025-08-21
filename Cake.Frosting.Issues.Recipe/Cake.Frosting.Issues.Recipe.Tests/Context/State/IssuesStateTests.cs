@@ -43,33 +43,19 @@ public sealed class IssuesStateVirtualMethodTests
     /// <summary>
     /// Testable version of IssuesState that exposes the protected virtual method for testing.
     /// </summary>
-    private class TestableIssuesState
+    private class TestableIssuesState(DirectoryPath buildRootDirectory)
     {
-        protected readonly DirectoryPath buildRootDirectory;
-
-        public TestableIssuesState(DirectoryPath buildRootDirectory)
-        {
-            this.buildRootDirectory = buildRootDirectory;
-        }
-
         public DirectoryPath TestDetermineProjectRootDirectory() => this.DetermineProjectRootDirectory();
 
-        protected virtual DirectoryPath DetermineProjectRootDirectory() => this.buildRootDirectory.Combine("..").Collapse();
+        protected virtual DirectoryPath DetermineProjectRootDirectory() => buildRootDirectory.Combine("..").Collapse();
     }
 
     /// <summary>
     /// Derived test class that overrides DetermineProjectRootDirectory.
     /// </summary>
-    private class DerivedTestableIssuesState : TestableIssuesState
+    private class DerivedTestableIssuesState(DirectoryPath buildRootDirectory, DirectoryPath customProjectRoot)
+        : TestableIssuesState(buildRootDirectory)
     {
-        private readonly DirectoryPath customProjectRoot;
-
-        public DerivedTestableIssuesState(DirectoryPath buildRootDirectory, DirectoryPath customProjectRoot)
-            : base(buildRootDirectory)
-        {
-            this.customProjectRoot = customProjectRoot;
-        }
-
-        protected override DirectoryPath DetermineProjectRootDirectory() => this.customProjectRoot;
+        protected override DirectoryPath DetermineProjectRootDirectory() => customProjectRoot;
     }
 }
