@@ -67,7 +67,7 @@ public class IssuesState : IIssuesState
     public IssuesState(
         IIssuesContext context,
         RepositoryInfoProviderType repositoryInfoProviderType,
-        Func<IssuesState, DirectoryPath> projectRootDirectoryProvider = null)
+        Func<IIssuesState, DirectoryPath> projectRootDirectoryProvider = null)
     {
         context.NotNull();
 
