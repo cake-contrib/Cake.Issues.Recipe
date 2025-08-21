@@ -50,7 +50,7 @@ public sealed class IssuesStateVirtualMethodTests
             var buildRootDirectory = new DirectoryPath("/test/build");
             var customProjectRoot = new DirectoryPath("/custom/project");
 
-            Func<TestableIssuesStateWithProvider, DirectoryPath> customProvider = state => customProjectRoot;
+            DirectoryPath customProvider(TestableIssuesStateWithProvider state) => customProjectRoot;
 
             // When
             var state = new TestableIssuesStateWithProvider(buildRootDirectory, customProvider);
@@ -80,18 +80,17 @@ public sealed class IssuesStateVirtualMethodTests
             var buildRootDirectory = new DirectoryPath("/test/build");
 
             TestableIssuesStateWithProvider capturedState = null;
-            Func<TestableIssuesStateWithProvider, DirectoryPath> customProvider = state =>
+            DirectoryPath customProvider(TestableIssuesStateWithProvider state)
             {
                 capturedState = state;
                 return state.BuildRootDirectory.Combine("../custom").Collapse();
-            };
+            }
 
             // When
             var state = new TestableIssuesStateWithProvider(buildRootDirectory, customProvider);
 
             // Then
-            capturedState.ShouldNotBeNull();
-            capturedState.ShouldBe(state);
+            capturedState.ShouldNotBeNull().ShouldBe(state);
             state.ProjectRootDirectory.ShouldBe(buildRootDirectory.Combine("../custom").Collapse());
         }
     }
