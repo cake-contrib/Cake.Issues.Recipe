@@ -6,7 +6,7 @@ using Xunit;
 
 public sealed class IssuesStateVirtualMethodTests
 {
-    public sealed class TheGetProjectRootDirectoryMethod
+    public sealed class TheDetermineProjectRootDirectoryMethod
     {
         [Fact]
         public void Should_Return_Parent_Directory_By_Default()
@@ -17,7 +17,7 @@ public sealed class IssuesStateVirtualMethodTests
             
             // When
             var testState = new TestableIssuesState(buildRootDirectory);
-            var actualProjectRoot = testState.TestGetProjectRootDirectory();
+            var actualProjectRoot = testState.TestDetermineProjectRootDirectory();
             
             // Then
             actualProjectRoot.ShouldBe(expectedProjectRoot);
@@ -32,7 +32,7 @@ public sealed class IssuesStateVirtualMethodTests
             
             // When
             var testState = new DerivedTestableIssuesState(buildRootDirectory, customProjectRoot);
-            var actualProjectRoot = testState.TestGetProjectRootDirectory();
+            var actualProjectRoot = testState.TestDetermineProjectRootDirectory();
             
             // Then
             actualProjectRoot.ShouldBe(customProjectRoot);
@@ -52,19 +52,19 @@ public sealed class IssuesStateVirtualMethodTests
             this.buildRootDirectory = buildRootDirectory;
         }
 
-        public DirectoryPath TestGetProjectRootDirectory()
+        public DirectoryPath TestDetermineProjectRootDirectory()
         {
-            return GetProjectRootDirectory();
+            return DetermineProjectRootDirectory();
         }
 
-        protected virtual DirectoryPath GetProjectRootDirectory()
+        protected virtual DirectoryPath DetermineProjectRootDirectory()
         {
             return this.buildRootDirectory.Combine("..").Collapse();
         }
     }
 
     /// <summary>
-    /// Derived test class that overrides GetProjectRootDirectory.
+    /// Derived test class that overrides DetermineProjectRootDirectory.
     /// </summary>
     private class DerivedTestableIssuesState : TestableIssuesState
     {
@@ -76,7 +76,7 @@ public sealed class IssuesStateVirtualMethodTests
             this.customProjectRoot = customProjectRoot;
         }
 
-        protected override DirectoryPath GetProjectRootDirectory()
+        protected override DirectoryPath DetermineProjectRootDirectory()
         {
             return this.customProjectRoot;
         }

@@ -17,7 +17,7 @@ public class IssuesState : IIssuesState
 
     private readonly List<(IIssueProvider, string)> issueProvidersAndRuns = [];
 
-    private DirectoryPath? projectRootDirectoryOverride;
+    private DirectoryPath projectRootDirectoryOverride;
 
     /// <inheritdoc />
     public DirectoryPath RepositoryRootDirectory { get; }
@@ -28,7 +28,7 @@ public class IssuesState : IIssuesState
     /// <inheritdoc />
     public DirectoryPath ProjectRootDirectory 
     { 
-        get => this.projectRootDirectoryOverride ?? this.GetProjectRootDirectory();
+        get => this.projectRootDirectoryOverride ?? this.DetermineProjectRootDirectory();
         set => this.projectRootDirectoryOverride = value;
     }
 
@@ -63,12 +63,12 @@ public class IssuesState : IIssuesState
     public IList<(IIssueProvider, string)> IssueProvidersAndRuns => this.issueProvidersAndRuns.AsReadOnly();
 
     /// <summary>
-    /// Gets the default project root directory.
+    /// Determines the default project root directory.
     /// This method can be overridden in derived classes to customize the project root directory calculation.
     /// Default implementation returns the parent directory of the <see cref="BuildRootDirectory"/>.
     /// </summary>
     /// <returns>The project root directory.</returns>
-    protected virtual DirectoryPath GetProjectRootDirectory()
+    protected virtual DirectoryPath DetermineProjectRootDirectory()
     {
         return this.BuildRootDirectory.Combine("..").Collapse();
     }

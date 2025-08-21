@@ -27,10 +27,11 @@ public class IssuesData
     /// </summary>
     public DirectoryPath ProjectRootDirectory 
     { 
-        get { return this.projectRootDirectoryOverride ?? this.GetProjectRootDirectory(); }
+        get { return this.projectRootDirectoryOverride ?? this.DetermineProjectRootDirectory(); }
         set { this.projectRootDirectoryOverride = value; }
     }
 
+    /// <summary>
     /// Gets the remote URL of the repository.
     /// </summary>
     public Uri RepositoryRemoteUrl { get; }
@@ -95,12 +96,12 @@ public class IssuesData
     }
 
     /// <summary>
-    /// Gets the default project root directory.
+    /// Determines the default project root directory.
     /// This method can be overridden in derived classes to customize the project root directory calculation.
     /// Default implementation returns the <see cref="BuildRootDirectory"/>.
     /// </summary>
     /// <returns>The project root directory.</returns>
-    protected virtual DirectoryPath GetProjectRootDirectory()
+    protected virtual DirectoryPath DetermineProjectRootDirectory()
     {
         return this.BuildRootDirectory;
     }
@@ -157,7 +158,7 @@ public class IssuesData
 
     /// <summary>
     /// Adds a list of issues to <see cref="Issues"/>.
-    /// To read issues from an issue provider use <see cref="AddIssues(IIssueProvider, IReadIssuesSettings)"/>.    /// Adds a list of issues to the data class.
+    /// To read issues from an issue provider use <see cref="AddIssues(IIssueProvider, IReadIssuesSettings)"/>.
     /// </summary>
     /// <param name="issues">Issues which should be added.</param>
     public void AddIssues(IEnumerable<IIssue> issues)
