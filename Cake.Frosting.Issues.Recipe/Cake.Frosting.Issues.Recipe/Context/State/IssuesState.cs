@@ -1,5 +1,6 @@
 ﻿namespace Cake.Frosting.Issues.Recipe;
 
+using System;
 using Cake.Common;
 using Cake.Common.Build;
 using Cake.Common.Diagnostics;
@@ -61,9 +62,12 @@ public class IssuesState : IIssuesState
     /// </summary>
     /// <param name="context">The Cake context.</param>
     /// <param name="repositoryInfoProviderType">Defines how information about the Git repository should be determined.</param>
+    /// <param name="projectRootDirectoryProvider">Function to determine the project root directory.
+    ///  If <c>null</c>, uses the parent directory of the <see cref="BuildRootDirectory"/>.</param>
     public IssuesState(
         IIssuesContext context,
-        RepositoryInfoProviderType repositoryInfoProviderType)
+        RepositoryInfoProviderType repositoryInfoProviderType,
+        Func<IIssuesState, DirectoryPath> projectRootDirectoryProvider = null)
     {
         context.NotNull();
 
@@ -72,7 +76,7 @@ public class IssuesState : IIssuesState
         this.BuildRootDirectory = context.MakeAbsolute(context.Directory("./"));
         context.Information("Build script root directory: {0}", this.BuildRootDirectory);
 
-        this.ProjectRootDirectory = this.BuildRootDirectory.Combine("..").Collapse();
+        this.ProjectRootDirectory = projectRootDirectoryProvider?.Invoke(this) ?? this.BuildRootDirectory.Combine("..").Collapse();
         context.Information("Project root directory: {0}", this.ProjectRootDirectory);
 
         this.RepositoryInfo = DetermineRepositoryInfoProvider(context, repositoryInfoProviderType);
