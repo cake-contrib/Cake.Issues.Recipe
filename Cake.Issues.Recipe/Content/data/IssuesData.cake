@@ -105,13 +105,13 @@ public class IssuesData
         this.BuildRootDirectory = context.MakeAbsolute(context.Directory("./"));
         context.Information("Build script root directory: {0}", this.BuildRootDirectory);
 
-        this.ProjectRootDirectory = projectRootDirectoryProvider?.Invoke(this) ?? this.BuildRootDirectory;
-        context.Information("Project root directory: {0}", this.ProjectRootDirectory);
-
         this.RepositoryInfo = DetermineRepositoryInfoProvider(context, repositoryInfoProviderType);
 
         this.RepositoryRootDirectory = context.GitFindRootFromPath(this.BuildRootDirectory);
         context.Information("Repository root directory: {0}", this.RepositoryRootDirectory);
+
+        this.ProjectRootDirectory = projectRootDirectoryProvider?.Invoke(this) ?? this.BuildRootDirectory;
+        context.Information("Project root directory: {0}", this.ProjectRootDirectory);
 
         this.BuildServer = DetermineBuildServer(context);
         if (this.BuildServer != null)

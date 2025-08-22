@@ -76,13 +76,13 @@ public class IssuesState : IIssuesState
         this.BuildRootDirectory = context.MakeAbsolute(context.Directory("./"));
         context.Information("Build script root directory: {0}", this.BuildRootDirectory);
 
-        this.ProjectRootDirectory = projectRootDirectoryProvider?.Invoke(this) ?? this.BuildRootDirectory.Combine("..").Collapse();
-        context.Information("Project root directory: {0}", this.ProjectRootDirectory);
-
         this.RepositoryInfo = DetermineRepositoryInfoProvider(context, repositoryInfoProviderType);
 
         this.RepositoryRootDirectory = this.RepositoryInfo.GetRepositoryRootDirectory(context, this.BuildRootDirectory);
         context.Information("Repository root directory: {0}", this.RepositoryRootDirectory);
+
+        this.ProjectRootDirectory = projectRootDirectoryProvider?.Invoke(this) ?? this.BuildRootDirectory.Combine("..").Collapse();
+        context.Information("Project root directory: {0}", this.ProjectRootDirectory);
 
         this.BuildServer = DetermineBuildServer(context);
         if (this.BuildServer != null)

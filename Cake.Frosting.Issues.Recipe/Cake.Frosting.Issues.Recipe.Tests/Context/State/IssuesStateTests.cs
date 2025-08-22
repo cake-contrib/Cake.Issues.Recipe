@@ -69,5 +69,29 @@ public sealed class IssuesStateVirtualMethodTests
             // Then
             capturedState.ShouldNotBeNull().ShouldBe(state);
         }
+
+        [Fact]
+        public void Should_Have_Repository_Root_Directory_Available_In_Provider_Function()
+        {
+            // Given
+            var fixture = new CakeContextFixture();
+
+            DirectoryPath capturedRepositoryRoot = null;
+            DirectoryPath customProvider(IIssuesState state)
+            {
+                capturedRepositoryRoot = state.RepositoryRootDirectory;
+                return state.BuildRootDirectory;
+            }
+
+            // When
+            var state = new IssuesState(
+                fixture.CreateContext(),
+                RepositoryInfoProviderType.CakeGit,
+                customProvider);
+
+            // Then
+            capturedRepositoryRoot.ShouldNotBeNull();
+            capturedRepositoryRoot.ShouldBe(state.RepositoryRootDirectory);
+        }
     }
 }
