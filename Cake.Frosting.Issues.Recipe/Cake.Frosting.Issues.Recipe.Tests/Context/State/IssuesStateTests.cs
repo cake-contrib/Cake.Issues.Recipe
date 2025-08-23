@@ -90,8 +90,8 @@ public sealed class IssuesStateVirtualMethodTests
                 customProvider);
 
             // Then
-            capturedRepositoryRoot.ShouldNotBeNull();
-            capturedRepositoryRoot.ShouldBe(state.RepositoryRootDirectory);
+            capturedRepositoryRoot.ShouldNotBeNull()
+                .ShouldBe(state.RepositoryRootDirectory);
         }
     }
 }
