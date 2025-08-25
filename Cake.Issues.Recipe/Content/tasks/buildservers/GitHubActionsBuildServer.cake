@@ -133,10 +133,20 @@ public class GitHubActionsBuildServer : BaseBuildServer
         context.NotNull();
         data.NotNull();
 
+        if (IssuesParameters.BuildServer.ShouldPublishFullIssuesReport &&
+            data.FullIssuesReport != null &&
+            context.FileExists(data.FullIssuesReport))
+        {
+            context.GitHubActions().Commands.UploadArtifact(data.FullIssuesReport, "Issues Report");
+        }
+
         if (IssuesParameters.BuildServer.ShouldPublishSarifReport &&
             data.SarifReport != null &&
             context.FileExists(data.SarifReport))
         {
+            context.GitHubActions().Commands.UploadArtifact(data.SarifReport, "SARIF Report");
+            
+            // Also upload SARIF to GitHub code scanning
             UploadSarifToCodeScanning(context, data);
         }
     }
@@ -170,7 +180,7 @@ public class GitHubActionsBuildServer : BaseBuildServer
         var requestBody = new
         {
             commit_sha = data.CommitId,
-            ref_,
+            ref_ = ref_,
             sarif = sarifBase64,
             tool_name = "Cake.Issues.Recipe"
         };

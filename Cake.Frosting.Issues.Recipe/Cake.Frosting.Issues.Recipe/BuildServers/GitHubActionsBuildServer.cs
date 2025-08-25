@@ -1,5 +1,8 @@
 namespace Cake.Frosting.Issues.Recipe;
 
+using System;
+using System.IO;
+using System.Net.Http;
 using Cake.Common;
 using Cake.Common.Build;
 using Cake.Common.Diagnostics;
@@ -138,10 +141,19 @@ internal sealed class GitHubActionsBuildServer : BaseBuildServer
     {
         context.NotNull();
 
+        if (context.Parameters.BuildServer.ShouldPublishFullIssuesReport &&
+            context.State.FullIssuesReport != null &&
+            context.FileExists(context.State.FullIssuesReport))
+        {
+            context.GitHubActions().Commands.UploadArtifact(context.State.FullIssuesReport, "Issues Report");
+        }
+
         if (context.Parameters.BuildServer.ShouldPublishSarifReport &&
             context.State.SarifReport != null &&
             context.FileExists(context.State.SarifReport))
         {
+            context.GitHubActions().Commands.UploadArtifact(context.State.SarifReport, "SARIF Report");
+            
             UploadSarifToCodeScanning(context);
         }
     }
