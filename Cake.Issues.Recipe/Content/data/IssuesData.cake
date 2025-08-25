@@ -20,11 +20,12 @@ public class IssuesData
     public DirectoryPath BuildRootDirectory { get; }
 
     /// <summary>
-    /// Gets the root directory of the project.
+    /// Gets or sets the root directory of the project.
     /// Default value is the <see cref="BuildRootDirectory"/>.
     /// </summary>
     public DirectoryPath ProjectRootDirectory { get; set; }
 
+    /// <summary>
     /// Gets the remote URL of the repository.
     /// </summary>
     public Uri RepositoryRemoteUrl { get; }
@@ -93,7 +94,9 @@ public class IssuesData
     /// </summary>
     /// <param name="context">The Cake context.</param>
     /// <param name="repositoryInfoProviderType">Defines how information about the Git repository should be determined.</param>
-    public IssuesData(ICakeContext context, RepositoryInfoProviderType repositoryInfoProviderType)
+    /// <param name="projectRootDirectoryProvider">Function to determine the project root directory.
+    /// If <c>null</c>, uses <see cref="BuildRootDirectory"/>.</param>
+    public IssuesData(ICakeContext context, RepositoryInfoProviderType repositoryInfoProviderType, Func<IssuesData, DirectoryPath> projectRootDirectoryProvider = null)
     {
         context.NotNull();
 
@@ -102,13 +105,13 @@ public class IssuesData
         this.BuildRootDirectory = context.MakeAbsolute(context.Directory("./"));
         context.Information("Build script root directory: {0}", this.BuildRootDirectory);
 
-        this.ProjectRootDirectory = this.BuildRootDirectory;
-        context.Information("Project root directory: {0}", this.ProjectRootDirectory);
-
         this.RepositoryInfo = DetermineRepositoryInfoProvider(context, repositoryInfoProviderType);
 
         this.RepositoryRootDirectory = context.GitFindRootFromPath(this.BuildRootDirectory);
         context.Information("Repository root directory: {0}", this.RepositoryRootDirectory);
+
+        this.ProjectRootDirectory = projectRootDirectoryProvider?.Invoke(this) ?? this.BuildRootDirectory;
+        context.Information("Project root directory: {0}", this.ProjectRootDirectory);
 
         this.BuildServer = DetermineBuildServer(context);
         if (this.BuildServer != null)
@@ -141,7 +144,7 @@ public class IssuesData
 
     /// <summary>
     /// Adds a list of issues to <see cref="Issues"/>.
-    /// To read issues from an issue provider use <see cref="AddIssues(IIssueProvider, IReadIssuesSettings)"/>.    /// Adds a list of issues to the data class.
+    /// To read issues from an issue provider use <see cref="AddIssues(IIssueProvider, IReadIssuesSettings)"/>.
     /// </summary>
     /// <param name="issues">Issues which should be added.</param>
     public void AddIssues(IEnumerable<IIssue> issues)
