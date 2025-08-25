@@ -97,7 +97,34 @@ public class GitHubActionsBuildServer : BaseBuildServer
         context.NotNull();
         data.NotNull();
 
-        // Summary issues report is not supported for GitHub Actions.
+        var summaryFileName = "summary";
+        if (!string.IsNullOrWhiteSpace(IssuesParameters.BuildIdentifier))
+        {
+            summaryFileName += $"-{IssuesParameters.BuildIdentifier}";
+        }
+        summaryFileName += ".md";
+        var summaryFilePath = IssuesParameters.OutputDirectory.CombineWithFilePath(summaryFileName);
+
+        // Create summary for GitHub Actions using custom template.
+        context.CreateIssueReport(
+            data.Issues,
+            context.GenericIssueReportFormatFromFilePath(
+                new FilePath(sourceFilePath).GetDirectory().Combine("tasks").Combine("buildservers").CombineWithFilePath("GitHubActionsSummary.cshtml")),
+            data.ProjectRootDirectory,
+            summaryFilePath);
+
+        // Append to GitHub Actions job summary
+        var githubStepSummary = context.EnvironmentVariable("GITHUB_STEP_SUMMARY");
+        if (!string.IsNullOrWhiteSpace(githubStepSummary))
+        {
+            var summaryContent = System.IO.File.ReadAllText(summaryFilePath.FullPath);
+            System.IO.File.AppendAllText(githubStepSummary, summaryContent + System.Environment.NewLine);
+            context.Information("Issues summary appended to GitHub Actions job summary.");
+        }
+        else
+        {
+            context.Warning("GITHUB_STEP_SUMMARY environment variable not found. Issues summary will not be displayed in GitHub Actions.");
+        }
     }
 
     /// <inheritdoc />
