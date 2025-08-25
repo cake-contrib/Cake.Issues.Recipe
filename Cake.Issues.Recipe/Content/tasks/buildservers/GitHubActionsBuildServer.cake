@@ -110,38 +110,14 @@ public class GitHubActionsBuildServer : BaseBuildServer
             data.FullIssuesReport != null &&
             context.FileExists(data.FullIssuesReport))
         {
-            // Set GitHub Actions output for full issues report
-            var outputFile = context.EnvironmentVariable("GITHUB_OUTPUT");
-            if (!string.IsNullOrEmpty(outputFile))
-            {
-                var outputContent = $"full-issues-report-path={data.FullIssuesReport.FullPath}";
-                System.IO.File.AppendAllText(outputFile, outputContent + System.Environment.NewLine);
-                context.Information($"Set GitHub Actions output: {outputContent}");
-            }
-            else
-            {
-                // Fallback to workflow command for older GitHub Actions runners
-                context.Information($"::set-output name=full-issues-report-path::{data.FullIssuesReport.FullPath}");
-            }
+            context.GitHubActions().Commands.UploadArtifact(data.FullIssuesReport, "Issues Report");
         }
 
         if (IssuesParameters.BuildServer.ShouldPublishSarifReport &&
             data.SarifReport != null &&
             context.FileExists(data.SarifReport))
         {
-            // Set GitHub Actions output for SARIF report
-            var outputFile = context.EnvironmentVariable("GITHUB_OUTPUT");
-            if (!string.IsNullOrEmpty(outputFile))
-            {
-                var outputContent = $"sarif-report-path={data.SarifReport.FullPath}";
-                System.IO.File.AppendAllText(outputFile, outputContent + System.Environment.NewLine);
-                context.Information($"Set GitHub Actions output: {outputContent}");
-            }
-            else
-            {
-                // Fallback to workflow command for older GitHub Actions runners
-                context.Information($"::set-output name=sarif-report-path::{data.SarifReport.FullPath}");
-            }
+            context.GitHubActions().Commands.UploadArtifact(data.SarifReport, "SARIF Report");
             
             // Also upload SARIF to GitHub code scanning
             UploadSarifToCodeScanning(context, data);

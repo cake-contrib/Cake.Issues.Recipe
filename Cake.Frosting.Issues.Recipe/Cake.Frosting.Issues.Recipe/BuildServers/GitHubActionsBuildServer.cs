@@ -114,38 +114,14 @@ internal sealed class GitHubActionsBuildServer : BaseBuildServer
             context.State.FullIssuesReport != null &&
             context.FileExists(context.State.FullIssuesReport))
         {
-            // Set GitHub Actions output for full issues report
-            var outputFile = context.EnvironmentVariable("GITHUB_OUTPUT");
-            if (!string.IsNullOrEmpty(outputFile))
-            {
-                var outputContent = $"full-issues-report-path={context.State.FullIssuesReport.FullPath}";
-                System.IO.File.AppendAllText(outputFile, outputContent + Environment.NewLine);
-                context.Information($"Set GitHub Actions output: {outputContent}");
-            }
-            else
-            {
-                // Fallback to workflow command for older GitHub Actions runners
-                context.Information($"::set-output name=full-issues-report-path::{context.State.FullIssuesReport.FullPath}");
-            }
+            context.GitHubActions().Commands.UploadArtifact(context.State.FullIssuesReport, "Issues Report");
         }
 
         if (context.Parameters.BuildServer.ShouldPublishSarifReport &&
             context.State.SarifReport != null &&
             context.FileExists(context.State.SarifReport))
         {
-            // Set GitHub Actions output for SARIF report
-            var outputFile = context.EnvironmentVariable("GITHUB_OUTPUT");
-            if (!string.IsNullOrEmpty(outputFile))
-            {
-                var outputContent = $"sarif-report-path={context.State.SarifReport.FullPath}";
-                System.IO.File.AppendAllText(outputFile, outputContent + Environment.NewLine);
-                context.Information($"Set GitHub Actions output: {outputContent}");
-            }
-            else
-            {
-                // Fallback to workflow command for older GitHub Actions runners
-                context.Information($"::set-output name=sarif-report-path::{context.State.SarifReport.FullPath}");
-            }
+            context.GitHubActions().Commands.UploadArtifact(context.State.SarifReport, "SARIF Report");
             
             UploadSarifToCodeScanning(context);
         }
