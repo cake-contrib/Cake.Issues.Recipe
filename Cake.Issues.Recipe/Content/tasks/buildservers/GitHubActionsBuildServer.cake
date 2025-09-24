@@ -97,7 +97,34 @@ public class GitHubActionsBuildServer : BaseBuildServer
         context.NotNull();
         data.NotNull();
 
-        // Summary issues report is not supported for GitHub Actions.
+        var summaryFileName = "summary";
+        if (!string.IsNullOrWhiteSpace(IssuesParameters.BuildIdentifier))
+        {
+            summaryFileName += $"-{IssuesParameters.BuildIdentifier}";
+        }
+        summaryFileName += ".md";
+        var summaryFilePath = IssuesParameters.OutputDirectory.CombineWithFilePath(summaryFileName);
+
+        // Create summary for GitHub Actions using custom template.
+        context.CreateIssueReport(
+            data.Issues,
+            context.GenericIssueReportFormatFromFilePath(
+                new FilePath(sourceFilePath).GetDirectory().Combine("tasks").Combine("buildservers").CombineWithFilePath("GitHubActionsSummary.cshtml")),
+            data.ProjectRootDirectory,
+            summaryFilePath);
+
+        // Append to GitHub Actions job summary
+        var githubStepSummary = context.EnvironmentVariable("GITHUB_STEP_SUMMARY");
+        if (!string.IsNullOrWhiteSpace(githubStepSummary))
+        {
+            var summaryContent = System.IO.File.ReadAllText(summaryFilePath.FullPath);
+            System.IO.File.AppendAllText(githubStepSummary, summaryContent + System.Environment.NewLine);
+            context.Information("Issues summary appended to GitHub Actions job summary.");
+        }
+        else
+        {
+            context.Warning("GITHUB_STEP_SUMMARY environment variable not found. Issues summary will not be displayed in GitHub Actions.");
+        }
     }
 
     /// <inheritdoc />
@@ -106,10 +133,20 @@ public class GitHubActionsBuildServer : BaseBuildServer
         context.NotNull();
         data.NotNull();
 
+        if (IssuesParameters.BuildServer.ShouldPublishFullIssuesReport &&
+            data.FullIssuesReport != null &&
+            context.FileExists(data.FullIssuesReport))
+        {
+            context.GitHubActions().Commands.UploadArtifact(data.FullIssuesReport, "Issues Report");
+        }
+
         if (IssuesParameters.BuildServer.ShouldPublishSarifReport &&
             data.SarifReport != null &&
             context.FileExists(data.SarifReport))
         {
+            context.GitHubActions().Commands.UploadArtifact(data.SarifReport, "SARIF Report");
+            
+            // Also upload SARIF to GitHub code scanning
             UploadSarifToCodeScanning(context, data);
         }
     }
@@ -143,7 +180,7 @@ public class GitHubActionsBuildServer : BaseBuildServer
         var requestBody = new
         {
             commit_sha = data.CommitId,
-            ref_,
+            ref_ = ref_,
             sarif = sarifBase64,
             tool_name = "Cake.Issues.Recipe"
         };

@@ -1,5 +1,8 @@
 namespace Cake.Frosting.Issues.Recipe;
 
+using System;
+using System.IO;
+using System.Net.Http;
 using Cake.Common;
 using Cake.Common.Build;
 using Cake.Common.Diagnostics;
@@ -99,18 +102,58 @@ internal sealed class GitHubActionsBuildServer : BaseBuildServer
     /// <inheritdoc />
     public override void CreateSummaryIssuesReport(
         IIssuesContext context,
-        [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "") =>
-            context.NotNull(); // Summary issues report is not supported for GitHub Actions.
+        [System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "")
+    {
+        context.NotNull();
+
+        var summaryFileName = "summary";
+        if (!string.IsNullOrWhiteSpace(context.Parameters.BuildIdentifier))
+        {
+            summaryFileName += $"-{context.Parameters.BuildIdentifier}";
+        }
+        summaryFileName += ".md";
+        var summaryFilePath = context.Parameters.OutputDirectory.CombineWithFilePath(summaryFileName);
+
+        // Create summary for GitHub Actions using custom template.
+        context.CreateIssueReport(
+            context.State.Issues,
+            context.GenericIssueReportFormatFromFilePath(
+                new FilePath(sourceFilePath).GetDirectory().Combine("BuildServers").CombineWithFilePath("GitHubActionsSummary.cshtml")),
+            context.State.ProjectRootDirectory,
+            summaryFilePath);
+
+        // Append to GitHub Actions job summary
+        var githubStepSummary = context.EnvironmentVariable("GITHUB_STEP_SUMMARY");
+        if (!string.IsNullOrWhiteSpace(githubStepSummary))
+        {
+            var summaryContent = File.ReadAllText(summaryFilePath.FullPath);
+            File.AppendAllText(githubStepSummary, summaryContent + Environment.NewLine);
+            context.Information("Issues summary appended to GitHub Actions job summary.");
+        }
+        else
+        {
+            context.Warning("GITHUB_STEP_SUMMARY environment variable not found. Issues summary will not be displayed in GitHub Actions.");
+        }
+    }
 
     /// <inheritdoc />
     public override void PublishIssuesArtifacts(IIssuesContext context)
     {
         context.NotNull();
 
+        if (context.Parameters.BuildServer.ShouldPublishFullIssuesReport &&
+            context.State.FullIssuesReport != null &&
+            context.FileExists(context.State.FullIssuesReport))
+        {
+            context.GitHubActions().Commands.UploadArtifact(context.State.FullIssuesReport, "Issues Report");
+        }
+
         if (context.Parameters.BuildServer.ShouldPublishSarifReport &&
             context.State.SarifReport != null &&
             context.FileExists(context.State.SarifReport))
         {
+            context.GitHubActions().Commands.UploadArtifact(context.State.SarifReport, "SARIF Report");
+            
             UploadSarifToCodeScanning(context);
         }
     }
