@@ -9,7 +9,6 @@ using Cake.Common.Diagnostics;
 using Cake.Common.IO;
 using Cake.Core.IO;
 using System.Net;
-using System.Net.Http;
 
 /// <summary>
 /// Support for builds running on GitHub Actions.
@@ -38,11 +37,11 @@ internal sealed class GitHubActionsBuildServer : BaseBuildServer
         {
             var eventPath = context.EnvironmentVariable("GITHUB_EVENT_PATH");
 
-            if (!string.IsNullOrWhiteSpace(eventPath) && System.IO.File.Exists(eventPath))
+            if (!string.IsNullOrWhiteSpace(eventPath) && File.Exists(eventPath))
             {
                 try
                 {
-                    var eventJson = System.IO.File.ReadAllText(eventPath);
+                    var eventJson = File.ReadAllText(eventPath);
                     var eventData = Newtonsoft.Json.JsonConvert.DeserializeObject(eventJson) as Newtonsoft.Json.Linq.JObject;
                     var prHeadSha = eventData?["pull_request"]?["head"]?["sha"];
 
@@ -51,11 +50,11 @@ internal sealed class GitHubActionsBuildServer : BaseBuildServer
                         return prHeadSha.ToString();
                     }
                 }
-                catch (System.IO.IOException)
+                catch (IOException)
                 {
                     // Fall through to default behavior if file I/O fails
                 }
-                catch (System.UnauthorizedAccessException)
+                catch (UnauthorizedAccessException)
                 {
                     // Fall through to default behavior if access is denied
                 }
