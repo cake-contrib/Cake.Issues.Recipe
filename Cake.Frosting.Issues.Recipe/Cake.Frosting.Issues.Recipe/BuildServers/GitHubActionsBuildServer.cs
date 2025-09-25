@@ -114,13 +114,24 @@ internal sealed class GitHubActionsBuildServer : BaseBuildServer
         summaryFileName += ".md";
         var summaryFilePath = context.Parameters.OutputDirectory.CombineWithFilePath(summaryFileName);
 
-        // Create summary for GitHub Actions using custom template.
-        context.CreateIssueReport(
-            context.State.Issues,
-            context.GenericIssueReportFormatFromFilePath(
-                new FilePath(sourceFilePath).GetDirectory().Combine("BuildServers").CombineWithFilePath("GitHubActionsSummary.cshtml")),
-            context.State.ProjectRootDirectory,
-            summaryFilePath);
+        var templateName = "Cake.Frosting.Issues.Recipe.BuildServers.GitHubActionsSummary.cshtml";
+        using (var stream = this.GetType().Assembly.GetManifestResourceStream(templateName))
+        {
+            if (stream == null)
+            {
+                throw new ApplicationException($"Could not load resource {templateName}");
+            }
+
+            using (var sr = new StreamReader(stream))
+            {
+                // Create summary for Azure Pipelines using custom template.
+                context.CreateIssueReport(
+                    context.State.Issues,
+                    context.GenericIssueReportFormatFromContent(sr.ReadToEnd()),
+                    context.State.ProjectRootDirectory,
+                    summaryFilePath);
+            }
+        }
 
         // Append to GitHub Actions job summary
         var githubStepSummary = context.EnvironmentVariable("GITHUB_STEP_SUMMARY");
