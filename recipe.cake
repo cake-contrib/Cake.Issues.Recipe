@@ -35,7 +35,8 @@ Task("Generate-Version-File")
             @"TargetCakeVersion: 6.0.0
 TargetFrameworks:
 - net8.0
-- net9.0"
+- net9.0
+- net10.0"
         );
 
         // Write metadata to class for use when running a build

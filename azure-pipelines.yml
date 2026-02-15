@@ -28,6 +28,10 @@ jobs:
     inputs:
       version: '9.x'
     displayName: 'Install .NET 9'
+  - task: UseDotNet@2
+    inputs:
+      version: '10.x'
+    displayName: 'Install .NET 10'
   - powershell: ./build.ps1
     displayName: 'Build'
   - publish: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
@@ -37,11 +41,11 @@ jobs:
 - template: .azuredevops/pipelines/templates/jobs/test-frosting.yml
   parameters:
     images: [ 'windows-2022', 'windows-2025', 'macOS-14', 'macOS-15', 'ubuntu-22.04', 'ubuntu-24.04' ]
-    dotNetVersions: [ 8, 9 ]
+    dotNetVersions: [ 8, 9, 10 ]
     repositoryInfoProviders: [ 'git-cli', 'cake-git' ]
 # Integration Tests Script Runner
 - template: .azuredevops/pipelines/templates/jobs/test-scripting.yml
   parameters:
     images: [ 'windows-2022', 'windows-2025', 'macOS-14', 'macOS-15', 'ubuntu-22.04', 'ubuntu-24.04' ]
-    dotNetVersions: [ 8, 9 ]
+    dotNetVersions: [ 8, 9, 10 ]
     repositoryInfoProviders: [ 'git-cli', 'cake-git' ]
