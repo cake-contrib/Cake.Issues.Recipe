@@ -12,7 +12,7 @@ steps:
       versionSpec: '20.x'
     displayName: 'Install NodeJs 20.x'
   - script: |
-      npm install -g markdownlint-cli
+      npm install -g markdownlint-cli@0.45.0
     displayName: 'Install required tools'
   - download: current
     artifact: NuGet Package
