@@ -16,7 +16,7 @@ install:
   - ps: $env:Path = "$env:DOTNET_INSTALL_DIR;$env:Path"
   - ps: dotnet --info
   - ps: Install-Product node 20
-  - ps: choco install markdownlint-cli --no-progress
+  - ps: choco install markdownlint-cli --version=0.45.0 --no-progress
 
 build_script:
   - ps: .\build.ps1 --target=ci
