@@ -39,6 +39,22 @@
                 "patch"
             ],
             "enabled": false
+        },
+        {
+            "description": "Disable major .NET SDK updates in test global.json files",
+            "matchManagers": [
+                "nuget"
+            ],
+            "matchPackageNames": [
+                "dotnet-sdk"
+            ],
+            "matchFileNames": [
+                "tests/**/global.json"
+            ],
+            "matchUpdateTypes": [
+                "major"
+            ],
+            "enabled": false
         }
     ]
 }
