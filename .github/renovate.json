@@ -31,8 +31,8 @@
         },
         {
             "description": "Ignore Cake minor and patch updates",
-            "matchDepNames": [
-                "Cake"
+            "matchPackageNames": [
+                "/^[Cc]ake/"
             ],
             "matchUpdateTypes": [
                 "minor",
