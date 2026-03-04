@@ -28,6 +28,17 @@
                 "/Cake.AzureDevOps/",
                 "/Cake.Frosting.AzureDevOps/"
             ]
+        },
+        {
+            "description": "Ignore Cake minor and patch updates",
+            "matchDepNames": [
+                "Cake"
+            ],
+            "matchUpdateTypes": [
+                "minor",
+                "patch"
+            ],
+            "enabled": false
         }
     ]
 }
