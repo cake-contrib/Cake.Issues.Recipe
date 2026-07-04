@@ -50,10 +50,11 @@ For recipe compatible with Cake Script Runners see Cake.Issues.Recipe.</Descript
     <PackageReference Include="Cake.Frosting.Issues.MsBuild" Version="6.0.0" />
     <PackageReference Include="Cake.Frosting.Issues.Sarif" Version="6.0.0" />
     <PackageReference Include="Cake.Frosting.Issues.Tap" Version="6.0.0" />
+    <PackageReference Include="Cake.Frosting.Issues.BuildServer" Version="6.0.0" />
+    <PackageReference Include="Cake.Frosting.Issues.BuildServer.AppVeyor" Version="6.0.0" />
+    <PackageReference Include="Cake.Frosting.Issues.BuildServer.GitHubActions" Version="6.0.0" />
     <PackageReference Include="Cake.Frosting.Issues.PullRequests" Version="6.0.0" />
-    <PackageReference Include="Cake.Frosting.Issues.PullRequests.AppVeyor" Version="5.9.1" />
     <PackageReference Include="Cake.Frosting.Issues.PullRequests.AzureDevOps" Version="6.0.0" />
-    <PackageReference Include="Cake.Frosting.Issues.PullRequests.GitHubActions" Version="5.9.1" />
     <PackageReference Include="Cake.Frosting.Issues.Reporting" Version="6.0.0" />
     <PackageReference Include="Cake.Frosting.Issues.Reporting.Sarif" Version="6.0.0" />    
     <PackageReference Include="Cake.Frosting.Issues.Reporting.Generic" Version="6.0.0" />
