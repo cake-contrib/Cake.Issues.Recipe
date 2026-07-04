@@ -17,7 +17,9 @@ BuildParameters.SetParameters(
     solutionFilePath: "./Cake.Frosting.Issues.Recipe/Cake.Frosting.Issues.Recipe.sln",
     shouldRunInspectCode: false, // Currently failing on AppVeyor since .NET 9 update
     shouldRunDotNetPack: true,
-    shouldGenerateDocumentation: false);
+    shouldGenerateDocumentation: false,
+    preferredBuildProviderType: BuildProviderType.GitHubActions,
+    preferredBuildAgentOperatingSystem: PlatformFamily.Linux);
 
 BuildParameters.PrintParameters(Context);
 
