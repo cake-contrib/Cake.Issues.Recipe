@@ -1,4 +1,4 @@
-#load nuget:?package=Cake.Recipe&version=4.0.0
+#load nuget:https://pkgs.dev.azure.com/cake-contrib/Home/_packaging/addins/nuget/v3/index.json?package=Cake.Recipe&version=4.1.0-alpha0042
 
 //*************************************************************************************************
 // Settings
@@ -16,7 +16,7 @@ BuildParameters.SetParameters(
     appVeyorAccountName: "cakecontrib",
     solutionFilePath: "./Cake.Frosting.Issues.Recipe/Cake.Frosting.Issues.Recipe.sln",
     shouldRunInspectCode: false, // Currently failing on AppVeyor since .NET 9 update
-    shouldRunDotNetCorePack: true,
+    shouldRunDotNetPack: true,
     shouldGenerateDocumentation: false);
 
 BuildParameters.PrintParameters(Context);
@@ -67,4 +67,4 @@ BuildParameters.Tasks.CleanTask
 // Execution
 //*************************************************************************************************
 
-Build.RunDotNetCore();
+Build.RunDotNet();
