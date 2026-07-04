@@ -1,6 +1,6 @@
 name: CI Build
 on:
-  # Trigger the workflow on pushes to the master or develop branch, ignoring changes to /docs
+  # Trigger the workflow on pushes to develop/master/release branches and on tag pushes
   push:
     branches: 
       - develop
