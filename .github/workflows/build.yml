@@ -23,7 +23,7 @@ jobs:
         run: .\build.ps1
         shell: powershell
       - name: Publish NuGet package as build artifact
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: NuGet Package
           path: ./BuildArtifacts/Packages/NuGet/
@@ -53,7 +53,7 @@ jobs:
         working-directory: ./tests/script-runner/net10.0-git-cli/
         shell: powershell
       - name: Publish generated reports as build artifact
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: Integration Tests Script Runner Windows (.NET tool)
           path: ./tests/script-runner/net10.0/BuildArtifacts/output/
