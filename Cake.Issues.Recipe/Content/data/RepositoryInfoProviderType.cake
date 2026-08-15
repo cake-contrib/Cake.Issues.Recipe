@@ -12,5 +12,10 @@ public enum RepositoryInfoProviderType
     /// Read repository information using Git CLI.
     /// Requires Git CLI to be available in path.
     /// </summary>
-    Cli
+    Cli,
+    /// <summary>
+    /// Read repository information using GitReader library.
+    /// Pure .NET implementation without external dependencies.
+    /// </summary>
+    GitReader
 }

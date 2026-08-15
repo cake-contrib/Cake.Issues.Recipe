@@ -60,6 +60,7 @@ For recipe compatible with Cake Script Runners see Cake.Issues.Recipe.</Descript
     <PackageReference Include="Cake.Frosting.Issues.Reporting.Generic" Version="6.0.0" />
     <PackageReference Include="Cake.Frosting.Issues.Reporting.Console" Version="6.0.0" />
     <PackageReference Include="Cake.GitHub" Version="1.0.0" />
+    <PackageReference Include="GitReader" Version="1.4.0" />
   </ItemGroup>
 
 </Project>
