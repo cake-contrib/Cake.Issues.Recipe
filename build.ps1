@@ -1,3 +1,7 @@
+if (-not (Get-Command dotnet -ErrorAction SilentlyContinue)) {
+    throw "The .NET SDK is required to run this build. Install it and ensure dotnet is available on PATH."
+}
+
 $SCRIPT_NAME = "recipe.cake"
 
 Write-Host "Restoring .NET Core tools"
