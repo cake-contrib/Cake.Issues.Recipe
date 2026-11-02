@@ -27,18 +27,6 @@ On OSX/Linux run:
 ./build.sh
 ```
 
-## Frosting integration tests
-
-Create packages with `./build.ps1 --target=Create-NuGet-Packages` on Windows
-or `./build.sh --target=Create-NuGet-Packages` on macOS/Linux before running
-an integration sample under `tests/frosting` with its build script.
-
-The Frosting samples map `Cake.Frosting.Issues.Recipe` exclusively to
-`BuildArtifacts/Packages/NuGet` so they test the locally built package even
-when NuGet.org has a newer version. Other dependencies are restored from
-NuGet.org. Generated reports are written to the sample's `BuildArtifacts`
-directory, alongside its `build` directory.
-
 ## Release
 
 See [Cake.Recipe documentation] how to create a new release of this addin.
