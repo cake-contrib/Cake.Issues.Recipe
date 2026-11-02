@@ -3,6 +3,7 @@ namespace Cake.Frosting.Issues.Recipe;
 using Cake.Common.Build;
 using Cake.Common.IO;
 using Cake.Core.IO;
+using Cake.Issues.BuildServer;
 
 /// <summary>
 /// Support for AppVeyor builds.
@@ -58,7 +59,7 @@ internal sealed class AppVeyorBuildServer : BaseBuildServer
     {
         context.NotNull();
 
-        context.ReportIssuesToPullRequest(
+        context.ReportIssuesToBuildServer(
             context.State.Issues,
             context.AppVeyorBuilds(),
             context.State.ProjectRootDirectory);

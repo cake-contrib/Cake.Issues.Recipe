@@ -1,5 +1,5 @@
 
-$RECIPE_PACKAGE_PATH = "packages/cake.frosting.issues.recipe"
+RECIPE_PACKAGE_PATH="packages/cake.frosting.issues.recipe"
 if [ -d "$RECIPE_PACKAGE_PATH" ]
 then
     echo "Cleaning up cached version of $RECIPE_PACKAGE_PATH..."

@@ -1,4 +1,4 @@
-#load nuget:https://pkgs.dev.azure.com/cake-contrib/Home/_packaging/addins/nuget/v3/index.json?package=Cake.Recipe&version=4.0.0-alpha0144
+#load nuget:https://pkgs.dev.azure.com/cake-contrib/Home/_packaging/addins/nuget/v3/index.json?package=Cake.Recipe&version=4.1.0-alpha0042
 
 //*************************************************************************************************
 // Settings
@@ -16,12 +16,20 @@ BuildParameters.SetParameters(
     appVeyorAccountName: "cakecontrib",
     solutionFilePath: "./Cake.Frosting.Issues.Recipe/Cake.Frosting.Issues.Recipe.sln",
     shouldRunInspectCode: false, // Currently failing on AppVeyor since .NET 9 update
-    shouldRunDotNetCorePack: true,
-    shouldGenerateDocumentation: false);
+    shouldRunDotNetPack: true,
+    shouldGenerateDocumentation: false,
+    preferredBuildProviderType: BuildProviderType.GitHubActions,
+    preferredBuildAgentOperatingSystem: PlatformFamily.Linux);
 
 BuildParameters.PrintParameters(Context);
 
 ToolSettings.SetToolSettings(context: Context);
+
+// Downgrade GitVersion due to issues with building tags on GitHub Actions
+// https://github.com/GitTools/GitVersion/issues/2838
+ToolSettings.SetToolPreprocessorDirectives(
+    gitVersionGlobalTool : "#tool dotnet:?package=GitVersion.Tool&version=5.10.0"
+);
 
 //*************************************************************************************************
 // Extensions
@@ -32,10 +40,11 @@ Task("Generate-Version-File")
         // Write metadata to configuration file
         System.IO.File.WriteAllText(
             "./Cake.Issues.Recipe/cake-version.yml",
-            @"TargetCakeVersion: 5.0.0
+            @"TargetCakeVersion: 6.0.0
 TargetFrameworks:
 - net8.0
-- net9.0"
+- net9.0
+- net10.0"
         );
 
         // Write metadata to class for use when running a build
@@ -66,4 +75,4 @@ BuildParameters.Tasks.CleanTask
 // Execution
 //*************************************************************************************************
 
-Build.RunDotNetCore();
+Build.RunDotNet();

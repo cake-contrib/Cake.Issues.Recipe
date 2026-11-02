@@ -10,7 +10,7 @@ public interface IIssuesParameters
     /// <summary>
     /// Gets or sets the path to the output directory.
     /// A relative path will be relative to the current working directory.
-    /// Default value is <c>BuildArtifacts</c>.
+    /// Default value is <c>../BuildArtifacts</c>.
     /// </summary>
     DirectoryPath OutputDirectory { get; set; }
 

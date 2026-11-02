@@ -54,7 +54,7 @@ public class AppVeyorBuildServer : BaseBuildServer
         context.NotNull();
         data.NotNull();
 
-        context.ReportIssuesToPullRequest(
+        context.ReportIssuesToBuildServer(
             data.Issues,
             context.AppVeyorBuilds(),
             data.ProjectRootDirectory);

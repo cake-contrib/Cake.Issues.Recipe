@@ -8,6 +8,7 @@ using Cake.Common.Build;
 using Cake.Common.Diagnostics;
 using Cake.Common.IO;
 using Cake.Core.IO;
+using Cake.Issues.BuildServer;
 using System.Net;
 
 /// <summary>
@@ -92,7 +93,7 @@ internal sealed class GitHubActionsBuildServer : BaseBuildServer
     {
         context.NotNull();
 
-        context.ReportIssuesToPullRequest(
+        context.ReportIssuesToBuildServer(
             context.State.Issues,
             context.GitHubActionsBuilds(),
             context.State.ProjectRootDirectory);

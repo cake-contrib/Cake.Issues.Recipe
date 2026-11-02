@@ -82,7 +82,7 @@ public class GitHubActionsBuildServer : BaseBuildServer
         context.NotNull();
         data.NotNull();
 
-        context.ReportIssuesToPullRequest(
+        context.ReportIssuesToBuildServer(
             data.Issues,
             context.GitHubActionsBuilds(),
             data.ProjectRootDirectory);

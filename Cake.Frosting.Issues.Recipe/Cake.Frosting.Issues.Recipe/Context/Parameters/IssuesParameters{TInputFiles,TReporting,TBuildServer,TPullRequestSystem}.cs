@@ -24,7 +24,7 @@ public abstract class IssuesParameters<TInputFiles, TReporting, TBuildServer, TP
     private readonly Lazy<TBuildBreaking> buildBreaking;
 
     /// <inheritdoc />
-    public DirectoryPath OutputDirectory { get; set; } = "BuildArtifacts";
+    public DirectoryPath OutputDirectory { get; set; } = "../BuildArtifacts";
 
     /// <inheritdoc />
     public string BuildIdentifier { get; set; } = string.Empty;

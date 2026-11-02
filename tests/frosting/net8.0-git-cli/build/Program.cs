@@ -43,11 +43,6 @@ public class BuildContext : IssuesContext<BuildParameters, BuildState>
 public class BuildParameters : IssuesParameters
 {
     public DirectoryPath LogDirectoryPath => this.OutputDirectory.Combine("logs");
-
-    public BuildParameters()
-    {
-        this.OutputDirectory = this.OutputDirectory.Combine("output");
-    }
 }
 
 public class BuildState : IssuesState

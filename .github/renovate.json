@@ -28,6 +28,33 @@
                 "/Cake.AzureDevOps/",
                 "/Cake.Frosting.AzureDevOps/"
             ]
+        },
+        {
+            "description": "Ignore Cake minor and patch updates",
+            "matchPackageNames": [
+                "/^[Cc]ake/"
+            ],
+            "matchUpdateTypes": [
+                "minor",
+                "patch"
+            ],
+            "enabled": false
+        },
+        {
+            "description": "Disable major .NET SDK updates in test global.json files",
+            "matchManagers": [
+                "nuget"
+            ],
+            "matchPackageNames": [
+                "dotnet-sdk"
+            ],
+            "matchFileNames": [
+                "tests/**/global.json"
+            ],
+            "matchUpdateTypes": [
+                "major"
+            ],
+            "enabled": false
         }
     ]
 }

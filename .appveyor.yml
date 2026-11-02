@@ -11,12 +11,20 @@ install:
   - ps: mkdir $env:DOTNET_INSTALL_DIR -Force | Out-Null
   - ps: Invoke-WebRequest -Uri "https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.ps1" -OutFile "$($env:DOTNET_INSTALL_DIR)/dotnet-install.ps1"
   - ps: '& "$($env:DOTNET_INSTALL_DIR)/dotnet-install.ps1" -Version 5.0.408 -InstallDir $env:DOTNET_INSTALL_DIR'
-  - ps: '& "$($env:DOTNET_INSTALL_DIR)/dotnet-install.ps1" -Version 8.0.414 -InstallDir $env:DOTNET_INSTALL_DIR'
-  - ps: '& "$($env:DOTNET_INSTALL_DIR)/dotnet-install.ps1" -Version 9.0.305 -InstallDir $env:DOTNET_INSTALL_DIR'
+  - ps: '& "$($env:DOTNET_INSTALL_DIR)/dotnet-install.ps1" -Version 8.0.423 -InstallDir $env:DOTNET_INSTALL_DIR'
+  - ps: '& "$($env:DOTNET_INSTALL_DIR)/dotnet-install.ps1" -Version 9.0.316 -InstallDir $env:DOTNET_INSTALL_DIR'
+  - ps: '& "$($env:DOTNET_INSTALL_DIR)/dotnet-install.ps1" -Version 10.0.302 -InstallDir $env:DOTNET_INSTALL_DIR'
   - ps: $env:Path = "$env:DOTNET_INSTALL_DIR;$env:Path"
   - ps: dotnet --info
   - ps: Install-Product node 20
-  - ps: choco install markdownlint-cli --no-progress
+  - ps: choco install markdownlint-cli --version=0.45.0 --no-progress
+
+before_build:
+  - ps: |
+      # GitVersion must normalize the checked-out PR merge commit, not the source branch.
+      if ($env:APPVEYOR_PULL_REQUEST_NUMBER) {
+        $env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH = "pull/$($env:APPVEYOR_PULL_REQUEST_NUMBER)/merge"
+      }
 
 build_script:
   - ps: .\build.ps1 --target=ci
