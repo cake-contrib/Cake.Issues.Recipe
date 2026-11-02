@@ -23,6 +23,6 @@ jobs:
               ./build.sh --verbosity=diagnostic
             workingDirectory: ./tests/frosting/net${{ dotNetVersion }}.0-${{ repositoryInfoProvider }}
             displayName: 'Run integration tests'
-          - publish: $(Build.SourcesDirectory)/tests/frosting/net${{ dotNetVersion }}.0-${{ repositoryInfoProvider }}/build/BuildArtifacts/output
+          - publish: $(Build.SourcesDirectory)/tests/frosting/net${{ dotNetVersion }}.0-${{ repositoryInfoProvider }}/BuildArtifacts
             artifact: Integration Tests Frosting ${{ image }} (.NET ${{ dotNetVersion }} + ${{ repositoryInfoProvider }})
             displayName: 'Publish generated reports as build artifact'
