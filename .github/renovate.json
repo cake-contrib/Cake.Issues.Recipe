@@ -32,7 +32,10 @@
         {
             "description": "Ignore Cake minor and patch updates",
             "matchPackageNames": [
-                "/^[Cc]ake/"
+                "cake.tool",
+                "Cake.Frosting",
+                "Cake.Testing",
+                "Cake.Testing.Xunit"
             ],
             "matchUpdateTypes": [
                 "minor",
